@@ -1,3 +1,4 @@
+
 //
 //  AppDelegate.swift
 //  TochaProto
@@ -16,6 +17,39 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
+        
+        NavSchemeManager.sharedInstance.initRootController()
+        UserStateManager.sharedInstance.loadUserState()
+        ProductManager.sharedInstance.loadPacksOfProducts()
+        let inscription = true
+        if inscription {
+            let request = InscriptionRequest()
+            request.inscriptionWithDicoParameters(["user" : ["email": "louis@docha.fr", "password": "azertyuiop"]])
+        } else {
+            let request = ConnexionRequest()
+            request.connexionWithEmail("louis@docha.fr", andPassword: "azertyuiop")
+        }
+        
+        //        let tabBarController = self.window?.rootViewController as! UITabBarController
+        //        let tabBar = tabBarController.tabBar as UITabBar
+        //        tabBar.backgroundImage = UIImage(named: "bottom-menu_tab")
+        //
+        //        let tabBarHomeItem = tabBar.items![0]
+        //        let tabBarRankingItem = tabBar.items![1]
+        //        let tabBarPlayItem = tabBar.items![2]
+        //        let tabBarCategoriesItem = tabBar.items![3]
+        //        let tabBarCouponsItem = tabBar.items![4]
+        //
+        //        tabBarHomeItem.image = UIImage(named: "home_150x117")?.imageWithRenderingMode(.AlwaysOriginal)
+        //        tabBarHomeItem.selectedImage = UIImage(named: "home_selected_150x117")?.imageWithRenderingMode(.AlwaysOriginal)
+        //        tabBarRankingItem.image = UIImage(named: "ranking_150x117")?.imageWithRenderingMode(.AlwaysOriginal)
+        //        tabBarRankingItem.selectedImage = UIImage(named: "ranking_selected_150x117")?.imageWithRenderingMode(.AlwaysOriginal)
+        //        tabBarPlayItem.image = UIImage(named: "play_150x117")?.imageWithRenderingMode(.AlwaysOriginal)
+        //        tabBarPlayItem.selectedImage = UIImage(named: "play_selected_150x117")?.imageWithRenderingMode(.AlwaysOriginal)
+        //        tabBarCategoriesItem.image = UIImage(named: "categories_150x117")?.imageWithRenderingMode(.AlwaysOriginal)
+        //        tabBarCategoriesItem.selectedImage = UIImage(named: "categories_selected_150x117")?.imageWithRenderingMode(.AlwaysOriginal)
+        //        tabBarCouponsItem.image = UIImage(named: "coupons_150x117")?.imageWithRenderingMode(.AlwaysOriginal)
+        //        tabBarCouponsItem.selectedImage = UIImage(named: "coupons_selected_150x117")?.imageWithRenderingMode(.AlwaysOriginal)
         return true
     }
 
