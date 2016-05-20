@@ -24,7 +24,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let inscription = true
         if inscription {
             let request = InscriptionRequest()
-            request.inscriptionWithDicoParameters(["user" : ["email": "louis@docha.fr", "password": "azertyuiop"]])
+            request.inscriptionWithDicoParameters(["user" : ["email": "mathis@docha.fr", "password": "azertyuiop"]])
         } else {
             let request = ConnexionRequest()
             request.connexionWithEmail("louis@docha.fr", andPassword: "azertyuiop")

@@ -15,6 +15,7 @@
 		6701D9941C108A2100F87043 /* TochaProtoUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6701D9931C108A2100F87043 /* TochaProtoUITests.swift */; };
 		6701D9A21C108AAE00F87043 /* Product.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6701D9A11C108AAE00F87043 /* Product.swift */; };
 		67240CEC1CEF0BCD001F4DC6 /* UserSessionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67240CEB1CEF0BCD001F4DC6 /* UserSessionManager.swift */; };
+		67240CF01CEF5C68001F4DC6 /* UserSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67240CEF1CEF5C68001F4DC6 /* UserSession.swift */; };
 		6733B6221C963E2100CB7AC8 /* NavSchemeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6733B6211C963E2100CB7AC8 /* NavSchemeManager.swift */; };
 		6775CE431C494BB700550041 /* JDFlipImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6775CE3E1C494BB700550041 /* JDFlipImageView.m */; };
 		6775CE441C494BB700550041 /* JDFlipNumberViewImageFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 6775CE401C494BB700550041 /* JDFlipNumberViewImageFactory.m */; };
@@ -82,6 +83,7 @@
 		6701D9951C108A2100F87043 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6701D9A11C108AAE00F87043 /* Product.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Product.swift; sourceTree = "<group>"; };
 		67240CEB1CEF0BCD001F4DC6 /* UserSessionManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserSessionManager.swift; sourceTree = "<group>"; };
+		67240CEF1CEF5C68001F4DC6 /* UserSession.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserSession.swift; sourceTree = "<group>"; };
 		6733B6211C963E2100CB7AC8 /* NavSchemeManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavSchemeManager.swift; sourceTree = "<group>"; };
 		674055401C4664F30047B369 /* TochaProto-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "TochaProto-Bridging-Header.h"; sourceTree = "<group>"; };
 		6775CE3D1C494BB700550041 /* JDFlipImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JDFlipImageView.h; sourceTree = "<group>"; };
@@ -275,6 +277,7 @@
 				6701D9A11C108AAE00F87043 /* Product.swift */,
 				67C2E3481C5BBB4500345D27 /* Coupon.swift */,
 				678B63451C9B5C0C00797516 /* User.swift */,
+				67240CEF1CEF5C68001F4DC6 /* UserSession.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -624,6 +627,7 @@
 				6775CE441C494BB700550041 /* JDFlipNumberViewImageFactory.m in Sources */,
 				67F0CA111CD6487900C9B4B6 /* UserStateManager.swift in Sources */,
 				6701D9741C108A2100F87043 /* AppDelegate.swift in Sources */,
+				67240CF01CEF5C68001F4DC6 /* UserSession.swift in Sources */,
 				67A31A6A1C961EA800A60E96 /* ConnexionPageViewController.swift in Sources */,
 				67A31A6F1C9626A700A60E96 /* ConnexionPageContentViewController.swift in Sources */,
 				677DAEEE1C91BEB3009C5DF2 /* RequestGamePlayProducts.swift in Sources */,
