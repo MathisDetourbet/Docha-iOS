@@ -11,7 +11,8 @@ import Alamofire
 import AlamofireImage
 import CNPPopupController
 
-class GameplayViewController: UIViewController {
+class GameplayViewController: RootViewController
+{
     
     // Constants
     let NUMBER_DIGIT_MAX = 3

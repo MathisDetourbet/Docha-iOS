@@ -8,7 +8,7 @@
 
 import Foundation
 
-class LevelsSelectionViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+class LevelsSelectionViewController: RootViewController, UITableViewDataSource, UITableViewDelegate {
     
     let MAX_LEVEL = 8
     

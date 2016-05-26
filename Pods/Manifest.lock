@@ -24,20 +24,31 @@ PODS:
   - AlamofireImage (2.3.1):
     - Alamofire (~> 3.2)
   - CNPPopupController (0.3.1)
+  - IQKeyboardManagerSwift (4.0.3)
+  - SCLAlertView (0.5.6)
   - SwiftyJSON (2.3.2)
+  - TextFieldEffects (1.2.0)
 
 DEPENDENCIES:
   - AFNetworking (~> 2.6)
   - Alamofire (~> 3.0)
   - AlamofireImage (~> 2.0)
   - CNPPopupController
+  - IQKeyboardManagerSwift
+  - SCLAlertView
   - SwiftyJSON (~> 2.3)
+  - TextFieldEffects
 
 SPEC CHECKSUMS:
   AFNetworking: cb8d14a848e831097108418f5d49217339d4eb60
   Alamofire: f11d8624a05f5d39e0c99309b3e600a3ba64298a
   AlamofireImage: e52336282757bbe1644f075d6cb85f19c891f939
   CNPPopupController: 67dc2ca5a3f88cd49a27bb1b0aeb78a24d423d79
+  IQKeyboardManagerSwift: b6883b720b0e76473692fdc80828442566e1075f
+  SCLAlertView: c2b916952520d96cf5e886a38053f1b8c3da502e
   SwiftyJSON: 04ccea08915aa0109039157c7974cf0298da292a
+  TextFieldEffects: bc4fd3bd557321bd61a0762f3f50965477a36f62
 
-COCOAPODS: 0.39.0
+PODFILE CHECKSUM: c13fb3e66567d65a449395ca9e797f4ea48395c3
+
+COCOAPODS: 1.0.0

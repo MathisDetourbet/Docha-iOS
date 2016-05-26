@@ -8,7 +8,7 @@
 
 import Foundation
 
-class MenuViewController: UIViewController {
+class MenuViewController: RootViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()

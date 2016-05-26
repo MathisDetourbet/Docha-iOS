@@ -14,7 +14,8 @@ class InscriptionRequest {
     
     func inscriptionWithDicoParameters(dicoParameters: Dictionary<String, AnyObject>) {
         
-        Alamofire.request(.POST, "http://localhost:3000/users", parameters: dicoParameters, encoding: .JSON)
+        let request = Alamofire.request(.POST, "http://localhost:3000/users", parameters: dicoParameters, encoding: .JSON)
+            .validate()
             .responseJSON { response in
                 let statusCode = (response.response?.statusCode)!
                 print("Status code : \(statusCode)")

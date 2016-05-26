@@ -8,7 +8,7 @@
 
 import Foundation
 
-class InscriptionStepFourthViewController: RootViewController {
+class InscriptionFourthStepViewController: RootViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()

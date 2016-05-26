@@ -10,7 +10,10 @@ import Foundation
 
 struct Constants {
     struct UserDefaultsKey {
+        // User object key
         static let kUserStateKey = "userStateKey"
+        
+        // User infos keys
         static let kUserInfosLastName = "userInfosLastName"
         static let kUserInfosFirstName = "userInfosFirstName"
         static let kUserInfosEmail = "userInfosEmail"

@@ -19,7 +19,7 @@ class NavSchemeManager {
         let window: UIWindow = ((UIApplication.sharedApplication().delegate?.window)!)!
         
         if true {
-            window.rootViewController = window.rootViewController?.storyboard?.instantiateViewControllerWithIdentifier("idConnexionNavController")
+            window.rootViewController = window.rootViewController?.storyboard?.instantiateViewControllerWithIdentifier("idStarterNavController")
         } else {
             window.rootViewController = window.rootViewController?.storyboard?.instantiateViewControllerWithIdentifier("idTabBarController")
             window.rootViewController?.storyboard?.instantiateViewControllerWithIdentifier("idMenuNavController")

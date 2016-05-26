@@ -8,6 +8,7 @@
 //
 
 import UIKit
+import IQKeyboardManagerSwift
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -18,17 +19,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
         
+        IQKeyboardManager.sharedManager().enable = true
+        
         NavSchemeManager.sharedInstance.initRootController()
-        UserStateManager.sharedInstance.loadUserState()
-        ProductManager.sharedInstance.loadPacksOfProducts()
-        let inscription = true
-        if inscription {
-            let request = InscriptionRequest()
-            request.inscriptionWithDicoParameters(["user" : ["email": "mathis@docha.fr", "password": "azertyuiop"]])
-        } else {
-            let request = ConnexionRequest()
-            request.connexionWithEmail("louis@docha.fr", andPassword: "azertyuiop")
-        }
+//        UserStateManager.sharedInstance.loadUserState()
+//        ProductManager.sharedInstance.loadPacksOfProducts()
+//        let inscription = true
+//        if inscription {
+//            let request = InscriptionRequest()
+//            request.inscriptionWithDicoParameters(["user" : ["email": "mathis@docha.fr", "password": "azertyuiop"]])
+//        } else {
+//            let request = ConnexionRequest()
+//            request.connexionWithEmail("louis@docha.fr", andPassword: "azertyuiop")
+//        }
         
         //        let tabBarController = self.window?.rootViewController as! UITabBarController
         //        let tabBar = tabBarController.tabBar as UITabBar

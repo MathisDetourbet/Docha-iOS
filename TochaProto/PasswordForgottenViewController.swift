@@ -7,3 +7,11 @@
 //
 
 import Foundation
+
+class PasswordForgottenViewController: RootViewController {
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        self.configNavigationBarWithTitle("Mot de passe oublié")
+    }
+}

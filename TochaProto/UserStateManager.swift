@@ -22,7 +22,7 @@ class UserStateManager {
         
         if ((userDefaults.objectForKey(Constants.UserDefaultsKey.kUserStateKey)) == nil) {
             // Creating new User
-            self.userState = User(levelMaxUnlocked: 1, dochos: 0, experience: 0, authToken: "")
+            self.userState = User()
             self.saveUserState()
             
         } else {

@@ -8,7 +8,7 @@
 
 import Foundation
 
-class CouponsStoreViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class CouponsStoreViewController: RootViewController, UITableViewDelegate, UITableViewDataSource {
     
     private var couponsList: [Coupon] = []
     
