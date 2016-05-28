@@ -11,7 +11,7 @@ import Foundation
 struct Constants {
     struct UserDefaultsKey {
         // User object key
-        static let kUserStateKey = "userStateKey"
+        static let kUserSessionObject = "userSessionObject"
         
         // User infos keys
         static let kUserInfosLastName = "userInfosLastName"
@@ -23,6 +23,7 @@ struct Constants {
         static let kUserInfosLevelMaxUnlocked = "userInfosLevelMaxUnlocked"
         static let kUserInfosDochos = "userInfosDochos"
         static let kUserInfosExperience = "userInfosExperience"
+        static let kUserInfosAvatar = "userInfosAvatar"
     }
     struct UserAuthentificationKey {
         static let kUserAuthentificationToken = "userAuthTokenKey"

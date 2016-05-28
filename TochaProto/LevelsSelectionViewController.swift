@@ -34,14 +34,10 @@ class LevelsSelectionViewController: RootViewController, UITableViewDataSource, 
         if let levelCell = cell as? LevelsTableViewCell {
             levelCell.titleLevelLabel.text = String("Level \(indexPath.row + 1)")
             levelCell.priceLevelLabel.text = String(indexPath.row*100)
-            let levelMax: Int
             
-            if let userState = UserStateManager.sharedInstance.userState {
-                levelMax = userState.levelMaxUnlocked
-            } else {
-                levelMax = 1
-                print("No level max saved... Level max by default = 1")
-            }
+            let levelMax: Int
+            let userState = UserSessionManager.sharedInstance.currentSession()
+            levelMax = userState.levelMaxUnlocked
             
             if  indexPath.row+1 <= levelMax {
                 levelCell.canvasImageView.hidden = true

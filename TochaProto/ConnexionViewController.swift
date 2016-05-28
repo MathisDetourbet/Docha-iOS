@@ -11,6 +11,7 @@ import Foundation
 class ConnexionViewController: RootViewController {
     
     @IBOutlet weak var backButtonItem: UIBarButtonItem!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.configNavigationBarWithTitle("Connexion")
@@ -19,24 +20,16 @@ class ConnexionViewController: RootViewController {
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        self.navigationController?.navigationBar.setBackgroundImage(UIImage(named: "nav_bar.png"), forBarMetrics: .Default)
-        self.navigationController?.navigationBar.tintColor = UIColor.whiteColor()
         self.navigationController!.setNavigationBarHidden(false, animated: false)
     }
     
     @IBAction func backButtonTapped(sender: UIBarButtonItem) {
         goBack()
     }
+    
     func textFieldShouldReturn(textField: UITextField) -> Bool {
         self.view.endEditing(true)
         return false
-    }
-    
-    func textFieldDidBeginEditing(textField: UITextField) {
-        animateViewMoving(true, moveValue: 100)
-    }
-    func textFieldDidEndEditing(textField: UITextField) {
-        animateViewMoving(false, moveValue: 100)
     }
     
     func animateViewMoving (up:Bool, moveValue :CGFloat){

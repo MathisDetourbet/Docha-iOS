@@ -8,6 +8,15 @@
 
 import Foundation
 
+extension UIView {
+    func animatedButtonLikeBubbleWithDelay(delay: NSTimeInterval, duration: NSTimeInterval) {
+        self.transform = CGAffineTransformMakeScale(0.0, 0.0)
+        UIView.animateWithDuration(duration, delay: delay, usingSpringWithDamping: 0.6, initialSpringVelocity: 3.0, options: .AllowUserInteraction, animations: { 
+            self.transform = CGAffineTransformIdentity
+            }, completion: nil)
+    }
+}
+
 class StarterPageViewController: RootViewController, UIPageViewControllerDataSource, UIPageViewControllerDelegate {
     
     let pageTitles = ["Bienvenue !", "Joue avec tes produits préférés", "Gagnes des cadeaux et des réductions"]
@@ -16,9 +25,14 @@ class StarterPageViewController: RootViewController, UIPageViewControllerDataSou
     let colors = [UIColor(red: 76, green: 162, blue: 255, alpha: 1), UIColor(red: 255, green: 112, blue: 101, alpha: 1), UIColor(red: 251, green: 196, blue: 73, alpha: 1)]
     
     var pageViewController: UIPageViewController!
+    //var startTouchLocation: CGPoint?
     
+    @IBOutlet weak var registerButton: UIButton!
+    @IBOutlet weak var connexionButton: UIButton!
+    @IBOutlet weak var iPhoneImageView: UIImageView!
     @IBOutlet weak var pageControl: UIPageControl!
     @IBOutlet weak var constraintTopToSuperview: NSLayoutConstraint!
+    @IBOutlet weak var constraintiPhoneTopToView: NSLayoutConstraint!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -35,6 +49,10 @@ class StarterPageViewController: RootViewController, UIPageViewControllerDataSou
         self.pageViewController.didMoveToParentViewController(self)
         
         self.view.bringSubviewToFront(self.pageControl)
+        self.view.bringSubviewToFront(self.iPhoneImageView)
+        
+        self.connexionButton.animatedButtonLikeBubbleWithDelay(0.5, duration: 0.5)
+        self.registerButton.animatedButtonLikeBubbleWithDelay(0.5, duration: 0.5)
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -82,31 +100,51 @@ class StarterPageViewController: RootViewController, UIPageViewControllerDataSou
         _ = pageContentViewController.view
         pageContentViewController.pageIndex = index
         
-        if index == self.pageTitles.count-1 {
-            // Set vertical effect
-            let verticalMotionEffect = UIInterpolatingMotionEffect(keyPath: "center.y", type: .TiltAlongVerticalAxis)
-            verticalMotionEffect.minimumRelativeValue = -50
-            verticalMotionEffect.maximumRelativeValue = 50
-            
-            // Set horizontal effect
-            let horizontalMotionEffect = UIInterpolatingMotionEffect(keyPath: "center.x", type: .TiltAlongHorizontalAxis)
-            horizontalMotionEffect.minimumRelativeValue = -50
-            horizontalMotionEffect.maximumRelativeValue = 50
-            
-            // Create group to combine both
-            let group = UIMotionEffectGroup()
-            group.motionEffects = [horizontalMotionEffect, verticalMotionEffect]
-            
-            // Add both effects to your view
-            for giftImageView in pageContentViewController.allGiftImageViewCollection! {
-                giftImageView.addMotionEffect(group)
-            }
-        }
+//        if index == self.pageTitles.count-1 {
+//            // Set vertical effect
+//            let verticalMotionEffect = UIInterpolatingMotionEffect(keyPath: "center.y", type: .TiltAlongVerticalAxis)
+//            verticalMotionEffect.minimumRelativeValue = -50
+//            verticalMotionEffect.maximumRelativeValue = 50
+//            
+//            // Set horizontal effect
+//            let horizontalMotionEffect = UIInterpolatingMotionEffect(keyPath: "center.x", type: .TiltAlongHorizontalAxis)
+//            horizontalMotionEffect.minimumRelativeValue = -50
+//            horizontalMotionEffect.maximumRelativeValue = 50
+//            
+//            // Create group to combine both
+//            let group = UIMotionEffectGroup()
+//            group.motionEffects = [horizontalMotionEffect, verticalMotionEffect]
+//            
+//            // Add both effects to your view
+//            for giftImageView in pageContentViewController.allGiftImageViewCollection! {
+//                giftImageView.addMotionEffect(group)
+//            }
+//        }
         
         return pageContentViewController
     }
     
-    override func viewWillLayoutSubviews() {
-        self.constraintTopToSuperview.constant = 0.61 * self.view.frame.height
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        self.constraintTopToSuperview.constant = 0.55 * self.view.frame.height
+        if case 0...(self.pageViewController.viewControllers?.count)!-1 = pageControl.currentPage {
+            let currentViewController = self.pageViewController.viewControllers?[pageControl.currentPage] as! StarterPageContentViewController
+            self.constraintiPhoneTopToView.constant = currentViewController.backgroundImageView.frame.height - self.iPhoneImageView.frame.height
+        }
     }
+    
+//    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+//        for touch in touches {
+//            self.startTouchLocation = touch.locationInView(view)
+//        }
+//    }
+//    
+//    override func touchesMoved(touches: Set<UITouch>, withEvent event: UIEvent?) {
+//        var location = CGPointMake(0, 0)
+//        for touch in touches {
+//            location = touch.locationInView(view)
+//        }
+//        
+//        
+//    }
 }

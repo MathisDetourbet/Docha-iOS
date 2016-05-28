@@ -18,21 +18,25 @@ class UserSessionManager {
         return Singleton.instance
     }
 	
-    func currentSession() -> UserSession? {
+    func currentSession() -> UserSession {
         let userDefaults = NSUserDefaults.standardUserDefaults()
-        let connexionEncodedObject = userDefaults.objectForKey(Constants.UserDefaultsKey.kUserStateKey) as! NSData
-        let currentSession = NSKeyedUnarchiver.unarchiveObjectWithData(connexionEncodedObject) as? UserSession
+        if let connexionEncodedObject = userDefaults.objectForKey(Constants.UserDefaultsKey.kUserSessionObject) as? NSData {
+            let currentSession = NSKeyedUnarchiver.unarchiveObjectWithData(connexionEncodedObject) as! UserSession
+            return currentSession
+        }
         
-        return currentSession
+        let userSession = UserSession()
+        userSession.saveSession()
+        return userSession
     }
     
     func isLogged() -> Bool {
-        return NSUserDefaults.standardUserDefaults().objectForKey(Constants.UserDefaultsKey.kUserStateKey) != nil
+        return NSUserDefaults.standardUserDefaults().objectForKey(Constants.UserDefaultsKey.kUserSessionObject) != nil
     }
     
     func inscription(dicoParams: [String: AnyObject], success: () -> Void, fail failure: (error: NSError, listError: [AnyObject]) -> Void) {
         self.inscriptionRequest = InscriptionRequest()
-        weak var weakSelf = self
+        
         inscriptionRequest?.inscriptionWithDicoParameters(dicoParams)
     }
 }

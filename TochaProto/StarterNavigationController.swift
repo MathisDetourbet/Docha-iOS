@@ -12,7 +12,9 @@ class StarterNavigationController: UINavigationController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.navigationItem.backBarButtonItem = nil
+        self.navigationBar.tintColor = UIColor.blueColor()
+        self.navigationBar.setBackgroundImage(UIImage(named: "nav_bar.png"), forBarMetrics: .Default)
+        self.navigationBar.tintColor = UIColor.whiteColor()
     }
     
     override func viewWillAppear(animated: Bool) {

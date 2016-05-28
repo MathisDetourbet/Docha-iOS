@@ -10,39 +10,51 @@ import Foundation
 
 class StarterPageContentViewController: RootViewController {
     
-    @IBOutlet weak var backgroundColoredView: UIView!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var subtitleLabel: UILabel!
-    @IBOutlet weak var imageView: UIImageView!
     @IBOutlet var allGiftImageViewCollection: [UIImageView]?
+    //@IBOutlet weak var blurEffectView: UIVisualEffectView!
+    @IBOutlet weak var backgroundImageView: UIImageView!
+    @IBOutlet weak var constraintBulleHowMuch: NSLayoutConstraint!
+    @IBOutlet weak var bubbleHowMuchImageView: UIImageView!
     
-    var pageIndex: Int?
+    var pageIndex: Int? {
+        didSet {
+            self.buildUI()
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        buildUI()
     }
     
     func buildUI() {
         
-        // design image
+        self.titleLabel.animatedButtonLikeBubbleWithDelay(0.2, duration: 0.5)
+        self.subtitleLabel.animatedButtonLikeBubbleWithDelay(0.2, duration: 0.5)
+        
         if let index = self.pageIndex {
             switch index {
             case 0:
-                self.backgroundColoredView.backgroundColor = UIColor(red: 76, green: 162, blue: 255, alpha: 1)
+                
                 break;
             case 1:
-                self.backgroundColoredView.backgroundColor = UIColor(red: 255, green: 112, blue: 101, alpha: 1)
+                self.bubbleHowMuchImageView.animatedButtonLikeBubbleWithDelay(0.5, duration: 0.5)
                 break;
             default:
-                self.backgroundColoredView.backgroundColor = UIColor(red: 251, green: 196, blue: 73, alpha: 1)
+                
                 break;
             }
         }
+        
+        //self.blurEffectView.alpha = 1.0
     }
     
-    override func viewWillLayoutSubviews() {
-        super.viewWillLayoutSubviews()
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
+        if self.pageIndex == 1 {
+            self.constraintBulleHowMuch.constant = 0.36667 * self.backgroundImageView.frame.height
+        }
     }
 }

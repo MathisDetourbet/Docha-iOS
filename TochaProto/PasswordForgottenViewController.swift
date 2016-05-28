@@ -13,5 +13,11 @@ class PasswordForgottenViewController: RootViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.configNavigationBarWithTitle("Mot de passe oublié")
+        hideKeyboardWhenTappedAround()
+    }
+    
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        self.view.endEditing(true)
+        return false
     }
 }

@@ -15,9 +15,28 @@ class User: NSObject {
     var sexe: String?
     var dateBirthday: NSDate?
     var categoryFavorite: String?
+    var avatar: String?
     var levelMaxUnlocked: Int = 1
     var dochos: Int = 0
     var experience: Int = 0
+    
+//    override init() {
+//        super.init()
+//    }
+//    
+//    convenience init(lastName: String?, firstName: String?, email: String?, sexe: String?, dateBirthday: NSDate?, categoryFavorite: String?, avatar: String?, levelMaxUnlocked: Int?, dochos: Int?, experience: Int?) {
+//        
+//        self.lastName = lastName
+//        self.firstName = firstName
+//        self.email = email
+//        self.sexe = sexe
+//        self.dateBirthday = dateBirthday
+//        self.categoryFavorite = categoryFavorite
+//        self.avatar = avatar
+//        self.levelMaxUnlocked = levelMaxUnlocked!
+//        self.dochos = dochos!
+//        self.experience = experience!
+//    }
     
     func initPropertiesWithResponseObject(responseObject: AnyObject) {
         if let dicoUser = responseObject["user"] as? [String: AnyObject] {
@@ -27,19 +46,10 @@ class User: NSObject {
             if let sexe = dicoUser["sexe"]?.string { self.sexe = sexe }
             if let dateBirthday = dicoUser["date_birthday"]?.date { self.dateBirthday = dateBirthday }
             if let categoryFavorite = dicoUser["category_favorite"]?.string { self.categoryFavorite = categoryFavorite }
+            if let avatar = dicoUser["avatar"]?.string { self.avatar = avatar }
             if let levelMaxUnlocked = dicoUser["level_max_unlocked"]?.integerValue { self.levelMaxUnlocked = levelMaxUnlocked }
             if let dochos = dicoUser["dochos"]?.integerValue { self.dochos = dochos }
             if let experience = dicoUser["experience"]?.integerValue { self.experience = experience }
         }
     }
-    
-//    convenience override init() {
-//        self.init(levelMaxUnlocked: 1, dochos: 0, experience: 0)
-//    }
-//    
-//    init(levelMaxUnlocked: Int, dochos: Int, experience: Int) {
-//        self.levelMaxUnlocked = levelMaxUnlocked
-//        self.dochos = dochos
-//        self.experience = experience
-//    }
 }

@@ -36,7 +36,7 @@ class InscriptionRequest {
                                     for (key, value) : (String, JSON) in jsonReponse {
                                         dicoUser[key] = value.object
                                     }
-                                    UserStateManager.sharedInstance.userState?.initPropertiesWithResponseObject(dicoUser)
+                                    UserSessionManager.sharedInstance.currentSession().initPropertiesWithResponseObject(dicoUser)
                                 } else {
                                     // JSON doesn't contain the key "user"
                                     print("json doesn't contain the key 'user'")

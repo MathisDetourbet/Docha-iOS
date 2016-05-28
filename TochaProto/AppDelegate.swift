@@ -22,7 +22,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         IQKeyboardManager.sharedManager().enable = true
         
         NavSchemeManager.sharedInstance.initRootController()
-//        UserStateManager.sharedInstance.loadUserState()
 //        ProductManager.sharedInstance.loadPacksOfProducts()
 //        let inscription = true
 //        if inscription {
