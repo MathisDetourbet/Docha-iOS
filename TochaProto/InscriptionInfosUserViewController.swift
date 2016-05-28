@@ -78,14 +78,14 @@ class InscriptionInfosUserViewController: RootViewController, UITextFieldDelegat
             self.genderSelected = "man"
             self.manButton.setImage(UIImage(named: "avatar_homme_selected_infos_user.png"), forState: .Normal)
             self.womanButton.setImage(UIImage(named: "avatar_femme_infos_user.png"), forState: .Normal)
+            self.manButton.animatedButtonLikeBubbleWithDelay(0.0, duration: 0.5)
         } else {
             // Woman selected
             self.genderSelected = "woman"
             self.womanButton.setImage(UIImage(named: "avatar_femme_selected_infos_user.png"), forState: .Normal)
             self.manButton.setImage(UIImage(named: "avatar_homme_infos_user.png"), forState: .Normal)
+            self.womanButton.animatedButtonLikeBubbleWithDelay(0.0, duration: 0.5)
         }
-        
-        self.view.setNeedsDisplay()
     }
     
     @IBAction func validProfilButtonTouched(sender: UIButton) {

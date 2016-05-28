@@ -25,5 +25,18 @@ class NavSchemeManager {
             window.rootViewController?.storyboard?.instantiateViewControllerWithIdentifier("idMenuNavController")
         }
     }
+    
+    func changeRootViewController(viewController: UIViewController) {
+        let snapShot = (((UIApplication.sharedApplication().delegate) as! AppDelegate)).window!.snapshotViewAfterScreenUpdates(true)
+        viewController.view .addSubview(snapShot)
+        (((UIApplication.sharedApplication().delegate) as! AppDelegate)).window!.rootViewController = viewController
+        UIView.animateWithDuration(0.3,
+                                   animations: { 
+                                    snapShot.layer.opacity = 0.0
+                                    snapShot.layer.transform = CATransform3DMakeScale(1.5, 1.5, 1.5)
+            }) { (finished) in
+                snapShot.removeFromSuperview()
+        }
+    }
 	
 }

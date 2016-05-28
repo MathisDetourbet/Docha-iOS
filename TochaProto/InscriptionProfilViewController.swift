@@ -38,11 +38,13 @@ class InscriptionProfilViewController: RootViewController {
         
         for (index, avatar) in avatarsButtonsCollection.enumerate() {
             avatar.setImage(UIImage(named: avatarImageArray![index]), forState: .Normal)
+            avatar.animatedButtonLikeBubbleWithDelay(Double(index/100)+0.2, duration: 0.5)
         }
     }
     
     @IBAction func avatarButtonTouched(sender: UIButton) {
         let index = sender.tag
         self.userAvatarImageView.image = UIImage(named: "\(self.avatarImageArray![index])_profil")
+        self.userAvatarImageView.animatedButtonLikeBubbleWithDelay(0.0, duration: 0.5)
     }
 }

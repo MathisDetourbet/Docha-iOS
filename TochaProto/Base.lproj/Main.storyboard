@@ -77,7 +77,7 @@
         <!--StarterViewController-->
         <scene sceneID="N4t-3w-dXh">
             <objects>
-                <viewController storyboardIdentifier="idStarterViewController" title="StarterViewController" id="K1c-if-O3e" customClass="StarterPageViewController" customModule="DochaProto" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="idStarterViewController" title="StarterViewController" id="K1c-if-O3e" customClass="StarterPageViewController" customModule="Docha" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="xXp-GD-Mpy"/>
                         <viewControllerLayoutGuide type="bottom" id="MKF-WR-01M"/>
@@ -161,7 +161,7 @@
         <!--ConnexionViewController-->
         <scene sceneID="rec-Dc-xVN">
             <objects>
-                <viewController storyboardIdentifier="idConnexionViewController" title="ConnexionViewController" id="xDt-My-EAi" customClass="ConnexionViewController" customModule="DochaProto" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="idConnexionViewController" title="ConnexionViewController" id="xDt-My-EAi" customClass="ConnexionViewController" customModule="Docha" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="GsN-Ws-BHC"/>
                         <viewControllerLayoutGuide type="bottom" id="juj-hp-ctS"/>
@@ -202,6 +202,9 @@
                                     <constraint firstAttribute="width" constant="280" id="FkH-ys-WTm"/>
                                 </constraints>
                                 <state key="normal" image="btn_fb"/>
+                                <connections>
+                                    <action selector="facebookButtonTouched:" destination="xDt-My-EAi" eventType="touchUpInside" id="deF-6j-fao"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="k7V-8Q-RZ0">
                                 <rect key="frame" x="20" y="92" width="280" height="60"/>
@@ -277,6 +280,7 @@
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" translucent="NO" prompted="NO"/>
                     <connections>
                         <outlet property="backButtonItem" destination="WNa-1r-frE" id="bga-lm-t2M"/>
+                        <outlet property="btnLoginFacebook" destination="aLw-Of-Nug" id="6jJ-rE-hl1"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="r4q-8o-hg0" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -286,7 +290,7 @@
         <!--PasswordForgottenViewController-->
         <scene sceneID="CuI-Ub-QiZ">
             <objects>
-                <viewController title="PasswordForgottenViewController" id="q3S-N3-jb6" customClass="PasswordForgottenViewController" customModule="DochaProto" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="PasswordForgottenViewController" id="q3S-N3-jb6" customClass="PasswordForgottenViewController" customModule="Docha" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="q7h-aO-IFJ"/>
                         <viewControllerLayoutGuide type="bottom" id="qlu-a3-8fp"/>
@@ -338,7 +342,14 @@
                             <constraint firstItem="qlu-a3-8fp" firstAttribute="top" secondItem="Tiw-9N-YAi" secondAttribute="bottom" id="xSI-tl-sfJ"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="Connexion" id="0md-lX-qKR"/>
+                    <navigationItem key="navigationItem" id="0md-lX-qKR">
+                        <barButtonItem key="leftBarButtonItem" image="return" id="ZcI-k0-4nG" userLabel="back button">
+                            <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <connections>
+                                <action selector="backButtonTouched:" destination="q3S-N3-jb6" id="B1P-6m-W81"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zRo-FT-Csl" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -347,7 +358,7 @@
         <!--Starter1PageContentViewController-->
         <scene sceneID="Uj7-3n-ico">
             <objects>
-                <viewController storyboardIdentifier="idStarterPage1ContentViewController" title="Starter1PageContentViewController" id="hIE-vd-jFL" customClass="StarterPageContentViewController" customModule="DochaProto" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="idStarterPage1ContentViewController" title="Starter1PageContentViewController" id="hIE-vd-jFL" customClass="StarterPageContentViewController" customModule="Docha" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Ywd-hT-J3W"/>
                         <viewControllerLayoutGuide type="bottom" id="ndj-2v-qNq"/>
@@ -397,7 +408,7 @@
         <!--Starter2PageContentViewController-->
         <scene sceneID="0Wd-YI-i4w">
             <objects>
-                <viewController storyboardIdentifier="idStarterPage2ContentViewController" title="Starter2PageContentViewController" id="DM1-39-qyC" customClass="StarterPageContentViewController" customModule="DochaProto" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="idStarterPage2ContentViewController" title="Starter2PageContentViewController" id="DM1-39-qyC" customClass="StarterPageContentViewController" customModule="Docha" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="3ap-61-nN2"/>
                         <viewControllerLayoutGuide type="bottom" id="WJ8-6p-Xf4"/>
@@ -457,7 +468,7 @@
         <!--Starter3PageContentViewController-->
         <scene sceneID="3CJ-ft-ZSz">
             <objects>
-                <viewController storyboardIdentifier="idStarterPage3ContentViewController" title="Starter3PageContentViewController" id="DI2-U5-U0k" customClass="StarterPageContentViewController" customModule="DochaProto" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="idStarterPage3ContentViewController" title="Starter3PageContentViewController" id="DI2-U5-U0k" customClass="StarterPageContentViewController" customModule="Docha" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Bev-0C-5mu"/>
                         <viewControllerLayoutGuide type="bottom" id="Foz-zy-akg"/>
@@ -509,7 +520,7 @@
         <!--InscriptionIdentifiantsViewController-->
         <scene sceneID="vcE-s8-CyL">
             <objects>
-                <viewController storyboardIdentifier="idInscriptionIdentifiantsViewController" title="InscriptionIdentifiantsViewController" id="DGp-QF-SKV" customClass="InscriptionIdentifiantsViewController" customModule="DochaProto" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="idInscriptionIdentifiantsViewController" title="InscriptionIdentifiantsViewController" id="DGp-QF-SKV" customClass="InscriptionIdentifiantsViewController" customModule="Docha" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="iE5-gF-6Qv"/>
                         <viewControllerLayoutGuide type="bottom" id="S5a-7K-JJM"/>
@@ -625,6 +636,7 @@
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" translucent="NO" prompted="NO"/>
                     <nil key="simulatedBottomBarMetrics"/>
                     <connections>
+                        <outlet property="btnLoginFacebook" destination="8gr-fi-icu" id="wda-9k-XCC"/>
                         <outlet property="emailTextField" destination="PGq-0l-ITw" id="8ow-xS-MYQ"/>
                         <outlet property="passwordTextField" destination="tSV-nw-XqR" id="AQO-Q6-dJ4"/>
                         <outlet property="registerButton" destination="CpM-KH-LEg" id="jiT-yM-8AO"/>
@@ -637,7 +649,7 @@
         <!--InscriptionInfosUserViewController-->
         <scene sceneID="W4D-69-QH5">
             <objects>
-                <viewController storyboardIdentifier="idInscriptionInfosUserViewController" title="InscriptionInfosUserViewController" id="Mgl-ri-00g" customClass="InscriptionInfosUserViewController" customModule="DochaProto" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="idInscriptionInfosUserViewController" title="InscriptionInfosUserViewController" id="Mgl-ri-00g" customClass="InscriptionInfosUserViewController" customModule="Docha" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="fb0-jp-CvY"/>
                         <viewControllerLayoutGuide type="bottom" id="ITc-tl-qiJ"/>
@@ -774,7 +786,7 @@
         <!--InscriptionCategoryViewController-->
         <scene sceneID="K6t-5I-iYh">
             <objects>
-                <viewController storyboardIdentifier="idInscriptionCategorySelectionViewController" title="InscriptionCategoryViewController" id="hRO-dK-e2E" customClass="InscriptionCategorySelectionViewController" customModule="DochaProto" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="idInscriptionCategorySelectionViewController" title="InscriptionCategoryViewController" id="hRO-dK-e2E" customClass="InscriptionCategorySelectionViewController" customModule="Docha" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="GII-3s-cNG"/>
                         <viewControllerLayoutGuide type="bottom" id="nYz-2j-vl1"/>
@@ -795,7 +807,7 @@
                                     <inset key="sectionInset" minX="8" minY="12" maxX="8" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" reuseIdentifier="idCategoryCollectionCell" id="Fv3-Pv-JJ9" customClass="InscriptionCategoryCollectionViewCell" customModule="DochaProto" customModuleProvider="target">
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" reuseIdentifier="idCategoryCollectionCell" id="Fv3-Pv-JJ9" customClass="InscriptionCategoryCollectionViewCell" customModule="Docha" customModuleProvider="target">
                                         <rect key="frame" x="8" y="12" width="90" height="90"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
@@ -892,7 +904,7 @@
         <!--Inscription Profil View Controller-->
         <scene sceneID="Dxf-Zn-JfX">
             <objects>
-                <viewController id="7uN-Ue-8KM" customClass="InscriptionProfilViewController" customModule="DochaProto" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="7uN-Ue-8KM" customClass="InscriptionProfilViewController" customModule="Docha" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="aeA-Rw-iBB"/>
                         <viewControllerLayoutGuide type="bottom" id="IXe-ue-2YG"/>
@@ -1040,7 +1052,7 @@
         <!--CouponsStoreViewController-->
         <scene sceneID="9qQ-De-5hm">
             <objects>
-                <viewController id="TSp-VD-xfW" userLabel="CouponsStoreViewController" customClass="CouponsStoreViewController" customModule="DochaProto" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="TSp-VD-xfW" userLabel="CouponsStoreViewController" customClass="CouponsStoreViewController" customModule="Docha" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="WZt-A4-b1Z"/>
                         <viewControllerLayoutGuide type="bottom" id="ESS-ax-lCL"/>
@@ -1062,7 +1074,7 @@
                                 <rect key="frame" x="16" y="37" width="288" height="418"/>
                                 <color key="backgroundColor" red="0.92549019607843142" green="0.92156862745098034" blue="0.94901960784313721" alpha="1" colorSpace="calibratedRGB"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="idCouponTableViewCell" rowHeight="90" id="Q0e-BA-UCh" customClass="CouponTableViewCell" customModule="DochaProto" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="idCouponTableViewCell" rowHeight="90" id="Q0e-BA-UCh" customClass="CouponTableViewCell" customModule="Docha" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="288" height="90"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Q0e-BA-UCh" id="EdN-yt-efS">
@@ -1260,7 +1272,7 @@
         <!--LevelViewController-->
         <scene sceneID="mY8-Pi-qMg">
             <objects>
-                <viewController title="LevelViewController" id="PSf-9h-DCt" customClass="LevelsSelectionViewController" customModule="DochaProto" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="LevelViewController" id="PSf-9h-DCt" customClass="LevelsSelectionViewController" customModule="Docha" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="sVf-gr-iqF"/>
                         <viewControllerLayoutGuide type="bottom" id="hiE-63-Gl6"/>
@@ -1273,7 +1285,7 @@
                                 <rect key="frame" x="0.0" y="64" width="320" height="504"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="idLevelsTableViewCell" rowHeight="80" id="c8i-42-b4Y" userLabel="idLevelsTableViewCell" customClass="LevelsTableViewCell" customModule="DochaProto" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="idLevelsTableViewCell" rowHeight="80" id="c8i-42-b4Y" userLabel="idLevelsTableViewCell" customClass="LevelsTableViewCell" customModule="Docha" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="1" width="320" height="80"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="c8i-42-b4Y" id="GNO-Hy-Mr8">
@@ -1356,7 +1368,7 @@
         <!--GameplayViewController-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController storyboardIdentifier="idGameplayViewController" hidesBottomBarWhenPushed="YES" id="BYZ-38-t0r" userLabel="GameplayViewController" customClass="GameplayViewController" customModule="DochaProto" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="idGameplayViewController" hidesBottomBarWhenPushed="YES" id="BYZ-38-t0r" userLabel="GameplayViewController" customClass="GameplayViewController" customModule="Docha" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
@@ -1480,13 +1492,13 @@
                                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="counter_base" translatesAutoresizingMaskIntoConstraints="NO" id="5oT-Qr-eAt">
                                                 <rect key="frame" x="26" y="0.0" width="260" height="55"/>
                                             </imageView>
-                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="counter_number_start" translatesAutoresizingMaskIntoConstraints="NO" id="t4I-i2-l3D" customClass="CounterView" customModule="DochaProto" customModuleProvider="target">
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="counter_number_start" translatesAutoresizingMaskIntoConstraints="NO" id="t4I-i2-l3D" customClass="CounterView" customModule="Docha" customModuleProvider="target">
                                                 <rect key="frame" x="158" y="6" width="37" height="37"/>
                                             </imageView>
-                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="counter_number_start" translatesAutoresizingMaskIntoConstraints="NO" id="f5B-ve-EYG" customClass="CounterView" customModule="DochaProto" customModuleProvider="target">
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="counter_number_start" translatesAutoresizingMaskIntoConstraints="NO" id="f5B-ve-EYG" customClass="CounterView" customModule="Docha" customModuleProvider="target">
                                                 <rect key="frame" x="68" y="6" width="37" height="37"/>
                                             </imageView>
-                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="counter_number_start" translatesAutoresizingMaskIntoConstraints="NO" id="dhT-Ng-JKt" customClass="CounterView" customModule="DochaProto" customModuleProvider="target">
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="counter_number_start" translatesAutoresizingMaskIntoConstraints="NO" id="dhT-Ng-JKt" customClass="CounterView" customModule="Docha" customModuleProvider="target">
                                                 <rect key="frame" x="113" y="6" width="37" height="37"/>
                                             </imageView>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="q7v-53-97P" userLabel="digitContainerView">
@@ -1710,7 +1722,7 @@
         <!--MenuViewController-->
         <scene sceneID="15R-7g-ykL">
             <objects>
-                <viewController title="MenuViewController" id="eeZ-b1-AeY" customClass="MenuViewController" customModule="DochaProto" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="idHomeViewController" title="MenuViewController" id="eeZ-b1-AeY" customClass="MenuViewController" customModule="Docha" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Z7N-Ww-GTR"/>
                         <viewControllerLayoutGuide type="bottom" id="sgV-7x-TDI"/>
@@ -1770,8 +1782,9 @@
         <!--Starter Navigation Controller-->
         <scene sceneID="Op2-3h-BlE">
             <objects>
-                <navigationController storyboardIdentifier="idStarterNavController" automaticallyAdjustsScrollViewInsets="NO" id="Qbv-ht-2nT" customClass="StarterNavigationController" customModule="DochaProto" customModuleProvider="target" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="idStarterNavController" automaticallyAdjustsScrollViewInsets="NO" id="Qbv-ht-2nT" customClass="StarterNavigationController" customModule="Docha" customModuleProvider="target" sceneMemberID="viewController">
                     <toolbarItems/>
+                    <simulatedStatusBarMetrics key="simulatedStatusBarMetrics"/>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" translucent="NO" prompted="NO"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" backIndicatorImage="return" id="KIr-iK-EDu">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>

@@ -20,4 +20,9 @@ class PasswordForgottenViewController: RootViewController {
         self.view.endEditing(true)
         return false
     }
+    
+    // MARK: @IBAction
+    @IBAction func backButtonTouched(sender: UIBarButtonItem) {
+        self.navigationController?.popViewControllerAnimated(true)
+    }
 }

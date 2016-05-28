@@ -33,6 +33,7 @@ extension String {
 
 class InscriptionIdentifiantsViewController: RootViewController, UITextFieldDelegate {
     
+    @IBOutlet weak var btnLoginFacebook: FBSDKLoginButton!
     @IBOutlet weak var emailTextField: HoshiTextField!
     @IBOutlet weak var passwordTextField: HoshiTextField!
     @IBOutlet weak var registerButton: UIButton!
