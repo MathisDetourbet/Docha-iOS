@@ -687,7 +687,7 @@
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Ex : 1990" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="mLY-tn-lfY" customClass="HoshiTextField" customModule="TextFieldEffects">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Ex : 1er Janvier 1990" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="mLY-tn-lfY" customClass="HoshiTextField" customModule="TextFieldEffects">
                                 <rect key="frame" x="40" y="257" width="240" height="46"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="240" id="1qA-cq-wP0"/>
@@ -711,9 +711,7 @@
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                                 <connections>
-                                    <action selector="birthdayTextFieldEditingChanged:" destination="Mgl-ri-00g" eventType="editingDidEnd" id="8xg-Kf-jj7"/>
-                                    <action selector="birthdayTextFieldEditingChanged:" destination="Mgl-ri-00g" eventType="editingDidBegin" id="Rj5-hp-Jp2"/>
-                                    <action selector="birthdayTextFieldEditingChanged:" destination="Mgl-ri-00g" eventType="editingChanged" id="pW9-5e-sfL"/>
+                                    <action selector="textFieldTouched:" destination="Mgl-ri-00g" eventType="editingDidBegin" id="dRO-J7-K7L"/>
                                 </connections>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="42s-M7-A7A">
@@ -890,48 +888,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="VPt-hg-LUa" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1799" y="2187"/>
-        </scene>
-        <!--InscriptionProfilViewController-->
-        <scene sceneID="kL1-1Y-id3">
-            <objects>
-                <viewController storyboardIdentifier="idInscriptionProfilViewController" title="InscriptionProfilViewController" id="CRW-pw-Ngr" customClass="InscriptionProfilViewController" customModule="DochaProto" customModuleProvider="target" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="AWu-uf-S0M"/>
-                        <viewControllerLayoutGuide type="bottom" id="qIR-dT-xco"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="1s0-Cn-Pg2">
-                        <rect key="frame" x="0.0" y="64" width="320" height="504"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ntl-vK-LAG" userLabel="validateButton">
-                                <rect key="frame" x="99" y="424" width="122" height="60"/>
-                                <state key="normal" image="btn_valid_profil"/>
-                            </button>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="background_avatar" translatesAutoresizingMaskIntoConstraints="NO" id="2Ll-BX-PQ4">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="170"/>
-                            </imageView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="m7Z-jb-8fo" userLabel="avatarButton">
-                                <rect key="frame" x="110" y="35" width="100" height="100"/>
-                                <state key="normal" image="avatar_man_hipster_profil"/>
-                            </button>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <constraints>
-                            <constraint firstItem="Ntl-vK-LAG" firstAttribute="centerX" secondItem="1s0-Cn-Pg2" secondAttribute="centerX" id="2lP-Cs-rmo"/>
-                            <constraint firstItem="m7Z-jb-8fo" firstAttribute="centerX" secondItem="2Ll-BX-PQ4" secondAttribute="centerX" id="36f-Ll-bj1"/>
-                            <constraint firstItem="2Ll-BX-PQ4" firstAttribute="top" secondItem="AWu-uf-S0M" secondAttribute="bottom" id="aIh-Uv-n6r"/>
-                            <constraint firstAttribute="trailing" secondItem="2Ll-BX-PQ4" secondAttribute="trailing" id="dv2-2t-bOD"/>
-                            <constraint firstItem="2Ll-BX-PQ4" firstAttribute="leading" secondItem="1s0-Cn-Pg2" secondAttribute="leading" id="iK2-hh-zGL"/>
-                            <constraint firstItem="qIR-dT-xco" firstAttribute="top" secondItem="Ntl-vK-LAG" secondAttribute="bottom" constant="20" id="oPX-By-6jc"/>
-                            <constraint firstItem="m7Z-jb-8fo" firstAttribute="centerY" secondItem="2Ll-BX-PQ4" secondAttribute="centerY" id="tzB-mB-393"/>
-                        </constraints>
-                    </view>
-                    <navigationItem key="navigationItem" id="lF1-5A-0c0"/>
-                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" translucent="NO" prompted="NO"/>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="vYa-S0-7tM" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="3285" y="2458"/>
         </scene>
         <!--Inscription Profil View Controller-->
         <scene sceneID="Dxf-Zn-JfX">
@@ -1863,7 +1819,6 @@
         <image name="arrow_left" width="18" height="32"/>
         <image name="avatar_femme_infos_user" width="100" height="100"/>
         <image name="avatar_homme_infos_user" width="100" height="100"/>
-        <image name="avatar_man_hipster_profil" width="100" height="100"/>
         <image name="avatar_woman_blond_profil" width="101" height="100"/>
         <image name="background_avatar" width="320" height="170"/>
         <image name="background_infos_users" width="320" height="480"/>
@@ -1912,6 +1867,6 @@
         <image name="valid_digit" width="60" height="32"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="edh-Ke-ZkS"/>
+        <segue reference="7ia-CO-aZr"/>
     </inferredMetricsTieBreakers>
 </document>

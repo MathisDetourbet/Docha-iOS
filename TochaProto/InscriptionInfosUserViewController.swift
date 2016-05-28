@@ -12,7 +12,7 @@ import TextFieldEffects
 class InscriptionInfosUserViewController: RootViewController, UITextFieldDelegate {
     
     var genderSelected: String?
-    var dateOfBirthday: Int?
+    var dateOfBirthday: NSDate?
     
     @IBOutlet weak var manButton: UIButton!
     @IBOutlet weak var womanButton: UIButton!
@@ -23,7 +23,7 @@ class InscriptionInfosUserViewController: RootViewController, UITextFieldDelegat
         super.viewDidLoad()
         
         self.hideKeyboardWhenTappedAround()
-        self.validProfilButton.enabled = true
+        self.validProfilButton.enabled = false
         self.navigationController!.setNavigationBarHidden(false, animated: false)
         self.navigationItem.setHidesBackButton(true, animated: false)
         self.configNavigationBarWithTitle("Qui êtes-vous ?")
@@ -34,40 +34,42 @@ class InscriptionInfosUserViewController: RootViewController, UITextFieldDelegat
         return false
     }
     
-    func isValidBirthday() -> Bool {
-        if let birthdayString = self.birthdayTextField.text {
-            if let birthdayInteger = Int(birthdayString) {
-                if case 1900...2017 = birthdayInteger {
-                    self.birthdayTextField.borderActiveColor = UIColor.greenColor()
-                    self.birthdayTextField.borderInactiveColor = UIColor.greenColor()
-                    self.dateOfBirthday = birthdayInteger
-                    
-                    return true
-                } else {
-                    // Wrong date
-                    print("Wrong date")
-                }
-            } else {
-                // Not a date (integer conversion equal nil)
-                print("Date not an integer")
-            }
+    @IBAction func textFieldTouched(sender: UITextField) {
+        let datePickerView  : UIDatePicker = UIDatePicker()
+        datePickerView.datePickerMode = UIDatePickerMode.Date
+        
+        let gregorian: NSCalendar = NSCalendar(calendarIdentifier: NSCalendarIdentifierGregorian)!
+        let currentDate: NSDate = NSDate()
+        let components: NSDateComponents = NSDateComponents()
+        
+        components.year = -120
+        let minDate: NSDate = gregorian.dateByAddingComponents(components, toDate: currentDate, options: NSCalendarOptions(rawValue: 0))!
+        
+        components.year = -150
+        let maxDate: NSDate = gregorian.dateByAddingComponents(components, toDate: currentDate, options: NSCalendarOptions(rawValue: 0))!
+        
+        datePickerView.minimumDate = minDate
+        datePickerView.maximumDate = maxDate
+        
+        sender.inputView = datePickerView
+        datePickerView.addTarget(self, action: #selector(InscriptionInfosUserViewController.handleDatePicker(_:)), forControlEvents: UIControlEvents.ValueChanged)
+    }
+    
+    func handleDatePicker(sender: UIDatePicker) {
+        let dateFormatter = NSDateFormatter()
+        dateFormatter.dateFormat = "dd MMM yyyy"
+        self.birthdayTextField.text = dateFormatter.stringFromDate(sender.date)
+        self.dateOfBirthday = dateFormatter.dateFromString(self.birthdayTextField.text!)
+        
+        if self.birthdayTextField.text != nil || !((self.birthdayTextField.text?.isEmpty)!) {
+            self.birthdayTextField.borderActiveColor = UIColor.greenColor()
+            self.birthdayTextField.borderInactiveColor = UIColor.greenColor()
+            self.validProfilButton.enabled = true
         } else {
-            // Birthday nil !
-            print("Date is nil")
+            self.validProfilButton.enabled = false
+            self.birthdayTextField.borderActiveColor = UIColor.redColor()
+            self.birthdayTextField.borderInactiveColor = UIColor.redColor()
         }
-        
-        self.birthdayTextField.borderActiveColor = UIColor.redColor()
-        self.birthdayTextField.borderInactiveColor = UIColor.redColor()
-        
-        return false
-    }
-    
-    @IBAction func birthdayTextFieldEditingChanged(sender: HoshiTextField) {
-        self.validProfilButton.enabled = isValidBirthday() ? true : false
-    }
-    
-    @IBAction func backButtonTapped(sender: UIButton) {
-        self.navigationController?.popViewControllerAnimated(true)
     }
     
     @IBAction func genderButtonTouched(sender: UIButton) {
@@ -92,6 +94,6 @@ class InscriptionInfosUserViewController: RootViewController, UITextFieldDelegat
             user.sexe = genderString
         }
         user.saveSession()
-        //user?.dateBirthday = self.dateOfBirthday
+        user.dateBirthday = self.dateOfBirthday
     }
 }
