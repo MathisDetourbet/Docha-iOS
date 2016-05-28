@@ -26,21 +26,21 @@ class InscriptionProfilViewController: RootViewController {
         if  let gender = currentUser.sexe {
             if gender == "man" {
                 avatarImageArray = ["avatar_man_black", "avatar_man_geek", "avatar_man_marin", "avatar_man_hipster", "avatar_man", "avatar_man_super"]
+                userAvatarImageView.image = UIImage(named: "avatar_man_profil")
             } else {
                 avatarImageArray = ["avatar_woman_indian", "avatar_woman_blond", "avatar_woman_latina", "avatar_woman_punk", "avatar_woman", "avatar_woman_glasses"]
+                userAvatarImageView.image = UIImage(named: "avatar_woman_profil")
             }
         } else {
             avatarImageArray = ["avatar_woman_indian", "avatar_woman_blond", "avatar_woman_latina", "avatar_woman_punk", "avatar_woman", "avatar_woman_glasses"]
+            userAvatarImageView.image = UIImage(named: "avatar_woman_profil")
         }
         
         for (index, avatar) in avatarsButtonsCollection.enumerate() {
             avatar.setImage(UIImage(named: avatarImageArray![index]), forState: .Normal)
         }
-        
-//        for (index, avatar) in avatarsButtonsCollection.enumerate() {
-//            avatar.setImage(UIImage(named: manAvatarsImagesNamesArray[index]), forState: .Normal)
-//        }
     }
+    
     @IBAction func avatarButtonTouched(sender: UIButton) {
         let index = sender.tag
         self.userAvatarImageView.image = UIImage(named: "\(self.avatarImageArray![index])_profil")

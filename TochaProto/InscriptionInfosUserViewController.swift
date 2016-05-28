@@ -87,8 +87,11 @@ class InscriptionInfosUserViewController: RootViewController, UITextFieldDelegat
     }
     
     @IBAction func validProfilButtonTouched(sender: UIButton) {
-                let user = UserSessionManager.sharedInstance.currentSession()
-                user.sexe = self.genderSelected
-                //user?.dateBirthday = self.dateOfBirthday
+        let user = UserSessionManager.sharedInstance.currentSession()
+        if let genderString = self.genderSelected {
+            user.sexe = genderString
+        }
+        user.saveSession()
+        //user?.dateBirthday = self.dateOfBirthday
     }
 }
