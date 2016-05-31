@@ -33,25 +33,55 @@ class UserSessionManager {
         return NSUserDefaults.standardUserDefaults().objectForKey(Constants.UserDefaultsKey.kUserSessionObject) != nil
     }
     
-    func connectByEmail(dicoParams: [String: AnyObject], success: () -> Void, fail failure: (error: NSError, listError: [AnyObject]) -> Void) {
+    // Email inscription
+    func inscriptionEmail(dicoParams: [String:AnyObject], success: () -> Void, fail failure: (error: NSError?, listError: [AnyObject]?) -> Void) {
         self.inscriptionRequest = InscriptionRequest()
         
         inscriptionRequest?.inscriptionWithDicoParameters(dicoParams,
             success: { (session) in
-                
+                                                            
             }, fail: { (error, listErrors) in
                 
         })
     }
     
-    func connectByFacebook(dicoUserData: [String:AnyObject], success: () -> Void, fail failure: (error: NSError, listError: [AnyObject]) -> Void) {
-//        self.connexionRequest = ConnexionRequest()
-//        connexionRequest?.connexionWithFacebook(dicoUserData)
+    func connectByEmail(dicoParams: [String: AnyObject], success: () -> Void, fail failure: (error: NSError, listError: [AnyObject]) -> Void) {
+        self.connexionRequest = ConnexionRequest()
         
+        if let
+            email = dicoParams["email"],
+            password = dicoParams["password"] {
+            
+            connexionRequest?.connexionWithEmail(email as! String, andPassword: password as! String,
+                success: {
+                                                    
+                }, fail: { (error, listError) in
+                    
+            })
+        }
     }
     
-    func connectByGooglePlus(dicoUserData: [String:AnyObject], success: () -> Void, fail failure: (error: NSError, listError: [AnyObject]) -> Void) {
+    func connectByFacebook(dicoUserData: [String:AnyObject], success: () -> Void, fail failure: (error: NSError?, listError: [AnyObject]?) -> Void) {
         self.connexionRequest = ConnexionRequest()
-        connexionRequest?.connexionWithGooglePlus(dicoUserData)
+        
+        connexionRequest?.connexionWithFacebook(dicoUserData,
+            success: {
+            
+            }, fail: { (error, listError) in
+                
+        })
+        
+        success()
+    }
+    
+    func connectByGooglePlus(dicoUserData: [String:AnyObject], success: () -> Void, fail failure: (error: NSError?, listError: [AnyObject]?) -> Void) {
+        self.connexionRequest = ConnexionRequest()
+        
+        connexionRequest?.connexionWithGooglePlus(dicoUserData,
+            success: {
+            
+            }, fail: { (error, listError) in
+                
+        })
     }
 }

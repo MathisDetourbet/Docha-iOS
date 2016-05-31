@@ -12,7 +12,7 @@ import SwiftyJSON
 
 class ConnexionRequest {
     
-    func connexionWithEmail(email: String, andPassword password: String) {
+    func connexionWithEmail(email: String, andPassword password: String, success: () -> Void, fail failure: (error: NSError?, listError: [AnyObject]?) -> Void) {
         
         let parameters = ["email": email, "password": password]
         
@@ -35,7 +35,7 @@ class ConnexionRequest {
         }
     }
     
-    func connexionWithFacebook(dicoParameters: [String:AnyObject]) {
+    func connexionWithFacebook(dicoParameters: [String:AnyObject], success: () -> Void, fail failure: (error: NSError?, listError: [AnyObject]?) -> Void) {
         
         Alamofire.request(.POST, Constants.UrlServer.UrlConnexion.UrlFacebookConnexion, parameters: dicoParameters, encoding: .JSON)
         .validate()
@@ -56,7 +56,7 @@ class ConnexionRequest {
         }
     }
     
-    func connexionWithGooglePlus(dicoParameters: [String:AnyObject]) {
+    func connexionWithGooglePlus(dicoParameters: [String:AnyObject], success: () -> Void, fail failure: (error: NSError?, listError: [AnyObject]?) -> Void) {
         
         Alamofire.request(.POST, Constants.UrlServer.UrlConnexion.UrlGooglePlusConnexion, parameters: dicoParameters, encoding: .JSON)
         .validate()

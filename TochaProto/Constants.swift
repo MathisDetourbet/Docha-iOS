@@ -49,7 +49,7 @@ struct Constants {
         struct UrlConnexion {
             static let UrlFacebookConnexion = ""
             static let UrlGooglePlusConnexion = ""
-            static let UrlEmailConnexion = ""
+            static let UrlEmailConnexion = "http://localhost:3000/users/sign_in"
         }
     }
 }

@@ -249,6 +249,9 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="R1h-Qc-qEX">
                                 <rect key="frame" x="99" y="402" width="122" height="60"/>
                                 <state key="normal" image="btn_connexion"/>
+                                <connections>
+                                    <action selector="emailConnexionTouched:" destination="xDt-My-EAi" eventType="touchUpInside" id="WKf-TW-713"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -538,6 +541,9 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8gr-fi-icu" userLabel="facebookButton">
                                 <rect key="frame" x="20" y="22" width="280" height="60"/>
                                 <state key="normal" image="btn_fb_identifiants"/>
+                                <connections>
+                                    <action selector="registerWithFacebookTouched:" destination="DGp-QF-SKV" eventType="touchUpInside" id="lxf-fj-Xfl"/>
+                                </connections>
                             </button>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="bezel" placeholder="Email" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="PGq-0l-ITw" customClass="HoshiTextField" customModule="TextFieldEffects">
                                 <rect key="frame" x="40" y="201" width="240" height="46"/>
@@ -614,6 +620,9 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Wug-XU-uAY" userLabel="googleButton">
                                 <rect key="frame" x="20" y="92" width="280" height="60"/>
                                 <state key="normal" image="btn_gplus_identifiants"/>
+                                <connections>
+                                    <action selector="registerWithGooglePlusTouched:" destination="DGp-QF-SKV" eventType="touchUpInside" id="hgw-0w-seG"/>
+                                </connections>
                             </button>
                         </subviews>
                         <constraints>

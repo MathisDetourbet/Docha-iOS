@@ -12,7 +12,7 @@ import SwiftyJSON
 
 class InscriptionRequest {
     
-    func inscriptionWithDicoParameters(dicoParameters: Dictionary<String, AnyObject>, success: (session: AnyObject) -> Void, fail failure: (error: NSError, listErrors: [AnyObject]) -> Void) {
+    func inscriptionWithDicoParameters(dicoParameters: [String:AnyObject], success: (session: AnyObject) -> Void, fail failure: (error: NSError, listErrors: [AnyObject]) -> Void) {
         
         Alamofire.request(.POST, "http://localhost:3000/users", parameters: dicoParameters, encoding: .JSON)
             .validate()

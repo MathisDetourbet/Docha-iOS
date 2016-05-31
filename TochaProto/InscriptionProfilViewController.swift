@@ -51,12 +51,21 @@ class InscriptionProfilViewController: RootViewController {
     }
     
     @IBAction func validProfilButtonTouched(sender: UIButton) {
+        let userSessionManager = UserSessionManager.sharedInstance
+        
         if let avatar = self.avatarImageSelected {
-            let currentSession = UserSessionManager.sharedInstance
-            if currentSession.dicoUserDataInscription == nil {
-                currentSession.dicoUserDataInscription = [String:AnyObject]()
+                if userSessionManager.dicoUserDataInscription == nil {
+                userSessionManager.dicoUserDataInscription = [String:AnyObject]()
             }
-            currentSession.dicoUserDataInscription!["avatar"] = avatar
+            userSessionManager.dicoUserDataInscription!["avatar"] = avatar
+        }
+        
+        userSessionManager.inscriptionEmail(userSessionManager.dicoUserDataInscription!,
+            success: {
+                let viewController = self.storyboard?.instantiateViewControllerWithIdentifier("idMenuNavController") as! UINavigationController
+                NavSchemeManager.sharedInstance.changeRootViewController(viewController)
+            }) { (error, listError) in
+                
         }
     }
 }

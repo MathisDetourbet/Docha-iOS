@@ -9,6 +9,8 @@
 import Foundation
 import TextFieldEffects
 import SCLAlertView
+import GoogleSignIn
+import SwiftyJSON
 
 // Dismiss keyboard on UITextField for UIViewControllers
 extension UIViewController {
@@ -102,6 +104,50 @@ class InscriptionIdentifiantsViewController: RootViewController, UITextFieldDele
         self.passwordTextField.borderInactiveColor = UIColor.redColor()
         
         return false
+    }
+    
+    @IBAction func registerWithFacebookTouched(sender: UIButton) {
+        let fbLoginManager : FBSDKLoginManager = FBSDKLoginManager()
+        
+        fbLoginManager.logInWithReadPermissions(["email", "public_profile"],
+                                                fromViewController: self)
+        { (result, error) -> Void in
+            
+            if error != nil {
+                print("Facebook login : process error : \(error)")
+                
+                return
+            } else if (result.isCancelled) {
+                print("Facebook login : cancelled")
+                return
+            } else {
+                let fbloginresult : FBSDKLoginManagerLoginResult = result
+                
+                if(fbloginresult.grantedPermissions.contains("email"))
+                {
+                    self.getFBUserData()
+                }
+            }
+        }
+    }
+    
+    func getFBUserData() {
+        
+        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+        appDelegate.facebookSignIn({
+            // Success
+            let categoryViewController = self.storyboard?.instantiateViewControllerWithIdentifier("idMenuNavViewController") as! MenuViewController
+            NavSchemeManager.sharedInstance.changeRootViewController(categoryViewController)
+        }) { (error, listError) in
+            // Fail
+            print("error saving Facebook user data in database : \(error)")
+            print("list error : \(listError)")
+        }
+    }
+
+
+    @IBAction func registerWithGooglePlusTouched(sender: UIButton) {
+        GIDSignIn.sharedInstance().signIn()
     }
     
     @IBAction func registerButtonTouched(sender: UIButton) {

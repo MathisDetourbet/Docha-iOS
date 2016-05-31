@@ -54,54 +54,20 @@ class ConnexionViewController: RootViewController, GIDSignInUIDelegate {
     }
     
     func getFBUserData() {
-        
-        if((FBSDKAccessToken.currentAccessToken()) != nil) {
-            
-            FBSDKGraphRequest(graphPath: "me", parameters: ["fields": "id, name, first_name, last_name, picture.type(large), email, gender, birthday"]).startWithCompletionHandler({ (connection, result, error) -> Void in
-                
-                if (error == nil) {
-                    print(result)
-                    let jsonResult = JSON(result)
-                    var dicoUserData = [String:AnyObject]()
-                    
-                    dicoUserData["email"] = jsonResult["email"].string
-                    dicoUserData["first_name"] = jsonResult["first_name"].string
-                    dicoUserData["last_name"] = jsonResult["last_name"].string
-                    dicoUserData["facebook_id"] = jsonResult["id"].string
-                    
-                    // Gender
-                    if jsonResult["gender"].string == "male" {
-                        dicoUserData["gender"] = "M"
-                    } else {
-                        dicoUserData["gender"] = "F"
-                    }
-                    
-                    // Birthday
-                    if let birthday = jsonResult["birthday"].string {
-                        let birthdayFormatter = NSDateFormatter()
-                        birthdayFormatter.dateFormat = "dd-MM-yyyy"
-                        let birthdayDate = birthdayFormatter.dateFromString(birthday)
-                        dicoUserData["date_birthday"] = birthdayDate
-                    }
-                    
-                    // Picture
-                    dicoUserData["image_url"] = jsonResult["picture"]["data"]["url"].string
-                    
-                    UserSessionManager.sharedInstance.connectByFacebook(
-                        dicoUserData,
-                        success: {
-                            let categoryViewController = self.storyboard?.instantiateViewControllerWithIdentifier("idInscriptionCategorySelectionViewController") as! InscriptionCategorySelectionViewController
-                            self.navigationController?.pushViewController(categoryViewController, animated: true)
-                            
-                        }, fail: { (error, listError) in
-                            print("error saving Facebook user data in database : \(error)")
-                            print("list error : \(listError)")
-                    })
-                } else {
-                    print("Facebook get user data : error : \(error)")
-                }
-            })
+        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+        appDelegate.facebookSignIn({
+            // Success
+            let categoryViewController = self.storyboard?.instantiateViewControllerWithIdentifier("idInscriptionCategorySelectionViewController") as! InscriptionCategorySelectionViewController
+            self.navigationController?.pushViewController(categoryViewController, animated: true)
+        }) { (error, listError) in
+            // Fail
+            print("Error fetching user facebook data : \(error)")
+            print("list error : \(listError)")
         }
+    }
+    
+    @IBAction func emailConnexionTouched(sender: UIButton) {
+        UserSessionManager.sharedInstance.connectByEmail(<#T##dicoParams: [String : AnyObject]##[String : AnyObject]#>, success: <#T##() -> Void#>, fail: <#T##(error: NSError, listError: [AnyObject]) -> Void#>)
     }
     
     @IBAction func googlePlusButtonTouched(sender: UIButton) {
