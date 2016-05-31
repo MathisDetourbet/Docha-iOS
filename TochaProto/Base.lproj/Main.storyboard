@@ -179,6 +179,7 @@
                                     <constraint firstAttribute="width" constant="240" id="5qM-TJ-77U"/>
                                     <constraint firstAttribute="height" constant="46" id="qGZ-BF-Dm9"/>
                                 </constraints>
+                                <color key="textColor" red="0.10980392160000001" green="0.18039215689999999" blue="0.23921568630000001" alpha="1" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" name="Montserrat-SemiBold" family="Montserrat" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" keyboardType="emailAddress" returnKeyType="done"/>
                                 <userDefinedRuntimeAttributes>
@@ -189,10 +190,17 @@
                                         <color key="value" red="0.9882352941176471" green="0.35294117647058826" blue="0.30588235294117649" alpha="1" colorSpace="calibratedRGB"/>
                                     </userDefinedRuntimeAttribute>
                                     <userDefinedRuntimeAttribute type="color" keyPath="borderActiveColor">
-                                        <color key="value" red="0.96470588239999999" green="0.35294117650000001" blue="0.30980392159999998" alpha="1" colorSpace="calibratedRGB"/>
+                                        <color key="value" red="0.98823529409999999" green="0.35294117650000001" blue="0.30588235289999999" alpha="1" colorSpace="calibratedRGB"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="placeholderColor">
+                                        <color key="value" red="0.10980392160000001" green="0.18039215689999999" blue="0.23921568630000001" alpha="1" colorSpace="calibratedRGB"/>
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                                 <connections>
+                                    <action selector="EmailTextFieldEditingChanged:" destination="xDt-My-EAi" eventType="editingDidEnd" id="D07-pZ-U6h"/>
+                                    <action selector="EmailTextFieldEditingChanged:" destination="xDt-My-EAi" eventType="editingDidBegin" id="nQt-qC-fHD"/>
+                                    <action selector="EmailTextFieldEditingChanged:" destination="xDt-My-EAi" eventType="editingChanged" id="rqe-HI-pIp"/>
+                                    <action selector="EmailTextFieldValueChanged:" destination="xDt-My-EAi" eventType="valueChanged" id="Hf4-Ps-mt3"/>
                                     <outlet property="delegate" destination="xDt-My-EAi" id="X3L-IQ-oJ1"/>
                                 </connections>
                             </textField>
@@ -229,6 +237,7 @@
                                     <constraint firstAttribute="width" constant="240" id="0fA-9y-wyh"/>
                                     <constraint firstAttribute="height" constant="46" id="hVB-ds-tU0"/>
                                 </constraints>
+                                <color key="textColor" red="0.10980392160000001" green="0.18039215689999999" blue="0.23921568630000001" alpha="1" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" name="Montserrat-SemiBold" family="Montserrat" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocorrectionType="no" returnKeyType="done" secureTextEntry="YES"/>
                                 <userDefinedRuntimeAttributes>
@@ -236,13 +245,20 @@
                                         <color key="value" red="0.98823529409999999" green="0.35294117650000001" blue="0.30588235289999999" alpha="1" colorSpace="calibratedRGB"/>
                                     </userDefinedRuntimeAttribute>
                                     <userDefinedRuntimeAttribute type="color" keyPath="borderActiveColor">
-                                        <color key="value" red="0.96470588239999999" green="0.35294117650000001" blue="0.30980392159999998" alpha="1" colorSpace="calibratedRGB"/>
+                                        <color key="value" red="0.98823529409999999" green="0.35294117650000001" blue="0.30588235289999999" alpha="1" colorSpace="calibratedRGB"/>
                                     </userDefinedRuntimeAttribute>
                                     <userDefinedRuntimeAttribute type="number" keyPath="placeholderFontScale">
                                         <real key="value" value="1"/>
                                     </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="placeholderColor">
+                                        <color key="value" red="0.10980392160000001" green="0.18039215689999999" blue="0.23921568630000001" alpha="1" colorSpace="calibratedRGB"/>
+                                    </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                                 <connections>
+                                    <action selector="PasswordTextFieldEditingChanged:" destination="xDt-My-EAi" eventType="editingChanged" id="TgA-ON-4Ig"/>
+                                    <action selector="PasswordTextFieldEditingChanged:" destination="xDt-My-EAi" eventType="editingDidBegin" id="Un4-J6-uOM"/>
+                                    <action selector="PasswordTextFieldEditingChanged:" destination="xDt-My-EAi" eventType="editingDidEnd" id="c6h-Py-mU9"/>
+                                    <action selector="PasswordTextFieldValueChanged:" destination="xDt-My-EAi" eventType="valueChanged" id="IuO-7J-Ylp"/>
                                     <outlet property="delegate" destination="xDt-My-EAi" id="Q8c-i0-na0"/>
                                 </connections>
                             </textField>
@@ -286,7 +302,9 @@
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" translucent="NO" prompted="NO"/>
                     <connections>
                         <outlet property="backButtonItem" destination="WNa-1r-frE" id="bga-lm-t2M"/>
-                        <outlet property="btnLoginFacebook" destination="aLw-Of-Nug" id="6jJ-rE-hl1"/>
+                        <outlet property="connexionEmailButton" destination="R1h-Qc-qEX" id="VPk-Ol-aeg"/>
+                        <outlet property="emailTextField" destination="ZFN-jb-fTC" id="gfj-gr-Wfo"/>
+                        <outlet property="passwordTextField" destination="JAs-yI-pp7" id="Jkl-Pj-yqL"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="r4q-8o-hg0" userLabel="First Responder" sceneMemberID="firstResponder"/>

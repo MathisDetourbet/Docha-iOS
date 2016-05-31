@@ -22,10 +22,10 @@ class InscriptionProfilViewController: RootViewController {
         self.navigationItem.setHidesBackButton(true, animated: false)
         self.configNavigationBarWithTitle("Choisissez votre avatar")
         
-        let currentUser = UserSessionManager.sharedInstance.currentSession()
+        let userGender = UserSessionManager.sharedInstance.dicoUserDataInscription!["gender"] as? String
         
-        if let gender = currentUser.gender {
-            if gender == "man" {
+        if let gender = userGender {
+            if gender == "M" {
                 avatarImageArray = ["avatar_man_black", "avatar_man_geek", "avatar_man_marin", "avatar_man_hipster", "avatar_man", "avatar_man_super"]
                 userAvatarImageView.image = UIImage(named: "avatar_man_profil")
             } else {

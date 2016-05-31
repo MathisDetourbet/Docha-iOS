@@ -38,18 +38,18 @@ struct Constants {
     
     struct UrlServer {
         
-        static let UrlBase = ""
+        static let UrlBase = "http://localhost:3000"
         
         struct UrlRegister {
-            static let UrlFacebookRegister = ""
-            static let UrlGooglePlusRegister = ""
-            static let UrlEmailRegister = ""
+            static let UrlFacebookRegister = "/facebook/auth"
+            static let UrlGooglePlusRegister = "/googleplus/auth"
+            static let UrlEmailRegister = "/users"
         }
         
         struct UrlConnexion {
-            static let UrlFacebookConnexion = ""
-            static let UrlGooglePlusConnexion = ""
-            static let UrlEmailConnexion = "http://localhost:3000/users/sign_in"
+            static let UrlFacebookConnexion = "/facebook/auth"
+            static let UrlGooglePlusConnexion = "/googleplus/auth"
+            static let UrlEmailConnexion = "/users/sign_in"
         }
     }
 }

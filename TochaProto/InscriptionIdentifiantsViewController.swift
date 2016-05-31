@@ -61,8 +61,8 @@ class InscriptionIdentifiantsViewController: RootViewController, UITextFieldDele
         if let emailString = emailTextField.text {
             if !emailString.isEmpty {
                 if emailString.isValidEmail() {
-                    self.emailTextField.borderActiveColor = UIColor.greenColor()
-                    self.emailTextField.borderInactiveColor = UIColor.greenColor()
+                    self.emailTextField.borderActiveColor = UIColor.blueDochaColor()
+                    self.emailTextField.borderInactiveColor = UIColor.blueDochaColor()
                     self.emailString = emailTextField.text
                     return true
                 } else {
@@ -78,8 +78,8 @@ class InscriptionIdentifiantsViewController: RootViewController, UITextFieldDele
             //print("Email is nil")
         }
         
-        self.emailTextField.borderActiveColor = UIColor.redColor()
-        self.emailTextField.borderInactiveColor = UIColor.redColor()
+        self.emailTextField.borderActiveColor = UIColor.redDochaColor()
+        self.emailTextField.borderInactiveColor = UIColor.redDochaColor()
         
         return false
     }
@@ -87,8 +87,8 @@ class InscriptionIdentifiantsViewController: RootViewController, UITextFieldDele
     func isPasswordValid() -> Bool {
         if let passwordString = passwordTextField.text {
             if !passwordString.isEmpty {
-                self.passwordTextField.borderActiveColor = UIColor.greenColor()
-                self.passwordTextField.borderInactiveColor = UIColor.greenColor()
+                self.passwordTextField.borderActiveColor = UIColor.blueDochaColor()
+                self.passwordTextField.borderInactiveColor = UIColor.blueDochaColor()
                 self.passwordString = passwordTextField.text
                 return true
             } else {
@@ -100,8 +100,8 @@ class InscriptionIdentifiantsViewController: RootViewController, UITextFieldDele
             //print("Password is nil")
         }
         
-        self.passwordTextField.borderActiveColor = UIColor.redColor()
-        self.passwordTextField.borderInactiveColor = UIColor.redColor()
+        self.passwordTextField.borderActiveColor = UIColor.redDochaColor()
+        self.passwordTextField.borderInactiveColor = UIColor.redDochaColor()
         
         return false
     }
@@ -159,10 +159,6 @@ class InscriptionIdentifiantsViewController: RootViewController, UITextFieldDele
             currentSessionManager.dicoUserDataInscription!["email"] = email
             currentSessionManager.dicoUserDataInscription!["password"] = password
         }
-    }
-    
-    @IBAction func backButtonTapped(sender: UIButton) {
-        self.navigationController?.popViewControllerAnimated(true)
     }
     
     @IBAction func EmailTextFieldEditingChanged(sender: HoshiTextField) {

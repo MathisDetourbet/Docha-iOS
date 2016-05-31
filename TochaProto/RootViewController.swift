@@ -30,4 +30,9 @@ class RootViewController: UIViewController {
     func goBack() {
         self.navigationController?.popViewControllerAnimated(true)
     }
+    
+    func goToHome() {
+        let viewController = self.storyboard?.instantiateViewControllerWithIdentifier("idMenuNavController") as! UINavigationController
+        NavSchemeManager.sharedInstance.changeRootViewController(viewController)
+    }
 }

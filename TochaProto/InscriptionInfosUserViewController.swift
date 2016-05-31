@@ -35,7 +35,7 @@ class InscriptionInfosUserViewController: RootViewController, UITextFieldDelegat
     }
     
     @IBAction func textFieldTouched(sender: UITextField) {
-        let datePickerView  : UIDatePicker = UIDatePicker()
+        let datePickerView: UIDatePicker = UIDatePicker()
         datePickerView.datePickerMode = UIDatePickerMode.Date
         
         let gregorian: NSCalendar = NSCalendar(calendarIdentifier: NSCalendarIdentifierGregorian)!

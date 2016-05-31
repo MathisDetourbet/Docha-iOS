@@ -8,24 +8,98 @@
 
 import Foundation
 import SwiftyJSON
+import TextFieldEffects
 // Google+
 import GoogleSignIn
 
+extension UIColor {
+    class func blueDochaColor() -> UIColor {
+        return UIColor(red: 0.28, green: 0.65, blue: 1.00, alpha: 1.0)
+    }
+    
+    class func redDochaColor() -> UIColor {
+        return UIColor(red: 0.99, green: 0.35, blue: 0.31, alpha: 1.0)
+    }
+}
+
 class ConnexionViewController: RootViewController, GIDSignInUIDelegate {
     
+    var emailString: String?
+    var passwordString: String?
+    
     @IBOutlet weak var backButtonItem: UIBarButtonItem!
-    @IBOutlet weak var btnLoginFacebook: FBSDKLoginButton!
+    @IBOutlet weak var emailTextField: HoshiTextField!
+    @IBOutlet weak var passwordTextField: HoshiTextField!
+    @IBOutlet weak var connexionEmailButton: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.configNavigationBarWithTitle("Connexion")
         hideKeyboardWhenTappedAround()
+        self.connexionEmailButton.enabled = false
     }
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         self.navigationController!.setNavigationBarHidden(false, animated: false)
         GIDSignIn.sharedInstance().uiDelegate = self
+    }
+    
+    func isEmailValid() -> Bool {
+        if let emailString = emailTextField.text {
+            if !emailString.isEmpty {
+                if emailString.isValidEmail() {
+                    self.emailTextField.borderActiveColor = UIColor.blueDochaColor()
+                    self.emailTextField.borderInactiveColor = UIColor.blueDochaColor()
+                    self.emailString = emailTextField.text
+                    return true
+                } else {
+                    // Email is not valid
+                    //print("Email is not valid")
+                }
+            } else {
+                // Email text field is empty
+                //print("Email text field is empty")
+            }
+        } else {
+            // Email is nil
+            //print("Email is nil")
+        }
+        
+        self.emailTextField.borderActiveColor = UIColor.redDochaColor()
+        self.emailTextField.borderInactiveColor = UIColor.redDochaColor()
+        
+        return false
+    }
+    
+    func isPasswordValid() -> Bool {
+        if let passwordString = passwordTextField.text {
+            if !passwordString.isEmpty {
+                self.passwordTextField.borderActiveColor = UIColor.blueDochaColor()
+                self.passwordTextField.borderInactiveColor = UIColor.blueDochaColor()
+                self.passwordString = passwordTextField.text
+                return true
+            } else {
+                // Password is empty
+                //print("Password is empty")
+            }
+        } else {
+            // Password is nil
+            //print("Password is nil")
+        }
+        
+        self.passwordTextField.borderActiveColor = UIColor.redDochaColor()
+        self.passwordTextField.borderInactiveColor = UIColor.redDochaColor()
+        
+        return false
+    }
+    
+    @IBAction func EmailTextFieldEditingChanged(sender: HoshiTextField) {
+        self.connexionEmailButton.enabled = (isEmailValid() && isPasswordValid()) ? true : false
+    }
+    
+    @IBAction func PasswordTextFieldEditingChanged(sender: HoshiTextField) {
+        self.connexionEmailButton.enabled = (isPasswordValid() && isEmailValid()) ? true : false
     }
     
     @IBAction func facebookButtonTouched(sender: UIButton) {
@@ -67,7 +141,20 @@ class ConnexionViewController: RootViewController, GIDSignInUIDelegate {
     }
     
     @IBAction func emailConnexionTouched(sender: UIButton) {
-        UserSessionManager.sharedInstance.connectByEmail(<#T##dicoParams: [String : AnyObject]##[String : AnyObject]#>, success: <#T##() -> Void#>, fail: <#T##(error: NSError, listError: [AnyObject]) -> Void#>)
+        if self.emailString != nil && passwordString != nil {
+            var dicoParams = [String:AnyObject]()
+            dicoParams["email"] = self.emailString!
+            dicoParams["password"] = self.passwordString!
+            
+        UserSessionManager.sharedInstance.connectByEmail(dicoParams,
+            success: {
+                print("User connexion by email : success !")
+                self.goToHome()
+                
+            }, fail: { (error, listError) in
+                print("User connexion by email failed...")
+            })
+        }
     }
     
     @IBAction func googlePlusButtonTouched(sender: UIButton) {

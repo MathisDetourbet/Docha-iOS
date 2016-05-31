@@ -14,7 +14,9 @@ class InscriptionRequest {
     
     func inscriptionWithDicoParameters(dicoParameters: [String:AnyObject], success: (session: AnyObject) -> Void, fail failure: (error: NSError, listErrors: [AnyObject]) -> Void) {
         
-        Alamofire.request(.POST, "http://localhost:3000/users", parameters: dicoParameters, encoding: .JSON)
+        let url = Constants.UrlServer.UrlBase + Constants.UrlServer.UrlRegister.UrlEmailRegister
+
+        Alamofire.request(.POST, url, parameters: dicoParameters, encoding: .JSON)
             .validate()
             .responseJSON { response in
                 let statusCode = (response.response?.statusCode)!

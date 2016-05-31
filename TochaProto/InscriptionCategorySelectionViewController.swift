@@ -101,8 +101,7 @@ class InscriptionCategorySelectionViewController: RootViewController, UICollecti
 
         if currentSessionManager.isLogged() {
             // User is already logged with facebook or googleplus
-            let viewController = self.storyboard?.instantiateViewControllerWithIdentifier("idMenuNavController") as! UINavigationController
-            NavSchemeManager.sharedInstance.changeRootViewController(viewController)
+            self.goToHome()
             
         } else {
             let viewController = self.storyboard?.instantiateViewControllerWithIdentifier("idInscriptionIdentifiantsViewController")
