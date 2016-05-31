@@ -1,2 +1,2 @@
-# docha-ios-proto
-Docha ios app prototype for the first release in august !
+# docha-ios
+Docha ios app for the first release in august !
