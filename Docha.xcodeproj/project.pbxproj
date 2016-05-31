@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		022A00E642A3FB1C89759AB3 /* Pods_DochaProto.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ECE41C51D06BC171CA643FA3 /* Pods_DochaProto.framework */; };
 		17C4C55B632D40738F022EBF /* Pods_Docha.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7B81E7EE25887F1C2C481FAD /* Pods_Docha.framework */; };
 		6701D9741C108A2100F87043 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6701D9731C108A2100F87043 /* AppDelegate.swift */; };
 		6701D9761C108A2100F87043 /* GameplayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6701D9751C108A2100F87043 /* GameplayViewController.swift */; };
@@ -228,7 +227,6 @@
 				679273DA1CF9ED1D00DABA88 /* FBSDKCoreKit.framework in Frameworks */,
 				679273DE1CF9ED3400DABA88 /* FBSDKShareKit.framework in Frameworks */,
 				679273DC1CF9ED2800DABA88 /* FBSDKLoginKit.framework in Frameworks */,
-				022A00E642A3FB1C89759AB3 /* Pods_DochaProto.framework in Frameworks */,
 				17C4C55B632D40738F022EBF /* Pods_Docha.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
