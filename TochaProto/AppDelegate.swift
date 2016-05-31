@@ -113,8 +113,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
             UserSessionManager.sharedInstance.connectByGooglePlus(
                 dicoUserData,
                 success: {
-                    
-                
+                    let viewController = self.window?.rootViewController
+                    let categoryViewController = viewController?.storyboard?.instantiateViewControllerWithIdentifier("") as! InscriptionCategorySelectionViewController
+                    viewController?.navigationController?.pushViewController(categoryViewController, animated: true)
                 }, fail: { (error, listError) in
                     print("error saving GooglePlus user data in database : \(error)")
                     print("list error : \(listError)")

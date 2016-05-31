@@ -7,7 +7,7 @@
 //
 
 import Foundation
-
+import SwiftyJSON
 // Google+
 import GoogleSignIn
 
@@ -61,40 +61,38 @@ class ConnexionViewController: RootViewController, GIDSignInUIDelegate {
                 
                 if (error == nil) {
                     print(result)
-                    
+                    let jsonResult = JSON(result)
                     var dicoUserData = [String:AnyObject]()
                     
-                    if let
-                        email = result["email"] as? String,
-                        firstName = result["first_name"] as? String,
-                        lastName = result["last_name"] as? String,
-                        facebookID = result["id"] as? String,
-                        gender = result["gender"] as? String,
-                        birthday = result["birthday"] as? String
-                    {
-                        dicoUserData["email"] = email
-                        dicoUserData["first_name"] = firstName
-                        dicoUserData["last_name"] = lastName
-                        dicoUserData["facebook_id"] = facebookID
-                        
-                        if gender == "male" {
-                            dicoUserData["gender"] = "M"
-                        } else {
-                            dicoUserData["gender"] = "F"
-                        }
-                        
+                    dicoUserData["email"] = jsonResult["email"].string
+                    dicoUserData["first_name"] = jsonResult["first_name"].string
+                    dicoUserData["last_name"] = jsonResult["last_name"].string
+                    dicoUserData["facebook_id"] = jsonResult["id"].string
+                    
+                    // Gender
+                    if jsonResult["gender"].string == "male" {
+                        dicoUserData["gender"] = "M"
+                    } else {
+                        dicoUserData["gender"] = "F"
+                    }
+                    
+                    // Birthday
+                    if let birthday = jsonResult["birthday"].string {
                         let birthdayFormatter = NSDateFormatter()
                         birthdayFormatter.dateFormat = "dd-MM-yyyy"
-                        let birthdayDate = birthdayFormatter.dateFromString(birthday as String)
+                        let birthdayDate = birthdayFormatter.dateFromString(birthday)
                         dicoUserData["date_birthday"] = birthdayDate
                     }
+                    
+                    // Picture
+                    dicoUserData["image_url"] = jsonResult["picture"]["data"]["url"].string
                     
                     UserSessionManager.sharedInstance.connectByFacebook(
                         dicoUserData,
                         success: {
-                            let menuNavViewController = self.storyboard?.instantiateViewControllerWithIdentifier("idMenuNavController") as! UINavigationController
-                            NavSchemeManager.sharedInstance.changeRootViewController(menuNavViewController)
-                        
+                            let categoryViewController = self.storyboard?.instantiateViewControllerWithIdentifier("idInscriptionCategorySelectionViewController") as! InscriptionCategorySelectionViewController
+                            self.navigationController?.pushViewController(categoryViewController, animated: true)
+                            
                         }, fail: { (error, listError) in
                             print("error saving Facebook user data in database : \(error)")
                             print("list error : \(listError)")
