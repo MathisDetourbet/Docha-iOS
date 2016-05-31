@@ -52,7 +52,6 @@
 		679274011CFC780E00DABA88 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 679274001CFC780E00DABA88 /* GoogleService-Info.plist */; };
 		679274021CFC78A000DABA88 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 679274001CFC780E00DABA88 /* GoogleService-Info.plist */; };
 		679274031CFC78A100DABA88 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 679274001CFC780E00DABA88 /* GoogleService-Info.plist */; };
-		679B79F53B30F1B4D183F497 /* Pods_DochaTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 859DC67D5613C53B3497F5C0 /* Pods_DochaTests.framework */; };
 		67A3021C1C5939C40065D097 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 67A3021B1C5939C40065D097 /* Assets.xcassets */; };
 		67A302241C5AA7A20065D097 /* CouponsStoreViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67A302231C5AA7A20065D097 /* CouponsStoreViewController.swift */; };
 		67A7816B1CE5D084006564CD /* beeandsee_products.json in Resources */ = {isa = PBXBuildFile; fileRef = 67A7816A1CE5D084006564CD /* beeandsee_products.json */; };
@@ -82,9 +81,6 @@
 		67FEE22D1C8E1E07008F842C /* Montserrat-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 67FEE2251C8E1E07008F842C /* Montserrat-Regular.otf */; };
 		67FEE22E1C8E1E07008F842C /* Montserrat-SemiBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 67FEE2261C8E1E07008F842C /* Montserrat-SemiBold.otf */; };
 		67FEE22F1C8E1E07008F842C /* Montserrat-UltraLight.otf in Resources */ = {isa = PBXBuildFile; fileRef = 67FEE2271C8E1E07008F842C /* Montserrat-UltraLight.otf */; };
-		A5B665D3D7F2CF9D50BC64E1 /* Pods_DochaProtoTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EF1DF76B4009E1620CBACAA4 /* Pods_DochaProtoTests.framework */; };
-		B74AC9FFA38F924E2AB69D55 /* Pods_DochaUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8A2C21F57EA7253529FE9E5C /* Pods_DochaUITests.framework */; };
-		D4FDEBA883F5F42B7E9FC5C1 /* Pods_DochaProtoUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A0E53A09087C2017C5D89FC /* Pods_DochaProtoUITests.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -105,7 +101,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		1A0E53A09087C2017C5D89FC /* Pods_DochaProtoUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_DochaProtoUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		1FCAEDDD4A008C15E66202A8 /* Pods-DochaProtoUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DochaProtoUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-DochaProtoUITests/Pods-DochaProtoUITests.release.xcconfig"; sourceTree = "<group>"; };
 		3537F45EDC9182E740E48A14 /* Pods-DochaProtoTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DochaProtoTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-DochaProtoTests/Pods-DochaProtoTests.debug.xcconfig"; sourceTree = "<group>"; };
 		4E4F35DA13902859F62CB364 /* Pods-Docha.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Docha.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Docha/Pods-Docha.debug.xcconfig"; sourceTree = "<group>"; };
@@ -197,13 +192,9 @@
 		7E7CB231F09F9BCAB47F8AF1 /* Pods-DochaProto.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DochaProto.release.xcconfig"; path = "Pods/Target Support Files/Pods-DochaProto/Pods-DochaProto.release.xcconfig"; sourceTree = "<group>"; };
 		80A84988DF7E70EF2CDA3731 /* Pods-DochaProtoTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DochaProtoTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-DochaProtoTests/Pods-DochaProtoTests.release.xcconfig"; sourceTree = "<group>"; };
 		83AA344425FDFDE624755D92 /* Pods-DochaTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DochaTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-DochaTests/Pods-DochaTests.release.xcconfig"; sourceTree = "<group>"; };
-		859DC67D5613C53B3497F5C0 /* Pods_DochaTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_DochaTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		8A2C21F57EA7253529FE9E5C /* Pods_DochaUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_DochaUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9392295D54620C70435BC5BE /* Pods-DochaTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DochaTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-DochaTests/Pods-DochaTests.debug.xcconfig"; sourceTree = "<group>"; };
 		D69760F2443CE06608FCA0CB /* Pods-DochaProto.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DochaProto.debug.xcconfig"; path = "Pods/Target Support Files/Pods-DochaProto/Pods-DochaProto.debug.xcconfig"; sourceTree = "<group>"; };
 		E0828485D3C862857D125B40 /* Pods-DochaUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DochaUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-DochaUITests/Pods-DochaUITests.release.xcconfig"; sourceTree = "<group>"; };
-		ECE41C51D06BC171CA643FA3 /* Pods_DochaProto.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_DochaProto.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		EF1DF76B4009E1620CBACAA4 /* Pods_DochaProtoTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_DochaProtoTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -235,8 +226,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A5B665D3D7F2CF9D50BC64E1 /* Pods_DochaProtoTests.framework in Frameworks */,
-				679B79F53B30F1B4D183F497 /* Pods_DochaTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -244,8 +233,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D4FDEBA883F5F42B7E9FC5C1 /* Pods_DochaProtoUITests.framework in Frameworks */,
-				B74AC9FFA38F924E2AB69D55 /* Pods_DochaUITests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -290,12 +277,7 @@
 				679273DB1CF9ED2800DABA88 /* FBSDKLoginKit.framework */,
 				679273D91CF9ED1D00DABA88 /* FBSDKCoreKit.framework */,
 				67240CF31CF0CEB5001F4DC6 /* Security.framework */,
-				ECE41C51D06BC171CA643FA3 /* Pods_DochaProto.framework */,
-				EF1DF76B4009E1620CBACAA4 /* Pods_DochaProtoTests.framework */,
-				1A0E53A09087C2017C5D89FC /* Pods_DochaProtoUITests.framework */,
 				7B81E7EE25887F1C2C481FAD /* Pods_Docha.framework */,
-				859DC67D5613C53B3497F5C0 /* Pods_DochaTests.framework */,
-				8A2C21F57EA7253529FE9E5C /* Pods_DochaUITests.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";

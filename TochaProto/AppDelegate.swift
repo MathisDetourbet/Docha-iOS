@@ -65,17 +65,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
         //        tabBarCouponsItem.selectedImage = UIImage(named: "coupons_selected_150x117")?.imageWithRenderingMode(.AlwaysOriginal)
         return true
     }
-    
-    func application(app: UIApplication, openURL url: NSURL, options: [String : AnyObject]) -> Bool {
-        return GIDSignIn.sharedInstance().handleURL(url,
-                                                    sourceApplication: options[UIApplicationOpenURLOptionsSourceApplicationKey] as? String,
-                                                    annotation: options[UIApplicationOpenURLOptionsAnnotationKey])
-    }
-    
+        
     func application(application: UIApplication, openURL url: NSURL, sourceApplication: String?, annotation: AnyObject) -> Bool
     {
-        var options: [String: AnyObject] = [UIApplicationOpenURLOptionsSourceApplicationKey: sourceApplication!,
-                                            UIApplicationOpenURLOptionsAnnotationKey: annotation]
         return FBSDKApplicationDelegate.sharedInstance().application(application, openURL: url, sourceApplication: sourceApplication, annotation: annotation) || GIDSignIn.sharedInstance().handleURL(url, sourceApplication: sourceApplication, annotation: annotation)
     }
 
@@ -121,8 +113,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
             UserSessionManager.sharedInstance.connectByGooglePlus(
                 dicoUserData,
                 success: {
-                    let viewController = self.window?.rootViewController?.storyboard!.instantiateViewControllerWithIdentifier("idMenuNavController") as! UINavigationController
-                    NavSchemeManager.sharedInstance.changeRootViewController(viewController)
+                    
                 
                 }, fail: { (error, listError) in
                     print("error saving GooglePlus user data in database : \(error)")

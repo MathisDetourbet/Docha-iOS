@@ -850,7 +850,6 @@
                                         <state key="normal" image="btn_valid_categorie"/>
                                         <connections>
                                             <action selector="validButtonTouched:" destination="hRO-dK-e2E" eventType="touchUpInside" id="Afq-pr-RoF"/>
-                                            <segue destination="DGp-QF-SKV" kind="push" id="R4G-jY-tLf"/>
                                         </connections>
                                     </button>
                                 </subviews>

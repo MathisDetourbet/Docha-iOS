@@ -37,6 +37,10 @@ class InscriptionCategorySelectionViewController: RootViewController, UICollecti
         loadData()
     }
     
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+    }
+    
     func loadData() {
         self.categoriesImages = [UIImage]()
         for item in categoriesImagesPathArray {
@@ -87,11 +91,22 @@ class InscriptionCategorySelectionViewController: RootViewController, UICollecti
     // MARK: @IBAction
     @IBAction func validButtonTouched(sender: UIButton) {
         let currentSessionManager = UserSessionManager.sharedInstance
+        
         if currentSessionManager.dicoUserDataInscription == nil {
             currentSessionManager.dicoUserDataInscription = [String:AnyObject]()
         }
         if let categoryFavorite = self.categoryPrefered {
             currentSessionManager.dicoUserDataInscription!["category_favorite"] = categoryFavorite
+        }
+
+        if currentSessionManager.isLogged() {
+            // User is already logged with facebook or googleplus
+            let viewController = self.storyboard?.instantiateViewControllerWithIdentifier("idMenuNavController") as! UINavigationController
+            NavSchemeManager.sharedInstance.changeRootViewController(viewController)
+            
+        } else {
+            let viewController = self.storyboard?.instantiateViewControllerWithIdentifier("idInscriptionIdentifiantsViewController")
+            self.navigationController?.pushViewController(viewController!, animated: true)
         }
     }
     

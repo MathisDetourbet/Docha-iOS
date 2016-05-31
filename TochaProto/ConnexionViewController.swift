@@ -31,10 +31,13 @@ class ConnexionViewController: RootViewController, GIDSignInUIDelegate {
     @IBAction func facebookButtonTouched(sender: UIButton) {
         let fbLoginManager : FBSDKLoginManager = FBSDKLoginManager()
         
-        fbLoginManager .logInWithReadPermissions(["email", "public_profile"], fromViewController: self) { (result, error) -> Void in
+        fbLoginManager.logInWithReadPermissions(["email", "public_profile"],
+                                                fromViewController: self)
+        { (result, error) -> Void in
             
             if error != nil {
                 print("Facebook login : process error : \(error)")
+                
                 return
             } else if (result.isCancelled) {
                 print("Facebook login : cancelled")
