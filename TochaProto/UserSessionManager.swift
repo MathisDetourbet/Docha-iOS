@@ -10,6 +10,7 @@ class UserSessionManager {
 	
     var connexionRequest: ConnexionRequest?
     var inscriptionRequest: InscriptionRequest?
+    var dicoUserDataInscription: [String: AnyObject]?
     
     class var sharedInstance: UserSessionManager {
         struct Singleton {
@@ -25,18 +26,26 @@ class UserSessionManager {
             return currentSession
         }
         
-        let userSession = UserSession()
-        userSession.saveSession()
-        return userSession
+        return UserSession()
     }
     
     func isLogged() -> Bool {
         return NSUserDefaults.standardUserDefaults().objectForKey(Constants.UserDefaultsKey.kUserSessionObject) != nil
     }
     
-    func inscription(dicoParams: [String: AnyObject], success: () -> Void, fail failure: (error: NSError, listError: [AnyObject]) -> Void) {
+    func connectByEmail(dicoParams: [String: AnyObject], success: () -> Void, fail failure: (error: NSError, listError: [AnyObject]) -> Void) {
         self.inscriptionRequest = InscriptionRequest()
         
-        inscriptionRequest?.inscriptionWithDicoParameters(dicoParams)
+        inscriptionRequest?.inscriptionWithDicoParameters(dicoParams,
+            success: { (session) in
+                
+            }, fail: { (error, listErrors) in
+                
+        })
+    }
+    
+    func connectByFacebook(dicoUserData: [String:AnyObject], success: () -> Void, fail failure: (error: NSError, listError: [AnyObject]) -> Void) {
+        self.connexionRequest = ConnexionRequest()
+        connexionRequest?.connexionWithFacebook(dicoUserData)
     }
 }

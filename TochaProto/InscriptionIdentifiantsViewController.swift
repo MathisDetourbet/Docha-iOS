@@ -33,6 +33,9 @@ extension String {
 
 class InscriptionIdentifiantsViewController: RootViewController, UITextFieldDelegate {
     
+    var emailString: String?
+    var passwordString: String?
+    
     @IBOutlet weak var btnLoginFacebook: FBSDKLoginButton!
     @IBOutlet weak var emailTextField: HoshiTextField!
     @IBOutlet weak var passwordTextField: HoshiTextField!
@@ -58,6 +61,7 @@ class InscriptionIdentifiantsViewController: RootViewController, UITextFieldDele
                 if emailString.isValidEmail() {
                     self.emailTextField.borderActiveColor = UIColor.greenColor()
                     self.emailTextField.borderInactiveColor = UIColor.greenColor()
+                    self.emailString = emailTextField.text
                     return true
                 } else {
                     // Email is not valid
@@ -83,6 +87,7 @@ class InscriptionIdentifiantsViewController: RootViewController, UITextFieldDele
             if !passwordString.isEmpty {
                 self.passwordTextField.borderActiveColor = UIColor.greenColor()
                 self.passwordTextField.borderInactiveColor = UIColor.greenColor()
+                self.passwordString = passwordTextField.text
                 return true
             } else {
                 // Password is empty
@@ -97,6 +102,17 @@ class InscriptionIdentifiantsViewController: RootViewController, UITextFieldDele
         self.passwordTextField.borderInactiveColor = UIColor.redColor()
         
         return false
+    }
+    
+    @IBAction func registerButtonTouched(sender: UIButton) {
+        let currentSessionManager = UserSessionManager.sharedInstance
+        if currentSessionManager.dicoUserDataInscription == nil {
+            currentSessionManager.dicoUserDataInscription = [String:AnyObject]()
+        }
+        if let email = self.emailString, password = self.passwordString {
+            currentSessionManager.dicoUserDataInscription!["email"] = email
+            currentSessionManager.dicoUserDataInscription!["password"] = password
+        }
     }
     
     @IBAction func backButtonTapped(sender: UIButton) {

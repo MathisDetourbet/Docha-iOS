@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		022A00E642A3FB1C89759AB3 /* Pods_DochaProto.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ECE41C51D06BC171CA643FA3 /* Pods_DochaProto.framework */; };
+		17C4C55B632D40738F022EBF /* Pods_Docha.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7B81E7EE25887F1C2C481FAD /* Pods_Docha.framework */; };
 		6701D9741C108A2100F87043 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6701D9731C108A2100F87043 /* AppDelegate.swift */; };
 		6701D9761C108A2100F87043 /* GameplayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6701D9751C108A2100F87043 /* GameplayViewController.swift */; };
 		6701D9791C108A2100F87043 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6701D9771C108A2100F87043 /* Main.storyboard */; };
@@ -34,6 +35,25 @@
 		679273DA1CF9ED1D00DABA88 /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 679273D91CF9ED1D00DABA88 /* FBSDKCoreKit.framework */; };
 		679273DC1CF9ED2800DABA88 /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 679273DB1CF9ED2800DABA88 /* FBSDKLoginKit.framework */; };
 		679273DE1CF9ED3400DABA88 /* FBSDKShareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 679273DD1CF9ED3400DABA88 /* FBSDKShareKit.framework */; };
+		679273E11CFB0FC000DABA88 /* UserSessionEmail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 679273E01CFB0FC000DABA88 /* UserSessionEmail.swift */; };
+		679273E51CFB5BC000DABA88 /* UserSessionFacebook.swift in Sources */ = {isa = PBXBuildFile; fileRef = 679273E41CFB5BC000DABA88 /* UserSessionFacebook.swift */; };
+		679273E71CFB5D5D00DABA88 /* UserSessionGooglePlus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 679273E61CFB5D5D00DABA88 /* UserSessionGooglePlus.swift */; };
+		679273E91CFC6AE800DABA88 /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 679273E81CFC6AE800DABA88 /* AddressBook.framework */; };
+		679273EB1CFC6AF900DABA88 /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 679273EA1CFC6AF900DABA88 /* AssetsLibrary.framework */; };
+		679273ED1CFC6B0500DABA88 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 679273EC1CFC6B0500DABA88 /* Foundation.framework */; };
+		679273EF1CFC6B0F00DABA88 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 679273EE1CFC6B0F00DABA88 /* CoreLocation.framework */; };
+		679273F11CFC6B1800DABA88 /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 679273F01CFC6B1800DABA88 /* CoreMotion.framework */; };
+		679273F31CFC6B1F00DABA88 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 679273F21CFC6B1F00DABA88 /* CoreGraphics.framework */; };
+		679273F51CFC6B2700DABA88 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 679273F41CFC6B2700DABA88 /* CoreText.framework */; };
+		679273F71CFC6B2F00DABA88 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 679273F61CFC6B2F00DABA88 /* MediaPlayer.framework */; };
+		679273F91CFC6B3D00DABA88 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 679273F81CFC6B3D00DABA88 /* SystemConfiguration.framework */; };
+		679273FB1CFC6B4900DABA88 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 679273FA1CFC6B4900DABA88 /* UIKit.framework */; };
+		679273FE1CFC6B6900DABA88 /* GoogleOpenSource.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 679273FC1CFC6B6900DABA88 /* GoogleOpenSource.framework */; };
+		679273FF1CFC6B6900DABA88 /* GooglePlus.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 679273FD1CFC6B6900DABA88 /* GooglePlus.framework */; };
+		679274011CFC780E00DABA88 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 679274001CFC780E00DABA88 /* GoogleService-Info.plist */; };
+		679274021CFC78A000DABA88 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 679274001CFC780E00DABA88 /* GoogleService-Info.plist */; };
+		679274031CFC78A100DABA88 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 679274001CFC780E00DABA88 /* GoogleService-Info.plist */; };
+		679B79F53B30F1B4D183F497 /* Pods_DochaTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 859DC67D5613C53B3497F5C0 /* Pods_DochaTests.framework */; };
 		67A3021C1C5939C40065D097 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 67A3021B1C5939C40065D097 /* Assets.xcassets */; };
 		67A302241C5AA7A20065D097 /* CouponsStoreViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67A302231C5AA7A20065D097 /* CouponsStoreViewController.swift */; };
 		67A7816B1CE5D084006564CD /* beeandsee_products.json in Resources */ = {isa = PBXBuildFile; fileRef = 67A7816A1CE5D084006564CD /* beeandsee_products.json */; };
@@ -64,6 +84,7 @@
 		67FEE22E1C8E1E07008F842C /* Montserrat-SemiBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 67FEE2261C8E1E07008F842C /* Montserrat-SemiBold.otf */; };
 		67FEE22F1C8E1E07008F842C /* Montserrat-UltraLight.otf in Resources */ = {isa = PBXBuildFile; fileRef = 67FEE2271C8E1E07008F842C /* Montserrat-UltraLight.otf */; };
 		A5B665D3D7F2CF9D50BC64E1 /* Pods_DochaProtoTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EF1DF76B4009E1620CBACAA4 /* Pods_DochaProtoTests.framework */; };
+		B74AC9FFA38F924E2AB69D55 /* Pods_DochaUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8A2C21F57EA7253529FE9E5C /* Pods_DochaUITests.framework */; };
 		D4FDEBA883F5F42B7E9FC5C1 /* Pods_DochaProtoUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A0E53A09087C2017C5D89FC /* Pods_DochaProtoUITests.framework */; };
 /* End PBXBuildFile section */
 
@@ -88,7 +109,10 @@
 		1A0E53A09087C2017C5D89FC /* Pods_DochaProtoUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_DochaProtoUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		1FCAEDDD4A008C15E66202A8 /* Pods-DochaProtoUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DochaProtoUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-DochaProtoUITests/Pods-DochaProtoUITests.release.xcconfig"; sourceTree = "<group>"; };
 		3537F45EDC9182E740E48A14 /* Pods-DochaProtoTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DochaProtoTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-DochaProtoTests/Pods-DochaProtoTests.debug.xcconfig"; sourceTree = "<group>"; };
+		4E4F35DA13902859F62CB364 /* Pods-Docha.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Docha.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Docha/Pods-Docha.debug.xcconfig"; sourceTree = "<group>"; };
 		51A775BB64754F54646CCB3D /* Pods-DochaProtoUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DochaProtoUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-DochaProtoUITests/Pods-DochaProtoUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		55664A0EBC2926A784E0D3C2 /* Pods-Docha.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Docha.release.xcconfig"; path = "Pods/Target Support Files/Pods-Docha/Pods-Docha.release.xcconfig"; sourceTree = "<group>"; };
+		5B0290D3059667BA03F0D851 /* Pods-DochaUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DochaUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-DochaUITests/Pods-DochaUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		6701D9701C108A2100F87043 /* Docha.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Docha.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6701D9731C108A2100F87043 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		6701D9751C108A2100F87043 /* GameplayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameplayViewController.swift; sourceTree = "<group>"; };
@@ -125,6 +149,22 @@
 		679273D91CF9ED1D00DABA88 /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKCoreKit.framework; sourceTree = "<group>"; };
 		679273DB1CF9ED2800DABA88 /* FBSDKLoginKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKLoginKit.framework; sourceTree = "<group>"; };
 		679273DD1CF9ED3400DABA88 /* FBSDKShareKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKShareKit.framework; sourceTree = "<group>"; };
+		679273E01CFB0FC000DABA88 /* UserSessionEmail.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserSessionEmail.swift; sourceTree = "<group>"; };
+		679273E41CFB5BC000DABA88 /* UserSessionFacebook.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserSessionFacebook.swift; sourceTree = "<group>"; };
+		679273E61CFB5D5D00DABA88 /* UserSessionGooglePlus.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserSessionGooglePlus.swift; sourceTree = "<group>"; };
+		679273E81CFC6AE800DABA88 /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = System/Library/Frameworks/AddressBook.framework; sourceTree = SDKROOT; };
+		679273EA1CFC6AF900DABA88 /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
+		679273EC1CFC6B0500DABA88 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		679273EE1CFC6B0F00DABA88 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		679273F01CFC6B1800DABA88 /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
+		679273F21CFC6B1F00DABA88 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		679273F41CFC6B2700DABA88 /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
+		679273F61CFC6B2F00DABA88 /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
+		679273F81CFC6B3D00DABA88 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		679273FA1CFC6B4900DABA88 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		679273FC1CFC6B6900DABA88 /* GoogleOpenSource.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GoogleOpenSource.framework; sourceTree = "<group>"; };
+		679273FD1CFC6B6900DABA88 /* GooglePlus.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GooglePlus.framework; sourceTree = "<group>"; };
+		679274001CFC780E00DABA88 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		67A3021B1C5939C40065D097 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		67A302231C5AA7A20065D097 /* CouponsStoreViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CouponsStoreViewController.swift; sourceTree = "<group>"; };
 		67A7816A1CE5D084006564CD /* beeandsee_products.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = beeandsee_products.json; sourceTree = "<group>"; };
@@ -154,9 +194,15 @@
 		67FEE2251C8E1E07008F842C /* Montserrat-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-Regular.otf"; sourceTree = "<group>"; };
 		67FEE2261C8E1E07008F842C /* Montserrat-SemiBold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-SemiBold.otf"; sourceTree = "<group>"; };
 		67FEE2271C8E1E07008F842C /* Montserrat-UltraLight.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-UltraLight.otf"; sourceTree = "<group>"; };
+		7B81E7EE25887F1C2C481FAD /* Pods_Docha.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Docha.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7E7CB231F09F9BCAB47F8AF1 /* Pods-DochaProto.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DochaProto.release.xcconfig"; path = "Pods/Target Support Files/Pods-DochaProto/Pods-DochaProto.release.xcconfig"; sourceTree = "<group>"; };
 		80A84988DF7E70EF2CDA3731 /* Pods-DochaProtoTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DochaProtoTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-DochaProtoTests/Pods-DochaProtoTests.release.xcconfig"; sourceTree = "<group>"; };
+		83AA344425FDFDE624755D92 /* Pods-DochaTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DochaTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-DochaTests/Pods-DochaTests.release.xcconfig"; sourceTree = "<group>"; };
+		859DC67D5613C53B3497F5C0 /* Pods_DochaTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_DochaTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		8A2C21F57EA7253529FE9E5C /* Pods_DochaUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_DochaUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		9392295D54620C70435BC5BE /* Pods-DochaTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DochaTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-DochaTests/Pods-DochaTests.debug.xcconfig"; sourceTree = "<group>"; };
 		D69760F2443CE06608FCA0CB /* Pods-DochaProto.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DochaProto.debug.xcconfig"; path = "Pods/Target Support Files/Pods-DochaProto/Pods-DochaProto.debug.xcconfig"; sourceTree = "<group>"; };
+		E0828485D3C862857D125B40 /* Pods-DochaUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DochaUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-DochaUITests/Pods-DochaUITests.release.xcconfig"; sourceTree = "<group>"; };
 		ECE41C51D06BC171CA643FA3 /* Pods_DochaProto.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_DochaProto.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		EF1DF76B4009E1620CBACAA4 /* Pods_DochaProtoTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_DochaProtoTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -166,11 +212,24 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				679273FF1CFC6B6900DABA88 /* GooglePlus.framework in Frameworks */,
+				679273FB1CFC6B4900DABA88 /* UIKit.framework in Frameworks */,
+				679273F91CFC6B3D00DABA88 /* SystemConfiguration.framework in Frameworks */,
+				679273F71CFC6B2F00DABA88 /* MediaPlayer.framework in Frameworks */,
+				679273F51CFC6B2700DABA88 /* CoreText.framework in Frameworks */,
+				679273F31CFC6B1F00DABA88 /* CoreGraphics.framework in Frameworks */,
+				679273F11CFC6B1800DABA88 /* CoreMotion.framework in Frameworks */,
+				679273FE1CFC6B6900DABA88 /* GoogleOpenSource.framework in Frameworks */,
+				679273EF1CFC6B0F00DABA88 /* CoreLocation.framework in Frameworks */,
+				679273ED1CFC6B0500DABA88 /* Foundation.framework in Frameworks */,
+				679273EB1CFC6AF900DABA88 /* AssetsLibrary.framework in Frameworks */,
+				679273E91CFC6AE800DABA88 /* AddressBook.framework in Frameworks */,
 				67240CF41CF0CEB5001F4DC6 /* Security.framework in Frameworks */,
 				679273DA1CF9ED1D00DABA88 /* FBSDKCoreKit.framework in Frameworks */,
 				679273DE1CF9ED3400DABA88 /* FBSDKShareKit.framework in Frameworks */,
 				679273DC1CF9ED2800DABA88 /* FBSDKLoginKit.framework in Frameworks */,
 				022A00E642A3FB1C89759AB3 /* Pods_DochaProto.framework in Frameworks */,
+				17C4C55B632D40738F022EBF /* Pods_Docha.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -179,6 +238,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A5B665D3D7F2CF9D50BC64E1 /* Pods_DochaProtoTests.framework in Frameworks */,
+				679B79F53B30F1B4D183F497 /* Pods_DochaTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -187,6 +247,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D4FDEBA883F5F42B7E9FC5C1 /* Pods_DochaProtoUITests.framework in Frameworks */,
+				B74AC9FFA38F924E2AB69D55 /* Pods_DochaUITests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -202,6 +263,12 @@
 				80A84988DF7E70EF2CDA3731 /* Pods-DochaProtoTests.release.xcconfig */,
 				51A775BB64754F54646CCB3D /* Pods-DochaProtoUITests.debug.xcconfig */,
 				1FCAEDDD4A008C15E66202A8 /* Pods-DochaProtoUITests.release.xcconfig */,
+				4E4F35DA13902859F62CB364 /* Pods-Docha.debug.xcconfig */,
+				55664A0EBC2926A784E0D3C2 /* Pods-Docha.release.xcconfig */,
+				9392295D54620C70435BC5BE /* Pods-DochaTests.debug.xcconfig */,
+				83AA344425FDFDE624755D92 /* Pods-DochaTests.release.xcconfig */,
+				5B0290D3059667BA03F0D851 /* Pods-DochaUITests.debug.xcconfig */,
+				E0828485D3C862857D125B40 /* Pods-DochaUITests.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -209,6 +276,18 @@
 		4F0217EA73D099493A640F99 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				679273FC1CFC6B6900DABA88 /* GoogleOpenSource.framework */,
+				679273FD1CFC6B6900DABA88 /* GooglePlus.framework */,
+				679273FA1CFC6B4900DABA88 /* UIKit.framework */,
+				679273F81CFC6B3D00DABA88 /* SystemConfiguration.framework */,
+				679273F61CFC6B2F00DABA88 /* MediaPlayer.framework */,
+				679273F41CFC6B2700DABA88 /* CoreText.framework */,
+				679273F21CFC6B1F00DABA88 /* CoreGraphics.framework */,
+				679273F01CFC6B1800DABA88 /* CoreMotion.framework */,
+				679273EE1CFC6B0F00DABA88 /* CoreLocation.framework */,
+				679273EC1CFC6B0500DABA88 /* Foundation.framework */,
+				679273EA1CFC6AF900DABA88 /* AssetsLibrary.framework */,
+				679273E81CFC6AE800DABA88 /* AddressBook.framework */,
 				679273DD1CF9ED3400DABA88 /* FBSDKShareKit.framework */,
 				679273DB1CF9ED2800DABA88 /* FBSDKLoginKit.framework */,
 				679273D91CF9ED1D00DABA88 /* FBSDKCoreKit.framework */,
@@ -216,6 +295,9 @@
 				ECE41C51D06BC171CA643FA3 /* Pods_DochaProto.framework */,
 				EF1DF76B4009E1620CBACAA4 /* Pods_DochaProtoTests.framework */,
 				1A0E53A09087C2017C5D89FC /* Pods_DochaProtoUITests.framework */,
+				7B81E7EE25887F1C2C481FAD /* Pods_Docha.framework */,
+				859DC67D5613C53B3497F5C0 /* Pods_DochaTests.framework */,
+				8A2C21F57EA7253529FE9E5C /* Pods_DochaUITests.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -245,6 +327,7 @@
 		6701D9721C108A2100F87043 /* Docha */ = {
 			isa = PBXGroup;
 			children = (
+				679274001CFC780E00DABA88 /* GoogleService-Info.plist */,
 				67A3021D1C5AA53C0065D097 /* Resources */,
 				67FEE2301C8E1E49008F842C /* Classes */,
 				67FEE2321C8E1ED2008F842C /* Supporting Files */,
@@ -314,6 +397,26 @@
 			name = Requests;
 			sourceTree = "<group>";
 		};
+		679274041CFC8BA300DABA88 /* User */ = {
+			isa = PBXGroup;
+			children = (
+				678B63451C9B5C0C00797516 /* User.swift */,
+				67240CEF1CEF5C68001F4DC6 /* UserSession.swift */,
+				679273E01CFB0FC000DABA88 /* UserSessionEmail.swift */,
+				679273E41CFB5BC000DABA88 /* UserSessionFacebook.swift */,
+				679273E61CFB5D5D00DABA88 /* UserSessionGooglePlus.swift */,
+			);
+			name = User;
+			sourceTree = "<group>";
+		};
+		679274051CFCA96E00DABA88 /* Product */ = {
+			isa = PBXGroup;
+			children = (
+				6701D9A11C108AAE00F87043 /* Product.swift */,
+			);
+			name = Product;
+			sourceTree = "<group>";
+		};
 		67A3021D1C5AA53C0065D097 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
@@ -352,10 +455,9 @@
 		67A302201C5AA56D0065D097 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				6701D9A11C108AAE00F87043 /* Product.swift */,
 				67C2E3481C5BBB4500345D27 /* Coupon.swift */,
-				678B63451C9B5C0C00797516 /* User.swift */,
-				67240CEF1CEF5C68001F4DC6 /* UserSession.swift */,
+				679274051CFCA96E00DABA88 /* Product */,
+				679274041CFC8BA300DABA88 /* User */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -576,6 +678,7 @@
 				TargetAttributes = {
 					6701D96F1C108A2100F87043 = {
 						CreatedOnToolsVersion = 7.1.1;
+						DevelopmentTeam = YLF3E7KUKY;
 					};
 					6701D9831C108A2100F87043 = {
 						CreatedOnToolsVersion = 7.1.1;
@@ -625,6 +728,7 @@
 				67A7816B1CE5D084006564CD /* beeandsee_products.json in Resources */,
 				67FEE22E1C8E1E07008F842C /* Montserrat-SemiBold.otf in Resources */,
 				67F0CA1B1CD7AB2600C9B4B6 /* products_category.json in Resources */,
+				679274011CFC780E00DABA88 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -632,6 +736,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				679274021CFC78A000DABA88 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -639,6 +744,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				679274031CFC78A100DABA88 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -687,7 +793,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-DochaProto/Pods-DochaProto-resources.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Docha/Pods-Docha-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		3F072A28002262A5072CBED1 /* 📦 Copy Pods Resources */ = {
@@ -702,7 +808,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-DochaProtoTests/Pods-DochaProtoTests-resources.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-DochaTests/Pods-DochaTests-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		45E91A69D1C69421F16FF2EB /* 📦 Embed Pods Frameworks */ = {
@@ -717,7 +823,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-DochaProto/Pods-DochaProto-frameworks.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Docha/Pods-Docha-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		8527282BB86C52D64CCAA823 /* 📦 Embed Pods Frameworks */ = {
@@ -732,7 +838,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-DochaProtoTests/Pods-DochaProtoTests-frameworks.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-DochaTests/Pods-DochaTests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		ABED16C81BC8263C94EC535C /* 📦 Check Pods Manifest.lock */ = {
@@ -762,7 +868,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-DochaProtoUITests/Pods-DochaProtoUITests-resources.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-DochaUITests/Pods-DochaUITests-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -802,12 +908,15 @@
 				6775CE451C494BB700550041 /* UIView+JDFlipImageView.m in Sources */,
 				67240CF91CF1C8A5001F4DC6 /* StarterPageViewController.swift in Sources */,
 				67F0CA091CD3A4FB00C9B4B6 /* LevelsSelectionViewController.swift in Sources */,
+				679273E71CFB5D5D00DABA88 /* UserSessionGooglePlus.swift in Sources */,
 				67E5C55C1CF88639009F3FCA /* InscriptionCategorySelectionViewController.swift in Sources */,
 				67C83B011CF498780066B982 /* PasswordForgottenViewController.swift in Sources */,
 				67DA29B61CEB384700CE621F /* InscriptionRequest.swift in Sources */,
+				679273E11CFB0FC000DABA88 /* UserSessionEmail.swift in Sources */,
 				67F75F701C42E00C00E78102 /* CounterView.swift in Sources */,
 				67240CF21CF0CE71001F4DC6 /* KeychainAccess.swift in Sources */,
 				6786E4021CF4851C00729D8E /* StarterNavigationController.swift in Sources */,
+				679273E51CFB5BC000DABA88 /* UserSessionFacebook.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -945,18 +1054,40 @@
 		};
 		6701D9991C108A2100F87043 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = D69760F2443CE06608FCA0CB /* Pods-DochaProto.debug.xcconfig */;
+			baseConfigurationReference = 4E4F35DA13902859F62CB364 /* Pods-Docha.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
 				);
 				INFOPLIST_FILE = TochaProto/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-framework",
+					"\"AFNetworking\"",
+					"-framework",
+					"\"Alamofire\"",
+					"-framework",
+					"\"AlamofireImage\"",
+					"-framework",
+					"\"CNPPopupController\"",
+					"-framework",
+					"\"IQKeyboardManagerSwift\"",
+					"-framework",
+					"\"SCLAlertView\"",
+					"-framework",
+					"\"SwiftyJSON\"",
+					"-framework",
+					"\"TextFieldEffects\"",
+					"$(OTHER_LDFLAGS)",
+					"-ObjC",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.latv.docha;
 				PRODUCT_NAME = Docha;
 				PROVISIONING_PROFILE = "";
@@ -968,18 +1099,40 @@
 		};
 		6701D99A1C108A2100F87043 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 7E7CB231F09F9BCAB47F8AF1 /* Pods-DochaProto.release.xcconfig */;
+			baseConfigurationReference = 55664A0EBC2926A784E0D3C2 /* Pods-Docha.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
 				);
 				INFOPLIST_FILE = TochaProto/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-framework",
+					"\"AFNetworking\"",
+					"-framework",
+					"\"Alamofire\"",
+					"-framework",
+					"\"AlamofireImage\"",
+					"-framework",
+					"\"CNPPopupController\"",
+					"-framework",
+					"\"IQKeyboardManagerSwift\"",
+					"-framework",
+					"\"SCLAlertView\"",
+					"-framework",
+					"\"SwiftyJSON\"",
+					"-framework",
+					"\"TextFieldEffects\"",
+					"$(OTHER_LDFLAGS)",
+					"-ObjC",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.latv.docha;
 				PRODUCT_NAME = Docha;
 				PROVISIONING_PROFILE = "";
@@ -990,7 +1143,7 @@
 		};
 		6701D99C1C108A2100F87043 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 3537F45EDC9182E740E48A14 /* Pods-DochaProtoTests.debug.xcconfig */;
+			baseConfigurationReference = 9392295D54620C70435BC5BE /* Pods-DochaTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				INFOPLIST_FILE = TochaProtoTests/Info.plist;
@@ -1003,7 +1156,7 @@
 		};
 		6701D99D1C108A2100F87043 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 80A84988DF7E70EF2CDA3731 /* Pods-DochaProtoTests.release.xcconfig */;
+			baseConfigurationReference = 83AA344425FDFDE624755D92 /* Pods-DochaTests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				INFOPLIST_FILE = TochaProtoTests/Info.plist;
@@ -1016,7 +1169,7 @@
 		};
 		6701D99F1C108A2100F87043 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 51A775BB64754F54646CCB3D /* Pods-DochaProtoUITests.debug.xcconfig */;
+			baseConfigurationReference = 5B0290D3059667BA03F0D851 /* Pods-DochaUITests.debug.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "iPhone Developer: Mathis Detourbet (VV3XJFU98M)";
 				INFOPLIST_FILE = TochaProtoUITests/Info.plist;
@@ -1030,7 +1183,7 @@
 		};
 		6701D9A01C108A2100F87043 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 1FCAEDDD4A008C15E66202A8 /* Pods-DochaProtoUITests.release.xcconfig */;
+			baseConfigurationReference = E0828485D3C862857D125B40 /* Pods-DochaUITests.release.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "iPhone Developer: Mathis Detourbet (VV3XJFU98M)";
 				INFOPLIST_FILE = TochaProtoUITests/Info.plist;

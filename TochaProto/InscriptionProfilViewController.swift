@@ -11,6 +11,7 @@ import Foundation
 class InscriptionProfilViewController: RootViewController {
     
     var avatarImageArray = [String]?()
+    var avatarImageSelected: String?
     
     @IBOutlet weak var userAvatarImageView: UIImageView!
     @IBOutlet var avatarsButtonsCollection: [UIButton]!
@@ -23,7 +24,7 @@ class InscriptionProfilViewController: RootViewController {
         
         let currentUser = UserSessionManager.sharedInstance.currentSession()
         
-        if  let gender = currentUser.sexe {
+        if let gender = currentUser.gender {
             if gender == "man" {
                 avatarImageArray = ["avatar_man_black", "avatar_man_geek", "avatar_man_marin", "avatar_man_hipster", "avatar_man", "avatar_man_super"]
                 userAvatarImageView.image = UIImage(named: "avatar_man_profil")
@@ -46,5 +47,16 @@ class InscriptionProfilViewController: RootViewController {
         let index = sender.tag
         self.userAvatarImageView.image = UIImage(named: "\(self.avatarImageArray![index])_profil")
         self.userAvatarImageView.animatedButtonLikeBubbleWithDelay(0.0, duration: 0.5)
+        self.avatarImageSelected = self.avatarImageArray![index]
+    }
+    
+    @IBAction func validProfilButtonTouched(sender: UIButton) {
+        if let avatar = self.avatarImageSelected {
+            let currentSession = UserSessionManager.sharedInstance
+            if currentSession.dicoUserDataInscription == nil {
+                currentSession.dicoUserDataInscription = [String:AnyObject]()
+            }
+            currentSession.dicoUserDataInscription!["avatar"] = avatar
+        }
     }
 }

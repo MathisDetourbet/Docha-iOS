@@ -85,9 +85,20 @@ class InscriptionCategorySelectionViewController: RootViewController, UICollecti
     }
     
     // MARK: @IBAction
+    @IBAction func validButtonTouched(sender: UIButton) {
+        let currentSessionManager = UserSessionManager.sharedInstance
+        if currentSessionManager.dicoUserDataInscription == nil {
+            currentSessionManager.dicoUserDataInscription = [String:AnyObject]()
+        }
+        if let categoryFavorite = self.categoryPrefered {
+            currentSessionManager.dicoUserDataInscription!["category_favorite"] = categoryFavorite
+        }
+    }
+    
     @IBAction func backButtonTouched(sender: UIBarButtonItem) {
         self.navigationController?.popViewControllerAnimated(true)
     }
+    
     @IBAction func infosButtonTouched(sender: UIBarButtonItem) {
         SCLAlertView().showInfo("Info", subTitle: "Nous souhaitons vous proposer au maximum des produits qui vous correspondent.")
     }

@@ -16,8 +16,9 @@ class ConnexionRequest {
         
         let parameters = ["email": email, "password": password]
         
-        Alamofire.request(.POST, "http://localhost:3000/users/sign_in", parameters: parameters, encoding: .JSON)
-            .responseJSON { response in
+        Alamofire.request(.POST, Constants.UrlServer.UrlConnexion.UrlEmailConnexion, parameters: parameters, encoding: .JSON)
+            .validate()
+            .responseJSON { (response) in
                 let statusCode = (response.response?.statusCode)! //Gets HTTP status code, useful for debugging
                 print("Status code : \(statusCode)")
                 
@@ -26,12 +27,52 @@ class ConnexionRequest {
                     let jsonReponse = JSON(value)
                     print(jsonReponse)
                     
-                    if let sessionID = jsonReponse["session_id"].string {
-                        print(sessionID)
-                        //At this point the user should have authenticated, store the session id and use it as you wish
-                    } else {
-                        print("error detected")
-                    }
+                    let userSessionEmail = UserSessionEmail()
+                    
+                    
+                    userSessionEmail.saveSession()
+                }
+        }
+    }
+    
+    func connexionWithFacebook(dicoParameters: [String:AnyObject]) {
+        
+        Alamofire.request(.POST, Constants.UrlServer.UrlConnexion.UrlFacebookConnexion, parameters: dicoParameters, encoding: .JSON)
+        .validate()
+        .responseJSON { (response) in
+            
+            let statusCode = (response.response?.statusCode)!
+            print("Status code : \(statusCode)")
+            
+            if let value: AnyObject = response.result.value {
+                let jsonResponse = JSON(value)
+                print("Response json : \(jsonResponse)")
+                
+                let userSessionFb = UserSessionFacebook()
+                
+                
+                userSessionFb.saveSession()
+            }
+        }
+    }
+    
+    func connexionWithGooglePlus(dicoParameters: [String:AnyObject]) {
+        
+        Alamofire.request(.POST, Constants.UrlServer.UrlConnexion.UrlGooglePlusConnexion, parameters: dicoParameters, encoding: .JSON)
+        .validate()
+            .responseJSON { (response) in
+                
+                let statusCode = (response.response?.statusCode)!
+                print("Status code : \(statusCode)")
+                
+                if let value: AnyObject = response.result.value {
+                    let jsonResponse = JSON(value)
+                    print("Response json : \(jsonResponse)")
+                    
+                    let userSessionGooglePlus = UserSessionGooglePlus()
+                    
+                    
+                    userSessionGooglePlus.saveSession()
                 }
         }
     }

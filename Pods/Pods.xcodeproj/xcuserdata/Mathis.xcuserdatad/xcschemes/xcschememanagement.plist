@@ -29,17 +29,17 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
-		<key>Pods-DochaProto.xcscheme</key>
+		<key>Pods-Docha.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
 		</dict>
-		<key>Pods-DochaProtoTests.xcscheme</key>
+		<key>Pods-DochaTests.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
 		</dict>
-		<key>Pods-DochaProtoUITests.xcscheme</key>
+		<key>Pods-DochaUITests.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
@@ -62,17 +62,12 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>0389348018D1820F11FEA86EB8F5158A</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
 		<key>05094CC4A047119F7ADC14EE74C4881C</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>0F1D2BED5150CDCB7AAD8398C76832FA</key>
+		<key>0ACFACC96CD1B9C8E8E2AE8DCDB626EC</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -82,7 +77,17 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>31A59D6C3AA065EBBF63467F1873D6CA</key>
+		<key>15BB4411015A5EDDE6D14202FD2DEFC0</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>303613FEE92062F486377DA0AD22623C</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>32E03C331CBF15141DA12648D4F86C0A</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -97,22 +102,17 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>BBEF5513567EB827761251B3B7972B04</key>
+		<key>80BD21062844320CAD193651C001D689</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>D1E4116CA3F1374322FD2041D0F6F60A</key>
+		<key>D2C1CA320A403E49C769AD9E36E75CE1</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
 		<key>D2D17D2E6A8AD8B5A2D1F30A3032805E</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>FA9600401E8BF6995D4B10C9D6DEE9D4</key>
 		<dict>
 			<key>primary</key>
 			<true/>

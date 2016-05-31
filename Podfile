@@ -3,7 +3,7 @@ use_frameworks!
 
 inhibit_all_warnings!
 
-target 'DochaProto' do
+target 'Docha' do
 	pod 'AFNetworking', '~> 2.6'
 	pod 'SwiftyJSON', '~> 2.3'
     pod 'CNPPopupController'
@@ -12,13 +12,14 @@ target 'DochaProto' do
     pod 'TextFieldEffects'
     pod 'SCLAlertView'
     pod 'IQKeyboardManagerSwift'
+    pod 'Google/SignIn'
 end
 
-target 'DochaProtoTests' do
+target 'DochaTests' do
 
 end
 
-target 'DochaProtoUITests' do
+target 'DochaUITests' do
 
 end
 

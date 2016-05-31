@@ -17,7 +17,7 @@ class UserSession: User, NSCoding {
         self.lastName = aDecoder.decodeObjectForKey(Constants.UserDefaultsKey.kUserInfosLastName) as? String
         self.firstName = aDecoder.decodeObjectForKey(Constants.UserDefaultsKey.kUserInfosFirstName) as? String
         self.email = aDecoder.decodeObjectForKey(Constants.UserDefaultsKey.kUserInfosEmail) as? String
-        self.sexe = aDecoder.decodeObjectForKey(Constants.UserDefaultsKey.kUserInfosSexe) as? String
+        self.gender = aDecoder.decodeObjectForKey(Constants.UserDefaultsKey.kUserInfosGender) as? String
         self.dateBirthday = aDecoder.decodeObjectForKey(Constants.UserDefaultsKey.kUserInfosDateBirthday) as? NSDate
         self.categoryFavorite = aDecoder.decodeObjectForKey(Constants.UserDefaultsKey.kUserInfosCategoryFavorite) as? String
         self.levelMaxUnlocked = aDecoder.decodeIntegerForKey(Constants.UserDefaultsKey.kUserInfosLevelMaxUnlocked) as Int
@@ -29,7 +29,7 @@ class UserSession: User, NSCoding {
         aCoder.encodeObject(lastName, forKey: Constants.UserDefaultsKey.kUserInfosLastName)
         aCoder.encodeObject(firstName, forKey: Constants.UserDefaultsKey.kUserInfosFirstName)
         aCoder.encodeObject(email, forKey: Constants.UserDefaultsKey.kUserInfosEmail)
-        aCoder.encodeObject(sexe, forKey: Constants.UserDefaultsKey.kUserInfosSexe)
+        aCoder.encodeObject(gender, forKey: Constants.UserDefaultsKey.kUserInfosGender)
         aCoder.encodeObject(dateBirthday, forKey: Constants.UserDefaultsKey.kUserInfosDateBirthday)
         aCoder.encodeObject(categoryFavorite, forKey: Constants.UserDefaultsKey.kUserInfosCategoryFavorite)
         aCoder.encodeInteger(levelMaxUnlocked, forKey: Constants.UserDefaultsKey.kUserInfosLevelMaxUnlocked)

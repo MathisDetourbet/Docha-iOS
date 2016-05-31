@@ -18,11 +18,10 @@ class NavSchemeManager {
     func initRootController() {
         let window: UIWindow = ((UIApplication.sharedApplication().delegate?.window)!)!
         
-        if true {
-            window.rootViewController = window.rootViewController?.storyboard?.instantiateViewControllerWithIdentifier("idStarterNavController")
+        if UserSessionManager.sharedInstance.isLogged() {
+            window.rootViewController = window.rootViewController?.storyboard?.instantiateViewControllerWithIdentifier("idMenuNavController")
         } else {
-            window.rootViewController = window.rootViewController?.storyboard?.instantiateViewControllerWithIdentifier("idTabBarController")
-            window.rootViewController?.storyboard?.instantiateViewControllerWithIdentifier("idMenuNavController")
+            window.rootViewController = window.rootViewController?.storyboard?.instantiateViewControllerWithIdentifier("idStarterNavController")
         }
     }
     
@@ -38,5 +37,4 @@ class NavSchemeManager {
                 snapShot.removeFromSuperview()
         }
     }
-	
 }

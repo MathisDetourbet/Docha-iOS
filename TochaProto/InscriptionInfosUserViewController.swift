@@ -57,7 +57,7 @@ class InscriptionInfosUserViewController: RootViewController, UITextFieldDelegat
     
     func handleDatePicker(sender: UIDatePicker) {
         let dateFormatter = NSDateFormatter()
-        dateFormatter.dateFormat = "dd MMM yyyy"
+        dateFormatter.dateFormat = "dd-MM-yyyy"
         self.birthdayTextField.text = dateFormatter.stringFromDate(sender.date)
         self.dateOfBirthday = dateFormatter.dateFromString(self.birthdayTextField.text!)
         
@@ -75,13 +75,13 @@ class InscriptionInfosUserViewController: RootViewController, UITextFieldDelegat
     @IBAction func genderButtonTouched(sender: UIButton) {
         if sender.tag == 1 {
             // Man selected
-            self.genderSelected = "man"
+            self.genderSelected = "M"
             self.manButton.setImage(UIImage(named: "avatar_homme_selected_infos_user.png"), forState: .Normal)
             self.womanButton.setImage(UIImage(named: "avatar_femme_infos_user.png"), forState: .Normal)
             self.manButton.animatedButtonLikeBubbleWithDelay(0.0, duration: 0.5)
         } else {
             // Woman selected
-            self.genderSelected = "woman"
+            self.genderSelected = "F"
             self.womanButton.setImage(UIImage(named: "avatar_femme_selected_infos_user.png"), forState: .Normal)
             self.manButton.setImage(UIImage(named: "avatar_homme_infos_user.png"), forState: .Normal)
             self.womanButton.animatedButtonLikeBubbleWithDelay(0.0, duration: 0.5)
@@ -89,11 +89,15 @@ class InscriptionInfosUserViewController: RootViewController, UITextFieldDelegat
     }
     
     @IBAction func validProfilButtonTouched(sender: UIButton) {
-        let user = UserSessionManager.sharedInstance.currentSession()
-        if let genderString = self.genderSelected {
-            user.sexe = genderString
+        let userSessionManager = UserSessionManager.sharedInstance
+        
+        if userSessionManager.dicoUserDataInscription == nil {
+            userSessionManager.dicoUserDataInscription = [String:AnyObject]()
         }
-        user.saveSession()
-        user.dateBirthday = self.dateOfBirthday
+        
+        if let genderString = self.genderSelected, birthday = self.dateOfBirthday {
+            userSessionManager.dicoUserDataInscription!["gender"] = genderString
+            userSessionManager.dicoUserDataInscription!["birthday"] = birthday
+        }
     }
 }

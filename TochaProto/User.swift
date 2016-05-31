@@ -12,7 +12,7 @@ class User: NSObject {
     var lastName: String?
     var firstName: String?
     var email: String?
-    var sexe: String?
+    var gender: String?
     var dateBirthday: NSDate?
     var categoryFavorite: String?
     var avatar: String?
@@ -43,7 +43,7 @@ class User: NSObject {
             if let lastName = dicoUser["last_name"]?.string { self.lastName = lastName }
             if let firstName = dicoUser["first_name"]?.string { self.firstName = firstName }
             if let email = dicoUser["email"]?.string { self.email = email }
-            if let sexe = dicoUser["sexe"]?.string { self.sexe = sexe }
+            if let gender = dicoUser["gender"]?.string { self.gender = gender }
             if let dateBirthday = dicoUser["date_birthday"]?.date { self.dateBirthday = dateBirthday }
             if let categoryFavorite = dicoUser["category_favorite"]?.string { self.categoryFavorite = categoryFavorite }
             if let avatar = dicoUser["avatar"]?.string { self.avatar = avatar }
