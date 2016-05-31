@@ -327,7 +327,6 @@
 		6701D9721C108A2100F87043 /* Docha */ = {
 			isa = PBXGroup;
 			children = (
-				679274001CFC780E00DABA88 /* GoogleService-Info.plist */,
 				67A3021D1C5AA53C0065D097 /* Resources */,
 				67FEE2301C8E1E49008F842C /* Classes */,
 				67FEE2321C8E1ED2008F842C /* Supporting Files */,
@@ -596,6 +595,7 @@
 		67FEE2321C8E1ED2008F842C /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				679274001CFC780E00DABA88 /* GoogleService-Info.plist */,
 				6701D97F1C108A2100F87043 /* Info.plist */,
 				674055401C4664F30047B369 /* TochaProto-Bridging-Header.h */,
 			);

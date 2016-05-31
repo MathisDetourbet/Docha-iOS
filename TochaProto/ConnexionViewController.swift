@@ -93,7 +93,7 @@ class ConnexionViewController: RootViewController, GIDSignInUIDelegate {
                             NavSchemeManager.sharedInstance.changeRootViewController(menuNavViewController)
                         
                         }, fail: { (error, listError) in
-                            print("error saving facebook user data in database : \(error)")
+                            print("error saving Facebook user data in database : \(error)")
                             print("list error : \(listError)")
                     })
                 } else {

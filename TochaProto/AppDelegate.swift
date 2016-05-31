@@ -106,23 +106,32 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
     
     func signIn(signIn: GIDSignIn!, didSignInForUser user: GIDGoogleUser!, withError error: NSError!) {
         if (error == nil) {
-            print(user)
+            var dicoUserData = [String:AnyObject]()
+            
             // Perform any operations on signed in user here.
-            let userId = user.userID                  // For client-side use only!
-            let idToken = user.authentication.idToken // Safe to send to the server
-            let fullName = user.profile.name
-            let givenName = user.profile.givenName
-            let familyName = user.profile.familyName
-            let email = user.profile.email
-            print(email, familyName, userId, idToken, fullName)
+            dicoUserData["id"] = user.userID                  // For client-side use only!
+            dicoUserData["token"] = user.authentication.idToken // Safe to send to the server
+            dicoUserData["first_name"] = user.profile.givenName
+            dicoUserData["last_name"] = user.profile.familyName
+            dicoUserData["email"] = user.profile.email
+            if user.profile.hasImage {
+                dicoUserData["image_url"] = user.profile.imageURLWithDimension(50).URLString
+            }
+            
+            UserSessionManager.sharedInstance.connectByGooglePlus(
+                dicoUserData,
+                success: {
+                    let viewController = self.window?.rootViewController?.storyboard!.instantiateViewControllerWithIdentifier("idMenuNavController") as! UINavigationController
+                    NavSchemeManager.sharedInstance.changeRootViewController(viewController)
+                
+                }, fail: { (error, listError) in
+                    print("error saving GooglePlus user data in database : \(error)")
+                    print("list error : \(listError)")
+            })
         } else {
+            print("GooglePlus get user data : error : \(error)")
             print("\(error.localizedDescription)")
         }
-    }
-    
-    func signIn(signIn: GIDSignIn!, didDisconnectWithUser user:GIDGoogleUser!, withError error: NSError!) {
-        // Perform any operations when the user disconnects from app here.
-        // ...
     }
 }
 

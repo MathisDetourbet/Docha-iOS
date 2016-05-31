@@ -21,6 +21,10 @@
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLName</key>
+			<string>com.latv.docha</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
 				<string>fb273418713002986</string>

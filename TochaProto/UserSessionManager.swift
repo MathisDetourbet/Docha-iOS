@@ -48,4 +48,9 @@ class UserSessionManager {
         self.connexionRequest = ConnexionRequest()
         connexionRequest?.connexionWithFacebook(dicoUserData)
     }
+    
+    func connectByGooglePlus(dicoUserData: [String:AnyObject], success: () -> Void, fail failure: (error: NSError, listError: [AnyObject]) -> Void) {
+        self.connexionRequest = ConnexionRequest()
+        connexionRequest?.connexionWithGooglePlus(dicoUserData)
+    }
 }

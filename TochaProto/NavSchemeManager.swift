@@ -18,7 +18,7 @@ class NavSchemeManager {
     func initRootController() {
         let window: UIWindow = ((UIApplication.sharedApplication().delegate?.window)!)!
         
-        if UserSessionManager.sharedInstance.isLogged() {
+        if false/*!UserSessionManager.sharedInstance.isLogged()*/ {
             window.rootViewController = window.rootViewController?.storyboard?.instantiateViewControllerWithIdentifier("idMenuNavController")
         } else {
             window.rootViewController = window.rootViewController?.storyboard?.instantiateViewControllerWithIdentifier("idStarterNavController")
