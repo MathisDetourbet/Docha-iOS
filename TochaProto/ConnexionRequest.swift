@@ -12,18 +12,25 @@ import SwiftyJSON
 
 class ConnexionRequest {
     
-    func connexionWithEmail(email: String, andPassword password: String, success: () -> Void, fail failure: (error: NSError?, listError: [AnyObject]?) -> Void) {
+    func connexionWithEmail(dicoParams: [String:AnyObject]!, success: () -> Void, fail failure: (error: NSError?, listError: [AnyObject]?) -> Void) {
         
-        let parameters = ["email": email, "password": password]
+        let parameters = ["email": dicoParams["email"]!, "password": dicoParams["password"]!]
+//        let headers = [
+//            "X-API-KEY": "\(dicoParams["auth_token"])",
+//            "Content-type application":"json",
+//            "Accept application" : "json"
+//        ]
+        let url = "\(Constants.UrlServer.UrlBase)\(Constants.UrlServer.UrlConnexion.UrlEmailConnexion)"
+        print("URL connexion with email : \(url)")
         
-        Alamofire.request(.POST, Constants.UrlServer.UrlConnexion.UrlEmailConnexion, parameters: parameters, encoding: .JSON)
+        Alamofire.request(.POST, url, parameters: parameters, encoding: .JSON)
             .validate()
             .responseJSON { (response) in
-                let statusCode = (response.response?.statusCode)! //Gets HTTP status code, useful for debugging
+                let statusCode = (response.response?.statusCode)! // Gets HTTP status code, useful for debugging
                 print("Status code : \(statusCode)")
                 
                 if let value: AnyObject = response.result.value {
-                    //Handle the results as JSON
+                    // Handle the results as JSON
                     let jsonReponse = JSON(value)
                     print(jsonReponse)
                     
@@ -31,6 +38,10 @@ class ConnexionRequest {
                     
                     
                     userSessionEmail.saveSession()
+                    
+                    success()
+                } else {
+                    //failure(error: ErrorType, listError: <#T##[AnyObject]?#>)
                 }
         }
     }

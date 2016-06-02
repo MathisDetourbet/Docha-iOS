@@ -10,7 +10,7 @@ import Foundation
 
 class UserSession: User, NSCoding {
     var authToken: String?
-    var sessionID: String?
+    var sessionID: Int?
     
     required convenience init(coder aDecoder: NSCoder) {
         self.init()
@@ -23,6 +23,8 @@ class UserSession: User, NSCoding {
         self.levelMaxUnlocked = aDecoder.decodeIntegerForKey(Constants.UserDefaultsKey.kUserInfosLevelMaxUnlocked) as Int
         self.dochos = aDecoder.decodeIntegerForKey(Constants.UserDefaultsKey.kUserInfosDochos) as Int
         self.experience = aDecoder.decodeIntegerForKey(Constants.UserDefaultsKey.kUserInfosExperience) as Int
+        self.authToken = aDecoder.decodeObjectForKey(Constants.UserDefaultsKey.kUserInfosAuthToken) as? String
+        self.sessionID = aDecoder.decodeIntegerForKey(Constants.UserDefaultsKey.kUserInfosSessionID) as Int
     }
     
     func encodeWithCoder(aCoder: NSCoder) {
@@ -44,6 +46,14 @@ class UserSession: User, NSCoding {
         let encodedData = NSKeyedArchiver.archivedDataWithRootObject(self)
         userDefaults.setObject(encodedData, forKey: Constants.UserDefaultsKey.kUserSessionObject)
         userDefaults.synchronize()
+    }
+    
+    override func initPropertiesWithResponseObject(responseObject: AnyObject) {
+        super.initPropertiesWithResponseObject(responseObject)
+        if let dicoUser = responseObject["user"] as? [String: AnyObject] {
+            if let authToken = dicoUser["auth_token"]?.string { self.authToken = authToken }
+            if let sessionID = dicoUser["session_id"]?.integerValue { self.sessionID = sessionID }
+        }
     }
     
 //    init?(authToken: String?, sessionID: String?, userObject: AnyObject) {

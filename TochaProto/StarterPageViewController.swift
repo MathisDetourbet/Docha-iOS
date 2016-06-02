@@ -11,8 +11,14 @@ import Foundation
 extension UIView {
     func animatedButtonLikeBubbleWithDelay(delay: NSTimeInterval, duration: NSTimeInterval) {
         self.transform = CGAffineTransformMakeScale(0.0, 0.0)
-        UIView.animateWithDuration(duration, delay: delay, usingSpringWithDamping: 0.6, initialSpringVelocity: 3.0, options: .AllowUserInteraction, animations: { 
-            self.transform = CGAffineTransformIdentity
+        UIView.animateWithDuration(duration,
+                                   delay: delay,
+                                   usingSpringWithDamping: 0.6,
+                                   initialSpringVelocity: 3.0,
+                                   options: .AllowUserInteraction,
+                                   animations:
+            {
+                self.transform = CGAffineTransformIdentity
             }, completion: nil)
     }
 }

@@ -60,12 +60,48 @@ class InscriptionProfilViewController: RootViewController {
             userSessionManager.dicoUserDataInscription!["avatar"] = avatar
         }
         
-        userSessionManager.inscriptionEmail(userSessionManager.dicoUserDataInscription!,
-            success: {
-                let viewController = self.storyboard?.instantiateViewControllerWithIdentifier("idMenuNavController") as! UINavigationController
-                NavSchemeManager.sharedInstance.changeRootViewController(viewController)
-            }) { (error, listError) in
-                
-        }
+        let registrationParams = userSessionManager.dicoUserDataInscription!
+        
+        UserSessionManager.sharedInstance.inscriptionEmail(registrationParams,
+            success: { (session) in
+                                                            
+                print("Saving in the database : success !")
+                                                            
+                // On lance une connexion avec le token reçu
+                if UserSessionManager.sharedInstance.currentSession().isKindOfClass(UserSessionEmail) {
+                    var connexionEmailParams = [String:AnyObject]()
+                    
+                    connexionEmailParams["email"] = registrationParams["email"]
+                    if let auth_token = UserSessionManager.sharedInstance.currentSession().authToken {
+                        print("auth_token extract from the device : \(auth_token)")
+                    }
+                    connexionEmailParams["password"] = registrationParams["password"]
+                                                                    
+                    UserSessionManager.sharedInstance.connectByEmail(connexionEmailParams,
+                        success: {
+                                
+                        let viewController = self.storyboard?.instantiateViewControllerWithIdentifier("idMenuNavController") as! UINavigationController
+                        NavSchemeManager.sharedInstance.changeRootViewController(viewController)
+                            
+                        }, fail: { (error, listError) in
+                                                                            
+                        })
+                } else {
+                    print("Error : class saved in the device isn't an UserSessionEmail class")
+                }
+                                                            
+            }, fail: { (error, listErrors) in
+                print("Error inscription : \(error)")
+        })
+        
+        
+        
+//        userSessionManager.inscriptionEmail(userSessionManager.dicoUserDataInscription!,
+//            success: {
+//                let viewController = self.storyboard?.instantiateViewControllerWithIdentifier("idMenuNavController") as! UINavigationController
+//                NavSchemeManager.sharedInstance.changeRootViewController(viewController)
+//            }) { (error, listError) in
+//                
+//        }
     }
 }

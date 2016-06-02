@@ -9,6 +9,7 @@
 import Foundation
 
 class User: NSObject {
+    var userID: Int?
     var lastName: String?
     var firstName: String?
     var email: String?
@@ -40,6 +41,7 @@ class User: NSObject {
     
     func initPropertiesWithResponseObject(responseObject: AnyObject) {
         if let dicoUser = responseObject["user"] as? [String: AnyObject] {
+            if let userID = dicoUser["id"]?.integerValue { self.userID = userID }
             if let lastName = dicoUser["last_name"]?.string { self.lastName = lastName }
             if let firstName = dicoUser["first_name"]?.string { self.firstName = firstName }
             if let email = dicoUser["email"]?.string { self.email = email }

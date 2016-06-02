@@ -36,9 +36,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
         
 //        ProductManager.sharedInstance.loadPacksOfProducts()
 //        let inscription = true
+//        let registrationParams = ["user" : ["email": "louis@docha.fr", "password": "azertyuiop"]]
 //        if inscription {
-//            let request = InscriptionRequest()
-//            request.inscriptionWithDicoParameters(["user" : ["email": "mathis@docha.fr", "password": "azertyuiop"]])
+//            
 //        } else {
 //            let request = ConnexionRequest()
 //            request.connexionWithEmail("louis@docha.fr", andPassword: "azertyuiop")

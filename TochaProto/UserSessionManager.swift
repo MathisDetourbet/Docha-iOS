@@ -39,7 +39,11 @@ class UserSessionManager {
         
         inscriptionRequest?.inscriptionWithDicoParameters(dicoParams,
             success: { (session) in
-                                                            
+                
+                // Saving user data in the device
+                session.saveSession()
+                success()
+                
             }, fail: { (error, listErrors) in
                 
         })
@@ -47,18 +51,13 @@ class UserSessionManager {
     
     func connectByEmail(dicoParams: [String: AnyObject], success: () -> Void, fail failure: (error: NSError, listError: [AnyObject]) -> Void) {
         self.connexionRequest = ConnexionRequest()
-        
-        if let
-            email = dicoParams["email"],
-            password = dicoParams["password"] {
             
-            connexionRequest?.connexionWithEmail(email as! String, andPassword: password as! String,
-                success: {
+        connexionRequest?.connexionWithEmail(dicoParams,
+            success: {
                                                     
-                }, fail: { (error, listError) in
+            }, fail: { (error, listError) in
                     
-            })
-        }
+        })
     }
     
     func connectByFacebook(dicoUserData: [String:AnyObject], success: () -> Void, fail failure: (error: NSError?, listError: [AnyObject]?) -> Void) {

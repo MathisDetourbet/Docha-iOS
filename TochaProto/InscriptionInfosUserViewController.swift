@@ -12,7 +12,7 @@ import TextFieldEffects
 class InscriptionInfosUserViewController: RootViewController, UITextFieldDelegate {
     
     var genderSelected: String?
-    var dateOfBirthday: NSDate?
+    var dateOfBirthday: String?
     
     @IBOutlet weak var manButton: UIButton!
     @IBOutlet weak var womanButton: UIButton!
@@ -57,18 +57,19 @@ class InscriptionInfosUserViewController: RootViewController, UITextFieldDelegat
     
     func handleDatePicker(sender: UIDatePicker) {
         let dateFormatter = NSDateFormatter()
-        dateFormatter.dateFormat = "dd-MM-yyyy"
+        dateFormatter.dateFormat = "dd MMMM yyyy"
         self.birthdayTextField.text = dateFormatter.stringFromDate(sender.date)
-        self.dateOfBirthday = dateFormatter.dateFromString(self.birthdayTextField.text!)
+        //self.dateOfBirthday = dateFormatter.dateFromString(self.birthdayTextField.text!) // la date doit être une string pour être serialisée (JSON)
+        self.dateOfBirthday = birthdayTextField.text
         
         if self.birthdayTextField.text != nil || !((self.birthdayTextField.text?.isEmpty)!) {
-            self.birthdayTextField.borderActiveColor = UIColor.greenColor()
-            self.birthdayTextField.borderInactiveColor = UIColor.greenColor()
+            self.birthdayTextField.borderActiveColor = UIColor.blueDochaColor()
+            self.birthdayTextField.borderInactiveColor = UIColor.blueDochaColor()
             self.validProfilButton.enabled = true
         } else {
             self.validProfilButton.enabled = false
-            self.birthdayTextField.borderActiveColor = UIColor.redColor()
-            self.birthdayTextField.borderInactiveColor = UIColor.redColor()
+            self.birthdayTextField.borderActiveColor = UIColor.redDochaColor()
+            self.birthdayTextField.borderInactiveColor = UIColor.redDochaColor()
         }
     }
     
@@ -96,8 +97,8 @@ class InscriptionInfosUserViewController: RootViewController, UITextFieldDelegat
         }
         
         if let genderString = self.genderSelected, birthday = self.dateOfBirthday {
-            userSessionManager.dicoUserDataInscription!["gender"] = genderString
-            userSessionManager.dicoUserDataInscription!["birthday"] = birthday
+            userSessionManager.dicoUserDataInscription!["sexe"] = genderString
+            userSessionManager.dicoUserDataInscription!["date_birthday"] = birthday
         }
     }
 }
