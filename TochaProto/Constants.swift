@@ -14,6 +14,8 @@ struct Constants {
         static let kUserSessionObject = "userSessionObject"
         
         // User infos keys
+        static let kUserInfosUserID = "userInfosUserID"
+        static let kUserInfosUsername = "userInfosUsername"
         static let kUserInfosLastName = "userInfosLastName"
         static let kUserInfosFirstName = "userInfosFirstName"
         static let kUserInfosEmail = "userInfosEmail"
@@ -29,9 +31,11 @@ struct Constants {
         static let kUserInfosSessionID = "userInfosSessionID"
         static let kUserInfosFacebookID = "userInfosFacebookID"
         static let kUserInfosFacebookAccessToken = "userInfosFacebookAccessToken"
+        static let kUserInfosFacebookImageURL = "userInfosFacebookImageURL"
         static let kUserInfosGooglePlusID = "userInfosGooglePlusID"
         static let kUserInfosGooglePlusAccessToken = "userInfosGooglePlusAccessToken"
     }
+    
     struct UserAuthentificationKey {
         static let kUserAuthentificationToken = "userAuthTokenKey"
         // Google Plus ID
@@ -43,14 +47,14 @@ struct Constants {
         static let UrlBase = "http://localhost:3000"
         
         struct UrlRegister {
-            static let UrlFacebookRegister = "/facebook/auth"
-            static let UrlGooglePlusRegister = "/googleplus/auth"
+            static let UrlFacebookRegister = "/users/auth/facebook"
+            static let UrlGooglePlusRegister = "/users"
             static let UrlEmailRegister = "/users"
         }
         
         struct UrlConnexion {
-            static let UrlFacebookConnexion = "/facebook/auth"
-            static let UrlGooglePlusConnexion = "/googleplus/auth"
+            static let UrlFacebookConnexion = "/users/auth/facebook"
+            static let UrlGooglePlusConnexion = "/users/sign_in" //"/users/auth/google"
             static let UrlEmailConnexion = "/users/sign_in"
         }
     }

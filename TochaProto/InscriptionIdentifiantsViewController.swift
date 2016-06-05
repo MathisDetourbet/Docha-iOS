@@ -87,10 +87,12 @@ class InscriptionIdentifiantsViewController: RootViewController, UITextFieldDele
     func isPasswordValid() -> Bool {
         if let passwordString = passwordTextField.text {
             if !passwordString.isEmpty {
-                self.passwordTextField.borderActiveColor = UIColor.blueDochaColor()
-                self.passwordTextField.borderInactiveColor = UIColor.blueDochaColor()
-                self.passwordString = passwordTextField.text
-                return true
+                if case 6...128 = passwordString.characters.count {
+                    self.passwordTextField.borderActiveColor = UIColor.blueDochaColor()
+                    self.passwordTextField.borderInactiveColor = UIColor.blueDochaColor()
+                    self.passwordString = passwordTextField.text
+                    return true
+                }
             } else {
                 // Password is empty
                 //print("Password is empty")
@@ -109,8 +111,7 @@ class InscriptionIdentifiantsViewController: RootViewController, UITextFieldDele
     @IBAction func registerWithFacebookTouched(sender: UIButton) {
         let fbLoginManager : FBSDKLoginManager = FBSDKLoginManager()
         
-        fbLoginManager.logInWithReadPermissions(["email", "public_profile"],
-                                                fromViewController: self)
+        fbLoginManager.logInWithReadPermissions(["email", "public_profile"], fromViewController: self)
         { (result, error) -> Void in
             
             if error != nil {
@@ -136,7 +137,7 @@ class InscriptionIdentifiantsViewController: RootViewController, UITextFieldDele
         let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
         appDelegate.facebookSignIn({
             // Success
-            let categoryViewController = self.storyboard?.instantiateViewControllerWithIdentifier("idMenuNavViewController") as! MenuViewController
+            let categoryViewController = self.storyboard?.instantiateViewControllerWithIdentifier("idMenuNavController") as! UINavigationController
             NavSchemeManager.sharedInstance.changeRootViewController(categoryViewController)
         }) { (error, listError) in
             // Fail

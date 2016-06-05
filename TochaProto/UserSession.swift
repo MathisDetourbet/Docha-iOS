@@ -12,22 +12,35 @@ class UserSession: User, NSCoding {
     var authToken: String?
     var sessionID: Int?
     
-    required convenience init(coder aDecoder: NSCoder) {
-        self.init()
-        self.lastName = aDecoder.decodeObjectForKey(Constants.UserDefaultsKey.kUserInfosLastName) as? String
-        self.firstName = aDecoder.decodeObjectForKey(Constants.UserDefaultsKey.kUserInfosFirstName) as? String
-        self.email = aDecoder.decodeObjectForKey(Constants.UserDefaultsKey.kUserInfosEmail) as? String
-        self.gender = aDecoder.decodeObjectForKey(Constants.UserDefaultsKey.kUserInfosGender) as? String
-        self.dateBirthday = aDecoder.decodeObjectForKey(Constants.UserDefaultsKey.kUserInfosDateBirthday) as? NSDate
-        self.categoryFavorite = aDecoder.decodeObjectForKey(Constants.UserDefaultsKey.kUserInfosCategoryFavorite) as? String
-        self.levelMaxUnlocked = aDecoder.decodeIntegerForKey(Constants.UserDefaultsKey.kUserInfosLevelMaxUnlocked) as Int
-        self.dochos = aDecoder.decodeIntegerForKey(Constants.UserDefaultsKey.kUserInfosDochos) as Int
-        self.experience = aDecoder.decodeIntegerForKey(Constants.UserDefaultsKey.kUserInfosExperience) as Int
-        self.authToken = aDecoder.decodeObjectForKey(Constants.UserDefaultsKey.kUserInfosAuthToken) as? String
-        self.sessionID = aDecoder.decodeIntegerForKey(Constants.UserDefaultsKey.kUserInfosSessionID) as Int
+    override init() {
+        super.init()
+    }
+    
+    required init(coder aDecoder: NSCoder) {
+        let userID = aDecoder.decodeObjectForKey(Constants.UserDefaultsKey.kUserInfosUserID) as? Int
+        let username = aDecoder.decodeObjectForKey(Constants.UserDefaultsKey.kUserInfosUsername) as? String
+        let lastName = aDecoder.decodeObjectForKey(Constants.UserDefaultsKey.kUserInfosLastName) as? String
+        let firstName = aDecoder.decodeObjectForKey(Constants.UserDefaultsKey.kUserInfosFirstName) as? String
+        let email = aDecoder.decodeObjectForKey(Constants.UserDefaultsKey.kUserInfosEmail) as? String
+        let gender = aDecoder.decodeObjectForKey(Constants.UserDefaultsKey.kUserInfosGender) as? String
+        let dateBirthday = aDecoder.decodeObjectForKey(Constants.UserDefaultsKey.kUserInfosDateBirthday) as? NSDate
+        let categoryFavorite = aDecoder.decodeObjectForKey(Constants.UserDefaultsKey.kUserInfosCategoryFavorite) as? String
+        let avatar = aDecoder.decodeObjectForKey(Constants.UserDefaultsKey.kUserInfosAvatar) as? String
+        let levelMaxUnlocked = aDecoder.decodeIntegerForKey(Constants.UserDefaultsKey.kUserInfosLevelMaxUnlocked) as Int
+        let dochos = aDecoder.decodeIntegerForKey(Constants.UserDefaultsKey.kUserInfosDochos) as Int
+        let experience = aDecoder.decodeIntegerForKey(Constants.UserDefaultsKey.kUserInfosExperience) as Int
+        let authToken = aDecoder.decodeObjectForKey(Constants.UserDefaultsKey.kUserInfosAuthToken) as? String
+        let sessionID = aDecoder.decodeIntegerForKey(Constants.UserDefaultsKey.kUserInfosSessionID) as Int
+        
+        super.init(userID: userID, username: username, lastName: lastName, firstName: firstName, email: email, gender: gender, dateBirthday: dateBirthday, categoryFavorite: categoryFavorite, avatar: avatar, levelMaxUnlocked: levelMaxUnlocked, dochos: dochos, experience: experience)
+        
+        self.authToken = authToken
+        self.sessionID = sessionID
     }
     
     func encodeWithCoder(aCoder: NSCoder) {
+        aCoder.encodeObject(userID, forKey: Constants.UserDefaultsKey.kUserInfosUserID)
+        aCoder.encodeObject(username, forKey: Constants.UserDefaultsKey.kUserInfosUsername)
         aCoder.encodeObject(lastName, forKey: Constants.UserDefaultsKey.kUserInfosLastName)
         aCoder.encodeObject(firstName, forKey: Constants.UserDefaultsKey.kUserInfosFirstName)
         aCoder.encodeObject(email, forKey: Constants.UserDefaultsKey.kUserInfosEmail)
@@ -56,48 +69,23 @@ class UserSession: User, NSCoding {
         }
     }
     
-//    init?(authToken: String?, sessionID: String?, userObject: AnyObject) {
-//        
-//        self.authToken = authToken
-//        self.sessionID = sessionID
-//        
-//        if let dicoUser = userObject["user"] as? [String: AnyObject] {
-//            guard
-//                let lastName = dicoUser["last_name"]?.string,
-//                let firstName = dicoUser["first_name"]?.string,
-//                let email = dicoUser["email"]?.string,
-//                let sexe = dicoUser["sexe"]?.string,
-//                let dateBirthday = dicoUser["date_birthday"]?.date,
-//                let categoryFavorite = dicoUser["category_favorite"]?.string,
-//                let avatar = dicoUser["avatar"]?.string,
-//                let levelMaxUnlocked = dicoUser["level_max_unlocked"]?.integerValue,
-//                let dochos = dicoUser["dochos"]?.integerValue,
-//                let experience = dicoUser["experience"]?.integerValue
-//                else { return nil }
-//            
-//            super.init(lastName: lastName, firstName: firstName, email: email, sexe: sexe, dateBirthday: dateBirthday, categoryFavorite: categoryFavorite, avatar: avatar, levelMaxUnlocked: levelMaxUnlocked, dochos: dochos, experience: experience)
-//        }
-//    }
-    
-    // MARK: NSCoding Protocol
-    
-//    required init?(coder aDecoder: NSCoder) {
-//        
-//        let levelMaxUnlocked = aDecoder.decodeIntegerForKey(Constants.UserDefaultsKey.kUserInfosLevelMaxUnlocked) as Int
-//        let dochos = aDecoder.decodeIntegerForKey(Constants.UserDefaultsKey.kUserInfosDochos) as Int
-//        let experience = aDecoder.decodeIntegerForKey(Constants.UserDefaultsKey.kUserInfosExperience) as Int
-//        
-//        guard
-//            let lastName = aDecoder.decodeObjectForKey(Constants.UserDefaultsKey.kUserInfosLastName) as? String,
-//            let firstName = aDecoder.decodeObjectForKey(Constants.UserDefaultsKey.kUserInfosFirstName) as? String,
-//            let email = aDecoder.decodeObjectForKey(Constants.UserDefaultsKey.kUserInfosEmail) as? String,
-//            let sexe = aDecoder.decodeObjectForKey(Constants.UserDefaultsKey.kUserInfosSexe) as? String,
-//            let dateBirthday = aDecoder.decodeObjectForKey(Constants.UserDefaultsKey.kUserInfosDateBirthday) as? NSDate,
-//            let categoryFavorite = aDecoder.decodeObjectForKey(Constants.UserDefaultsKey.kUserInfosCategoryFavorite) as? String,
-//            let avatar = aDecoder.decodeObjectForKey(Constants.UserDefaultsKey.kUserInfosAvatar) as? String
-//            else { return nil }
-//        
-//        //super.init(lastName: lastName, firstName: firstName, email: email, sexe: sexe, dateBirthday: dateBirthday, categoryFavorite: categoryFavorite, avatar: avatar, levelMaxUnlocked: levelMaxUnlocked, dochos: dochos, experience: experience)
-//        
-//    }
+    func generateJSONFromUserSession() -> [String:AnyObject]? {
+        var dataUser = [String:AnyObject]()
+        
+        if let userID = self.userID { dataUser[UserDataKey.kUserID] = userID }
+        if let username = self.username { dataUser[UserDataKey.kUsername] = username }
+        if let lastName = self.lastName { dataUser[UserDataKey.kLastName] = lastName }
+        if let firstName = self.firstName { dataUser[UserDataKey.kFirstName] = firstName }
+        if let email = self.email { dataUser[UserDataKey.kEmail] = email }
+        if let gender = self.gender { dataUser[UserDataKey.kGender] = gender }
+        if let dateBirthday = self.dateBirthday { dataUser[UserDataKey.kDateBirthday] = dateBirthday }
+        if let categoryFavorite = self.categoryFavorite { dataUser[UserDataKey.kCategoryFavorite] = categoryFavorite }
+        if let avatar = self.avatar { dataUser[UserDataKey.kAvatar] = avatar }
+        if let authToken = self.authToken { dataUser[UserDataKey.kAuthToken] = authToken }
+        if let sessionID = self.sessionID { dataUser[UserDataKey.kSessionID] = sessionID }
+        dataUser[UserDataKey.kDochos] = dochos
+        dataUser[UserDataKey.kExperience] = experience
+        
+        return dataUser
+    }
 }

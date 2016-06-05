@@ -7,6 +7,22 @@
 //
 
 import Foundation
+import SCLAlertView
+
+extension UIViewController {
+    
+    func popToViewControllerClass(viewControllerClass: AnyClass) {
+        if self.navigationController != nil {
+            let allViewController = (self.navigationController?.viewControllers)! as [UIViewController]
+            
+            for aViewController in allViewController {
+                if aViewController.isKindOfClass(viewControllerClass) {
+                    self.navigationController?.popToViewController(aViewController, animated: true)
+                }
+            }
+        }
+    }
+}
 
 class InscriptionProfilViewController: RootViewController {
     
@@ -22,7 +38,7 @@ class InscriptionProfilViewController: RootViewController {
         self.navigationItem.setHidesBackButton(true, animated: false)
         self.configNavigationBarWithTitle("Choisissez votre avatar")
         
-        let userGender = UserSessionManager.sharedInstance.dicoUserDataInscription!["gender"] as? String
+        let userGender = UserSessionManager.sharedInstance.dicoUserDataInscription!["sexe"] as? String
         
         if let gender = userGender {
             if gender == "M" {
@@ -69,13 +85,10 @@ class InscriptionProfilViewController: RootViewController {
                                                             
                 // On lance une connexion avec le token reçu
                 if UserSessionManager.sharedInstance.currentSession().isKindOfClass(UserSessionEmail) {
-                    var connexionEmailParams = [String:AnyObject]()
+                    var connexionEmailParams = [String:String]()
                     
-                    connexionEmailParams["email"] = registrationParams["email"]
-                    if let auth_token = UserSessionManager.sharedInstance.currentSession().authToken {
-                        print("auth_token extract from the device : \(auth_token)")
-                    }
-                    connexionEmailParams["password"] = registrationParams["password"]
+                    connexionEmailParams["email"] = registrationParams["email"] as? String
+                    connexionEmailParams["password"] = registrationParams["password"] as? String
                                                                     
                     UserSessionManager.sharedInstance.connectByEmail(connexionEmailParams,
                         success: {
@@ -91,17 +104,14 @@ class InscriptionProfilViewController: RootViewController {
                 }
                                                             
             }, fail: { (error, listErrors) in
+                if let error = error {
+                    if error.code == 422 {
+                        SCLAlertView().showError("Oups...", subTitle: (error.userInfo["message"])! as! String).setDismissBlock({
+                            self.popToViewControllerClass(InscriptionIdentifiantsViewController)
+                        })
+                    }
+                }
                 print("Error inscription : \(error)")
         })
-        
-        
-        
-//        userSessionManager.inscriptionEmail(userSessionManager.dicoUserDataInscription!,
-//            success: {
-//                let viewController = self.storyboard?.instantiateViewControllerWithIdentifier("idMenuNavController") as! UINavigationController
-//                NavSchemeManager.sharedInstance.changeRootViewController(viewController)
-//            }) { (error, listError) in
-//                
-//        }
     }
 }

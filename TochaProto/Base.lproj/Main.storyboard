@@ -214,7 +214,7 @@
                                     <action selector="facebookButtonTouched:" destination="xDt-My-EAi" eventType="touchUpInside" id="deF-6j-fao"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="k7V-8Q-RZ0">
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="k7V-8Q-RZ0">
                                 <rect key="frame" x="20" y="92" width="280" height="60"/>
                                 <state key="normal" image="btn_gplus"/>
                                 <connections>
@@ -635,7 +635,7 @@
                                 <color key="textColor" red="0.10980392160000001" green="0.18039215689999999" blue="0.23921568630000001" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Wug-XU-uAY" userLabel="googleButton">
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Wug-XU-uAY" userLabel="googleButton">
                                 <rect key="frame" x="20" y="92" width="280" height="60"/>
                                 <state key="normal" image="btn_gplus_identifiants"/>
                                 <connections>
@@ -724,7 +724,7 @@
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Ex : 1er Janvier 1990" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="mLY-tn-lfY" customClass="HoshiTextField" customModule="TextFieldEffects">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Exemple : 1er Janvier 1990" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="mLY-tn-lfY" customClass="HoshiTextField" customModule="TextFieldEffects">
                                 <rect key="frame" x="40" y="257" width="240" height="46"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="240" id="1qA-cq-wP0"/>

@@ -14,10 +14,13 @@ class UserSessionEmail: UserSession {
     override init() {
         super.init()
     }
-    
-    convenience required init(coder aDecoder: NSCoder) {
-        self.init()
-        self.password = aDecoder.decodeObjectForKey(Constants.UserDefaultsKey.kUserInfosPassword) as? String
+
+    required init(coder aDecoder: NSCoder) {
+        let password = aDecoder.decodeObjectForKey(Constants.UserDefaultsKey.kUserInfosPassword) as? String
+        
+        super.init(coder: aDecoder)
+        
+        self.password = password
     }
     
     override func encodeWithCoder(aCoder: NSCoder) {
@@ -30,5 +33,12 @@ class UserSessionEmail: UserSession {
         if let dicoUser = responseObject["user"] as? [String: AnyObject] {
             if let password = dicoUser["password"]?.string { self.password = password }
         }
+    }
+    
+    override func generateJSONFromUserSession() -> [String : AnyObject]? {
+        var dataUser = super.generateJSONFromUserSession()
+        if let password = self.password { dataUser![UserDataKey.kPassword] = password }
+        
+        return dataUser
     }
 }

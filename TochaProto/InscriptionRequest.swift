@@ -12,7 +12,7 @@ import SwiftyJSON
 
 class InscriptionRequest {
     
-    func inscriptionWithDicoParameters(dicoParameters: [String:AnyObject], success: (session: UserSessionEmail) -> Void, fail failure: (error: NSError, listErrors: [AnyObject]) -> Void) {
+    func inscriptionWithDicoParameters(dicoParameters: [String:AnyObject], success: (session: UserSessionEmail) -> Void, fail failure: (error: NSError?, listErrors: [AnyObject]?) -> Void) {
         
         let url = "\(Constants.UrlServer.UrlBase)\(Constants.UrlServer.UrlRegister.UrlEmailRegister)"
         print("URL Request inscription : \(url)")
@@ -26,55 +26,235 @@ class InscriptionRequest {
                 let statusCode = (response.response?.statusCode)!
                 print("Status code : \(statusCode)")
                 
-                if let value: AnyObject = response.result.value {
-                    let jsonReponse = JSON(value)
-                    print(jsonReponse)
+                if statusCode == 422 {
+                    // Email already registered !
+                    let error = NSError(
+                        domain: kCFErrorDomainCFNetwork as String,
+                        code: 422,
+                        userInfo: ["message" : "L'email a déjà été enregistrée"])
                     
-                    if jsonReponse["success"].bool != nil {
+                    failure(error: error, listErrors: nil)
+                }
+                
+                if let value: AnyObject = response.result.value {
+                    let jsonResponse = JSON(value)
+                    print(jsonResponse)
+                    
+                    if jsonResponse["success"].bool != nil {
                         
-                        if let dicoValid = jsonReponse["data"].dictionary {
+                        if let dicoValid = jsonResponse["data"].dictionary {
                             
                             if !dicoValid.isEmpty {
                                 
                                 if dicoValid["user"]!.dictionary != nil  {
                                     
                                     let session = UserSessionEmail()
-                                    session.sessionID = jsonReponse["data"]["user"]["id"].intValue
-                                    session.email = jsonReponse["data"]["user"]["email"].string
-                                    session.password = jsonReponse["data"]["user"]["password"].string
-                                    session.authToken = jsonReponse["data"]["auth_token"].string
+                                    session.userID = jsonResponse["data"]["user"][UserDataKey.kUserID].intValue
+                                    session.email = jsonResponse["data"]["user"][UserDataKey.kEmail].string
+                                    session.password = jsonResponse["data"]["user"][UserDataKey.kPassword].string
+                                    session.authToken = jsonResponse["data"][UserDataKey.kAuthToken].string
                                     
                                     let dateFormatter = NSDateFormatter()
-                                    dateFormatter.dateFormat = "dd-MM-yyyy"
-                                    let dateString = jsonReponse["data"]["user"]["date_birthday"].string
+                                    dateFormatter.dateFormat = "yyyy-MM-dd"
+                                    let dateString = jsonResponse["data"]["user"][UserDataKey.kDateBirthday].string
                                     session.dateBirthday = dateFormatter.dateFromString(dateString!)
                                     
-                                    session.firstName = jsonReponse["data"]["user"]["first_name"].string
-                                    session.lastName = jsonReponse["data"]["user"]["last_name"].string
-                                    session.categoryFavorite = jsonReponse["data"]["user"]["category_favorite"].string
-                                    session.gender = jsonReponse["data"]["user"]["sexe"].string
+                                    session.firstName = jsonResponse["data"]["user"][UserDataKey.kFirstName].string
+                                    session.lastName = jsonResponse["data"]["user"][UserDataKey.kLastName].string
+                                    session.categoryFavorite = jsonResponse["data"]["user"][UserDataKey.kCategoryFavorite].string
+                                    session.gender = jsonResponse["data"]["user"][UserDataKey.kGender].string
+                                    session.avatar = jsonResponse["data"]["user"][UserDataKey.kAvatar].string
                                     
                                     success(session: session)
                                     
                                 } else {
                                     // JSON doesn't contain the key "user"
                                     print("json doesn't contain the key 'user'")
+                                    failure(error: nil, listErrors: nil)
                                 }
                             } else {
                                 // JSON['data'] dictionary is empty
                                 print("JSON['data'] dictionary is empty")
+                                failure(error: nil, listErrors: nil)
                             }
                         } else {
                             // JSON['data'] doesn't exist
                             print("JSON['data'] doesn't exist")
+                            failure(error: nil, listErrors: nil)
                         }
                     } else {
                         // Request failed
-                        print("Request failed : \(jsonReponse["json"]["message"])")
+                        print("Request failed : \(jsonResponse["json"]["message"])")
+                        failure(error: nil, listErrors: nil)
                     }
                 } else {
                     // JSON value is nil
-                    print("JSON value is nil")
+                    print("Error : email already registered !")
+                    failure(error: nil, listErrors: nil)
+                }
+        }
+    }
+    
+    func inscriptionFacebookWithDicoParameters(dicoParameters: [String:AnyObject], success: (session: UserSessionFacebook) -> Void, fail failure: (error: NSError?, listErrors: [AnyObject]?) -> Void) {
+        
+        let url = "\(Constants.UrlServer.UrlBase)\(Constants.UrlServer.UrlRegister.UrlFacebookRegister)"
+        print("URL Request inscription : \(url)")
+        
+        var dicoInscriptionApi = [String:AnyObject]()
+        dicoInscriptionApi["user"] = dicoParameters
+        
+        Alamofire.request(.POST, url, parameters: dicoInscriptionApi, encoding: .JSON)
+            .validate()
+            .responseJSON { response in
+                let statusCode = (response.response?.statusCode)!
+                print("Status code : \(statusCode)")
+                
+                if statusCode == 422 {
+                    // Email already registered !
+                    let error = NSError(
+                        domain: kCFErrorDomainCFNetwork as String,
+                        code: 422,
+                        userInfo: ["message" : "L'email a déjà été enregistrée"])
+                    
+                    failure(error: error, listErrors: nil)
+                }
+                
+                if let value: AnyObject = response.result.value {
+                    let jsonResponse = JSON(value)
+                    print(jsonResponse)
+                    
+                    if jsonResponse["success"].bool != nil {
+                        
+                        if let dicoValid = jsonResponse["data"].dictionary {
+                            
+                            if !dicoValid.isEmpty {
+                                
+                                if dicoValid["user"]!.dictionary != nil  {
+                                    
+                                    let session = UserSessionFacebook()
+                                    session.userID = jsonResponse["data"]["user"][UserDataKey.kUserID].intValue
+                                    session.email = jsonResponse["data"]["user"][UserDataKey.kEmail].string
+                                    session.authToken = jsonResponse["data"][UserDataKey.kAuthToken].string
+                                    
+                                    let dateFormatter = NSDateFormatter()
+                                    dateFormatter.dateFormat = "yyyy-MM-dd"
+                                    let dateString = jsonResponse["data"]["user"][UserDataKey.kDateBirthday].string
+                                    session.dateBirthday = dateFormatter.dateFromString(dateString!)
+                                    
+                                    session.firstName = jsonResponse["data"]["user"][UserDataKey.kFirstName].string
+                                    session.lastName = jsonResponse["data"]["user"][UserDataKey.kLastName].string
+                                    session.categoryFavorite = jsonResponse["data"]["user"][UserDataKey.kCategoryFavorite].string
+                                    session.gender = jsonResponse["data"]["user"][UserDataKey.kGender].string
+                                    session.avatar = jsonResponse["data"]["user"][UserDataKey.kAvatar].string
+                                    
+                                    success(session: session)
+                                    
+                                } else {
+                                    // JSON doesn't contain the key "user"
+                                    print("json doesn't contain the key 'user'")
+                                    failure(error: nil, listErrors: nil)
+                                }
+                            } else {
+                                // JSON['data'] dictionary is empty
+                                print("JSON['data'] dictionary is empty")
+                                failure(error: nil, listErrors: nil)
+                            }
+                        } else {
+                            // JSON['data'] doesn't exist
+                            print("JSON['data'] doesn't exist")
+                            failure(error: nil, listErrors: nil)
+                        }
+                    } else {
+                        // Request failed
+                        print("Request failed : \(jsonResponse["json"]["message"])")
+                        failure(error: nil, listErrors: nil)
+                    }
+                } else {
+                    // JSON value is nil
+                    print("Error : email already registered !")
+                    failure(error: nil, listErrors: nil)
+                }
+        }
+    }
+    
+    func inscriptionGooglePlusWithDicoParameters(dicoParameters: [String:AnyObject], success: (session: UserSessionGooglePlus) -> Void, fail failure: (error: NSError?, listErrors: [AnyObject]?) -> Void) {
+        
+        let url = "\(Constants.UrlServer.UrlBase)\(Constants.UrlServer.UrlRegister.UrlGooglePlusRegister)"
+        print("URL Request inscription : \(url)")
+        
+        var dicoInscriptionApi = [String:AnyObject]()
+        dicoInscriptionApi["user"] = dicoParameters
+        
+        Alamofire.request(.POST, url, parameters: dicoInscriptionApi, encoding: .JSON)
+            .validate()
+            .responseJSON { response in
+                let statusCode = (response.response?.statusCode)!
+                print("Status code : \(statusCode)")
+                
+                if statusCode == 422 {
+                    // Email already registered !
+                    let error = NSError(
+                        domain: kCFErrorDomainCFNetwork as String,
+                        code: 422,
+                        userInfo: ["message" : "L'email a déjà été enregistrée"])
+                    
+                    failure(error: error, listErrors: nil)
+                }
+                
+                if let value: AnyObject = response.result.value {
+                    let jsonResponse = JSON(value)
+                    print(jsonResponse)
+                    
+                    if jsonResponse["success"].bool != nil {
+                        
+                        if let dicoValid = jsonResponse["data"].dictionary {
+                            
+                            if !dicoValid.isEmpty {
+                                
+                                if dicoValid["user"]!.dictionary != nil  {
+                                    
+                                    let session = UserSessionGooglePlus()
+                                    session.userID = jsonResponse["data"]["user"][UserDataKey.kUserID].intValue
+                                    session.email = jsonResponse["data"]["user"][UserDataKey.kEmail].string
+                                    session.authToken = jsonResponse["data"][UserDataKey.kAuthToken].string
+                                    
+                                    let dateFormatter = NSDateFormatter()
+                                    dateFormatter.dateFormat = "yyyy-MM-dd"
+                                    let dateString = jsonResponse["data"]["user"][UserDataKey.kDateBirthday].string
+                                    session.dateBirthday = dateFormatter.dateFromString(dateString!)
+                                    
+                                    session.firstName = jsonResponse["data"]["user"][UserDataKey.kFirstName].string
+                                    session.lastName = jsonResponse["data"]["user"][UserDataKey.kLastName].string
+                                    session.categoryFavorite = jsonResponse["data"]["user"][UserDataKey.kCategoryFavorite].string
+                                    session.gender = jsonResponse["data"]["user"][UserDataKey.kGender].string
+                                    session.avatar = jsonResponse["data"]["user"][UserDataKey.kAvatar].string
+                                    
+                                    success(session: session)
+                                    
+                                } else {
+                                    // JSON doesn't contain the key "user"
+                                    print("json doesn't contain the key 'user'")
+                                    failure(error: nil, listErrors: nil)
+                                }
+                            } else {
+                                // JSON['data'] dictionary is empty
+                                print("JSON['data'] dictionary is empty")
+                                failure(error: nil, listErrors: nil)
+                            }
+                        } else {
+                            // JSON['data'] doesn't exist
+                            print("JSON['data'] doesn't exist")
+                            failure(error: nil, listErrors: nil)
+                        }
+                    } else {
+                        // Request failed
+                        print("Request failed : \(jsonResponse["json"]["message"])")
+                        failure(error: nil, listErrors: nil)
+                    }
+                } else {
+                    // JSON value is nil
+                    print("Error : email already registered !")
+                    failure(error: nil, listErrors: nil)
                 }
         }
     }

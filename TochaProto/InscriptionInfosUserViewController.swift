@@ -65,11 +65,13 @@ class InscriptionInfosUserViewController: RootViewController, UITextFieldDelegat
         if self.birthdayTextField.text != nil || !((self.birthdayTextField.text?.isEmpty)!) {
             self.birthdayTextField.borderActiveColor = UIColor.blueDochaColor()
             self.birthdayTextField.borderInactiveColor = UIColor.blueDochaColor()
+            self.birthdayTextField.placeholder = ""
             self.validProfilButton.enabled = true
         } else {
             self.validProfilButton.enabled = false
             self.birthdayTextField.borderActiveColor = UIColor.redDochaColor()
             self.birthdayTextField.borderInactiveColor = UIColor.redDochaColor()
+            self.birthdayTextField.placeholder = "Exemple : 1er Janvier 1990"
         }
     }
     

@@ -35,14 +35,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
         GIDSignIn.sharedInstance().delegate = self
         
 //        ProductManager.sharedInstance.loadPacksOfProducts()
-//        let inscription = true
-//        let registrationParams = ["user" : ["email": "louis@docha.fr", "password": "azertyuiop"]]
-//        if inscription {
-//            
-//        } else {
-//            let request = ConnexionRequest()
-//            request.connexionWithEmail("louis@docha.fr", andPassword: "azertyuiop")
-//        }
         
         //        let tabBarController = self.window?.rootViewController as! UITabBarController
         //        let tabBar = tabBarController.tabBar as UITabBar
@@ -103,43 +95,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
             FBSDKGraphRequest(graphPath: "me", parameters: ["fields": "id, name, first_name, last_name, picture.type(large), email, gender, birthday"]).startWithCompletionHandler({ (connection, result, error) -> Void in
                 
                 if (error == nil) {
-                    print(result)
-                    let jsonResult = JSON(result)
+                    print("Facebook authentication result : \(result)")
                     var dicoUserData = [String:AnyObject]()
                     
-                    dicoUserData["email"] = jsonResult["email"].string
-                    dicoUserData["first_name"] = jsonResult["first_name"].string
-                    dicoUserData["last_name"] = jsonResult["last_name"].string
-                    dicoUserData["facebook_id"] = jsonResult["id"].string
-                    
-                    // Gender
-                    if jsonResult["gender"].string == "male" {
-                        dicoUserData["gender"] = "M"
-                    } else {
-                        dicoUserData["gender"] = "F"
-                    }
-                    
-                    // Birthday
-                    if let birthday = jsonResult["birthday"].string {
-                        let birthdayFormatter = NSDateFormatter()
-                        birthdayFormatter.dateFormat = "dd-MM-yyyy"
-                        let birthdayDate = birthdayFormatter.dateFromString(birthday)
-                        dicoUserData["date_birthday"] = birthdayDate
-                    }
-                    
-                    // Picture
-                    dicoUserData["image_url"] = jsonResult["picture"]["data"]["url"].string
-                    
                     // User access token
-                    dicoUserData["fb_token"] = FBSDKAccessToken.currentAccessToken().tokenString
-                    
+                    dicoUserData[UserDataKey.kFacebookToken] = FBSDKAccessToken.currentAccessToken().tokenString
+
                     UserSessionManager.sharedInstance.connectByFacebook(
                         dicoUserData,
                         success: {
                             success()
                         }, fail: { (error, listError) in
                             print("error saving Facebook user data in database : \(error)")
-                            print("list error : \(listError)")
                             failure(error: error, listError: listError)
                     })
                 } else {
@@ -163,21 +130,50 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
                 dicoUserData["image_url"] = user.profile.imageURLWithDimension(50).URLString
             }
             
-            UserSessionManager.sharedInstance.connectByGooglePlus(dicoUserData,
-                success: {
-                    let viewController = self.window?.rootViewController
+            if UserSessionManager.sharedInstance.isLogged() {
+            
+                UserSessionManager.sharedInstance.connectByGooglePlus(dicoUserData,
+                    success: {
+                        let viewController = self.window?.rootViewController
                     
-                    if UserSessionManager.sharedInstance.dicoUserDataInscription == nil {
-                        let categoryViewController = viewController?.storyboard?.instantiateViewControllerWithIdentifier("idInscriptionCategorySelectionViewController") as! InscriptionCategorySelectionViewController
-                        viewController?.navigationController?.pushViewController(categoryViewController, animated: true)
-                    } else {
-                        let categoryViewController = viewController?.storyboard?.instantiateViewControllerWithIdentifier("idMenuNavViewController") as! MenuViewController
-                        NavSchemeManager.sharedInstance.changeRootViewController(categoryViewController)
-                    }
-                }, fail: { (error, listError) in
-                    print("error saving GooglePlus user data in database : \(error)")
-                    print("list error : \(listError)")
-            })
+                        if UserSessionManager.sharedInstance.dicoUserDataInscription == nil {
+                            let categoryViewController = viewController?.storyboard?.instantiateViewControllerWithIdentifier("idInscriptionCategorySelectionViewController") as!InscriptionCategorySelectionViewController
+                            viewController?.navigationController?.pushViewController(categoryViewController, animated: true)
+                        } else {
+                            let categoryViewController = viewController?.storyboard?.instantiateViewControllerWithIdentifier("idMenuNavController") as! UINavigationController
+                            NavSchemeManager.sharedInstance.changeRootViewController(categoryViewController)
+                        }
+                    }, fail: { (error, listError) in
+                        print("error saving GooglePlus user data in database : \(error)")
+                        print("list error : \(listError)")
+                })
+            } else {
+                
+                UserSessionManager.sharedInstance.inscriptionByGooglePlus(dicoUserData,
+                    success: { (session) in
+                        
+                        dicoUserData = session.generateJSONFromUserSession()!
+                        
+                        UserSessionManager.sharedInstance.connectByGooglePlus(dicoUserData,
+                            success: {
+                                let viewController = self.window?.rootViewController
+                                
+                                if UserSessionManager.sharedInstance.dicoUserDataInscription == nil {
+                                    let categoryViewController = viewController?.storyboard?.instantiateViewControllerWithIdentifier("idInscriptionCategorySelectionViewController") as!InscriptionCategorySelectionViewController
+                                    viewController?.navigationController?.pushViewController(categoryViewController, animated: true)
+                                } else {
+                                    let categoryViewController = viewController?.storyboard?.instantiateViewControllerWithIdentifier("idMenuNavController") as! UINavigationController
+                                    NavSchemeManager.sharedInstance.changeRootViewController(categoryViewController)
+                                }
+                            }, fail: { (error, listError) in
+                                print("error saving GooglePlus user data in database : \(error)")
+                                print("list error : \(listError)")
+                        })
+                        
+                    }, fail: { (error, listError) in
+                        print("Error inscription GooglePlus : \(error)")
+                })
+            }
         } else {
             print("GooglePlus get user data : error : \(error)")
             print("\(error.localizedDescription)")
