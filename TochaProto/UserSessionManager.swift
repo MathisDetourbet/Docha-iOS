@@ -109,7 +109,9 @@ class UserSessionManager {
         self.connexionRequest = ConnexionRequest()
             
         connexionRequest?.connexionWithEmail(dicoParams,
-            success: {
+            success: { (session) in
+                
+                session.saveSession()
                 
                 if UserSessionManager.sharedInstance.isLogged() {
                     success()

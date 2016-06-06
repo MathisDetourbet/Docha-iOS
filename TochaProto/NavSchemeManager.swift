@@ -19,7 +19,9 @@ class NavSchemeManager {
         let window: UIWindow = ((UIApplication.sharedApplication().delegate?.window)!)!
         
         if UserSessionManager.sharedInstance.isLogged() {
-            window.rootViewController = window.rootViewController?.storyboard?.instantiateViewControllerWithIdentifier("idMenuNavController") as! UINavigationController
+            window.rootViewController = window.rootViewController?.storyboard?.instantiateViewControllerWithIdentifier("idDochaTabBarController") as! UITabBarController
+            let tabBarController = window.rootViewController as! UITabBarController
+            tabBarController.selectedIndex = 1
         } else {
             window.rootViewController = window.rootViewController?.storyboard?.instantiateViewControllerWithIdentifier("idStarterNavController")
         }

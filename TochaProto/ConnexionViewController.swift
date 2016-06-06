@@ -12,16 +12,6 @@ import TextFieldEffects
 // Google+
 import GoogleSignIn
 
-extension UIColor {
-    class func blueDochaColor() -> UIColor {
-        return UIColor(red: 0.28, green: 0.65, blue: 1.00, alpha: 1.0)
-    }
-    
-    class func redDochaColor() -> UIColor {
-        return UIColor(red: 0.99, green: 0.35, blue: 0.31, alpha: 1.0)
-    }
-}
-
 class ConnexionViewController: RootViewController, GIDSignInUIDelegate {
     
     var emailString: String?
@@ -131,8 +121,13 @@ class ConnexionViewController: RootViewController, GIDSignInUIDelegate {
         let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
         appDelegate.facebookSignIn({
             // Success
-            let categoryViewController = self.storyboard?.instantiateViewControllerWithIdentifier("idInscriptionCategorySelectionViewController") as! InscriptionCategorySelectionViewController
-            self.navigationController?.pushViewController(categoryViewController, animated: true)
+            if UserSessionManager.sharedInstance.currentSession().categoryFavorite != nil {
+                let viewController = self.storyboard?.instantiateViewControllerWithIdentifier("idDochaTabBarController") as! UITabBarController
+                NavSchemeManager.sharedInstance.changeRootViewController(viewController)
+            } else {
+                let categoryViewController = self.storyboard?.instantiateViewControllerWithIdentifier("idInscriptionCategorySelectionViewController") as! InscriptionCategorySelectionViewController
+                self.navigationController?.pushViewController(categoryViewController, animated: true)
+            }
         }) { (error, listError) in
             // Fail
             print("Error fetching user facebook data : \(error)")

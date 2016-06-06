@@ -50,7 +50,7 @@ class InscriptionCategorySelectionViewController: RootViewController, UICollecti
         self.collectionView.reloadData()
     }
     
-    //MARK: Collection View Data Source
+    //MARK: Collection View Data Source Methods
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return CATEGORY_NUMBER
@@ -69,7 +69,7 @@ class InscriptionCategorySelectionViewController: RootViewController, UICollecti
         return cell
     }
     
-    //MARK: Collection View Delegate
+    //MARK: Collection View Delegate Methods
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         // Deselect old cell

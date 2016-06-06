@@ -12,14 +12,9 @@ import SwiftyJSON
 
 class ConnexionRequest {
     
-    func connexionWithEmail(dicoParams: [String:AnyObject]!, success: () -> Void, fail failure: (error: NSError?, listError: [AnyObject]?) -> Void) {
+    func connexionWithEmail(dicoParams: [String:AnyObject]!, success: (session: UserSessionEmail) -> Void, fail failure: (error: NSError?, listErrors: [AnyObject]?) -> Void) {
         
         let parameters = ["email": dicoParams["email"]!, "password": dicoParams["password"]!]
-        //        let headers = [
-        //            "X-API-KEY": "\(dicoParams["auth_token"])",
-        //            "Content-type application":"json",
-        //            "Accept application" : "json"
-        //        ]
         let url = "\(Constants.UrlServer.UrlBase)\(Constants.UrlServer.UrlConnexion.UrlEmailConnexion)"
         print("URL connexion with email : \(url)")
         
@@ -28,15 +23,61 @@ class ConnexionRequest {
             .responseJSON { (response) in
                 let statusCode = (response.response?.statusCode)! // Gets HTTP status code, useful for debugging
                 print("Status code : \(statusCode)")
-                
                 if let value: AnyObject = response.result.value {
-                    // Handle the results as JSON
-                    let jsonReponse = JSON(value)
-                    print("Connexion json response : \(jsonReponse)")
+                    let jsonResponse = JSON(value)
+                    print("Connexion with email json response : \(jsonResponse)")
                     
-                    success()
+                    if jsonResponse["success"].bool != nil {
+                        
+                        if let dicoValid = jsonResponse["data"].dictionary {
+                            
+                            if !dicoValid.isEmpty {
+                                
+                                if dicoValid["user"]!.dictionary != nil  {
+                                    
+                                    let session = UserSessionEmail()
+                                    session.userID = jsonResponse["data"]["user"][UserDataKey.kUserID].intValue
+                                    session.email = jsonResponse["data"]["user"][UserDataKey.kEmail].string
+                                    session.password = jsonResponse["data"]["user"][UserDataKey.kPassword].string
+                                    session.authToken = jsonResponse["data"][UserDataKey.kAuthToken].string
+                                    
+                                    let dateFormatter = NSDateFormatter()
+                                    dateFormatter.dateFormat = "yyyy-MM-dd"
+                                    let dateString = jsonResponse["data"]["user"][UserDataKey.kDateBirthday].string
+                                    session.dateBirthday = dateFormatter.dateFromString(dateString!)
+                                    
+                                    session.firstName = jsonResponse["data"]["user"][UserDataKey.kFirstName].string
+                                    session.lastName = jsonResponse["data"]["user"][UserDataKey.kLastName].string
+                                    session.categoryFavorite = jsonResponse["data"]["user"][UserDataKey.kCategoryFavorite].string
+                                    session.gender = jsonResponse["data"]["user"][UserDataKey.kGender].string
+                                    session.avatar = jsonResponse["data"]["user"][UserDataKey.kAvatar].string
+                                    
+                                    success(session: session)
+                                    
+                                } else {
+                                    // JSON doesn't contain the key "user"
+                                    print("json doesn't contain the key 'user'")
+                                    failure(error: nil, listErrors: nil)
+                                }
+                            } else {
+                                // JSON['data'] dictionary is empty
+                                print("JSON['data'] dictionary is empty")
+                                failure(error: nil, listErrors: nil)
+                            }
+                        } else {
+                            // JSON['data'] doesn't exist
+                            print("JSON['data'] doesn't exist")
+                            failure(error: nil, listErrors: nil)
+                        }
+                    } else {
+                        // Request failed
+                        print("Request failed : \(jsonResponse["json"]["message"])")
+                        failure(error: nil, listErrors: nil)
+                    }
                 } else {
-                    failure(error: nil, listError: nil)
+                    // JSON value is nil
+                    print("Error : email already registered !")
+                    failure(error: nil, listErrors: nil)
                 }
         }
     }

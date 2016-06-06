@@ -67,6 +67,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
     func applicationWillResignActive(application: UIApplication) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
         // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
+        //TODO: RESUME THE GAME HERE
     }
 
     func applicationDidEnterBackground(application: UIApplication) {
@@ -89,6 +90,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
         loginManager.logOut()
     }
     
+    // MARK: Facebook Sign In
     func facebookSignIn(success:() -> Void, fail failure: (error: NSError?, listError: [AnyObject]?) -> Void) {
         if((FBSDKAccessToken.currentAccessToken()) != nil) {
             
@@ -116,6 +118,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
         }
     }
     
+    // MARK: GooglePlus Sign In
     func signIn(signIn: GIDSignIn!, didSignInForUser user: GIDGoogleUser!, withError error: NSError!) {
         if (error == nil) {
             var dicoUserData = [String:AnyObject]()
@@ -162,7 +165,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
                                     let categoryViewController = viewController?.storyboard?.instantiateViewControllerWithIdentifier("idInscriptionCategorySelectionViewController") as!InscriptionCategorySelectionViewController
                                     viewController?.navigationController?.pushViewController(categoryViewController, animated: true)
                                 } else {
-                                    let categoryViewController = viewController?.storyboard?.instantiateViewControllerWithIdentifier("idMenuNavController") as! UINavigationController
+                                    let categoryViewController = viewController?.storyboard?.instantiateViewControllerWithIdentifier("idDochaTabBarController") as! UITabBarController
                                     NavSchemeManager.sharedInstance.changeRootViewController(categoryViewController)
                                 }
                             }, fail: { (error, listError) in

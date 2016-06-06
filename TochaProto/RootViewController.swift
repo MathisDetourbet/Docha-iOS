@@ -32,7 +32,7 @@ class RootViewController: UIViewController {
     }
     
     func goToHome() {
-        let viewController = self.storyboard?.instantiateViewControllerWithIdentifier("idMenuNavController") as! UINavigationController
+        let viewController = self.storyboard?.instantiateViewControllerWithIdentifier("idDochaTabBarController") as! UITabBarController
         NavSchemeManager.sharedInstance.changeRootViewController(viewController)
     }
 }

@@ -93,7 +93,7 @@ class InscriptionProfilViewController: RootViewController {
                     UserSessionManager.sharedInstance.connectByEmail(connexionEmailParams,
                         success: {
                                 
-                        let viewController = self.storyboard?.instantiateViewControllerWithIdentifier("idMenuNavController") as! UINavigationController
+                        let viewController = self.storyboard?.instantiateViewControllerWithIdentifier("idDochaTabBarController") as! UITabBarController
                         NavSchemeManager.sharedInstance.changeRootViewController(viewController)
                             
                         }, fail: { (error, listError) in

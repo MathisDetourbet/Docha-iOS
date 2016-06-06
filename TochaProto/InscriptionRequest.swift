@@ -38,7 +38,7 @@ class InscriptionRequest {
                 
                 if let value: AnyObject = response.result.value {
                     let jsonResponse = JSON(value)
-                    print(jsonResponse)
+                    print("Inscription with email json : \(jsonResponse)")
                     
                     if jsonResponse["success"].bool != nil {
                         
