@@ -12,21 +12,44 @@ class PreferencesViewController: RootViewController, UITableViewDelegate, UITabl
     
     let idNormalTableViewCell = "idNormalTableViewCell"
     let idSwitchTableViewCell = "idSwitchTableViewCell"
-    
     let sections: [String] = ["COMPTE", "PARAMÈTRES", "AUTRES"]
-    
     let cellContent: [[[String:String]]] = [[["title":"Modifier le profil","iconPath": "profil_icon"], ["title":"Changer le mot de passe","iconPath": "password_change_icon"], ["title":"Catégorie préférés","iconPath": "category_selection_icon"]],
-                                   [["title":"Notifications","iconPath": "notifications_icon"], ["title":"Newsletter","iconPath": "newsletter_icon"], ["title":"Langue","iconPath": "language_icon"]],
-                                   [["title":"À propos","iconPath": "rocket_icon"], ["title":"Nous contacter","iconPath": "mail_icon"]]]
+                                            [["title":"Notifications","iconPath": "notifications_icon"], ["title":"Newsletter","iconPath": "newsletter_icon"], ["title":"Langue","iconPath": "language_icon"]],
+                                            [["title":"À propos","iconPath": "rocket_icon"], ["title":"Nous contacter","iconPath": "mail_icon"]]]
     
     @IBOutlet weak var tableView: UITableView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.buildUI()
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
+    }
+    
+    func buildUI() {
+        let footerView = UIView(frame: CGRectMake(0, 0, self.view.frame.width, 123))
+        
+        let inviteFacebookFriendsButton = UIButton(type: .Custom)
+        inviteFacebookFriendsButton.translatesAutoresizingMaskIntoConstraints = false
+        inviteFacebookFriendsButton.setImage(UIImage(named: "btn_fb_invit"), forState: .Normal)
+        inviteFacebookFriendsButton.addTarget(self, action: #selector(PreferencesViewController.inviteFacebookFriendsButtonTouched), forControlEvents: .TouchUpInside)
+        footerView.addSubview(inviteFacebookFriendsButton)
+        
+        footerView.addConstraint(NSLayoutConstraint(item: inviteFacebookFriendsButton, attribute: .CenterX, relatedBy: .Equal, toItem: footerView, attribute: .CenterX, multiplier: 1, constant: 0))
+        footerView.addConstraint(NSLayoutConstraint(item: inviteFacebookFriendsButton, attribute: .Top, relatedBy: .Equal, toItem: footerView, attribute: .Top, multiplier: 1, constant: 15))
+        
+        let logoutButton = UIButton(type: .Custom)
+        logoutButton.translatesAutoresizingMaskIntoConstraints = false
+        logoutButton.setImage(UIImage(named: "btn_logout"), forState: .Normal)
+        logoutButton.addTarget(self, action: #selector(PreferencesViewController.logoutButtonTouched), forControlEvents: .TouchUpInside)
+        footerView.addSubview(logoutButton)
+        
+        footerView.addConstraint(NSLayoutConstraint(item: logoutButton, attribute: .Top, relatedBy: .Equal, toItem: inviteFacebookFriendsButton, attribute: .Bottom, multiplier: 1, constant: 10))
+        footerView.addConstraint(NSLayoutConstraint(item: logoutButton, attribute: .CenterX, relatedBy: .Equal, toItem: footerView, attribute: .CenterX, multiplier: 1, constant: 0))
+        
+        self.tableView.tableFooterView = footerView
     }
     
     
@@ -41,14 +64,7 @@ class PreferencesViewController: RootViewController, UITableViewDelegate, UITabl
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        switch section {
-        case 0:
-            return 3
-        case 1:
-            return 3
-        default:
-            return 2
-        }
+        return self.cellContent[section].count
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -61,7 +77,7 @@ class PreferencesViewController: RootViewController, UITableViewDelegate, UITabl
             
         } else {
             let cell = tableView.dequeueReusableCellWithIdentifier(self.idNormalTableViewCell, forIndexPath: indexPath) as? PreferencesNormalTableViewCell
-            let title = self.cellContent[0][indexPath.row]["title"]
+            let title = self.cellContent[indexPath.section][indexPath.row]["title"]
             cell?.titleLabel.text = title
             (title == "Categorie préférée") ? (cell?.categoryFavoriteLabel.text = title) : (cell?.categoryFavoriteLabel.text = "")
             cell?.iconImageView.image = UIImage(named: self.cellContent[indexPath.section][indexPath.row]["iconPath"]!)
@@ -75,34 +91,6 @@ class PreferencesViewController: RootViewController, UITableViewDelegate, UITabl
     
     func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 32.0
-    }
-    
-    func tableView(tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-        if section == 2 {
-            let footerView = UIView(frame: CGRectMake(0, 0, self.view.frame.width, 123))
-            
-            let inviteFacebookFriendsButton = UIButton(type: .Custom)
-            inviteFacebookFriendsButton.translatesAutoresizingMaskIntoConstraints = false
-            inviteFacebookFriendsButton.setImage(UIImage(named: "btn_fb_invit"), forState: .Normal)
-            inviteFacebookFriendsButton.addTarget(self, action: #selector(PreferencesViewController.inviteFacebookFriendsButtonTouched), forControlEvents: .TouchUpInside)
-            footerView.addSubview(inviteFacebookFriendsButton)
-            
-            footerView.addConstraint(NSLayoutConstraint(item: inviteFacebookFriendsButton, attribute: .CenterX, relatedBy: .Equal, toItem: footerView, attribute: .CenterX, multiplier: 1, constant: 0))
-            footerView.addConstraint(NSLayoutConstraint(item: inviteFacebookFriendsButton, attribute: .Top, relatedBy: .Equal, toItem: footerView, attribute: .Top, multiplier: 1, constant: 15))
-            
-            let logoutButton = UIButton(type: .Custom)
-            logoutButton.translatesAutoresizingMaskIntoConstraints = false
-            logoutButton.setImage(UIImage(named: "btn_logout"), forState: .Normal)
-            logoutButton.addTarget(self, action: #selector(PreferencesViewController.logoutButtonTouched), forControlEvents: .TouchUpInside)
-            footerView.addSubview(logoutButton)
-            
-            footerView.addConstraint(NSLayoutConstraint(item: logoutButton, attribute: .Top, relatedBy: .Equal, toItem: inviteFacebookFriendsButton, attribute: .Bottom, multiplier: 1, constant: 10))
-            footerView.addConstraint(NSLayoutConstraint(item: logoutButton, attribute: .CenterX, relatedBy: .Equal, toItem: footerView, attribute: .CenterX, multiplier: 1, constant: 0))
-            
-            return footerView
-        }
-        
-        return nil
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
@@ -123,6 +111,8 @@ class PreferencesViewController: RootViewController, UITableViewDelegate, UITabl
     }
     
     func logoutButtonTouched() {
-        
+        UserSessionManager.sharedInstance.logout()
+        let connexionViewController = self.storyboard?.instantiateViewControllerWithIdentifier("idStarterNavController")
+        NavSchemeManager.sharedInstance.changeRootViewController(connexionViewController!)
     }
 }

@@ -37,7 +37,7 @@ class LevelsSelectionViewController: RootViewController, UITableViewDataSource, 
             
             let levelMax: Int
             let userState = UserSessionManager.sharedInstance.currentSession()
-            levelMax = userState.levelMaxUnlocked
+            levelMax = userState!.levelMaxUnlocked
             
             if  indexPath.row+1 <= levelMax {
                 levelCell.canvasImageView.hidden = true

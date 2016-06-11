@@ -89,8 +89,11 @@ if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_framework "$BUILT_PRODUCTS_DIR/AlamofireImage/AlamofireImage.framework"
   install_framework "$BUILT_PRODUCTS_DIR/CNPPopupController/CNPPopupController.framework"
   install_framework "$BUILT_PRODUCTS_DIR/IQKeyboardManagerSwift/IQKeyboardManagerSwift.framework"
+  install_framework "$BUILT_PRODUCTS_DIR/MBCircularProgressBar/MBCircularProgressBar.framework"
+  install_framework "$BUILT_PRODUCTS_DIR/PageMenu/PageMenu.framework"
   install_framework "$BUILT_PRODUCTS_DIR/SCLAlertView/SCLAlertView.framework"
   install_framework "$BUILT_PRODUCTS_DIR/SwiftyJSON/SwiftyJSON.framework"
+  install_framework "$BUILT_PRODUCTS_DIR/SwiftyTimer/SwiftyTimer.framework"
   install_framework "$BUILT_PRODUCTS_DIR/TextFieldEffects/TextFieldEffects.framework"
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
@@ -99,7 +102,10 @@ if [[ "$CONFIGURATION" == "Release" ]]; then
   install_framework "$BUILT_PRODUCTS_DIR/AlamofireImage/AlamofireImage.framework"
   install_framework "$BUILT_PRODUCTS_DIR/CNPPopupController/CNPPopupController.framework"
   install_framework "$BUILT_PRODUCTS_DIR/IQKeyboardManagerSwift/IQKeyboardManagerSwift.framework"
+  install_framework "$BUILT_PRODUCTS_DIR/MBCircularProgressBar/MBCircularProgressBar.framework"
+  install_framework "$BUILT_PRODUCTS_DIR/PageMenu/PageMenu.framework"
   install_framework "$BUILT_PRODUCTS_DIR/SCLAlertView/SCLAlertView.framework"
   install_framework "$BUILT_PRODUCTS_DIR/SwiftyJSON/SwiftyJSON.framework"
+  install_framework "$BUILT_PRODUCTS_DIR/SwiftyTimer/SwiftyTimer.framework"
   install_framework "$BUILT_PRODUCTS_DIR/TextFieldEffects/TextFieldEffects.framework"
 fi

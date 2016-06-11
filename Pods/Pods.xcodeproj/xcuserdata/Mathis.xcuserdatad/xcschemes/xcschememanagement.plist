@@ -29,6 +29,21 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>MBCircularProgressBar-MBCircularProgressBar.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>MBCircularProgressBar.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>PageMenu.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>Pods-Docha.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -54,6 +69,11 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>SwiftyTimer.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>TextFieldEffects.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -62,7 +82,22 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
+		<key>0147D1F912ADE4324EEB2F030CA57D0E</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>04AE14B3871FDDF662715CEE04855268</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>05094CC4A047119F7ADC14EE74C4881C</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>05888A38E6503DD1B246BB82E8D7FDCD</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -77,12 +112,7 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>15BB4411015A5EDDE6D14202FD2DEFC0</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>303613FEE92062F486377DA0AD22623C</key>
+		<key>21C461B0CAD90DE64B07A5D212C5F829</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -97,17 +127,27 @@
 			<key>primary</key>
 			<true/>
 		</dict>
+		<key>511D01576D49C11697020CA31B007A75</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>78FD1898276D307951A1193DA4570987</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>79C040AFDDCE1BCBF6D8B5EB0B85887F</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>80BD21062844320CAD193651C001D689</key>
+		<key>860A9179BCFD9F1C616D8653DB2B4F91</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>D2C1CA320A403E49C769AD9E36E75CE1</key>
+		<key>8FC4B2785BB68892651401B8A26A15AD</key>
 		<dict>
 			<key>primary</key>
 			<true/>

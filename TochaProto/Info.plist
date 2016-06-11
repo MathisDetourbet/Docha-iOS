@@ -49,6 +49,8 @@
 	<string>273418713002986</string>
 	<key>FacebookDisplayName</key>
 	<string>Docha</string>
+	<key>FirebaseAppDelegateProxyEnabled</key>
+	<false/>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
 		<string>fbapi</string>
@@ -95,7 +97,5 @@
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
 	</array>
-	<key>FirebaseAppDelegateProxyEnabled</key>
-	<false/>
 </dict>
 </plist>

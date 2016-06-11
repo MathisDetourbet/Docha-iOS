@@ -6,6 +6,8 @@
 //  Copyright © 2016 LaTV. All rights reserved.
 //
 
+import GoogleSignIn
+
 class UserSessionManager {
 	
     var connexionRequest: ConnexionRequest?
@@ -19,10 +21,16 @@ class UserSessionManager {
         return Singleton.instance
     }
 	
-    func currentSession() -> UserSession {
+    func currentSession() -> UserSession? {
+        let currentSession: UserSession?
         let userDefaults = NSUserDefaults.standardUserDefaults()
         let connexionEncodedObject = userDefaults.objectForKey(Constants.UserDefaultsKey.kUserSessionObject) as? NSData
-        let currentSession = NSKeyedUnarchiver.unarchiveObjectWithData(connexionEncodedObject!) as! UserSession
+        if (connexionEncodedObject != nil) {
+            currentSession = NSKeyedUnarchiver.unarchiveObjectWithData(connexionEncodedObject!) as? UserSession
+        } else {
+            return nil
+        }
+        
         
         return currentSession
     }
@@ -170,5 +178,21 @@ class UserSessionManager {
             }, fail: { (error, listErrors) in
                 failure(error: error, listError: listErrors)
         })
+    }
+    
+    func logout() {
+        if let currentSession = self.currentSession() {
+            
+            if currentSession.isKindOfClass(UserSessionFacebook) {
+                let loginManager = FBSDKLoginManager()
+                loginManager.logOut()
+                
+            } else if currentSession.isKindOfClass(UserSessionGooglePlus) {
+                GIDSignIn.sharedInstance().disconnect()
+            }
+        }
+        
+        NSUserDefaults.standardUserDefaults().removeObjectForKey(Constants.UserDefaultsKey.kUserSessionObject)
+        NSUserDefaults.standardUserDefaults().synchronize()
     }
 }

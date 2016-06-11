@@ -8,8 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		17C4C55B632D40738F022EBF /* Pods_Docha.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7B81E7EE25887F1C2C481FAD /* Pods_Docha.framework */; };
+		3BBFA0F0EB4F828F18867FE4 /* Pods_DochaTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7CF8F4D01B437EA5343370DD /* Pods_DochaTests.framework */; };
 		6701D9741C108A2100F87043 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6701D9731C108A2100F87043 /* AppDelegate.swift */; };
-		6701D9761C108A2100F87043 /* GameplayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6701D9751C108A2100F87043 /* GameplayViewController.swift */; };
 		6701D9791C108A2100F87043 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6701D9771C108A2100F87043 /* Main.storyboard */; };
 		6701D97E1C108A2100F87043 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6701D97C1C108A2100F87043 /* LaunchScreen.storyboard */; };
 		6701D9891C108A2100F87043 /* TochaProtoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6701D9881C108A2100F87043 /* TochaProtoTests.swift */; };
@@ -23,6 +23,14 @@
 		67240CF91CF1C8A5001F4DC6 /* StarterPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67240CF81CF1C8A5001F4DC6 /* StarterPageViewController.swift */; };
 		67240CFB1CF1DA6D001F4DC6 /* StarterPageContentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67240CFA1CF1DA6D001F4DC6 /* StarterPageContentViewController.swift */; };
 		67240CFD1CF1DB32001F4DC6 /* ConnexionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67240CFC1CF1DB32001F4DC6 /* ConnexionViewController.swift */; };
+		672D6F0D1D0B145300C0EB01 /* GameplayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 672D6F0C1D0B145300C0EB01 /* GameplayViewController.swift */; };
+		672D6F0F1D0B25AC00C0EB01 /* KeyboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 672D6F0E1D0B25AC00C0EB01 /* KeyboardView.swift */; };
+		67300B811D083B6E0061D06F /* StorePagerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67300B801D083B6E0061D06F /* StorePagerViewController.swift */; };
+		67300B851D0853220061D06F /* CAPSPageMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67300B841D0853220061D06F /* CAPSPageMenu.swift */; };
+		67300B8A1D08545A0061D06F /* StorePromotionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67300B891D08545A0061D06F /* StorePromotionsViewController.swift */; };
+		67300B8E1D0855070061D06F /* StoreGiftsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67300B8D1D0855070061D06F /* StoreGiftsViewController.swift */; };
+		67300B901D0855120061D06F /* StoreOrdersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67300B8F1D0855120061D06F /* StoreOrdersViewController.swift */; };
+		67300B921D09A9730061D06F /* StringHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67300B911D09A9730061D06F /* StringHelper.swift */; };
 		6733B6221C963E2100CB7AC8 /* NavSchemeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6733B6211C963E2100CB7AC8 /* NavSchemeManager.swift */; };
 		6775CE431C494BB700550041 /* JDFlipImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6775CE3E1C494BB700550041 /* JDFlipImageView.m */; };
 		6775CE441C494BB700550041 /* JDFlipNumberViewImageFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 6775CE401C494BB700550041 /* JDFlipNumberViewImageFactory.m */; };
@@ -89,6 +97,7 @@
 		67FEE22D1C8E1E07008F842C /* Montserrat-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 67FEE2251C8E1E07008F842C /* Montserrat-Regular.otf */; };
 		67FEE22E1C8E1E07008F842C /* Montserrat-SemiBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 67FEE2261C8E1E07008F842C /* Montserrat-SemiBold.otf */; };
 		67FEE22F1C8E1E07008F842C /* Montserrat-UltraLight.otf in Resources */ = {isa = PBXBuildFile; fileRef = 67FEE2271C8E1E07008F842C /* Montserrat-UltraLight.otf */; };
+		AA744F25FC04F4249EE51163 /* Pods_DochaUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 352F70D99049A1FC09684B9B /* Pods_DochaUITests.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -110,6 +119,7 @@
 
 /* Begin PBXFileReference section */
 		1FCAEDDD4A008C15E66202A8 /* Pods-DochaProtoUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DochaProtoUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-DochaProtoUITests/Pods-DochaProtoUITests.release.xcconfig"; sourceTree = "<group>"; };
+		352F70D99049A1FC09684B9B /* Pods_DochaUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_DochaUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3537F45EDC9182E740E48A14 /* Pods-DochaProtoTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DochaProtoTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-DochaProtoTests/Pods-DochaProtoTests.debug.xcconfig"; sourceTree = "<group>"; };
 		4E4F35DA13902859F62CB364 /* Pods-Docha.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Docha.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Docha/Pods-Docha.debug.xcconfig"; sourceTree = "<group>"; };
 		51A775BB64754F54646CCB3D /* Pods-DochaProtoUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DochaProtoUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-DochaProtoUITests/Pods-DochaProtoUITests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -117,7 +127,6 @@
 		5B0290D3059667BA03F0D851 /* Pods-DochaUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DochaUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-DochaUITests/Pods-DochaUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		6701D9701C108A2100F87043 /* Docha.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Docha.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6701D9731C108A2100F87043 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		6701D9751C108A2100F87043 /* GameplayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameplayViewController.swift; sourceTree = "<group>"; };
 		6701D9781C108A2100F87043 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		6701D97D1C108A2100F87043 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		6701D97F1C108A2100F87043 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -136,6 +145,14 @@
 		67240CF81CF1C8A5001F4DC6 /* StarterPageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StarterPageViewController.swift; sourceTree = "<group>"; };
 		67240CFA1CF1DA6D001F4DC6 /* StarterPageContentViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StarterPageContentViewController.swift; sourceTree = "<group>"; };
 		67240CFC1CF1DB32001F4DC6 /* ConnexionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConnexionViewController.swift; sourceTree = "<group>"; };
+		672D6F0C1D0B145300C0EB01 /* GameplayViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameplayViewController.swift; sourceTree = "<group>"; };
+		672D6F0E1D0B25AC00C0EB01 /* KeyboardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyboardView.swift; sourceTree = "<group>"; };
+		67300B801D083B6E0061D06F /* StorePagerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StorePagerViewController.swift; sourceTree = "<group>"; };
+		67300B841D0853220061D06F /* CAPSPageMenu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CAPSPageMenu.swift; sourceTree = "<group>"; };
+		67300B891D08545A0061D06F /* StorePromotionsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StorePromotionsViewController.swift; sourceTree = "<group>"; };
+		67300B8D1D0855070061D06F /* StoreGiftsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StoreGiftsViewController.swift; sourceTree = "<group>"; };
+		67300B8F1D0855120061D06F /* StoreOrdersViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StoreOrdersViewController.swift; sourceTree = "<group>"; };
+		67300B911D09A9730061D06F /* StringHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringHelper.swift; sourceTree = "<group>"; };
 		6733B6211C963E2100CB7AC8 /* NavSchemeManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavSchemeManager.swift; sourceTree = "<group>"; };
 		674055401C4664F30047B369 /* TochaProto-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "TochaProto-Bridging-Header.h"; sourceTree = "<group>"; };
 		6775CE3D1C494BB700550041 /* JDFlipImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JDFlipImageView.h; sourceTree = "<group>"; };
@@ -205,6 +222,7 @@
 		67FEE2261C8E1E07008F842C /* Montserrat-SemiBold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-SemiBold.otf"; sourceTree = "<group>"; };
 		67FEE2271C8E1E07008F842C /* Montserrat-UltraLight.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-UltraLight.otf"; sourceTree = "<group>"; };
 		7B81E7EE25887F1C2C481FAD /* Pods_Docha.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Docha.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		7CF8F4D01B437EA5343370DD /* Pods_DochaTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_DochaTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7E7CB231F09F9BCAB47F8AF1 /* Pods-DochaProto.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DochaProto.release.xcconfig"; path = "Pods/Target Support Files/Pods-DochaProto/Pods-DochaProto.release.xcconfig"; sourceTree = "<group>"; };
 		80A84988DF7E70EF2CDA3731 /* Pods-DochaProtoTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DochaProtoTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-DochaProtoTests/Pods-DochaProtoTests.release.xcconfig"; sourceTree = "<group>"; };
 		83AA344425FDFDE624755D92 /* Pods-DochaTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DochaTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-DochaTests/Pods-DochaTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -242,6 +260,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3BBFA0F0EB4F828F18867FE4 /* Pods_DochaTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -249,6 +268,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AA744F25FC04F4249EE51163 /* Pods_DochaUITests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -294,6 +314,8 @@
 				679273D91CF9ED1D00DABA88 /* FBSDKCoreKit.framework */,
 				67240CF31CF0CEB5001F4DC6 /* Security.framework */,
 				7B81E7EE25887F1C2C481FAD /* Pods_Docha.framework */,
+				7CF8F4D01B437EA5343370DD /* Pods_DochaTests.framework */,
+				352F70D99049A1FC09684B9B /* Pods_DochaUITests.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -359,6 +381,27 @@
 				6786E4011CF4851C00729D8E /* StarterNavigationController.swift */,
 			);
 			name = Starter;
+			sourceTree = "<group>";
+		};
+		67300B7F1D0839DD0061D06F /* Store */ = {
+			isa = PBXGroup;
+			children = (
+				67300B801D083B6E0061D06F /* StorePagerViewController.swift */,
+				67300B8D1D0855070061D06F /* StoreGiftsViewController.swift */,
+				67300B891D08545A0061D06F /* StorePromotionsViewController.swift */,
+				67300B8F1D0855120061D06F /* StoreOrdersViewController.swift */,
+			);
+			name = Store;
+			sourceTree = "<group>";
+		};
+		67300B931D09D6A50061D06F /* Gameplay */ = {
+			isa = PBXGroup;
+			children = (
+				67F75F6F1C42E00C00E78102 /* CounterView.swift */,
+				672D6F0C1D0B145300C0EB01 /* GameplayViewController.swift */,
+				672D6F0E1D0B25AC00C0EB01 /* KeyboardView.swift */,
+			);
+			name = Gameplay;
 			sourceTree = "<group>";
 		};
 		6746C16E1C9606A20085149C /* Connexion */ = {
@@ -480,6 +523,8 @@
 		67A3021F1C5AA55B0065D097 /* ViewsControllers */ = {
 			isa = PBXGroup;
 			children = (
+				67300B931D09D6A50061D06F /* Gameplay */,
+				67300B7F1D0839DD0061D06F /* Store */,
 				679B23BC1D058F1400692400 /* Preferences */,
 				6783382E1D049F6A002907EC /* Home */,
 				67240CF71CF1C886001F4DC6 /* Starter */,
@@ -506,8 +551,6 @@
 		67A302211C5AA7490065D097 /* GameplayTab */ = {
 			isa = PBXGroup;
 			children = (
-				6701D9751C108A2100F87043 /* GameplayViewController.swift */,
-				67F75F6F1C42E00C00E78102 /* CounterView.swift */,
 			);
 			name = GameplayTab;
 			sourceTree = "<group>";
@@ -623,6 +666,7 @@
 		67FEE2311C8E1E5A008F842C /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
+				67300B841D0853220061D06F /* CAPSPageMenu.swift */,
 				677EDF5A1D044AD000192C9D /* LxTabBarController.swift */,
 				6775CE3D1C494BB700550041 /* JDFlipImageView.h */,
 				6775CE3E1C494BB700550041 /* JDFlipImageView.m */,
@@ -632,6 +676,7 @@
 				6775CE421C494BB700550041 /* UIView+JDFlipImageView.m */,
 				67240CF11CF0CE71001F4DC6 /* KeychainAccess.swift */,
 				679B23CD1D05E66F00692400 /* DochaColorsHealper.swift */,
+				67300B911D09A9730061D06F /* StringHelper.swift */,
 			);
 			name = Helpers;
 			sourceTree = "<group>";
@@ -922,13 +967,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6701D9761C108A2100F87043 /* GameplayViewController.swift in Sources */,
 				67E5C5641CF88ACF009F3FCA /* InscriptionProfilViewController.swift in Sources */,
 				67240CEC1CEF0BCD001F4DC6 /* UserSessionManager.swift in Sources */,
 				67E5C5601CF8865C009F3FCA /* InscriptionInfosUserViewController.swift in Sources */,
 				67DA29B01CEB327400CE621F /* ConnexionRequest.swift in Sources */,
 				679B23CE1D05E66F00692400 /* DochaColorsHealper.swift in Sources */,
 				679B23BE1D058F2900692400 /* PreferencesViewController.swift in Sources */,
+				67300B921D09A9730061D06F /* StringHelper.swift in Sources */,
 				6775CE441C494BB700550041 /* JDFlipNumberViewImageFactory.m in Sources */,
 				67E61A561CF606220055411F /* InscriptionCategoryCollectionViewCell.swift in Sources */,
 				67E5C55E1CF8864C009F3FCA /* InscriptionIdentifiantsViewController.swift in Sources */,
@@ -938,12 +983,15 @@
 				67240CF01CEF5C68001F4DC6 /* UserSession.swift in Sources */,
 				677DAEEE1C91BEB3009C5DF2 /* RequestGamePlayProducts.swift in Sources */,
 				6733B6221C963E2100CB7AC8 /* NavSchemeManager.swift in Sources */,
+				67300B851D0853220061D06F /* CAPSPageMenu.swift in Sources */,
 				6775CE431C494BB700550041 /* JDFlipImageView.m in Sources */,
+				67300B8E1D0855070061D06F /* StoreGiftsViewController.swift in Sources */,
 				678B63461C9B5C0C00797516 /* User.swift in Sources */,
 				67A302241C5AA7A20065D097 /* CouponsStoreViewController.swift in Sources */,
 				6786E4041CF485ED00729D8E /* RootViewController.swift in Sources */,
 				67C2E3491C5BBB4500345D27 /* Coupon.swift in Sources */,
 				67F0CA0B1CD3BFCC00C9B4B6 /* LevelsTableViewCell.swift in Sources */,
+				67300B811D083B6E0061D06F /* StorePagerViewController.swift in Sources */,
 				6701D9A21C108AAE00F87043 /* Product.swift in Sources */,
 				67F0CA0E1CD4EFDB00C9B4B6 /* MenuViewController.swift in Sources */,
 				67F0CA141CD64F1100C9B4B6 /* Constants.swift in Sources */,
@@ -951,20 +999,24 @@
 				67240CF61CF1BFF8001F4DC6 /* AuthorizationManager.swift in Sources */,
 				67240CFB1CF1DA6D001F4DC6 /* StarterPageContentViewController.swift in Sources */,
 				679B23D71D05EEAC00692400 /* HomeBadgesTableViewCell.swift in Sources */,
+				67300B8A1D08545A0061D06F /* StorePromotionsViewController.swift in Sources */,
 				67240CFD1CF1DB32001F4DC6 /* ConnexionViewController.swift in Sources */,
 				679B23CA1D059DF500692400 /* PreferencesTableViewCells.swift in Sources */,
 				67C2E3471C5BA94200345D27 /* CouponTableViewCell.swift in Sources */,
 				6775CE451C494BB700550041 /* UIView+JDFlipImageView.m in Sources */,
 				67240CF91CF1C8A5001F4DC6 /* StarterPageViewController.swift in Sources */,
 				67F0CA091CD3A4FB00C9B4B6 /* LevelsSelectionViewController.swift in Sources */,
+				672D6F0F1D0B25AC00C0EB01 /* KeyboardView.swift in Sources */,
 				679273E71CFB5D5D00DABA88 /* UserSessionGooglePlus.swift in Sources */,
 				677EDF5B1D044AD000192C9D /* LxTabBarController.swift in Sources */,
 				67E5C55C1CF88639009F3FCA /* InscriptionCategorySelectionViewController.swift in Sources */,
 				67C83B011CF498780066B982 /* PasswordForgottenViewController.swift in Sources */,
 				67DA29B61CEB384700CE621F /* InscriptionRequest.swift in Sources */,
 				679273E11CFB0FC000DABA88 /* UserSessionEmail.swift in Sources */,
+				672D6F0D1D0B145300C0EB01 /* GameplayViewController.swift in Sources */,
 				678338301D04E754002907EC /* HomeViewController.swift in Sources */,
 				67F75F701C42E00C00E78102 /* CounterView.swift in Sources */,
+				67300B901D0855120061D06F /* StoreOrdersViewController.swift in Sources */,
 				679B23D01D05EDF600692400 /* HomePlayTableViewCell.swift in Sources */,
 				67240CF21CF0CE71001F4DC6 /* KeychainAccess.swift in Sources */,
 				6786E4021CF4851C00729D8E /* StarterNavigationController.swift in Sources */,
@@ -1140,7 +1192,7 @@
 					"$(OTHER_LDFLAGS)",
 					"-ObjC",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.latv.docha;
+				PRODUCT_BUNDLE_IDENTIFIER = com.slymoover.docha;
 				PRODUCT_NAME = Docha;
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "TochaProto/TochaProto-Bridging-Header.h";
@@ -1185,7 +1237,7 @@
 					"$(OTHER_LDFLAGS)",
 					"-ObjC",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.latv.docha;
+				PRODUCT_BUNDLE_IDENTIFIER = com.slymoover.docha;
 				PRODUCT_NAME = Docha;
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "TochaProto/TochaProto-Bridging-Header.h";

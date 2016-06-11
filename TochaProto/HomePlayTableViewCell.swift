@@ -19,6 +19,7 @@ class HomePlayTableViewCell: UITableViewCell {
     @IBOutlet weak var nextRecompenseLabel: UILabel!
     @IBOutlet weak var levelLabel: UILabel!
     @IBOutlet weak var constraintWidthProgressBar: NSLayoutConstraint!
+    @IBOutlet weak var levelBackgroundImageView: UIImageView!
     
     override func awakeFromNib() {
         super.awakeFromNib()

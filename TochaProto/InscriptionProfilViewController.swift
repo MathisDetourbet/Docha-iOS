@@ -84,23 +84,24 @@ class InscriptionProfilViewController: RootViewController {
                 print("Saving in the database : success !")
                                                             
                 // On lance une connexion avec le token reçu
-                if UserSessionManager.sharedInstance.currentSession().isKindOfClass(UserSessionEmail) {
-                    var connexionEmailParams = [String:String]()
-                    
-                    connexionEmailParams["email"] = registrationParams["email"] as? String
-                    connexionEmailParams["password"] = registrationParams["password"] as? String
-                                                                    
-                    UserSessionManager.sharedInstance.connectByEmail(connexionEmailParams,
-                        success: {
+                if let currentSession = UserSessionManager.sharedInstance.currentSession() {
+                    if currentSession.isKindOfClass(UserSessionEmail) {
+                        var connexionEmailParams = [String:String]()
+                        
+                        connexionEmailParams["email"] = registrationParams["email"] as? String
+                        connexionEmailParams["password"] = registrationParams["password"] as? String
+                        
+                        UserSessionManager.sharedInstance.connectByEmail(connexionEmailParams,
+                            success: {
                                 
-                        let viewController = self.storyboard?.instantiateViewControllerWithIdentifier("idDochaTabBarController") as! UITabBarController
-                        NavSchemeManager.sharedInstance.changeRootViewController(viewController)
-                            
-                        }, fail: { (error, listError) in
-                                                                            
+                                self.goToHome()
+                                
+                            }, fail: { (error, listError) in
+                                
                         })
-                } else {
-                    print("Error : class saved in the device isn't an UserSessionEmail class")
+                    } else {
+                        print("Error : class saved in the device isn't an UserSessionEmail class")
+                    }
                 }
                                                             
             }, fail: { (error, listErrors) in

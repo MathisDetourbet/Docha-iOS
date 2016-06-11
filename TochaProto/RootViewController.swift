@@ -33,6 +33,9 @@ class RootViewController: UIViewController {
     
     func goToHome() {
         let viewController = self.storyboard?.instantiateViewControllerWithIdentifier("idDochaTabBarController") as! UITabBarController
+        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+        let tabBarController = appDelegate.window!.rootViewController as! UITabBarController
+        tabBarController.selectedIndex = 1
         NavSchemeManager.sharedInstance.changeRootViewController(viewController)
     }
 }

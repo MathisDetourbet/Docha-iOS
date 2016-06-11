@@ -137,8 +137,7 @@ class InscriptionIdentifiantsViewController: RootViewController, UITextFieldDele
         let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
         appDelegate.facebookSignIn({
             // Success
-            let categoryViewController = self.storyboard?.instantiateViewControllerWithIdentifier("idDochaTabBarController") as! UITabBarController
-            NavSchemeManager.sharedInstance.changeRootViewController(categoryViewController)
+            self.goToHome()
         }) { (error, listError) in
             // Fail
             print("error saving Facebook user data in database : \(error)")

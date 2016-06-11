@@ -10,9 +10,12 @@ target 'Docha' do
     pod 'Alamofire', '~> 3.0'
     pod 'AlamofireImage', '~> 2.0'
     pod 'TextFieldEffects'
+    pod 'PageMenu'
     pod 'SCLAlertView'
     pod 'IQKeyboardManagerSwift'
     pod 'Google/SignIn'
+    pod 'MBCircularProgressBar'
+    pod 'SwiftyTimer'
 end
 
 target 'DochaTests' do

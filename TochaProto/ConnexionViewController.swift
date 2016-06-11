@@ -121,9 +121,8 @@ class ConnexionViewController: RootViewController, GIDSignInUIDelegate {
         let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
         appDelegate.facebookSignIn({
             // Success
-            if UserSessionManager.sharedInstance.currentSession().categoryFavorite != nil {
-                let viewController = self.storyboard?.instantiateViewControllerWithIdentifier("idDochaTabBarController") as! UITabBarController
-                NavSchemeManager.sharedInstance.changeRootViewController(viewController)
+            if UserSessionManager.sharedInstance.currentSession()?.categoryFavorite != nil {
+                self.goToHome()
             } else {
                 let categoryViewController = self.storyboard?.instantiateViewControllerWithIdentifier("idInscriptionCategorySelectionViewController") as! InscriptionCategorySelectionViewController
                 self.navigationController?.pushViewController(categoryViewController, animated: true)
