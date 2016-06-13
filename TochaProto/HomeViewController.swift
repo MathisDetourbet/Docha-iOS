@@ -22,6 +22,7 @@ class HomeViewController: RootViewController, UITableViewDelegate, UITableViewDa
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.hidesBottomBarWhenPushed = true
         
         if let userSession = UserSessionManager.sharedInstance.currentSession() {
             
