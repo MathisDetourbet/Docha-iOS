@@ -9,7 +9,7 @@
 import Foundation
 
 extension UIView {
-    func animatedButtonLikeBubbleWithDelay(delay: NSTimeInterval, duration: NSTimeInterval) {
+    func animatedLikeBubbleWithDelay(delay: NSTimeInterval, duration: NSTimeInterval) {
         self.transform = CGAffineTransformMakeScale(0.0, 0.0)
         UIView.animateWithDuration(duration,
                                    delay: delay,
@@ -57,8 +57,8 @@ class StarterPageViewController: RootViewController, UIPageViewControllerDataSou
         self.view.bringSubviewToFront(self.pageControl)
         self.view.bringSubviewToFront(self.iPhoneImageView)
         
-        self.connexionButton.animatedButtonLikeBubbleWithDelay(0.5, duration: 0.5)
-        self.registerButton.animatedButtonLikeBubbleWithDelay(0.5, duration: 0.5)
+        self.connexionButton.animatedLikeBubbleWithDelay(0.5, duration: 0.5)
+        self.registerButton.animatedLikeBubbleWithDelay(0.5, duration: 0.5)
     }
     
     override func viewWillAppear(animated: Bool) {

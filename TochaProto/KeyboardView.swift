@@ -40,10 +40,43 @@ class KeyboardView: UIView {
 
 class CounterContainerView: UIView {
     
+    var numbersArray: [Int]?
+    
+    @IBOutlet var counterViewArray: [CounterView]!
     @IBOutlet weak var centaineCounterView: CounterView!
     @IBOutlet weak var dizaineCounterView: CounterView!
     @IBOutlet weak var uniteCounterView: CounterView!
     @IBOutlet weak var centsLabel: UILabel!
     
     @IBOutlet weak var circularTimer: MBCircularProgressBarView!
+    
+    func initCounterData() {
+        numbersArray = []
+        
+        for _ in 0...counterViewArray.count {
+            numbersArray?.append(-1)
+        }
+    }
+    
+    func initCountersViews() {
+        initCounterData()
+        
+        for counterView in counterViewArray {
+            counterView.counterImage = JDFlipImageView(frame: CGRectMake(0.0, 0.0, counterView.bounds.width, counterView.bounds.height))
+            counterView.counterImage.image = UIImage(named: "counter_base")
+            counterView.counterImage.contentMode = .ScaleAspectFit
+        }
+    }
+    
+    func resetCountersViews() {
+        for counterView in counterViewArray {
+            counterView.counterImage.setImageAnimated(
+                UIImage(named: "counter_base"),
+                duration: 0.5,
+                completion: { (finished) in
+                    counterView.currentNumber = -1
+                    self.initCounterData()
+            })
+        }
+    }
 }

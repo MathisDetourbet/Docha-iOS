@@ -30,8 +30,8 @@ class StarterPageContentViewController: RootViewController {
     
     func buildUI() {
         
-        self.titleLabel.animatedButtonLikeBubbleWithDelay(0.2, duration: 0.5)
-        self.subtitleLabel.animatedButtonLikeBubbleWithDelay(0.2, duration: 0.5)
+        self.titleLabel.animatedLikeBubbleWithDelay(0.2, duration: 0.5)
+        self.subtitleLabel.animatedLikeBubbleWithDelay(0.2, duration: 0.5)
         
         if let index = self.pageIndex {
             switch index {
@@ -39,7 +39,7 @@ class StarterPageContentViewController: RootViewController {
                 
                 break;
             case 1:
-                self.bubbleHowMuchImageView.animatedButtonLikeBubbleWithDelay(0.5, duration: 0.5)
+                self.bubbleHowMuchImageView.animatedLikeBubbleWithDelay(0.5, duration: 0.5)
                 break;
             default:
                 

@@ -533,7 +533,6 @@
 				6746C16F1C9606B90085149C /* Inscription */,
 				6746C16E1C9606A20085149C /* Connexion */,
 				67A302221C5AA7500065D097 /* CouponsTab */,
-				67A302211C5AA7490065D097 /* GameplayTab */,
 			);
 			name = ViewsControllers;
 			sourceTree = "<group>";
@@ -546,13 +545,6 @@
 				679274041CFC8BA300DABA88 /* User */,
 			);
 			name = Model;
-			sourceTree = "<group>";
-		};
-		67A302211C5AA7490065D097 /* GameplayTab */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = GameplayTab;
 			sourceTree = "<group>";
 		};
 		67A302221C5AA7500065D097 /* CouponsTab */ = {

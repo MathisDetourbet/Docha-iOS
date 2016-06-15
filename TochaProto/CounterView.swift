@@ -25,9 +25,9 @@ class CounterView: UIImageView {
     var isSelected: Bool = false {
         didSet {
             if isSelected {
-                self.image = UIImage(named: "counter_number_start")
+                self.image = UIImage(named: "counter_base")
             } else {
-                self.image = UIImage(named: "counter_number_start")
+                self.image = UIImage(named: "counter_base")
             }
         }
     }
@@ -51,7 +51,7 @@ class CounterView: UIImageView {
         self.isSelected = isSelected
         
         self.counterImage = JDFlipImageView(frame: CGRectMake(0, 0, 50, 50))
-        self.counterImage.image = UIImage(named: "counter_number_start")
+        self.counterImage.image = UIImage(named: "counter_base")
         self.counterImage.translatesAutoresizingMaskIntoConstraints = false
         
         self.addConstraint(NSLayoutConstraint(item: self.counterImage, attribute: .Top, relatedBy: .Equal, toItem: self, attribute: .Top, multiplier: 1.0, constant: 0))
@@ -72,7 +72,7 @@ class CounterView: UIImageView {
                 return
             }
             self.currentNumber! = newNumber
-            self.counterImage.setImageAnimated(UIImage(named: "counter_number_start"), duration: 0.5, completion: { (finished) -> Void in
+            self.counterImage.setImageAnimated(UIImage(named: "counter_base"), duration: 0.5, completion: { (finished) -> Void in
                 if finished {
                     completion(finished: false)
                 }
@@ -102,7 +102,7 @@ class CounterView: UIImageView {
         } else if range == 1 {
             self.currentNumber! += 1
             let currentNumberStr = String(self.currentNumber!)
-            self.counterImage.setImageAnimated(UIImage(named: String(currentNumberStr + "_counter")), duration: 0.5, completion: { (finished) -> Void in
+            self.counterImage.setImageAnimated(UIImage(named: String("counter_" + currentNumberStr)), duration: 0.5, completion: { (finished) -> Void in
                 if finished {
                     self.isSelected = false
                     completion(finished: true)
@@ -115,7 +115,7 @@ class CounterView: UIImageView {
                 self.currentNumber! += 1
                 var currentNumberStr = String(self.currentNumber!)
                 let opBlock: NSBlockOperation = NSBlockOperation(block: ({ () -> Void in
-                    self.counterImage.setImageAnimated(UIImage(named: String(currentNumberStr + "_counter")), duration: 0.3, completion: { (finished) -> Void in
+                    self.counterImage.setImageAnimated(UIImage(named: String("counter_" + currentNumberStr)), duration: 0.3, completion: { (finished) -> Void in
                         if finished {
                             currentNumberStr = String(self.currentNumber!)
                         }

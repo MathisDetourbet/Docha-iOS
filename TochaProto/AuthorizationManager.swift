@@ -76,9 +76,9 @@ public class AuthorizationManager: Manager {
         
         // Make the refresh call and run the following in the success closure to restart the cached tasks
         
-        let cachedTaskCopy = self.cachedTasks
+        //let cachedTaskCopy = self.cachedTasks
         self.cachedTasks.removeAll()
-        cachedTaskCopy.map { $0(nil, nil, nil) }
+        //cachedTaskCopy.map { $0(nil, nil, nil) }
         
         self.isRefreshing = false
     }
