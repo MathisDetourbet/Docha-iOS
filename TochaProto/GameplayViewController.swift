@@ -25,14 +25,36 @@ enum GameplayMode {
     case Debrief
 }
 
+enum EstimationResult {
+    case Perfect
+    case Amazing
+    case Great
+    case Oups
+}
+
 class GameplayViewController: RootViewController, KeyboardViewDelegate {
     
     var productsList: [Product]?
+    var currentProduct: Product?
+    var currentPriceInArray: ([Int], String)?
+    var currentNumberOfCounter: Int? {
+        didSet {
+            if currentNumberOfCounter == 2 {
+                counterContainerView.hideCounterView()
+            }
+        }
+    }
     
-    var cursorCounter: Int?
+    var cursorProduct: Int = 0 {
+        didSet {
+            currentProduct = productsList![cursorProduct]
+        }
+    }
+    var cursorCounter: Int = 0
     
-    let kCooldownForPreview: Double! = 2.0
-    let kCooldownForMain: Double! = 7.0
+    let kCooldownForPreview: Double! = 3.0
+    let kCooldownForMain: Double! = 5.0
+    let kCooldownForAfter: Double! = 3.0
     var currentTotalCooldown: Double? {
         didSet {
             self.currentMillisecondTime = currentTotalCooldown
@@ -42,23 +64,20 @@ class GameplayViewController: RootViewController, KeyboardViewDelegate {
         didSet {
             if self.gameplayMode == .Preview {
                 self.previewCircularProgress.value = CGFloat(Double(self.currentMillisecondTime! * 100.0) / self.currentTotalCooldown!)
-            } else if self.gameplayMode == .Main {
+            } else if gameplayMode == .Main || gameplayMode == .After {
                 self.mainCircularProgress.value = CGFloat(Double(self.currentMillisecondTime! * 100.0) / self.currentTotalCooldown!)
             }
         }
     }
     var timer: NSTimer?
+    var timerFinished: Bool = true
     
     var gameplayMode: GameplayMode! = .Preview {
         didSet {
             self.startGameplayMode(gameplayMode)
-            if gameplayMode == .Preview {
-                startPreviewMode()
-            } else if gameplayMode == .Main {
-                startMainMode()
-            }
         }
     }
+    
     
     // MARK: @IBOutlets
     @IBOutlet weak var previewCircularProgress: MBCircularProgressBarView!
@@ -69,18 +88,20 @@ class GameplayViewController: RootViewController, KeyboardViewDelegate {
     
     @IBOutlet weak var topInfosContainerView: UIView!
     @IBOutlet weak var bottomFeaturesContainer: UIView!
-    @IBOutlet weak var firstFeatureLabel: UILabel!
-    @IBOutlet weak var secondFeatureLabel: UILabel!
-    @IBOutlet weak var thirdFeatureLabel: UILabel!
-    
+    @IBOutlet weak var bottomFeaturesLabelsContainer: UIView!
+    @IBOutlet var featuresLabelsCollection: [UILabel]!
     
     @IBOutlet weak var keyboardCounterContainerView: UIView!
     @IBOutlet weak var keyboardContainerView: KeyboardView!
     @IBOutlet weak var counterContainerView: CounterContainerView!
+    @IBOutlet weak var afterView: AfterView!
+    @IBOutlet weak var timelineView: TimelineView!
+    
+    
+    //MARK: @IBOutlets Constraints
     
     // Product ImageView Constraints
     @IBOutlet weak var topProductImageViewConstraint: NSLayoutConstraint!
-    var aspectProductImageViewConstraint: NSLayoutConstraint?
     @IBOutlet weak var heightProductImageViewConstraint: NSLayoutConstraint!
     
     // Top Container Constraints (productName + brandName)
@@ -101,17 +122,32 @@ class GameplayViewController: RootViewController, KeyboardViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        if !isProductListLoaded() {
+            print("Error : products are not loaded... productsList.count = \(self.productsList?.count)")
+            goToHome()
+            return
+        }
+        
+        self.keyboardContainerView.delegate = self
         configureView()
         startGameplayMode(self.gameplayMode)
-        self.keyboardContainerView.delegate = self
     }
     
     func configureView() {
         self.hidesBottomBarWhenPushed = true
-        //self.heightProductImageViewConstraint.constant = 0.891 * self.view.frame.height
         self.heightFeaturesContainerConstraint.constant = self.view.frame.height - (self.topInfosContainerView.frame.height + self.productImageView.frame.height)
+        self.widthInfosContainerConstraint.constant = self.view.frame.width - (self.view.frame.width - self.previewCircularProgress.frame.origin.x)
         self.view.layoutIfNeeded()
     }
+    
+    func isProductListLoaded() -> Bool {
+        if self.productsList?.count == 5 {
+            return true
+        } else {
+            return false
+        }
+    }
+    
     
     //MARK: Gameplay Life Cycle Methods
     
@@ -133,62 +169,101 @@ class GameplayViewController: RootViewController, KeyboardViewDelegate {
     }
     
     func startPreviewMode() {
-        initTimer()
-        startTimer()
-        self.previewCircularProgress.hidden = false
         hideKeyboardCounterContainerView(true)
+        
+        // On enchaine avec un nouveau produit -> on efface la vue after
+        if cursorProduct > 0 {
+            self.afterView.alpha = 0.0
+            self.topInfosContainerView.alpha = 0.0
+            self.bottomFeaturesContainer.alpha = 0.0
+            
+            self.previewCircularProgress.hidden = false
+            
+            // Top info container
+            self.topInfosContainerConstraint.constant = 0.0
+            self.widthInfosContainerConstraint.constant = self.view.frame.width - (self.view.frame.width - self.previewCircularProgress.frame.origin.x)
+            
+            // Product Image View
+            self.topProductImageViewConstraint.constant = self.topInfosContainerView.frame.height
+            self.heightProductImageViewConstraint.constant = 285.0
+            self.view.layoutIfNeeded()
+            
+            // Features Container
+            self.leadingFeaturesContainerConstraint.constant = 0.0
+            self.heightFeaturesContainerConstraint.constant = self.view.frame.height - (self.topInfosContainerView.frame.height + self.productImageView.frame.height)
+            self.view.layoutIfNeeded()
+            
+            self.topFeaturesContainerConstraint.constant = self.topInfosContainerView.frame.height + self.productImageView.frame.height
+            self.topFeaturesSubContainerConstraint.constant = (self.bottomFeaturesContainer.frame.height - self.bottomFeaturesLabelsContainer.frame.height) / 2
+            
+            UIView.animateWithDuration(0.5, animations: { 
+                self.topInfosContainerView.alpha = 1.0
+                self.bottomFeaturesContainer.alpha = 1.0
+                self.initTimer()
+                self.startTimer()
+            })
+
+            self.view.layoutIfNeeded()
+            
+        } else {
+            initTimer()
+            startTimer()
+            timelineView.initTimeline()
+            previewCircularProgress.hidden = false
+        }
+        
+        productNameLabel.text = currentProduct?.model
+        productBrandLabel.text = currentProduct?.brand
+        productImageView.downloadedFrom(link: (currentProduct?.imageURL)!, contentMode: .ScaleAspectFit)
+        if currentProduct?.caracteristiques.count > 0 {
+            for index in 0...(currentProduct?.caracteristiques.count)!-1 {
+                if index >= 3 {
+                    continue
+                }
+                self.featuresLabelsCollection[index].text = currentProduct?.caracteristiques[index]
+            }
+        }
+        currentPriceInArray = convertPriceToArrayOfInt((currentProduct?.price)!)
+        counterContainerView.centsLabel.text = currentPriceInArray?.1
     }
     
     func startMainMode() {
         self.cursorCounter = 0
-        self.counterContainerView.initCountersViews()
+        counterContainerView.initCountersViews()
         
+        // Start animation
         self.previewCircularProgress.hidden = true
         hideKeyboardCounterContainerView(false)
         
-        self.topInfosContainerView.hidden = true
-        self.bottomFeaturesContainer.hidden = true
+        self.topInfosContainerView.alpha = 0.0
+        self.bottomFeaturesContainer.alpha = 0.0
         
-        // Moving ImageView
         self.topProductImageViewConstraint.constant = 0.0
         self.heightProductImageViewConstraint.constant = 0.229 * self.view.frame.height
+        self.view.layoutIfNeeded()
         
-        // Configure infos product contraints
-        // Top Infos
         self.topInfosContainerConstraint.constant = self.productImageView.frame.height
+        self.widthInfosContainerConstraint.constant = self.view.frame.width / 2
         
-        // Features bottom container
         self.leadingFeaturesContainerConstraint.constant = self.view.frame.width / 2
         self.topFeaturesContainerConstraint.constant = self.productImageView.frame.height
         self.heightFeaturesContainerConstraint.constant = self.view.frame.height - (self.keyboardContainerView.frame.height + self.productImageView.frame.height)
         self.topFeaturesSubContainerConstraint.constant = 8.0
         
-        self.topInfosContainerView.hidden = false
-        self.bottomFeaturesContainer.hidden = false
-        self.topInfosContainerView.animatedLikeBubbleWithDelay(0.0, duration: 0.5)
-        self.bottomFeaturesContainer.animatedLikeBubbleWithDelay(0.2, duration: 0.5)
+        UIView.animateWithDuration(0.5) { 
+            self.topInfosContainerView.alpha = 1.0
+            self.bottomFeaturesContainer.alpha = 1.0
+        }
         
         self.view.layoutIfNeeded()
-        
-        
-        // Top Infos Container
-//        self.widthTopContainerConstraint.constant = self.view.frame.width / 1.882
-//        self.LeadingTopContainerConstraint.constant = self.view.frame.width - (self.view.frame.width / 1.882)
-//        
-//        // Product ImageView
-//        self.topProductImageViewConstraint.constant = 0.0
-//        self.aspectProductImageViewContraint = NSLayoutConstraint(item: self.productImageView, attribute: .Width, relatedBy: .Equal, toItem: self.productImageView, attribute: .Height, multiplier: 1, constant: 0)
-//        self.trailingProductImageViewConstraint.constant = self.widthTopContainerConstraint.constant
-//        
-//        // Features Container
-//        self.leadingInfosContainerConstraint.constant = self.view.frame.width - self.view.frame.width / 1.882
-//        self.topInfosContainerConstraint.constant = 0.0
-        //self.bottomFeaturesContainerConstraint.constant = self.keyboardContainerView.frame.size.height + 300
-        //self.bottomFeaturesContainerConstraint = NSLayoutConstraint(item: self.bottomFeaturesContainer, attribute: .Bottom, relatedBy: .Equal, toItem: self.keyboardContainerView, attribute: .Top, multiplier: 1.0, constant: 0.0)
     }
     
     func startAfterMode() {
-        
+        UIView.animateWithDuration(0.5) { 
+            self.afterView.alpha = 1.0
+        }
+        initTimer()
+        startTimer()
     }
     
     func startDebriefMode() {
@@ -199,7 +274,7 @@ class GameplayViewController: RootViewController, KeyboardViewDelegate {
         self.keyboardCounterContainerView.hidden = hide
         
         if hide {
-            self.topKeyboardCounterConstraint.constant = self.view.frame.size.height
+            self.topKeyboardCounterConstraint.constant = self.view.frame.height
             self.view.layoutSubviews()
         } else {
             UIView.animateWithDuration(1.0,
@@ -212,8 +287,10 @@ class GameplayViewController: RootViewController, KeyboardViewDelegate {
                 self.view.layoutSubviews()
                                         
                 }, completion: { (finished: Bool) in
-                    self.initTimer()
-                    self.startTimer()
+                    if finished {
+                        self.initTimer()
+                        self.startTimer()
+                    }
             })
         }
     }
@@ -222,49 +299,138 @@ class GameplayViewController: RootViewController, KeyboardViewDelegate {
     //MARK: Timer Methods
     
     func startTimer() {
+        self.timerFinished = false
         self.timer?.start()
     }
     
+    func stopTimer() {
+        self.timerFinished = true
+        self.timer?.invalidate()
+        self.timer = nil
+    }
+    
     func initTimer() {
-        if self.gameplayMode == .Preview {
-            self.currentTotalCooldown = kCooldownForPreview
-            self.previewCircularProgress.initProgressBar()
-        } else if self.gameplayMode == .Main {
-            self.currentTotalCooldown = kCooldownForMain
-            self.mainCircularProgress.initProgressBar()
+        if gameplayMode == .Preview {
+            currentTotalCooldown = kCooldownForPreview
+            previewCircularProgress.initProgressBar()
+            
+        } else if gameplayMode == .Main {
+            currentTotalCooldown = kCooldownForMain
+            mainCircularProgress.initProgressBar()
+            
+        } else if gameplayMode == .After {
+            currentTotalCooldown = kCooldownForAfter
+            mainCircularProgress.initProgressBar()
         }
-        self.currentMillisecondTime = self.currentTotalCooldown
-        self.timer = NSTimer.new(every: 0.01, { (timer: NSTimer) in
+        
+        currentMillisecondTime = currentTotalCooldown
+        timer = NSTimer.new(every: 0.01, { (timer: NSTimer) in
+            if self.timerFinished {
+                timer.invalidate()
+            }
             self.updateTimer()
         })
     }
     
     func updateTimer() {
-        self.currentMillisecondTime = self.currentMillisecondTime! - 0.01
+        currentMillisecondTime = currentMillisecondTime! - 0.01
         
-        if self.currentMillisecondTime <= 0.0 {
-            self.timer?.invalidate()
+        if currentMillisecondTime <= 0.0 {
+            stopTimer()
             
-            if self.gameplayMode == .Preview {
-                self.gameplayMode = .Main
-            } else if self.gameplayMode == .Main {
-                self.gameplayMode = .After
+            if gameplayMode == .Preview {
+                gameplayMode = .Main
+                
+            } else if gameplayMode == .Main {
+                validatePricing()
+                gameplayMode = .After
+                
+            } else if (gameplayMode == .After) && (cursorProduct == productsList!.count-1) {
+                gameplayMode = .Debrief
+                
+            } else if gameplayMode == .After {
+                self.cursorProduct += 1
+                gameplayMode = .Preview
             }
         }
     }
     
+    
+    //MARK: Keyboard Action Methods
+    
     func clickOnPadWithNumber(number: Int) {
-        self.counterContainerView.counterViewArray[cursorCounter!].startCounterAnimation(WithNumber: number) { (finished) in
-            self.cursorCounter! += 1
-            self.counterContainerView.numbersArray![self.cursorCounter!] = number
+        if cursorCounter == counterContainerView.numberOfCounterDisplayed {
+            return
+        }
+        let cursor = self.counterContainerView.numberOfCounterDisplayed == 2 ? self.cursorCounter+1 : self.cursorCounter
+        self.counterContainerView.counterViewArray[cursor].startCounterAnimationWithNumber(number: number)
+        { (finished) in
+            if self.cursorCounter <= self.counterContainerView.numberOfCounterDisplayed {
+                self.counterContainerView.numbersArray![self.cursorCounter] = number
+                self.cursorCounter += 1
+            }
         }
     }
     
     func validatePricing() {
+        self.stopTimer()
         
+        var counterViewTypeArray: [CounterViewAfterType] = []
+        let counterNumberArray = self.counterContainerView.numbersArray!
+        
+        if counterNumberArray == currentPriceInArray!.0 {
+            // Perfect price !
+            for _ in 0...counterNumberArray.count-1 {
+                counterViewTypeArray.append(CounterViewAfterType.Perfect)
+            }
+            
+            counterContainerView.revealCounterViewAfterWithArrayType(counterViewTypeArray)
+            afterView.estimationResult = .Perfect
+            gameplayMode == .After
+            
+            return
+        }
+        
+        for index in 0...counterNumberArray.count-1 {
+            if counterNumberArray[index] == currentPriceInArray!.0[index] {
+                counterViewTypeArray.append(CounterViewAfterType.Green)
+            } else {
+                counterViewTypeArray.append(CounterViewAfterType.Red)
+            }
+        }
+        afterView.displayEstimationResults(counterViewTypeArray)
+        counterContainerView.revealCounterViewAfterWithArrayType(counterViewTypeArray)
+        gameplayMode = .After
     }
     
     func eraseAllCounters() {
         self.counterContainerView.resetCountersViews()
+        cursorCounter = 0
+    }
+    
+    
+    //MARK: Helpers Methods
+    
+    func convertPriceToArrayOfInt(price: Double) -> ([Int], String) {
+        let string = String(price)
+        let eurosAndCentsArray = string.characters.split{$0 == "."}.map(String.init)
+        
+        let eurosString = String(eurosAndCentsArray[0])
+        let eurosArray = eurosString.characters.flatMap{Int(String($0))}
+        
+        var centsString = String(eurosAndCentsArray[1])
+        if centsString.characters.count == 1 {
+            centsString += "0"
+        }
+        
+        if price >= 10 {
+            if price >= 100 && price < 1000 {
+                currentNumberOfCounter = 3
+            } else {
+                currentNumberOfCounter = 2
+            }
+        }
+        
+        return (eurosArray, centsString)
     }
 }

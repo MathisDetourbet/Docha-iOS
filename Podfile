@@ -16,6 +16,7 @@ target 'Docha' do
     pod 'Google/SignIn'
     pod 'MBCircularProgressBar'
     pod 'SwiftyTimer'
+    pod 'ReachabilitySwift'
 end
 
 target 'DochaTests' do

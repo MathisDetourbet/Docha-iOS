@@ -59,6 +59,11 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>ReachabilitySwift.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>SCLAlertView.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -82,22 +87,7 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>0147D1F912ADE4324EEB2F030CA57D0E</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>04AE14B3871FDDF662715CEE04855268</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
 		<key>05094CC4A047119F7ADC14EE74C4881C</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>05888A38E6503DD1B246BB82E8D7FDCD</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -108,6 +98,11 @@
 			<true/>
 		</dict>
 		<key>1520003FEBEC114D6C84F832AFEDB994</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>1E810081A9F44ACFB47781D56C18B32F</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -127,12 +122,7 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>511D01576D49C11697020CA31B007A75</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>78FD1898276D307951A1193DA4570987</key>
+		<key>54DDE24A6CD61FEA08571E4740C3F67A</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -147,12 +137,32 @@
 			<key>primary</key>
 			<true/>
 		</dict>
+		<key>8F0CBEFC930BD99A1E767E209B7A7129</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>8FC4B2785BB68892651401B8A26A15AD</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
+		<key>A74CDBB1488271E3ABFBA3DABB46AD32</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>D2D17D2E6A8AD8B5A2D1F30A3032805E</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>D77AD979EE994198703EE72145F80F50</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>DF61DEF0A3128D6613087298D3CFA5CA</key>
 		<dict>
 			<key>primary</key>
 			<true/>

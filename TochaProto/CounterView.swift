@@ -9,6 +9,12 @@
 import Foundation
 import UIKit
 
+enum CounterViewAfterType {
+    case Perfect
+    case Green
+    case Red
+}
+
 class CounterView: UIImageView {
     let NUMBER_MAX = 10
     var counterImage: JDFlipImageView! {
@@ -64,7 +70,7 @@ class CounterView: UIImageView {
         super.init(coder: aDecoder)
     }
     
-    func startCounterAnimation(WithNumber newNumber: Int, completion: (finished: Bool) -> Void) {
+    func startCounterAnimationWithNumber(number newNumber: Int, completion: (finished: Bool) -> Void) {
         if newNumber == -1 {
             if newNumber == currentNumber! {
                 self.isSelected = false
@@ -72,7 +78,7 @@ class CounterView: UIImageView {
                 return
             }
             self.currentNumber! = newNumber
-            self.counterImage.setImageAnimated(UIImage(named: "counter_base"), duration: 0.5, completion: { (finished) -> Void in
+            self.counterImage.setImageAnimated(UIImage(named: "counter_base"), duration: 0.3, completion: { (finished) -> Void in
                 if finished {
                     completion(finished: false)
                 }
@@ -102,7 +108,10 @@ class CounterView: UIImageView {
         } else if range == 1 {
             self.currentNumber! += 1
             let currentNumberStr = String(self.currentNumber!)
-            self.counterImage.setImageAnimated(UIImage(named: String("counter_" + currentNumberStr)), duration: 0.5, completion: { (finished) -> Void in
+            self.counterImage.setImageAnimated(
+                UIImage(named: String("counter_" + currentNumberStr)),
+                duration: 0.3,
+                completion: { (finished) -> Void in
                 if finished {
                     self.isSelected = false
                     completion(finished: true)
@@ -115,7 +124,10 @@ class CounterView: UIImageView {
                 self.currentNumber! += 1
                 var currentNumberStr = String(self.currentNumber!)
                 let opBlock: NSBlockOperation = NSBlockOperation(block: ({ () -> Void in
-                    self.counterImage.setImageAnimated(UIImage(named: String("counter_" + currentNumberStr)), duration: 0.3, completion: { (finished) -> Void in
+                    self.counterImage.setImageAnimated(
+                        UIImage(named: String("counter_" + currentNumberStr)),
+                        duration: 0.3,
+                        completion: { (finished) -> Void in
                         if finished {
                             currentNumberStr = String(self.currentNumber!)
                         }
@@ -133,6 +145,20 @@ class CounterView: UIImageView {
             
             self.isSelected = false
             completion(finished: true)
+        }
+    }
+    
+    func setCounterViewAfterWithCounterViewAfterType(type: CounterViewAfterType) {
+        switch type {
+        case .Perfect:
+            counterImage.image = UIImage(named: "counter_perfect")
+            break
+        case .Green:
+            counterImage.image = UIImage(named: "counter_right")
+            break
+        default:
+            counterImage.image = UIImage(named: "counter_wrong")
+            break
         }
     }
 }

@@ -192,7 +192,7 @@ class UserSessionManager {
             }
         }
         
-        NSUserDefaults.standardUserDefaults().removeObjectForKey(Constants.UserDefaultsKey.kUserSessionObject)
-        NSUserDefaults.standardUserDefaults().synchronize()
+        //NSUserDefaults.standardUserDefaults().removeObjectForKey(Constants.UserDefaultsKey.kUserSessionObject)
+        //NSUserDefaults.standardUserDefaults().synchronize()
     }
 }

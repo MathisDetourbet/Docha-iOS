@@ -55,6 +55,7 @@ PODS:
   - IQKeyboardManagerSwift (4.0.3)
   - MBCircularProgressBar (0.3.4)
   - PageMenu (1.2.9)
+  - ReachabilitySwift (2.3.3)
   - SCLAlertView (0.5.8)
   - SwiftyJSON (2.3.2)
   - SwiftyTimer (1.4.0)
@@ -69,6 +70,7 @@ DEPENDENCIES:
   - IQKeyboardManagerSwift
   - MBCircularProgressBar
   - PageMenu
+  - ReachabilitySwift
   - SCLAlertView
   - SwiftyJSON (~> 2.3)
   - SwiftyTimer
@@ -92,11 +94,12 @@ SPEC CHECKSUMS:
   IQKeyboardManagerSwift: b6883b720b0e76473692fdc80828442566e1075f
   MBCircularProgressBar: ff3b8e2f441214d9ee122a24ba0d4d00cc7de881
   PageMenu: ba19ff267f7a19e444e93c20a7847b78954a7011
+  ReachabilitySwift: e0f6b6f280effb47731acfaaa2d5ffe223703793
   SCLAlertView: 653e84d1f9fd95333bc54671fbadb7d0c47fce49
   SwiftyJSON: 04ccea08915aa0109039157c7974cf0298da292a
   SwiftyTimer: db4458cfaf67fc71e16ad6e4637c60b86f76a649
   TextFieldEffects: bc4fd3bd557321bd61a0762f3f50965477a36f62
 
-PODFILE CHECKSUM: bff2ecb63b7aeb8c9b473c37fa00ad26d7f4fda4
+PODFILE CHECKSUM: d7756626042061b1c324cc315adb45ac46865a30
 
 COCOAPODS: 1.0.0

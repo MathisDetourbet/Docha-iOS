@@ -21,6 +21,7 @@ struct UserDataKey {
     static let kAvatar = "avatar"
     static let kDochos = "dochos"
     static let kExperience = "experience"
+    static let kPerfectPriceCpt = "perfect_price_cpt"
     static let kFacebookID = "fb_id"
     static let kFacebookToken = "fb_token"
     static let kFacebookImageURL = "fb_image_url"
@@ -44,10 +45,11 @@ class User: NSObject {
     var levelMaxUnlocked: Int = 1
     var dochos: Int = 0
     var experience: Int = 0
+    var perfectPriceCpt: Int = 0
     
     override init() {}
     
-    init(userID: Int?, username: String?, lastName: String?, firstName: String?, email: String?, gender: String?, dateBirthday: NSDate?, categoryFavorite: String?, avatar: String?, levelMaxUnlocked: Int?, dochos: Int?, experience: Int?) {
+    init(userID: Int?, username: String?, lastName: String?, firstName: String?, email: String?, gender: String?, dateBirthday: NSDate?, categoryFavorite: String?, avatar: String?, levelMaxUnlocked: Int?, dochos: Int?, experience: Int?, perfectPriceCpt: Int?) {
         self.userID = userID
         self.username = username
         self.lastName = lastName
@@ -60,6 +62,7 @@ class User: NSObject {
         self.levelMaxUnlocked = levelMaxUnlocked!
         self.dochos = dochos!
         self.experience = experience!
+        self.perfectPriceCpt = perfectPriceCpt!
     }
     
     //    convenience init(lastName: String?, firstName: String?, email: String?, sexe: String?, dateBirthday: NSDate?, categoryFavorite: String?, avatar: String?, levelMaxUnlocked: Int?, dochos: Int?, experience: Int?) {
@@ -89,6 +92,7 @@ class User: NSObject {
             if let levelMaxUnlocked = dicoUser["level_max_unlocked"]?.integerValue { self.levelMaxUnlocked = levelMaxUnlocked }
             if let dochos = dicoUser["dochos"]?.integerValue { self.dochos = dochos }
             if let experience = dicoUser["experience"]?.integerValue { self.experience = experience }
+            if let perfectPriceCpt = dicoUser["perfect_price_cpt"]?.integerValue { self.perfectPriceCpt = perfectPriceCpt }
         }
     }
 }

@@ -19,6 +19,8 @@ class KeyboardView: UIView {
     
     var delegate: KeyboardViewDelegate?
     
+    @IBOutlet weak var counterContainerView: CounterContainerView!
+    
     @IBOutlet var padButtons: [UIButton]!
     @IBOutlet weak var eraseButton: UIButton!
     @IBOutlet weak var validButton: UIButton!
@@ -30,17 +32,22 @@ class KeyboardView: UIView {
     
     @IBAction func eraseAllCounters(sender: UIButton) {
         self.delegate?.eraseAllCounters()
+        self.validButton.enabled = false
+        self.eraseButton.enabled = false
     }
     
     @IBAction func clickOnPad(sender: UIButton) {
         let padNumber = sender.tag
         self.delegate?.clickOnPadWithNumber(padNumber)
+        self.validButton.enabled = counterContainerView.enableValidButton()
+        self.eraseButton.enabled = true
     }
 }
 
 class CounterContainerView: UIView {
     
     var numbersArray: [Int]?
+    var numberOfCounterDisplayed: Int = 3
     
     @IBOutlet var counterViewArray: [CounterView]!
     @IBOutlet weak var centaineCounterView: CounterView!
@@ -53,7 +60,7 @@ class CounterContainerView: UIView {
     func initCounterData() {
         numbersArray = []
         
-        for _ in 0...counterViewArray.count {
+        for _ in 1...numberOfCounterDisplayed {
             numbersArray?.append(-1)
         }
     }
@@ -78,5 +85,25 @@ class CounterContainerView: UIView {
                     self.initCounterData()
             })
         }
+    }
+    
+    func enableValidButton() -> Bool {
+        for number in numbersArray! {
+            if number == -1 {
+                return false
+            }
+        }
+        return true
+    }
+    
+    func revealCounterViewAfterWithArrayType(typeArray: [CounterViewAfterType]!) {
+        for index in 0...typeArray.count-1 {
+            counterViewArray[index].setCounterViewAfterWithCounterViewAfterType(typeArray[index])
+        }
+    }
+    
+    func hideCounterView() {
+        centaineCounterView.hidden = true
+        numberOfCounterDisplayed = 2
     }
 }

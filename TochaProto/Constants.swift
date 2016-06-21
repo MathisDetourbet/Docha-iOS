@@ -26,6 +26,7 @@ struct Constants {
         static let kUserInfosLevelMaxUnlocked = "userInfosLevelMaxUnlocked"
         static let kUserInfosDochos = "userInfosDochos"
         static let kUserInfosExperience = "userInfosExperience"
+        static let kUserInfosPerfectPriceCpt = "userInfosPerfectPriceCpt"
         static let kUserInfosAvatar = "userInfosAvatar"
         static let kUserInfosAuthToken = "userInfosAuthToken"
         static let kUserInfosSessionID = "userInfosSessionID"
@@ -44,7 +45,7 @@ struct Constants {
     
     struct UrlServer {
         
-        static let UrlBase = "http://localhost:3000"
+        static let UrlBase = "https://afternoon-beyond-49404.herokuapp.com" //"http://localhost:3000"
         
         struct UrlRegister {
             static let UrlFacebookRegister = "/users/auth/facebook"

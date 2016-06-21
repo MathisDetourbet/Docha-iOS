@@ -29,10 +29,11 @@ class UserSession: User, NSCoding {
         let levelMaxUnlocked = aDecoder.decodeIntegerForKey(Constants.UserDefaultsKey.kUserInfosLevelMaxUnlocked) as Int
         let dochos = aDecoder.decodeIntegerForKey(Constants.UserDefaultsKey.kUserInfosDochos) as Int
         let experience = aDecoder.decodeIntegerForKey(Constants.UserDefaultsKey.kUserInfosExperience) as Int
+        let perfectPriceCpt = aDecoder.decodeIntegerForKey(Constants.UserDefaultsKey.kUserInfosPerfectPriceCpt) as Int
         let authToken = aDecoder.decodeObjectForKey(Constants.UserDefaultsKey.kUserInfosAuthToken) as? String
         let sessionID = aDecoder.decodeIntegerForKey(Constants.UserDefaultsKey.kUserInfosSessionID) as Int
         
-        super.init(userID: userID, username: username, lastName: lastName, firstName: firstName, email: email, gender: gender, dateBirthday: dateBirthday, categoryFavorite: categoryFavorite, avatar: avatar, levelMaxUnlocked: levelMaxUnlocked, dochos: dochos, experience: experience)
+        super.init(userID: userID, username: username, lastName: lastName, firstName: firstName, email: email, gender: gender, dateBirthday: dateBirthday, categoryFavorite: categoryFavorite, avatar: avatar, levelMaxUnlocked: levelMaxUnlocked, dochos: dochos, experience: experience, perfectPriceCpt: perfectPriceCpt)
         
         self.authToken = authToken
         self.sessionID = sessionID
@@ -50,6 +51,7 @@ class UserSession: User, NSCoding {
         aCoder.encodeInteger(levelMaxUnlocked, forKey: Constants.UserDefaultsKey.kUserInfosLevelMaxUnlocked)
         aCoder.encodeInteger(dochos, forKey: Constants.UserDefaultsKey.kUserInfosDochos)
         aCoder.encodeInteger(experience, forKey: Constants.UserDefaultsKey.kUserInfosExperience)
+        aCoder.encodeInteger(perfectPriceCpt, forKey: Constants.UserDefaultsKey.kUserInfosPerfectPriceCpt)
         aCoder.encodeObject(avatar, forKey: Constants.UserDefaultsKey.kUserInfosAvatar)
     }
     

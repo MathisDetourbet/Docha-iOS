@@ -13,7 +13,7 @@ class PreferencesViewController: RootViewController, UITableViewDelegate, UITabl
     let idNormalTableViewCell = "idNormalTableViewCell"
     let idSwitchTableViewCell = "idSwitchTableViewCell"
     let sections: [String] = ["COMPTE", "PARAMÈTRES", "AUTRES"]
-    let cellContent: [[[String:String]]] = [[["title":"Modifier le profil","iconPath": "profil_icon"], ["title":"Changer le mot de passe","iconPath": "password_change_icon"], ["title":"Catégorie préférés","iconPath": "category_selection_icon"]],
+    let cellContent: [[[String:String]]] = [[["title":"Modifier le profil","iconPath": "profil_icon"], ["title":"Changer le mot de passe","iconPath": "password_change_icon"], ["title":"Catégorie préférées","iconPath": "category_selection_icon"]],
                                             [["title":"Notifications","iconPath": "notifications_icon"], ["title":"Newsletter","iconPath": "newsletter_icon"], ["title":"Langue","iconPath": "language_icon"]],
                                             [["title":"À propos","iconPath": "rocket_icon"], ["title":"Nous contacter","iconPath": "mail_icon"]]]
     

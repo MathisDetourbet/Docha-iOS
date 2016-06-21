@@ -20,7 +20,7 @@ class RootViewController: UIViewController {
     
     func configNavigationBarWithTitle(title: String) {
         self.navigationItem.title = title
-        self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName:UIColor.whiteColor()]
+        self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName:UIColor.whiteColor(), NSFontAttributeName: UIFont(name: "Montserrat-ExtraBold", size: 13)!]
     }
     
     override func prefersStatusBarHidden() -> Bool {

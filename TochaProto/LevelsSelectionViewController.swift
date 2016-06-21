@@ -54,7 +54,7 @@ class LevelsSelectionViewController: RootViewController, UITableViewDataSource, 
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         // load products
-        ProductManager.sharedInstance.loadPacksOfProducts()
+        ProductManager.sharedInstance.loadProductsWithCurrentCategory()
         
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let gameplayViewController = storyboard.instantiateViewControllerWithIdentifier("idGameplayViewController") as! GameplayViewController

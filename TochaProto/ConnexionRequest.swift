@@ -125,6 +125,7 @@ class ConnexionRequest {
                                     session.categoryFavorite = jsonResponse["data"]["user"][UserDataKey.kCategoryFavorite].string
                                     session.gender = jsonResponse["data"]["user"][UserDataKey.kGender].string
                                     session.facebookImageURL = jsonResponse["data"]["user"][UserDataKey.kFacebookImageURL].string
+                                    print("Facebook image URL : \(session.facebookImageURL)")
                                     session.facebookID = jsonResponse["data"]["user"][UserDataKey.kFacebookID].string
                                     session.facebookAccessToken = jsonResponse["data"]["user"][UserDataKey.kFacebookToken].string
                                     
