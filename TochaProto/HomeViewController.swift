@@ -57,7 +57,7 @@ class HomeViewController: RootViewController, UITableViewDelegate, UITableViewDa
                 }
                 
                 if let fbImageURL = userSessionFacebook.facebookImageURL {
-                    avatarImageView.downloadedFrom(link: fbImageURL, contentMode: .ScaleToFill)
+                    avatarImageView.downloadedFrom(link: fbImageURL, contentMode: .ScaleToFill, WithCompletion: nil)
                     
                     avatarImageView.layer.cornerRadius = self.avatarImageView.frame.size.height/2
                     avatarImageView.layer.borderWidth = 3.0
@@ -104,13 +104,44 @@ class HomeViewController: RootViewController, UITableViewDelegate, UITableViewDa
     //MARK: Table View Controller - Delegate Methods
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        
+        return
     }
     
     func playButtonTouched() {
-        // Start the game !
-        // On charge 5 produits
-        var productsList = ProductManager.sharedInstance.loadProductsWithCurrentCategory()
+        let loadingView = LoadingView(frame: self.view.frame, loadingType: .Gameplay)
+        self.navigationController?.view.addSubview(loadingView)
+        loadingView.startLoading()
+        
+        let productManager = ProductManager.sharedInstance
+        productManager.loadProductsWithCurrentCategory()
+        
+        var packOfProducts = productManager.loadPackOfProducts()
+        
+        productManager.downloadProductsImages(packOfProducts!, WithCompletion: { (finished) in
+            if finished {
+                UIView.animateWithDuration(0.2, animations: {
+                    loadingView.alpha = 0.0
+                    
+                    }, completion: { (finished) in
+                        loadingView.dismissView()
+                })
+                loadingView.dismissView()
+                
+                let productsImages = productManager.productsImages
+                
+                for index in 0...productsImages!.count-1 {
+                    packOfProducts![index].image = productsImages!["\(packOfProducts![index].id)"]
+                }
+                let gameplayVC = self.storyboard?.instantiateViewControllerWithIdentifier("idGameplayViewController") as! GameplayViewController
+                gameplayVC.productsList = packOfProducts
+                self.hidesBottomBarWhenPushed = true
+                self.navigationController?.pushViewController(gameplayVC, animated: true)
+                
+            } else {
+                print("Error when loading products...")
+                SCLAlertView.init().showError("Oups !", subTitle: "Il semblerait que vous ne soyez pas connecté à internet... :( Essayer à nouveau utlérieurement")
+            }
+        })
     }
     
     func displayAllFriendsButtonTouched() {

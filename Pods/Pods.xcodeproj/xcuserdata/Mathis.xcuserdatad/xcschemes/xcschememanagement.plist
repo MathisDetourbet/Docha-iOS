@@ -39,6 +39,11 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>NVActivityIndicatorView.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>PageMenu.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -102,11 +107,6 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>1E810081A9F44ACFB47781D56C18B32F</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
 		<key>21C461B0CAD90DE64B07A5D212C5F829</key>
 		<dict>
 			<key>primary</key>
@@ -117,12 +117,12 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>4878C70B21CA37D7CB8A476BF986741B</key>
+		<key>3BE8AC0404F6D963BD7BFAAF610C1FDB</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>54DDE24A6CD61FEA08571E4740C3F67A</key>
+		<key>4878C70B21CA37D7CB8A476BF986741B</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -137,7 +137,7 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>8F0CBEFC930BD99A1E767E209B7A7129</key>
+		<key>8951D99FC1A38A63CBD2243C06CE05E9</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -147,7 +147,17 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>A74CDBB1488271E3ABFBA3DABB46AD32</key>
+		<key>BDDC4DBF7654960710F7FF7B28F35033</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>C43946B07B8CABF5E98F58793EEF4861</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>D23C5F0EBCB674DB7FC387411DDE3DE6</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -157,12 +167,12 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>D77AD979EE994198703EE72145F80F50</key>
+		<key>DAF6DA6AAC807770530113391B76AE20</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>DF61DEF0A3128D6613087298D3CFA5CA</key>
+		<key>F06C7B5DA1A323690BEEB595D98417D8</key>
 		<dict>
 			<key>primary</key>
 			<true/>

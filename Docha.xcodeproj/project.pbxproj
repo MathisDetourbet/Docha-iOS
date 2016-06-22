@@ -80,6 +80,7 @@
 		67C2E3491C5BBB4500345D27 /* Coupon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67C2E3481C5BBB4500345D27 /* Coupon.swift */; };
 		67C83B011CF498780066B982 /* PasswordForgottenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67C83B001CF498780066B982 /* PasswordForgottenViewController.swift */; };
 		67C8EBF41D11A4E700AF885B /* AfterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67C8EBF31D11A4E700AF885B /* AfterView.swift */; };
+		67D4826A1D19949A009F1992 /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67D482691D19949A009F1992 /* LoadingView.swift */; };
 		67DA29B01CEB327400CE621F /* ConnexionRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67DA29AF1CEB327400CE621F /* ConnexionRequest.swift */; };
 		67DA29B61CEB384700CE621F /* InscriptionRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67DA29B51CEB384700CE621F /* InscriptionRequest.swift */; };
 		67E5C55C1CF88639009F3FCA /* InscriptionCategorySelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67E5C55B1CF88639009F3FCA /* InscriptionCategorySelectionViewController.swift */; };
@@ -209,6 +210,7 @@
 		67C2E3481C5BBB4500345D27 /* Coupon.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Coupon.swift; sourceTree = "<group>"; };
 		67C83B001CF498780066B982 /* PasswordForgottenViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PasswordForgottenViewController.swift; sourceTree = "<group>"; };
 		67C8EBF31D11A4E700AF885B /* AfterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AfterView.swift; sourceTree = "<group>"; };
+		67D482691D19949A009F1992 /* LoadingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
 		67DA29AF1CEB327400CE621F /* ConnexionRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConnexionRequest.swift; sourceTree = "<group>"; };
 		67DA29B51CEB384700CE621F /* InscriptionRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InscriptionRequest.swift; sourceTree = "<group>"; };
 		67E5C55B1CF88639009F3FCA /* InscriptionCategorySelectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InscriptionCategorySelectionViewController.swift; sourceTree = "<group>"; };
@@ -692,6 +694,7 @@
 				679B23CD1D05E66F00692400 /* DochaColorsHealper.swift */,
 				67300B911D09A9730061D06F /* StringHelper.swift */,
 				677BFD631D18C1380014878C /* ArrayHelper.swift */,
+				67D482691D19949A009F1992 /* LoadingView.swift */,
 			);
 			name = Helpers;
 			sourceTree = "<group>";
@@ -1009,6 +1012,7 @@
 				67A302241C5AA7A20065D097 /* CouponsStoreViewController.swift in Sources */,
 				6786E4041CF485ED00729D8E /* RootViewController.swift in Sources */,
 				67C2E3491C5BBB4500345D27 /* Coupon.swift in Sources */,
+				67D4826A1D19949A009F1992 /* LoadingView.swift in Sources */,
 				67F0CA0B1CD3BFCC00C9B4B6 /* LevelsTableViewCell.swift in Sources */,
 				67300B811D083B6E0061D06F /* StorePagerViewController.swift in Sources */,
 				6701D9A21C108AAE00F87043 /* Product.swift in Sources */,

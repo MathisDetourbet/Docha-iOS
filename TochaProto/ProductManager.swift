@@ -9,7 +9,7 @@
 import SwiftyJSON
 
 extension UIImageView {
-    func downloadedFrom(link link:String, contentMode mode: UIViewContentMode) {
+    func downloadedFrom(link link:String, contentMode mode: UIViewContentMode, WithCompletion completion: (() -> Void)?) {
         guard
             let url = NSURL(string: link)
             else {return}
@@ -23,14 +23,16 @@ extension UIImageView {
                 else { return }
             dispatch_async(dispatch_get_main_queue()) { () -> Void in
                 self.image = image
+                completion?()
             }
         }).resume()
     }
 }
 
+
 class ProductManager {
     var products: [Product]?
-    var productsImagesViews: [UIImageView]?
+    var productsImages: [String:UIImage]?
     
     class var sharedInstance: ProductManager {
         struct Singleton {
@@ -40,7 +42,7 @@ class ProductManager {
     }
     
     func loadProductsWithCurrentCategory() {
-        let category = UserSessionManager.sharedInstance.currentSession()?.categoryFavorite
+        //let category = UserSessionManager.sharedInstance.currentSession()?.categoryFavorite
         let jsonName = "decoration"
         guard
             let jsonPath = NSBundle.mainBundle().pathForResource(jsonName, ofType: "json"),
@@ -96,21 +98,28 @@ class ProductManager {
             return packOfProducts
             
         } else {
-            print("products of productManager is nil... Need to call loadPacksOfProductsWithCurrentCategory before")
+            print("products of productManager is nil... Need to call loadPacksOfProductsWithCurrentCategory() before")
             return nil
         }
     }
     
-    func downloadProductsImages() {
-        self.productsImagesViews = []
+    func downloadProductsImages(packOfProducts: [Product]!, WithCompletion completion: (finished: Bool) -> Void) {
+        self.productsImages = [String:UIImage]()
         
-        for product in self.products! {
+        for product in packOfProducts! {
             let imageURL = product.imageURL
             let imageView = UIImageView()
-            dispatch_async(dispatch_get_main_queue()) { () -> Void in
-                imageView.downloadedFrom(link: imageURL, contentMode: UIViewContentMode.ScaleAspectFit)
-                self.productsImagesViews!.append(imageView)
-            }
+            
+            dispatch_async(dispatch_get_main_queue(), {
+                imageView.downloadedFrom(link: imageURL, contentMode: .ScaleAspectFit, WithCompletion: { 
+                    self.productsImages!["\(product.id)"] = imageView.image!
+                    
+                    if self.productsImages?.count == packOfProducts.count {
+                            completion(finished: true)
+                    }
+                })
+                
+            })
         }
     }
 }

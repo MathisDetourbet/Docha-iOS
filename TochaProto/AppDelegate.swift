@@ -34,8 +34,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
         
         GIDSignIn.sharedInstance().delegate = self
         
-        ProductManager.sharedInstance.loadProductsWithCurrentCategory()
-        
         //        let tabBarController = self.window?.rootViewController as! UITabBarController
         //        let tabBar = tabBarController.tabBar as UITabBar
         //        tabBar.backgroundImage = UIImage(named: "bottom-menu_tab")

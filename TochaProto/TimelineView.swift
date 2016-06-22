@@ -30,37 +30,46 @@ class TimelineView: UIView {
             stepStateArray?.append(.None)
         }
         cursor = stepStateArray?.indexOf(.Current)
-        
-//        for index in 0...stepsImagesViews.count-1 {
-//            let stepImage = stepsImagesViews[index]
-//            stepImage.translatesAutoresizingMaskIntoConstraints = false
-//            
-//            // Center Y
-//            self.addConstraint(NSLayoutConstraint(item: stepImage, attribute: .CenterY, relatedBy: .Equal, toItem: self, attribute: .CenterY, multiplier: 1.0, constant: 0.0))
-//            
-//            // Leading
-//            if index == 0 {
-//                self.addConstraint(NSLayoutConstraint(item: stepImage, attribute: .Leading, relatedBy: .Equal, toItem: self, attribute: .Leading, multiplier: 1.0, constant: 3.0))
-//            } else {
-//                self.addConstraint(NSLayoutConstraint(item: stepImage, attribute: .Leading, relatedBy: .Equal, toItem: stepsImagesViews[index-1], attribute: .Trailing, multiplier: 1.0, constant: 3.0))
-//            }
-//            
-//            // Height & Width
-//            stepStateArray![index] == .Current ? addSizeConstraintToItem(stepImage, andSize: 25.0) : addSizeConstraintToItem(stepImage, andSize: 20.0)
-//        }
     }
     
-    func nextStepWithState(state: StepState) {
+    func nextStepWithCounterViewAfterTypeArray(counterViewArray: [CounterViewAfterType]!) {
+        let state = getStateWithCounterViewAfterType(counterViewArray)
         if cursor == stepsImagesViews.count {
             return
         }
         stepStateArray![cursor] = state
         stepStateArray![cursor+1] = .Current
-        //resizeItem(stepsImagesViews![cursor!], withSize: 20.0, OfIndex: cursor!)
         updateImageItem(stepsImagesViews![cursor], withState: state)
         
         cursor = stepStateArray?.indexOf(.Current)
-        //resizeItem(stepsImagesViews![cursor], withSize: 25.0, OfIndex: cursor!)
+        resizeItem(stepsImagesViews![cursor], withSize: 25.0, OfIndex: cursor!)
+    }
+    
+    func getStateWithCounterViewAfterType(counterViewAfterTypeArray: [CounterViewAfterType]!) -> StepState {
+        var perfectCpt = 0
+        var greenCpt = 0
+        var redCpt = 0
+        
+        for type in counterViewAfterTypeArray {
+            switch type {
+            case .Perfect:
+                perfectCpt += 1
+                break
+            case .Green:
+                greenCpt += 1
+                break
+            default:
+                redCpt += 1
+                break
+            }
+        }
+        if perfectCpt == counterViewAfterTypeArray.count {
+            return StepState.Perfect
+        } else if redCpt == counterViewAfterTypeArray.count {
+            return StepState.Fail
+        } else {
+            return StepState.Success
+        }
     }
     
     func updateImageItem(item: UIImageView, withState state: StepState) {

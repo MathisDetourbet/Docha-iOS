@@ -100,7 +100,7 @@ class PreferencesViewController: RootViewController, UITableViewDelegate, UITabl
     func tableView(tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
         let header = view as! UITableViewHeaderFooterView
         header.textLabel?.font = UIFont(name: "Montserrat-Semibold", size: 12)
-        header.textLabel?.textColor = UIColor.darkBlueColor()
+        header.textLabel?.textColor = UIColor.darkBlueDochaColor()
     }
     
     

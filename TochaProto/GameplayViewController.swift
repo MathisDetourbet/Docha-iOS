@@ -123,13 +123,14 @@ class GameplayViewController: RootViewController, KeyboardViewDelegate {
         super.viewDidLoad()
         
         if !isProductListLoaded() {
-            print("Error : products are not loaded... productsList.count = \(self.productsList?.count)")
+            print("Error : products are not loaded... productsList.count = \(self.productsList?.count))")
             goToHome()
             return
         }
         
         self.keyboardContainerView.delegate = self
         configureView()
+        cursorProduct = 0
         startGameplayMode(self.gameplayMode)
     }
     
@@ -173,6 +174,7 @@ class GameplayViewController: RootViewController, KeyboardViewDelegate {
         
         // On enchaine avec un nouveau produit -> on efface la vue after
         if cursorProduct > 0 {
+            self.timelineView.nextStepWithCounterViewAfterTypeArray(self.afterView.counterViewTypeArray)
             self.afterView.alpha = 0.0
             self.topInfosContainerView.alpha = 0.0
             self.bottomFeaturesContainer.alpha = 0.0
@@ -214,7 +216,7 @@ class GameplayViewController: RootViewController, KeyboardViewDelegate {
         
         productNameLabel.text = currentProduct?.model
         productBrandLabel.text = currentProduct?.brand
-        productImageView.downloadedFrom(link: (currentProduct?.imageURL)!, contentMode: .ScaleAspectFit)
+        productImageView.image = currentProduct?.image
         if currentProduct?.caracteristiques.count > 0 {
             for index in 0...(currentProduct?.caracteristiques.count)!-1 {
                 if index >= 3 {
@@ -306,7 +308,7 @@ class GameplayViewController: RootViewController, KeyboardViewDelegate {
     func stopTimer() {
         self.timerFinished = true
         self.timer?.invalidate()
-        self.timer = nil
+        //self.timer = nil
     }
     
     func initTimer() {
@@ -343,7 +345,6 @@ class GameplayViewController: RootViewController, KeyboardViewDelegate {
                 
             } else if gameplayMode == .Main {
                 validatePricing()
-                gameplayMode = .After
                 
             } else if (gameplayMode == .After) && (cursorProduct == productsList!.count-1) {
                 gameplayMode = .Debrief
@@ -387,19 +388,23 @@ class GameplayViewController: RootViewController, KeyboardViewDelegate {
             counterContainerView.revealCounterViewAfterWithArrayType(counterViewTypeArray)
             afterView.estimationResult = .Perfect
             gameplayMode == .After
+            self.afterView.counterViewTypeArray = counterViewTypeArray
             
             return
         }
         
         for index in 0...counterNumberArray.count-1 {
+            
             if counterNumberArray[index] == currentPriceInArray!.0[index] {
                 counterViewTypeArray.append(CounterViewAfterType.Green)
+                
             } else {
                 counterViewTypeArray.append(CounterViewAfterType.Red)
             }
         }
         afterView.displayEstimationResults(counterViewTypeArray)
         counterContainerView.revealCounterViewAfterWithArrayType(counterViewTypeArray)
+        self.afterView.counterViewTypeArray = counterViewTypeArray
         gameplayMode = .After
     }
     
@@ -411,7 +416,7 @@ class GameplayViewController: RootViewController, KeyboardViewDelegate {
     
     //MARK: Helpers Methods
     
-    func convertPriceToArrayOfInt(price: Double) -> ([Int], String) {
+    func convertPriceToArrayOfInt(price: Double!) -> ([Int], String) {
         let string = String(price)
         let eurosAndCentsArray = string.characters.split{$0 == "."}.map(String.init)
         

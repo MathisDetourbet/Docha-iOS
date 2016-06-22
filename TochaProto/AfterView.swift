@@ -10,6 +10,7 @@ import Foundation
 
 class AfterView: UIView {
     
+    var counterViewTypeArray: [CounterViewAfterType]?
     var estimationResult: EstimationResult? {
         didSet {
             switch estimationResult! {
@@ -32,6 +33,7 @@ class AfterView: UIView {
             }
         }
     }
+    
     @IBOutlet weak var blueLayerView: UIView!
     @IBOutlet weak var wordImageView: UIImageView!
     @IBOutlet weak var sentenceLabel: UILabel!

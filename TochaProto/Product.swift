@@ -21,7 +21,7 @@ class Product: NSObject {
     let price: Double
     let category: String
     let imageURL: String
-    let image: UIImage?
+    var image: UIImage?
     let caracteristiques: [String]
     let pageURL: String
     let gender: Gender

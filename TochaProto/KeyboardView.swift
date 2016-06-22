@@ -98,7 +98,11 @@ class CounterContainerView: UIView {
     
     func revealCounterViewAfterWithArrayType(typeArray: [CounterViewAfterType]!) {
         for index in 0...typeArray.count-1 {
-            counterViewArray[index].setCounterViewAfterWithCounterViewAfterType(typeArray[index])
+            var newIndex = index
+            if numberOfCounterDisplayed == 2 {
+                newIndex += 1
+            }
+            counterViewArray[newIndex].setCounterViewAfterWithCounterViewAfterType(typeArray[index])
         }
     }
     

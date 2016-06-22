@@ -17,6 +17,7 @@ target 'Docha' do
     pod 'MBCircularProgressBar'
     pod 'SwiftyTimer'
     pod 'ReachabilitySwift'
+    pod 'NVActivityIndicatorView'
 end
 
 target 'DochaTests' do
