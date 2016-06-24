@@ -12,6 +12,8 @@ import IQKeyboardManagerSwift
 import GoogleSignIn
 import Google
 import SwiftyJSON
+import Fabric
+import Crashlytics
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
@@ -20,6 +22,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
+        
+        // Crashlytics
+        Fabric.with([Crashlytics.self])
+        
         IQKeyboardManager.sharedManager().enable = true
         
         NavSchemeManager.sharedInstance.initRootController()
@@ -100,7 +106,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
                     
                     // User access token
                     dicoUserData[UserDataKey.kFacebookToken] = FBSDKAccessToken.currentAccessToken().tokenString
-
+                    
+                    DochaPopupHelper.sharedInstance.showLoadingPopup()
+                    
                     UserSessionManager.sharedInstance.connectByFacebook(
                         dicoUserData,
                         success: {

@@ -24,6 +24,9 @@ PODS:
   - AlamofireImage (2.4.0):
     - Alamofire (~> 3.3)
   - CNPPopupController (0.3.1)
+  - Crashlytics (3.7.2):
+    - Fabric (~> 1.6.3)
+  - Fabric (1.6.7)
   - FirebaseAnalytics (3.2.0):
     - FirebaseInstanceID (~> 1.0)
     - GoogleInterchangeUtilities (~> 1.2)
@@ -68,6 +71,8 @@ DEPENDENCIES:
   - Alamofire (~> 3.0)
   - AlamofireImage (~> 2.0)
   - CNPPopupController
+  - Crashlytics
+  - Fabric
   - Google/SignIn
   - IQKeyboardManagerSwift
   - MBCircularProgressBar
@@ -85,6 +90,8 @@ SPEC CHECKSUMS:
   Alamofire: c19a627cefd6a95f840401c49ab1f124e07f54ee
   AlamofireImage: 87408b652e0f5ae5fe364035f15aea8b9b24c77e
   CNPPopupController: 67dc2ca5a3f88cd49a27bb1b0aeb78a24d423d79
+  Crashlytics: 130ab943f8c78cda7a814b434f270b2e2c8a3cba
+  Fabric: caf7580c725e64db144f610ac65cd60956911dc7
   FirebaseAnalytics: 6f75b04e6bfb8e0b6e9ef298e04c24eea3b13863
   FirebaseInstanceID: d014d574053a2fe84478f12f7bae96979e7051bb
   Google: 813c467362eabc11385f5a5cc9ad0cb651a58f4e
@@ -106,6 +113,6 @@ SPEC CHECKSUMS:
   SwiftyTimer: db4458cfaf67fc71e16ad6e4637c60b86f76a649
   TextFieldEffects: bc4fd3bd557321bd61a0762f3f50965477a36f62
 
-PODFILE CHECKSUM: 6d31bb44bedc6786f49cc3bda53ff706d47cd7c1
+PODFILE CHECKSUM: 3580924e7beab4664288d411d3f24837356fa80b
 
-COCOAPODS: 1.0.0
+COCOAPODS: 1.0.1

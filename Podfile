@@ -19,6 +19,8 @@ target 'Docha' do
     pod 'ReachabilitySwift'
     pod 'NVActivityIndicatorView'
     pod 'PBWebViewController'
+    pod 'Fabric'
+    pod 'Crashlytics'
 end
 
 target 'DochaTests' do

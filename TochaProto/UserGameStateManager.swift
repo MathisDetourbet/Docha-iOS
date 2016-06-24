@@ -23,4 +23,10 @@ class UserGameStateManager {
 //        let experience = userSession.experience
 //        let level = userSession.levelMaxUnlocked
 //    }
+    
+    func getCurrentDochos() -> Int {
+        return self.userSession.dochos
+    }
+    
+    
 }

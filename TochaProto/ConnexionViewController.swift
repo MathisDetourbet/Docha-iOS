@@ -9,6 +9,7 @@
 import Foundation
 import SwiftyJSON
 import TextFieldEffects
+import SCLAlertView
 // Google+
 import GoogleSignIn
 
@@ -121,6 +122,7 @@ class ConnexionViewController: RootViewController, GIDSignInUIDelegate {
         let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
         appDelegate.facebookSignIn({
             // Success
+            DochaPopupHelper.sharedInstance.dismissAlertView()
             if UserSessionManager.sharedInstance.currentSession()?.categoryFavorite != nil {
                 self.goToHome()
             } else {
@@ -147,6 +149,7 @@ class ConnexionViewController: RootViewController, GIDSignInUIDelegate {
                 
             }, fail: { (error, listError) in
                 print("User connexion by email failed...")
+                SCLAlertView.init().showError("Oups...", subTitle: "L'email ou le mot de passe est incorrecte")
             })
         }
     }

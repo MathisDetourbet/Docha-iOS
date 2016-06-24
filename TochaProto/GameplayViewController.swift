@@ -366,7 +366,6 @@ class GameplayViewController: RootViewController, KeyboardViewDelegate {
         }
         
         let cursor = self.counterContainerView.numberOfCounterDisplayed == 2 ? self.cursorCounter+1 : self.cursorCounter
-        print("cursor counterview to animate : \(cursor)")
         
         self.counterContainerView.counterViewArray[cursor].startCounterAnimationWithNumber(number: number)
         { (finished) in
