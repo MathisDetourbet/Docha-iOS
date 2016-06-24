@@ -56,6 +56,7 @@ PODS:
   - MBCircularProgressBar (0.3.4)
   - NVActivityIndicatorView (2.7)
   - PageMenu (1.2.9)
+  - PBWebViewController (0.5.0)
   - ReachabilitySwift (2.3.3)
   - SCLAlertView (0.5.8)
   - SwiftyJSON (2.3.2)
@@ -72,6 +73,7 @@ DEPENDENCIES:
   - MBCircularProgressBar
   - NVActivityIndicatorView
   - PageMenu
+  - PBWebViewController
   - ReachabilitySwift
   - SCLAlertView
   - SwiftyJSON (~> 2.3)
@@ -97,12 +99,13 @@ SPEC CHECKSUMS:
   MBCircularProgressBar: ff3b8e2f441214d9ee122a24ba0d4d00cc7de881
   NVActivityIndicatorView: dc80f18fb27ac92f0aa87246cc13dc39ed3e9ee0
   PageMenu: ba19ff267f7a19e444e93c20a7847b78954a7011
+  PBWebViewController: 6537990155ca850fb8d0563efbc12becebc953ef
   ReachabilitySwift: e0f6b6f280effb47731acfaaa2d5ffe223703793
   SCLAlertView: 653e84d1f9fd95333bc54671fbadb7d0c47fce49
   SwiftyJSON: 04ccea08915aa0109039157c7974cf0298da292a
   SwiftyTimer: db4458cfaf67fc71e16ad6e4637c60b86f76a649
   TextFieldEffects: bc4fd3bd557321bd61a0762f3f50965477a36f62
 
-PODFILE CHECKSUM: ab63dedcbaa850073190013b0d9222504b4e564c
+PODFILE CHECKSUM: 6d31bb44bedc6786f49cc3bda53ff706d47cd7c1
 
 COCOAPODS: 1.0.0

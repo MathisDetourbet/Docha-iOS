@@ -40,9 +40,11 @@ class TimelineView: UIView {
         stepStateArray![cursor] = state
         stepStateArray![cursor+1] = .Current
         updateImageItem(stepsImagesViews![cursor], withState: state)
+        //resizeItem(stepsImagesViews![cursor], withSize: 20.0, OfIndex: cursor!)
         
         cursor = stepStateArray?.indexOf(.Current)
-        resizeItem(stepsImagesViews![cursor], withSize: 25.0, OfIndex: cursor!)
+        updateImageItem(stepsImagesViews![cursor], withState: .Current)
+        //resizeItem(stepsImagesViews![cursor], withSize: 25.0, OfIndex: cursor!)
     }
     
     func getStateWithCounterViewAfterType(counterViewAfterTypeArray: [CounterViewAfterType]!) -> StepState {

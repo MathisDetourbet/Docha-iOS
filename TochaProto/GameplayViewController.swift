@@ -174,6 +174,7 @@ class GameplayViewController: RootViewController, KeyboardViewDelegate {
         
         // On enchaine avec un nouveau produit -> on efface la vue after
         if cursorProduct > 0 {
+            self.counterContainerView.resetCountersViews()
             self.timelineView.nextStepWithCounterViewAfterTypeArray(self.afterView.counterViewTypeArray)
             self.afterView.alpha = 0.0
             self.topInfosContainerView.alpha = 0.0
@@ -181,16 +182,13 @@ class GameplayViewController: RootViewController, KeyboardViewDelegate {
             
             self.previewCircularProgress.hidden = false
             
-            // Top info container
             self.topInfosContainerConstraint.constant = 0.0
             self.widthInfosContainerConstraint.constant = self.view.frame.width - (self.view.frame.width - self.previewCircularProgress.frame.origin.x)
             
-            // Product Image View
             self.topProductImageViewConstraint.constant = self.topInfosContainerView.frame.height
             self.heightProductImageViewConstraint.constant = 285.0
             self.view.layoutIfNeeded()
             
-            // Features Container
             self.leadingFeaturesContainerConstraint.constant = 0.0
             self.heightFeaturesContainerConstraint.constant = self.view.frame.height - (self.topInfosContainerView.frame.height + self.productImageView.frame.height)
             self.view.layoutIfNeeded()
@@ -233,7 +231,6 @@ class GameplayViewController: RootViewController, KeyboardViewDelegate {
         self.cursorCounter = 0
         counterContainerView.initCountersViews()
         
-        // Start animation
         self.previewCircularProgress.hidden = true
         hideKeyboardCounterContainerView(false)
         
@@ -269,7 +266,10 @@ class GameplayViewController: RootViewController, KeyboardViewDelegate {
     }
     
     func startDebriefMode() {
-        
+        let debriefVC = self.storyboard?.instantiateViewControllerWithIdentifier("idDebriefViewController") as! GameplayDebriefViewController
+        debriefVC.productsPlayed = self.productsList
+        debriefVC.timelineView = self.timelineView
+        self.navigationController?.pushViewController(debriefVC, animated: true)
     }
     
     func hideKeyboardCounterContainerView(hide: Bool) {
@@ -278,6 +278,7 @@ class GameplayViewController: RootViewController, KeyboardViewDelegate {
         if hide {
             self.topKeyboardCounterConstraint.constant = self.view.frame.height
             self.view.layoutSubviews()
+            
         } else {
             UIView.animateWithDuration(1.0,
                                        delay: 0.0,
@@ -363,9 +364,13 @@ class GameplayViewController: RootViewController, KeyboardViewDelegate {
         if cursorCounter == counterContainerView.numberOfCounterDisplayed {
             return
         }
+        
         let cursor = self.counterContainerView.numberOfCounterDisplayed == 2 ? self.cursorCounter+1 : self.cursorCounter
+        print("cursor counterview to animate : \(cursor)")
+        
         self.counterContainerView.counterViewArray[cursor].startCounterAnimationWithNumber(number: number)
         { (finished) in
+            
             if self.cursorCounter <= self.counterContainerView.numberOfCounterDisplayed {
                 self.counterContainerView.numbersArray![self.cursorCounter] = number
                 self.cursorCounter += 1
@@ -385,9 +390,10 @@ class GameplayViewController: RootViewController, KeyboardViewDelegate {
                 counterViewTypeArray.append(CounterViewAfterType.Perfect)
             }
             
+            afterView.displayEstimationResults(counterViewTypeArray)
             counterContainerView.revealCounterViewAfterWithArrayType(counterViewTypeArray)
-            afterView.estimationResult = .Perfect
-            gameplayMode == .After
+            self.afterView.estimationResult = .Perfect
+            self.gameplayMode == .After
             self.afterView.counterViewTypeArray = counterViewTypeArray
             
             return
@@ -431,8 +437,10 @@ class GameplayViewController: RootViewController, KeyboardViewDelegate {
         if price >= 10 {
             if price >= 100 && price < 1000 {
                 currentNumberOfCounter = 3
+                self.counterContainerView.numberOfCounterDisplayed = currentNumberOfCounter!
             } else {
                 currentNumberOfCounter = 2
+                self.counterContainerView.numberOfCounterDisplayed = currentNumberOfCounter!
             }
         }
         

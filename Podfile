@@ -18,6 +18,7 @@ target 'Docha' do
     pod 'SwiftyTimer'
     pod 'ReachabilitySwift'
     pod 'NVActivityIndicatorView'
+    pod 'PBWebViewController'
 end
 
 target 'DochaTests' do
