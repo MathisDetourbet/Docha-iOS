@@ -9,7 +9,7 @@
 import Foundation
 import PBWebViewController
 
-class GameplayDebriefViewController: RootViewController, UITableViewDelegate, UITableViewDataSource, DebriefCellDelegate {
+class GameplayDebriefViewController: GameViewController, UITableViewDelegate, UITableViewDataSource, DebriefCellDelegate {
     
     var productsPlayed: [Product]?
     var webViewController: PBWebViewController?
@@ -27,6 +27,21 @@ class GameplayDebriefViewController: RootViewController, UITableViewDelegate, UI
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        let gameManager = UserGameStateManager.sharedInstance
+        let rewardsWon = gameManager.getRewardsWithEstimationResultArray()
+        let perfectNumber = gameManager.perfectNumber
+        rewardDochosLabel.text = "+ \(rewardsWon.dochos)"
+        rewardPerfectLabel.text = "+ \(perfectNumber)"
+        
+        let oldExprience = gameManager.getExperienceProgressionInPercent()
+        widthLevelBarConstraint.constant = CGFloat(oldExprience)
+        
+        gameManager.updateRewardsWithDochos(rewardsWon.dochos, andExperience: rewardsWon.exprience)
+        let newExperience = gameManager.getExperienceProgressionInPercent()
+        UIView.animateWithDuration(1.0, delay: 1.0, options: .LayoutSubviews, animations: {
+            self.widthLevelBarConstraint.constant = CGFloat(newExperience)
+        }, completion: nil)
     }
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {

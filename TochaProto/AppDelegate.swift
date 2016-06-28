@@ -34,11 +34,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
         FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
         
         // GooglePlus SDK : Initialize sign-in
-        var configureError: NSError?
-        GGLContext.sharedInstance().configureWithError(&configureError)
-        assert(configureError == nil, "Error configuring Google services: \(configureError)")
-        
-        GIDSignIn.sharedInstance().delegate = self
+//        var configureError: NSError?
+//        GGLContext.sharedInstance().configureWithError(&configureError)
+//        assert(configureError == nil, "Error configuring Google services: \(configureError)")
+//        
+//        GIDSignIn.sharedInstance().delegate = self
         
         //        let tabBarController = self.window?.rootViewController as! UITabBarController
         //        let tabBar = tabBarController.tabBar as UITabBar

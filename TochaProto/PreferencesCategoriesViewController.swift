@@ -1,15 +1,15 @@
 //
-//  InscriptionCategorySelectionViewController.swift
-//  DochaProto
+//  PreferencesCategoriesViewController.swift
+//  Docha
 //
-//  Created by Mathis D on 27/05/2016.
+//  Created by Mathis D on 27/06/2016.
 //  Copyright © 2016 LaTV. All rights reserved.
 //
 
 import Foundation
 import SCLAlertView
 
-class InscriptionCategorySelectionViewController: RootViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+class PreferencesCategoriesViewController: RootViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     let CATEGORY_NUMBER = 10
     let reuseIdentifier = "idCategoryCollectionCell"
@@ -48,6 +48,9 @@ class InscriptionCategorySelectionViewController: RootViewController, UICollecti
         }
         
         self.collectionView.reloadData()
+        
+        let currentSession = UserSessionManager.sharedInstance.currentSession()
+        self.categoryPrefered = currentSession?.categoryFavorite
     }
     
     //MARK: Collection View Data Source Methods
@@ -65,7 +68,12 @@ class InscriptionCategorySelectionViewController: RootViewController, UICollecti
         
         cell.categoryImageView.image = self.categoriesImages![indexPath.item]
         cell.categoryName = self.categoriesImagesPathArray[indexPath.item]
-        cell.imageSelected = false
+        if cell.categoryName! == self.categoryPrefered! {
+            cell.imageSelected = true
+            self.oldCategoryIndexPath = indexPath
+        } else {
+            cell.imageSelected = false
+        }
         return cell
     }
     
@@ -82,42 +90,16 @@ class InscriptionCategorySelectionViewController: RootViewController, UICollecti
         cellSelected.imageSelected = true
         self.categoryPrefered = cellSelected.categoryName!
         self.oldCategoryIndexPath = indexPath
-        
-        UIView.animateWithDuration(0.3) {
-            self.footerValidateView.alpha = 1.0
-        }
     }
+    
     
     // MARK: @IBAction
-    @IBAction func validButtonTouched(sender: UIButton) {
-        let currentSessionManager = UserSessionManager.sharedInstance
-        
-        if currentSessionManager.dicoUserDataInscription == nil {
-            currentSessionManager.dicoUserDataInscription = [String:AnyObject]()
-        }
-        if let categoryFavorite = self.categoryPrefered {
-            currentSessionManager.dicoUserDataInscription!["category_favorite"] = categoryFavorite
-            currentSessionManager.currentSession()?.categoryFavorite = categoryFavorite
-            let params = currentSessionManager.currentSession()?.generateJSONFromUserSession()
-            let request = ProfilRequest()
-//            request.updateProfil(params!, success: {
-//                print("Success categories VC")
-//                }, fail: { (error, listErrors) in
-//                    print("Fail categories VC")
-//            })
-        }
-        
-        if currentSessionManager.isLogged() {
-            // User is already logged with facebook or googleplus
-            self.goToHome()
-            
-        } else {
-            let viewController = self.storyboard?.instantiateViewControllerWithIdentifier("idInscriptionIdentifiantsViewController")
-            self.navigationController?.pushViewController(viewController!, animated: true)
-        }
-    }
     
     @IBAction func backButtonTouched(sender: UIBarButtonItem) {
+        let currentSession = UserSessionManager.sharedInstance.currentSession()
+        currentSession?.categoryFavorite = self.categoryPrefered
+        currentSession?.saveSession()
+        // Need to update the BDD !!
         self.navigationController?.popViewControllerAnimated(true)
     }
     

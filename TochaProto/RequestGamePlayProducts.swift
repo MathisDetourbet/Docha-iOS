@@ -12,7 +12,7 @@ import SwiftyJSON
 
 class RequestGamePlayProducts {
     
-    func getGamePlayProducts() -> [Product?] {
+   /* func getGamePlayProducts() -> [Product?] {
         var productsList: [Product?] = []
         Alamofire.request(.GET, "https://intense-atoll-44238.herokuapp.com/products.json")
             .responseJSON { response in
@@ -34,7 +34,7 @@ class RequestGamePlayProducts {
                 
         }
         return productsList
-    }
+    }*/
     
 //    func parseGamePlayProductsWithResponse(json :AnyObject) -> [Product] {
 //        var productsList: [Product] = []

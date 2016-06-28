@@ -74,9 +74,7 @@
 		679B23D31D05EE2100692400 /* HomeFriendsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 679B23D21D05EE2100692400 /* HomeFriendsTableViewCell.swift */; };
 		679B23D71D05EEAC00692400 /* HomeBadgesTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 679B23D61D05EEAC00692400 /* HomeBadgesTableViewCell.swift */; };
 		67A3021C1C5939C40065D097 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 67A3021B1C5939C40065D097 /* Assets.xcassets */; };
-		67A302241C5AA7A20065D097 /* CouponsStoreViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67A302231C5AA7A20065D097 /* CouponsStoreViewController.swift */; };
 		67A7816B1CE5D084006564CD /* beeandsee_products.json in Resources */ = {isa = PBXBuildFile; fileRef = 67A7816A1CE5D084006564CD /* beeandsee_products.json */; };
-		67C2E3471C5BA94200345D27 /* CouponTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67C2E3461C5BA94200345D27 /* CouponTableViewCell.swift */; };
 		67C2E3491C5BBB4500345D27 /* Coupon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67C2E3481C5BBB4500345D27 /* Coupon.swift */; };
 		67C83B011CF498780066B982 /* PasswordForgottenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67C83B001CF498780066B982 /* PasswordForgottenViewController.swift */; };
 		67C8EBF41D11A4E700AF885B /* AfterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67C8EBF31D11A4E700AF885B /* AfterView.swift */; };
@@ -84,6 +82,10 @@
 		67D4826C1D1C059C009F1992 /* GameplayDebriefViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67D4826B1D1C059C009F1992 /* GameplayDebriefViewController.swift */; };
 		67D4826E1D1C074F009F1992 /* DebriefTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67D4826D1D1C074F009F1992 /* DebriefTableViewCell.swift */; };
 		67D482741D1CBF91009F1992 /* DochaPopupHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67D482731D1CBF91009F1992 /* DochaPopupHelper.swift */; };
+		67D4827A1D1D9203009F1992 /* ProfilRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67D482791D1D9203009F1992 /* ProfilRequest.swift */; };
+		67D4827C1D2157E7009F1992 /* PreferencesCategoriesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67D4827B1D2157E7009F1992 /* PreferencesCategoriesViewController.swift */; };
+		67D4827F1D216FAC009F1992 /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67D4827E1D216FAC009F1992 /* GameViewController.swift */; };
+		67D482811D217CAF009F1992 /* PreferencesAboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67D482801D217CAF009F1992 /* PreferencesAboutViewController.swift */; };
 		67DA29B01CEB327400CE621F /* ConnexionRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67DA29AF1CEB327400CE621F /* ConnexionRequest.swift */; };
 		67DA29B61CEB384700CE621F /* InscriptionRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67DA29B51CEB384700CE621F /* InscriptionRequest.swift */; };
 		67E5C55C1CF88639009F3FCA /* InscriptionCategorySelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67E5C55B1CF88639009F3FCA /* InscriptionCategorySelectionViewController.swift */; };
@@ -91,8 +93,6 @@
 		67E5C5601CF8865C009F3FCA /* InscriptionInfosUserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67E5C55F1CF8865C009F3FCA /* InscriptionInfosUserViewController.swift */; };
 		67E5C5641CF88ACF009F3FCA /* InscriptionProfilViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67E5C5631CF88ACF009F3FCA /* InscriptionProfilViewController.swift */; };
 		67E61A561CF606220055411F /* InscriptionCategoryCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67E61A551CF606220055411F /* InscriptionCategoryCollectionViewCell.swift */; };
-		67F0CA091CD3A4FB00C9B4B6 /* LevelsSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67F0CA081CD3A4FB00C9B4B6 /* LevelsSelectionViewController.swift */; };
-		67F0CA0B1CD3BFCC00C9B4B6 /* LevelsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67F0CA0A1CD3BFCC00C9B4B6 /* LevelsTableViewCell.swift */; };
 		67F0CA141CD64F1100C9B4B6 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67F0CA131CD64F1100C9B4B6 /* Constants.swift */; };
 		67F0CA161CD6A18E00C9B4B6 /* ProductManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67F0CA151CD6A18E00C9B4B6 /* ProductManager.swift */; };
 		67F0CA1B1CD7AB2600C9B4B6 /* products_category.json in Resources */ = {isa = PBXBuildFile; fileRef = 67F0CA1A1CD7AB2600C9B4B6 /* products_category.json */; };
@@ -206,9 +206,7 @@
 		679B23D21D05EE2100692400 /* HomeFriendsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeFriendsTableViewCell.swift; sourceTree = "<group>"; };
 		679B23D61D05EEAC00692400 /* HomeBadgesTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeBadgesTableViewCell.swift; sourceTree = "<group>"; };
 		67A3021B1C5939C40065D097 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		67A302231C5AA7A20065D097 /* CouponsStoreViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CouponsStoreViewController.swift; sourceTree = "<group>"; };
 		67A7816A1CE5D084006564CD /* beeandsee_products.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = beeandsee_products.json; sourceTree = "<group>"; };
-		67C2E3461C5BA94200345D27 /* CouponTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CouponTableViewCell.swift; sourceTree = "<group>"; };
 		67C2E3481C5BBB4500345D27 /* Coupon.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Coupon.swift; sourceTree = "<group>"; };
 		67C83B001CF498780066B982 /* PasswordForgottenViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PasswordForgottenViewController.swift; sourceTree = "<group>"; };
 		67C8EBF31D11A4E700AF885B /* AfterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AfterView.swift; sourceTree = "<group>"; };
@@ -216,6 +214,10 @@
 		67D4826B1D1C059C009F1992 /* GameplayDebriefViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameplayDebriefViewController.swift; sourceTree = "<group>"; };
 		67D4826D1D1C074F009F1992 /* DebriefTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DebriefTableViewCell.swift; sourceTree = "<group>"; };
 		67D482731D1CBF91009F1992 /* DochaPopupHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DochaPopupHelper.swift; sourceTree = "<group>"; };
+		67D482791D1D9203009F1992 /* ProfilRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfilRequest.swift; sourceTree = "<group>"; };
+		67D4827B1D2157E7009F1992 /* PreferencesCategoriesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreferencesCategoriesViewController.swift; sourceTree = "<group>"; };
+		67D4827E1D216FAC009F1992 /* GameViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
+		67D482801D217CAF009F1992 /* PreferencesAboutViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreferencesAboutViewController.swift; sourceTree = "<group>"; };
 		67DA29AF1CEB327400CE621F /* ConnexionRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConnexionRequest.swift; sourceTree = "<group>"; };
 		67DA29B51CEB384700CE621F /* InscriptionRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InscriptionRequest.swift; sourceTree = "<group>"; };
 		67E5C55B1CF88639009F3FCA /* InscriptionCategorySelectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InscriptionCategorySelectionViewController.swift; sourceTree = "<group>"; };
@@ -223,8 +225,6 @@
 		67E5C55F1CF8865C009F3FCA /* InscriptionInfosUserViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InscriptionInfosUserViewController.swift; sourceTree = "<group>"; };
 		67E5C5631CF88ACF009F3FCA /* InscriptionProfilViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InscriptionProfilViewController.swift; sourceTree = "<group>"; };
 		67E61A551CF606220055411F /* InscriptionCategoryCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InscriptionCategoryCollectionViewCell.swift; sourceTree = "<group>"; };
-		67F0CA081CD3A4FB00C9B4B6 /* LevelsSelectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LevelsSelectionViewController.swift; sourceTree = "<group>"; };
-		67F0CA0A1CD3BFCC00C9B4B6 /* LevelsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LevelsTableViewCell.swift; sourceTree = "<group>"; };
 		67F0CA131CD64F1100C9B4B6 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		67F0CA151CD6A18E00C9B4B6 /* ProductManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProductManager.swift; sourceTree = "<group>"; };
 		67F0CA1A1CD7AB2600C9B4B6 /* products_category.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = products_category.json; sourceTree = "<group>"; };
@@ -448,6 +448,7 @@
 				677DAEED1C91BEB3009C5DF2 /* RequestGamePlayProducts.swift */,
 				67DA29AF1CEB327400CE621F /* ConnexionRequest.swift */,
 				67DA29B51CEB384700CE621F /* InscriptionRequest.swift */,
+				67D482791D1D9203009F1992 /* ProfilRequest.swift */,
 			);
 			name = Requests;
 			sourceTree = "<group>";
@@ -486,6 +487,7 @@
 			children = (
 				679B23BD1D058F2900692400 /* PreferencesViewController.swift */,
 				679B23C31D05904200692400 /* Cells */,
+				67D4827D1D2157F0009F1992 /* PreferencesList */,
 			);
 			name = Preferences;
 			sourceTree = "<group>";
@@ -533,6 +535,7 @@
 			children = (
 				6701D9731C108A2100F87043 /* AppDelegate.swift */,
 				6786E4031CF485ED00729D8E /* RootViewController.swift */,
+				67D4827E1D216FAC009F1992 /* GameViewController.swift */,
 			);
 			name = Common;
 			sourceTree = "<group>";
@@ -540,15 +543,13 @@
 		67A3021F1C5AA55B0065D097 /* ViewsControllers */ = {
 			isa = PBXGroup;
 			children = (
+				6783382E1D049F6A002907EC /* Home */,
 				67300B931D09D6A50061D06F /* Gameplay */,
 				67300B7F1D0839DD0061D06F /* Store */,
 				679B23BC1D058F1400692400 /* Preferences */,
-				6783382E1D049F6A002907EC /* Home */,
 				67240CF71CF1C886001F4DC6 /* Starter */,
-				67F0CA071CD3A4D300C9B4B6 /* LevelsSelection */,
 				6746C16F1C9606B90085149C /* Inscription */,
 				6746C16E1C9606A20085149C /* Connexion */,
-				67A302221C5AA7500065D097 /* CouponsTab */,
 			);
 			name = ViewsControllers;
 			sourceTree = "<group>";
@@ -561,15 +562,6 @@
 				679274041CFC8BA300DABA88 /* User */,
 			);
 			name = Model;
-			sourceTree = "<group>";
-		};
-		67A302221C5AA7500065D097 /* CouponsTab */ = {
-			isa = PBXGroup;
-			children = (
-				67A302231C5AA7A20065D097 /* CouponsStoreViewController.swift */,
-				67C2E3461C5BA94200345D27 /* CouponTableViewCell.swift */,
-			);
-			name = CouponsTab;
 			sourceTree = "<group>";
 		};
 		67C8EBF51D11A4F300AF885B /* Views */ = {
@@ -632,13 +624,13 @@
 			name = Controllers;
 			sourceTree = "<group>";
 		};
-		67F0CA071CD3A4D300C9B4B6 /* LevelsSelection */ = {
+		67D4827D1D2157F0009F1992 /* PreferencesList */ = {
 			isa = PBXGroup;
 			children = (
-				67F0CA081CD3A4FB00C9B4B6 /* LevelsSelectionViewController.swift */,
-				67F0CA0A1CD3BFCC00C9B4B6 /* LevelsTableViewCell.swift */,
+				67D4827B1D2157E7009F1992 /* PreferencesCategoriesViewController.swift */,
+				67D482801D217CAF009F1992 /* PreferencesAboutViewController.swift */,
 			);
-			name = LevelsSelection;
+			name = PreferencesList;
 			sourceTree = "<group>";
 		};
 		67F0CA0F1CD5006F00C9B4B6 /* Managers */ = {
@@ -1062,31 +1054,30 @@
 				6775CE431C494BB700550041 /* JDFlipImageView.m in Sources */,
 				67300B8E1D0855070061D06F /* StoreGiftsViewController.swift in Sources */,
 				678B63461C9B5C0C00797516 /* User.swift in Sources */,
-				67A302241C5AA7A20065D097 /* CouponsStoreViewController.swift in Sources */,
 				6786E4041CF485ED00729D8E /* RootViewController.swift in Sources */,
 				67C2E3491C5BBB4500345D27 /* Coupon.swift in Sources */,
 				67D4826A1D19949A009F1992 /* LoadingView.swift in Sources */,
-				67F0CA0B1CD3BFCC00C9B4B6 /* LevelsTableViewCell.swift in Sources */,
 				67300B811D083B6E0061D06F /* StorePagerViewController.swift in Sources */,
+				67D482811D217CAF009F1992 /* PreferencesAboutViewController.swift in Sources */,
 				6701D9A21C108AAE00F87043 /* Product.swift in Sources */,
 				67F0CA141CD64F1100C9B4B6 /* Constants.swift in Sources */,
 				67F0CA161CD6A18E00C9B4B6 /* ProductManager.swift in Sources */,
 				67D482741D1CBF91009F1992 /* DochaPopupHelper.swift in Sources */,
+				67D4827A1D1D9203009F1992 /* ProfilRequest.swift in Sources */,
 				67240CF61CF1BFF8001F4DC6 /* AuthorizationManager.swift in Sources */,
 				67240CFB1CF1DA6D001F4DC6 /* StarterPageContentViewController.swift in Sources */,
 				679B23D71D05EEAC00692400 /* HomeBadgesTableViewCell.swift in Sources */,
 				67300B8A1D08545A0061D06F /* StorePromotionsViewController.swift in Sources */,
 				67240CFD1CF1DB32001F4DC6 /* ConnexionViewController.swift in Sources */,
 				679B23CA1D059DF500692400 /* PreferencesTableViewCells.swift in Sources */,
-				67C2E3471C5BA94200345D27 /* CouponTableViewCell.swift in Sources */,
 				6775CE451C494BB700550041 /* UIView+JDFlipImageView.m in Sources */,
 				67240CF91CF1C8A5001F4DC6 /* StarterPageViewController.swift in Sources */,
-				67F0CA091CD3A4FB00C9B4B6 /* LevelsSelectionViewController.swift in Sources */,
 				672D6F0F1D0B25AC00C0EB01 /* KeyboardView.swift in Sources */,
 				679273E71CFB5D5D00DABA88 /* UserSessionGooglePlus.swift in Sources */,
 				67D4826E1D1C074F009F1992 /* DebriefTableViewCell.swift in Sources */,
 				677EDF5B1D044AD000192C9D /* LxTabBarController.swift in Sources */,
 				67E5C55C1CF88639009F3FCA /* InscriptionCategorySelectionViewController.swift in Sources */,
+				67D4827F1D216FAC009F1992 /* GameViewController.swift in Sources */,
 				67C83B011CF498780066B982 /* PasswordForgottenViewController.swift in Sources */,
 				67DA29B61CEB384700CE621F /* InscriptionRequest.swift in Sources */,
 				679273E11CFB0FC000DABA88 /* UserSessionEmail.swift in Sources */,
@@ -1097,6 +1088,7 @@
 				67300B901D0855120061D06F /* StoreOrdersViewController.swift in Sources */,
 				679B23D01D05EDF600692400 /* HomePlayTableViewCell.swift in Sources */,
 				67240CF21CF0CE71001F4DC6 /* KeychainAccess.swift in Sources */,
+				67D4827C1D2157E7009F1992 /* PreferencesCategoriesViewController.swift in Sources */,
 				6786E4021CF4851C00729D8E /* StarterNavigationController.swift in Sources */,
 				679273E51CFB5BC000DABA88 /* UserSessionFacebook.swift in Sources */,
 			);

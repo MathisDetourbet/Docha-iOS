@@ -11,7 +11,7 @@ import AlamofireImage
 import ReachabilitySwift
 import SCLAlertView
 
-class HomeViewController: RootViewController, UITableViewDelegate, UITableViewDataSource, HomePlayCellDelegate, HomeFriendsCellDelegate {
+class HomeViewController: GameViewController, UITableViewDelegate, UITableViewDataSource, HomePlayCellDelegate, HomeFriendsCellDelegate {
     
     let idsTableViewCell: [String] = ["idHomePlayTableViewCell", "idHomeFriendsTableViewCell", "idHomeBadgesTableViewCell"]
     var userSession: UserSession?
@@ -32,6 +32,11 @@ class HomeViewController: RootViewController, UITableViewDelegate, UITableViewDa
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        configGameNavigationBar()
     }
     
     
@@ -87,6 +92,7 @@ class HomeViewController: RootViewController, UITableViewDelegate, UITableViewDa
             let cell = self.tableView.dequeueReusableCellWithIdentifier(self.idsTableViewCell[indexPath.row], forIndexPath: indexPath) as! HomePlayTableViewCell
             cell.delegate = self
             cell.levelLabel.text = self.userSession?.levelMaxUnlocked != nil ? "Niveau \(self.userSession?.levelMaxUnlocked)" : "Niveau 1"
+            cell.constraintWidthProgressBar.constant = CGFloat(UserGameStateManager.sharedInstance.getExperienceProgressionInPercent())
             return cell
             
         } else if indexPath.row == 1 {

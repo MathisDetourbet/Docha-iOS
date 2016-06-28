@@ -32,11 +32,12 @@ enum EstimationResult {
     case Oups
 }
 
-class GameplayViewController: RootViewController, KeyboardViewDelegate {
+class GameplayViewController: GameViewController, KeyboardViewDelegate {
     
     var productsList: [Product]?
     var currentProduct: Product?
-    var currentPriceInArray: ([Int], String)?
+    var currentPriceInArray: (euros: [Int], cents: String)?
+    var estimationResultArray: [EstimationResult]?
     var currentNumberOfCounter: Int? {
         didSet {
             if currentNumberOfCounter == 2 {
@@ -131,6 +132,7 @@ class GameplayViewController: RootViewController, KeyboardViewDelegate {
         self.keyboardContainerView.delegate = self
         configureView()
         cursorProduct = 0
+        self.estimationResultArray = []
         startGameplayMode(self.gameplayMode)
     }
     
@@ -223,7 +225,7 @@ class GameplayViewController: RootViewController, KeyboardViewDelegate {
                 self.featuresLabelsCollection[index].text = currentProduct?.caracteristiques[index]
             }
         }
-        currentPriceInArray = convertPriceToArrayOfInt((currentProduct?.price)!)
+        currentPriceInArray = ([1,1,1], "00")//convertPriceToArrayOfInt((currentProduct?.price)!)
         counterContainerView.centsLabel.text = currentPriceInArray?.1
     }
     
@@ -266,6 +268,8 @@ class GameplayViewController: RootViewController, KeyboardViewDelegate {
     }
     
     func startDebriefMode() {
+        UserGameStateManager.sharedInstance.estimationResultsArray = self.estimationResultArray
+        
         let debriefVC = self.storyboard?.instantiateViewControllerWithIdentifier("idDebriefViewController") as! GameplayDebriefViewController
         debriefVC.productsPlayed = self.productsList
         debriefVC.timelineView = self.timelineView
@@ -391,9 +395,9 @@ class GameplayViewController: RootViewController, KeyboardViewDelegate {
             
             afterView.displayEstimationResults(counterViewTypeArray)
             counterContainerView.revealCounterViewAfterWithArrayType(counterViewTypeArray)
-            self.afterView.estimationResult = .Perfect
-            self.gameplayMode == .After
             self.afterView.counterViewTypeArray = counterViewTypeArray
+            self.estimationResultArray?.append(.Perfect)
+            self.gameplayMode = .After
             
             return
         }
@@ -410,7 +414,8 @@ class GameplayViewController: RootViewController, KeyboardViewDelegate {
         afterView.displayEstimationResults(counterViewTypeArray)
         counterContainerView.revealCounterViewAfterWithArrayType(counterViewTypeArray)
         self.afterView.counterViewTypeArray = counterViewTypeArray
-        gameplayMode = .After
+        self.estimationResultArray?.append(self.afterView.estimationResult!)
+        self.gameplayMode = .After
     }
     
     func eraseAllCounters() {

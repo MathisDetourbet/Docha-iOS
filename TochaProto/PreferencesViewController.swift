@@ -8,7 +8,7 @@
 
 import Foundation
 
-class PreferencesViewController: RootViewController, UITableViewDelegate, UITableViewDataSource {
+class PreferencesViewController: GameViewController, UITableViewDelegate, UITableViewDataSource {
     
     let idNormalTableViewCell = "idNormalTableViewCell"
     let idSwitchTableViewCell = "idSwitchTableViewCell"
@@ -22,6 +22,11 @@ class PreferencesViewController: RootViewController, UITableViewDelegate, UITabl
     override func viewDidLoad() {
         super.viewDidLoad()
         self.buildUI()
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        configGameNavigationBar()
     }
     
     override func viewDidLayoutSubviews() {
@@ -94,7 +99,31 @@ class PreferencesViewController: RootViewController, UITableViewDelegate, UITabl
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        
+        switch indexPath.section {
+        case 0:
+            // Compte section
+            switch indexPath.row {
+            case 0:
+                // Modifier le profil
+                break
+            case 1:
+                // Changer le mdp
+                break
+            default:
+                // Catégories préférées
+                let categoriesVC = self.storyboard?.instantiateViewControllerWithIdentifier("idPreferencesCategoryViewController") as! PreferencesCategoriesViewController
+                self.navigationController?.pushViewController(categoriesVC, animated: true)
+                break
+            }
+            break
+        case 1:
+            // Paramètres section
+            break
+        default:
+            // Autres section
+            break
+        }
+        self.tableView.deselectRowAtIndexPath(indexPath, animated: true)
     }
     
     func tableView(tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {

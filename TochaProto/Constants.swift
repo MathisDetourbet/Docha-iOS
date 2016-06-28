@@ -47,6 +47,10 @@ struct Constants {
         
         static let UrlBase = "https://afternoon-beyond-49404.herokuapp.com" //"http://localhost:3000"
         
+        struct UrlProfil {
+            static let UrlProfilUpdate = "/users"
+        }
+        
         struct UrlRegister {
             static let UrlFacebookRegister = "/users/auth/facebook"
             static let UrlGooglePlusRegister = "/users"

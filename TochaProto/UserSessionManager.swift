@@ -25,12 +25,12 @@ class UserSessionManager {
         let currentSession: UserSession?
         let userDefaults = NSUserDefaults.standardUserDefaults()
         let connexionEncodedObject = userDefaults.objectForKey(Constants.UserDefaultsKey.kUserSessionObject) as? NSData
+        
         if (connexionEncodedObject != nil) {
             currentSession = NSKeyedUnarchiver.unarchiveObjectWithData(connexionEncodedObject!) as? UserSession
         } else {
             return nil
         }
-        
         
         return currentSession
     }
