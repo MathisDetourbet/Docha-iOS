@@ -10,14 +10,6 @@ import Foundation
 import MBCircularProgressBar
 import SwiftyTimer
 
-//MARK: Circular Progress Bar Methods
-extension MBCircularProgressBarView {
-    func initProgressBar() {
-        self.maxValue = 100
-        self.value = 100
-    }
-}
-
 enum GameplayMode {
     case Preview
     case Main
@@ -65,8 +57,10 @@ class GameplayViewController: GameViewController, KeyboardViewDelegate {
         didSet {
             if self.gameplayMode == .Preview {
                 self.previewCircularProgress.value = CGFloat(Double(self.currentMillisecondTime! * 100.0) / self.currentTotalCooldown!)
+                self.previewCircularProgress.updateTimerLabelWithTime(Int(currentMillisecondTime!)+1)
             } else if gameplayMode == .Main || gameplayMode == .After {
                 self.mainCircularProgress.value = CGFloat(Double(self.currentMillisecondTime! * 100.0) / self.currentTotalCooldown!)
+                self.mainCircularProgress.updateTimerLabelWithTime(Int(currentMillisecondTime!)+1)
             }
         }
     }
@@ -225,7 +219,7 @@ class GameplayViewController: GameViewController, KeyboardViewDelegate {
                 self.featuresLabelsCollection[index].text = currentProduct?.caracteristiques[index]
             }
         }
-        currentPriceInArray = ([1,1,1], "00")//convertPriceToArrayOfInt((currentProduct?.price)!)
+        currentPriceInArray = convertPriceToArrayOfInt((currentProduct?.price)!)
         counterContainerView.centsLabel.text = currentPriceInArray?.1
     }
     
@@ -313,21 +307,22 @@ class GameplayViewController: GameViewController, KeyboardViewDelegate {
     func stopTimer() {
         self.timerFinished = true
         self.timer?.invalidate()
-        //self.timer = nil
+        self.mainCircularProgress.stopTimer()
+        self.previewCircularProgress.stopTimer()
     }
     
     func initTimer() {
         if gameplayMode == .Preview {
             currentTotalCooldown = kCooldownForPreview
-            previewCircularProgress.initProgressBar()
+            previewCircularProgress.initProgressBarWithCoolDown(Int(currentTotalCooldown!+1), andColorLabel: UIColor.darkBlueDochaColor())
             
         } else if gameplayMode == .Main {
             currentTotalCooldown = kCooldownForMain
-            mainCircularProgress.initProgressBar()
+            mainCircularProgress.initProgressBarWithCoolDown(Int(currentTotalCooldown!+1), andColorLabel: UIColor.whiteColor())
             
         } else if gameplayMode == .After {
             currentTotalCooldown = kCooldownForAfter
-            mainCircularProgress.initProgressBar()
+            mainCircularProgress.initProgressBarWithCoolDown(Int(currentTotalCooldown!+1), andColorLabel: UIColor.whiteColor())
         }
         
         currentMillisecondTime = currentTotalCooldown

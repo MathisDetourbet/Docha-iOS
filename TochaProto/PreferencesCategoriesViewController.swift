@@ -34,11 +34,18 @@ class PreferencesCategoriesViewController: RootViewController, UICollectionViewD
         
         self.configNavigationBarWithTitle("Choisissez votre catégorie préférée")
         
+        self.categoryPrefered = UserSessionManager.sharedInstance.currentSession()?.categoryFavorite
+        
         loadData()
     }
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
+    }
+    
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillAppear(animated)
+        
     }
     
     func loadData() {
@@ -53,7 +60,8 @@ class PreferencesCategoriesViewController: RootViewController, UICollectionViewD
         self.categoryPrefered = currentSession?.categoryFavorite
     }
     
-    //MARK: Collection View Data Source Methods
+    
+//MARK: Collection View Data Source Methods
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return CATEGORY_NUMBER
@@ -68,16 +76,20 @@ class PreferencesCategoriesViewController: RootViewController, UICollectionViewD
         
         cell.categoryImageView.image = self.categoriesImages![indexPath.item]
         cell.categoryName = self.categoriesImagesPathArray[indexPath.item]
-        if cell.categoryName! == self.categoryPrefered! {
-            cell.imageSelected = true
-            self.oldCategoryIndexPath = indexPath
+        
+        if let categoryFavorite = self.categoryPrefered {
+            if cell.categoryName! == categoryFavorite {
+                cell.imageSelected = true
+                self.oldCategoryIndexPath = indexPath
+            }
         } else {
             cell.imageSelected = false
         }
         return cell
     }
     
-    //MARK: Collection View Delegate Methods
+    
+//MARK: Collection View Delegate Methods
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         // Deselect old cell
@@ -93,7 +105,7 @@ class PreferencesCategoriesViewController: RootViewController, UICollectionViewD
     }
     
     
-    // MARK: @IBAction
+// MARK: @IBAction
     
     @IBAction func backButtonTouched(sender: UIBarButtonItem) {
         let currentSession = UserSessionManager.sharedInstance.currentSession()

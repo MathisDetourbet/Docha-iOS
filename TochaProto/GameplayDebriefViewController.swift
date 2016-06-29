@@ -29,19 +29,22 @@ class GameplayDebriefViewController: GameViewController, UITableViewDelegate, UI
         super.viewDidLoad()
         
         let gameManager = UserGameStateManager.sharedInstance
-        let rewardsWon = gameManager.getRewardsWithEstimationResultArray()
-        let perfectNumber = gameManager.perfectNumber
-        rewardDochosLabel.text = "+ \(rewardsWon.dochos)"
-        rewardPerfectLabel.text = "+ \(perfectNumber)"
+        gameManager.calculRewards()
+        let rewardsWon = gameManager.getRewards()
+        rewardDochosLabel.text = "+ \(rewardsWon.dochos!)"
+        rewardPerfectLabel.text = "+ \(rewardsWon.perfects!)"
         
         let oldExprience = gameManager.getExperienceProgressionInPercent()
         widthLevelBarConstraint.constant = CGFloat(oldExprience)
         
-        gameManager.updateRewardsWithDochos(rewardsWon.dochos, andExperience: rewardsWon.exprience)
+        gameManager.saveRewards()
         let newExperience = gameManager.getExperienceProgressionInPercent()
         UIView.animateWithDuration(1.0, delay: 1.0, options: .LayoutSubviews, animations: {
             self.widthLevelBarConstraint.constant = CGFloat(newExperience)
         }, completion: nil)
+        
+        // Update nav bar
+        configGameNavigationBar()
     }
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {

@@ -67,6 +67,8 @@ class InscriptionProfilViewController: RootViewController {
     }
     
     @IBAction func validProfilButtonTouched(sender: UIButton) {
+        DochaPopupHelper.sharedInstance.showLoadingPopup()
+        
         let userSessionManager = UserSessionManager.sharedInstance
         
         if let avatar = self.avatarImageSelected {
@@ -93,7 +95,7 @@ class InscriptionProfilViewController: RootViewController {
                         
                         UserSessionManager.sharedInstance.connectByEmail(connexionEmailParams,
                             success: {
-                                
+                                DochaPopupHelper.sharedInstance.dismissAlertView()
                                 self.goToHome()
                                 
                             }, fail: { (error, listError) in

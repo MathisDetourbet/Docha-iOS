@@ -10,10 +10,21 @@ import Foundation
 
 class UserGameStateManager {
     
+    struct Rewards {
+        var dochos: Int?
+        var experience: Int?
+        var perfects: Int?
+        
+        init(dochos: Int, experience: Int, perfects: Int) {
+            self.dochos = dochos
+            self.experience = experience
+            self.perfects = perfects
+        }
+    }
+    
     lazy var userSession: UserSession = UserSessionManager.sharedInstance.currentSession()!
     var estimationResultsArray: [EstimationResult]?
-    var perfectNumber: Int = 0
-    
+    var currentRewards: Rewards?
     
     class var sharedInstance: UserGameStateManager {
         struct Singleton {
@@ -27,7 +38,12 @@ class UserGameStateManager {
         let experience = userSession.experience
         let level = userSession.levelMaxUnlocked
         
-        return Double((experience * 100) / (level * 10))
+        return Double((experience) / (level))
+    }
+    
+    func getUserLevel() -> Int {
+        self.userSession = UserSessionManager.sharedInstance.currentSession()!
+        return self.userSession.levelMaxUnlocked
     }
     
     func getCurrentDochos() -> Int {
@@ -40,9 +56,10 @@ class UserGameStateManager {
         return self.userSession.perfectPriceCpt
     }
     
-    func getRewardsWithEstimationResultArray() -> (dochos: Int, exprience: Int) {
+    func calculRewards() {
         var dochosWon = 0
         var experienceWon = 0
+        var perfectNumber = 0
         
         for result in self.estimationResultsArray! {
             if result == .Perfect {
@@ -55,20 +72,27 @@ class UserGameStateManager {
         }
         experienceWon += 5
         
-        return (dochosWon, experienceWon)
+        self.currentRewards = Rewards(dochos: dochosWon, experience: experienceWon, perfects: perfectNumber)
     }
     
-    func updateRewardsWithDochos(dochos: Int, andExperience experience: Int) {
+    func getRewards() -> Rewards {
+        return self.currentRewards!
+    }
+    
+    func saveRewards() {
         self.userSession = UserSessionManager.sharedInstance.currentSession()!
         let experienceToLvlUp = 10 * self.userSession.levelMaxUnlocked
-        if experience >= experienceToLvlUp {
+        
+        if self.currentRewards!.experience >= experienceToLvlUp {
             // Lvl Up !
             self.userSession.experience = abs(self.userSession.dochos - experienceToLvlUp)
             self.userSession.levelMaxUnlocked += 1
         } else {
-            self.userSession.experience += experience
+            self.userSession.experience += self.currentRewards!.experience!
         }
-        self.userSession.dochos += dochos
+        
+        self.userSession.dochos += self.currentRewards!.dochos!
+        self.userSession.perfectPriceCpt += self.currentRewards!.perfects!
         
         self.userSession.saveSession()
     }

@@ -21,6 +21,7 @@ target 'Docha' do
     pod 'PBWebViewController'
     pod 'Fabric'
     pod 'Crashlytics'
+    pod 'DeepLinkKit'
 end
 
 target 'DochaTests' do

@@ -26,6 +26,7 @@ PODS:
   - CNPPopupController (0.3.1)
   - Crashlytics (3.7.2):
     - Fabric (~> 1.6.3)
+  - DeepLinkKit (1.2.1)
   - Fabric (1.6.7)
   - FirebaseAnalytics (3.2.0):
     - FirebaseInstanceID (~> 1.0)
@@ -72,6 +73,7 @@ DEPENDENCIES:
   - AlamofireImage (~> 2.0)
   - CNPPopupController
   - Crashlytics
+  - DeepLinkKit
   - Fabric
   - Google/SignIn
   - IQKeyboardManagerSwift
@@ -91,6 +93,7 @@ SPEC CHECKSUMS:
   AlamofireImage: 87408b652e0f5ae5fe364035f15aea8b9b24c77e
   CNPPopupController: 67dc2ca5a3f88cd49a27bb1b0aeb78a24d423d79
   Crashlytics: 130ab943f8c78cda7a814b434f270b2e2c8a3cba
+  DeepLinkKit: 4c3a713b7ecc6c6e25ba56c87d0c728f6035a9ef
   Fabric: caf7580c725e64db144f610ac65cd60956911dc7
   FirebaseAnalytics: 6f75b04e6bfb8e0b6e9ef298e04c24eea3b13863
   FirebaseInstanceID: d014d574053a2fe84478f12f7bae96979e7051bb
@@ -113,6 +116,6 @@ SPEC CHECKSUMS:
   SwiftyTimer: db4458cfaf67fc71e16ad6e4637c60b86f76a649
   TextFieldEffects: bc4fd3bd557321bd61a0762f3f50965477a36f62
 
-PODFILE CHECKSUM: 3580924e7beab4664288d411d3f24837356fa80b
+PODFILE CHECKSUM: 088eabf8362023ca22a7bba0f6541087e7a2151b
 
 COCOAPODS: 1.0.1

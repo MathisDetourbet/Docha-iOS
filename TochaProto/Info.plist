@@ -36,7 +36,7 @@
 			<key>CFBundleURLIconFile</key>
 			<string></string>
 			<key>CFBundleURLName</key>
-			<string>com.latv.docha</string>
+			<string>com.slymoover.docha</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
 				<string>com.googleusercontent.apps.155812467582-3s7hf6qnffet4s5qf4dpuh5shu64celn</string>
@@ -56,6 +56,15 @@
 				<dict/>
 				<key>KitName</key>
 				<string>Crashlytics</string>
+			</dict>
+			<dict>
+				<key>KitInfo</key>
+				<dict>
+					<key>branch_key</key>
+					<string>key_live_cjd89qx1gNzAAQcVZZxYsfjiqwmvQYNy</string>
+				</dict>
+				<key>KitName</key>
+				<string>Branch</string>
 			</dict>
 		</array>
 	</dict>

@@ -67,6 +67,7 @@
 		679274011CFC780E00DABA88 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 679274001CFC780E00DABA88 /* GoogleService-Info.plist */; };
 		679274021CFC78A000DABA88 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 679274001CFC780E00DABA88 /* GoogleService-Info.plist */; };
 		679274031CFC78A100DABA88 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 679274001CFC780E00DABA88 /* GoogleService-Info.plist */; };
+		679965FC1D23D8F400E1F1E0 /* CircularProgressBarHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 679965FB1D23D8F400E1F1E0 /* CircularProgressBarHelper.swift */; };
 		679B23BE1D058F2900692400 /* PreferencesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 679B23BD1D058F2900692400 /* PreferencesViewController.swift */; };
 		679B23CA1D059DF500692400 /* PreferencesTableViewCells.swift in Sources */ = {isa = PBXBuildFile; fileRef = 679B23C91D059DF500692400 /* PreferencesTableViewCells.swift */; };
 		679B23CE1D05E66F00692400 /* DochaColorsHealper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 679B23CD1D05E66F00692400 /* DochaColorsHealper.swift */; };
@@ -199,6 +200,7 @@
 		679273FC1CFC6B6900DABA88 /* GoogleOpenSource.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GoogleOpenSource.framework; sourceTree = "<group>"; };
 		679273FD1CFC6B6900DABA88 /* GooglePlus.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GooglePlus.framework; sourceTree = "<group>"; };
 		679274001CFC780E00DABA88 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		679965FB1D23D8F400E1F1E0 /* CircularProgressBarHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CircularProgressBarHelper.swift; sourceTree = "<group>"; };
 		679B23BD1D058F2900692400 /* PreferencesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreferencesViewController.swift; sourceTree = "<group>"; };
 		679B23C91D059DF500692400 /* PreferencesTableViewCells.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreferencesTableViewCells.swift; sourceTree = "<group>"; };
 		679B23CD1D05E66F00692400 /* DochaColorsHealper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DochaColorsHealper.swift; sourceTree = "<group>"; };
@@ -725,6 +727,7 @@
 				67D482751D1D6513009F1992 /* FlipImageView */,
 				67D482701D1CBCC3009F1992 /* Popup */,
 				67240CF11CF0CE71001F4DC6 /* KeychainAccess.swift */,
+				679965FB1D23D8F400E1F1E0 /* CircularProgressBarHelper.swift */,
 			);
 			name = Helpers;
 			sourceTree = "<group>";
@@ -1031,6 +1034,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				679965FC1D23D8F400E1F1E0 /* CircularProgressBarHelper.swift in Sources */,
 				67E5C5641CF88ACF009F3FCA /* InscriptionProfilViewController.swift in Sources */,
 				67240CEC1CEF0BCD001F4DC6 /* UserSessionManager.swift in Sources */,
 				67E5C5601CF8865C009F3FCA /* InscriptionInfosUserViewController.swift in Sources */,

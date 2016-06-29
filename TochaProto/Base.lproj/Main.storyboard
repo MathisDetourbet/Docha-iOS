@@ -1211,15 +1211,15 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="big_dochos" translatesAutoresizingMaskIntoConstraints="NO" id="D7z-bZ-vu8">
-                                <rect key="frame" x="182" y="29" width="40" height="40"/>
+                                <rect key="frame" x="203" y="33" width="40" height="40"/>
                             </imageView>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="big_perfect" translatesAutoresizingMaskIntoConstraints="NO" id="Ppk-I1-b41">
                                 <rect key="frame" x="125" y="75" width="25" height="25"/>
                             </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="+65" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="f6i-dN-ooQ">
-                                <rect key="frame" x="85" y="23" width="88" height="44"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="+165" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="f6i-dN-ooQ">
+                                <rect key="frame" x="80" y="23" width="110" height="61"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="44" id="VRv-55-pcA"/>
+                                    <constraint firstAttribute="height" constant="61" id="VRv-55-pcA"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="Montserrat-ExtraBold" family="Montserrat" pointSize="50"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -1234,7 +1234,7 @@
                             <constraint firstItem="Y76-xB-oTX" firstAttribute="top" secondItem="YE5-QZ-bKE" secondAttribute="bottom" constant="8" id="5q9-Cy-sL0"/>
                             <constraint firstItem="Y76-xB-oTX" firstAttribute="leading" secondItem="HoR-3P-lwF" secondAttribute="leadingMargin" constant="60" id="ANk-gL-bF4"/>
                             <constraint firstItem="x1v-R8-FlK" firstAttribute="leading" secondItem="d1j-MX-gqI" secondAttribute="trailing" constant="8" id="ARY-tI-y3j"/>
-                            <constraint firstItem="Ppk-I1-b41" firstAttribute="top" secondItem="f6i-dN-ooQ" secondAttribute="bottom" constant="8" id="Br8-iC-nmC"/>
+                            <constraint firstItem="Ppk-I1-b41" firstAttribute="top" secondItem="f6i-dN-ooQ" secondAttribute="bottom" constant="-9" id="Br8-iC-nmC"/>
                             <constraint firstItem="d1j-MX-gqI" firstAttribute="top" secondItem="vTP-qy-RuK" secondAttribute="bottom" constant="8" id="Ct1-ax-HPn"/>
                             <constraint firstAttribute="trailing" secondItem="vTP-qy-RuK" secondAttribute="trailing" id="K0A-Q8-rek"/>
                             <constraint firstItem="f6i-dN-ooQ" firstAttribute="top" secondItem="cli-dR-YfA" secondAttribute="bottom" constant="5" id="KDk-GA-532"/>
@@ -1248,15 +1248,15 @@
                             <constraint firstItem="YE5-QZ-bKE" firstAttribute="top" secondItem="Ppk-I1-b41" secondAttribute="bottom" constant="3" id="g8i-Np-nXE"/>
                             <constraint firstItem="lHO-cR-AYU" firstAttribute="leading" secondItem="HoR-3P-lwF" secondAttribute="leading" id="gfo-vF-MVT"/>
                             <constraint firstAttribute="trailing" secondItem="lHO-cR-AYU" secondAttribute="trailing" id="hKi-Va-wlT"/>
-                            <constraint firstItem="D7z-bZ-vu8" firstAttribute="top" secondItem="cli-dR-YfA" secondAttribute="bottom" constant="11" id="kXJ-eZ-LLa"/>
+                            <constraint firstItem="D7z-bZ-vu8" firstAttribute="top" secondItem="cli-dR-YfA" secondAttribute="bottom" constant="15" id="kXJ-eZ-LLa"/>
                             <constraint firstItem="vTP-qy-RuK" firstAttribute="top" secondItem="lHO-cR-AYU" secondAttribute="bottom" id="kjZ-jA-WR7"/>
-                            <constraint firstItem="f6i-dN-ooQ" firstAttribute="leading" secondItem="HoR-3P-lwF" secondAttribute="leadingMargin" constant="69" id="kmG-86-30D"/>
+                            <constraint firstItem="f6i-dN-ooQ" firstAttribute="leading" secondItem="HoR-3P-lwF" secondAttribute="leadingMargin" constant="64" id="kmG-86-30D"/>
                             <constraint firstItem="YE5-QZ-bKE" firstAttribute="centerX" secondItem="HoR-3P-lwF" secondAttribute="centerX" id="q2d-xM-yQO"/>
                             <constraint firstItem="cli-dR-YfA" firstAttribute="centerX" secondItem="HoR-3P-lwF" secondAttribute="centerX" id="rJQ-9Q-8VF"/>
                             <constraint firstItem="vTP-qy-RuK" firstAttribute="leading" secondItem="HoR-3P-lwF" secondAttribute="leading" id="rTe-5w-J7p"/>
-                            <constraint firstItem="8f9-6R-d4V" firstAttribute="top" secondItem="f6i-dN-ooQ" secondAttribute="bottom" constant="3" id="rYr-hD-uMe"/>
+                            <constraint firstItem="8f9-6R-d4V" firstAttribute="top" secondItem="f6i-dN-ooQ" secondAttribute="bottom" constant="-14" id="rYr-hD-uMe"/>
                             <constraint firstItem="d1j-MX-gqI" firstAttribute="leading" secondItem="HoR-3P-lwF" secondAttribute="leading" constant="7" id="v5i-tA-RxX"/>
-                            <constraint firstItem="D7z-bZ-vu8" firstAttribute="leading" secondItem="f6i-dN-ooQ" secondAttribute="trailing" constant="9" id="vaM-AR-I7X"/>
+                            <constraint firstItem="D7z-bZ-vu8" firstAttribute="leading" secondItem="f6i-dN-ooQ" secondAttribute="trailing" constant="13" id="vaM-AR-I7X"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="p89-65-3a9">

@@ -14,7 +14,7 @@ import SCLAlertView
 class HomeViewController: GameViewController, UITableViewDelegate, UITableViewDataSource, HomePlayCellDelegate, HomeFriendsCellDelegate {
     
     let idsTableViewCell: [String] = ["idHomePlayTableViewCell", "idHomeFriendsTableViewCell", "idHomeBadgesTableViewCell"]
-    var userSession: UserSession?
+    let userGameManager: UserGameStateManager = UserGameStateManager.sharedInstance
     
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var avatarImageView: UIImageView!
@@ -91,7 +91,8 @@ class HomeViewController: GameViewController, UITableViewDelegate, UITableViewDa
         if indexPath.row == 0 {
             let cell = self.tableView.dequeueReusableCellWithIdentifier(self.idsTableViewCell[indexPath.row], forIndexPath: indexPath) as! HomePlayTableViewCell
             cell.delegate = self
-            cell.levelLabel.text = self.userSession?.levelMaxUnlocked != nil ? "Niveau \(self.userSession?.levelMaxUnlocked)" : "Niveau 1"
+            cell.levelLabel.text = "Niveau \(self.userGameManager.getUserLevel())"
+            print(CGFloat(UserGameStateManager.sharedInstance.getExperienceProgressionInPercent()))
             cell.constraintWidthProgressBar.constant = CGFloat(UserGameStateManager.sharedInstance.getExperienceProgressionInPercent())
             return cell
             
