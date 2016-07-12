@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import Amplitude_iOS
 
 class GameViewController: RootViewController {
     
@@ -41,6 +42,11 @@ class GameViewController: RootViewController {
         leftView.addConstraint(NSLayoutConstraint(item: perfectImageView, attribute: .Trailing, relatedBy: .Equal, toItem: perfectLabel, attribute: .Leading, multiplier: 1.0, constant: -8.0))
         leftView.addConstraint(NSLayoutConstraint(item: perfectLabel, attribute: .CenterY, relatedBy: .Equal, toItem: leftView, attribute: .CenterY, multiplier: 1.0, constant: 0.0))
         
+        let tapGesturePerfect = UITapGestureRecognizer()
+        tapGesturePerfect.numberOfTapsRequired = 1
+        tapGesturePerfect.addTarget(self, action: #selector(perfectNavBarTouched))
+        leftView.addGestureRecognizer(tapGesturePerfect)
+        
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(customView: leftView)
         
         // Right bar button item : number of dochos
@@ -64,6 +70,30 @@ class GameViewController: RootViewController {
         rightView.addConstraint(NSLayoutConstraint(item: dochosLabel, attribute: .CenterY, relatedBy: .Equal, toItem: rightView, attribute: .CenterY, multiplier: 1.0, constant: 0.0))
         rightView.addConstraint(NSLayoutConstraint(item: dochosLabel, attribute: .Trailing, relatedBy: .Equal, toItem: rightView, attribute: .Trailing, multiplier: 1.0, constant: 0.0))
         
+        let tapGestureDochos = UITapGestureRecognizer()
+        tapGestureDochos.numberOfTapsRequired = 1
+        tapGestureDochos.addTarget(self, action: #selector(dochosNavBarTouched))
+        rightView.addGestureRecognizer(tapGestureDochos)
+        
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: rightView)
+    }
+    
+    func configTitleViewDocha() {
+        let titleLabel = UILabel(frame: CGRectMake(96.0, 6.0, 128.0, 33.0))
+        titleLabel.text = "Docha"
+        titleLabel.textColor = UIColor.whiteColor()
+        titleLabel.font = UIFont(name: "CaviarDreams-Bold", size: 20.0)
+        titleLabel.textAlignment = .Center
+        self.navigationItem.titleView = titleLabel
+    }
+    
+    func dochosNavBarTouched() {
+        // Amplitude
+        Amplitude.instance().logEvent("ClickDochosNavBar")
+    }
+    
+    func perfectNavBarTouched() {
+        // Amplitude
+        Amplitude.instance().logEvent("ClickPerfectNavBar")
     }
 }

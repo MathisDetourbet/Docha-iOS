@@ -1,4 +1,4 @@
-//
+ //
 //  UserSessionManager.swift
 //  DochaProto
 //
@@ -12,6 +12,7 @@ class UserSessionManager {
 	
     var connexionRequest: ConnexionRequest?
     var inscriptionRequest: InscriptionRequest?
+    var profilRequest: ProfilRequest?
     var dicoUserDataInscription: [String: AnyObject]?
     
     class var sharedInstance: UserSessionManager {
@@ -39,7 +40,8 @@ class UserSessionManager {
         return NSUserDefaults.standardUserDefaults().objectForKey(Constants.UserDefaultsKey.kUserSessionObject) != nil
     }
     
-    // MARK: Inscription Methods
+    
+// MARK: Inscription Methods
     
     // Email inscription
     func inscriptionEmail(dicoParams: [String:AnyObject], success: () -> Void, fail failure: (error: NSError?, listError: [AnyObject]?) -> Void) {
@@ -111,7 +113,34 @@ class UserSessionManager {
         })
     }
     
-    // MARK: Connexion Methods
+
+// MARK: Connexion Methods
+    
+    func login(success: () -> Void, fail failure: (error: NSError?, listErrors: [AnyObject]?) -> Void) {
+        let userSession = self.currentSession()!
+        let dicoParams = userSession.generateJSONFromUserSession()
+        self.connexionRequest = ConnexionRequest()
+        
+        if userSession.isKindOfClass(UserSessionEmail) {
+            self.connexionRequest?.connexionWithEmail(dicoParams,
+                success: { (session) in
+                    session.saveSession()
+                    success()
+                    
+                }, fail: { (error, listErrors) in
+                    failure(error: error, listErrors: listErrors)
+            })
+        } else if userSession.isKindOfClass(UserSessionFacebook) {
+            self.connexionRequest?.connexionWithFacebook(dicoParams,
+                success: { (session) in
+                    session.saveSession()
+                    success()
+                    
+                }, fail: { (error, listErrors) in
+                    failure(error: error, listErrors: listErrors)
+            })
+        }
+    }
     
     func connectByEmail(dicoParams: [String: AnyObject], success: () -> Void, fail failure: (error: NSError?, listError: [AnyObject]?) -> Void) {
         self.connexionRequest = ConnexionRequest()
@@ -174,6 +203,17 @@ class UserSessionManager {
                     let error = NSError(domain: kCFErrorFilePathKey as String, code: 900, userInfo: ["message" : "Error when exctracting user in the user defaults"])
                     failure(error: error, listError: nil)
                 }
+            
+            }, fail: { (error, listErrors) in
+                failure(error: error, listError: listErrors)
+        })
+    }
+    
+    func updateUserProfil(dicoParameters: [String:AnyObject], success: () -> Void, fail failure: (error: NSError?, listError: [AnyObject]?) -> Void) {
+        self.profilRequest = ProfilRequest()
+        
+        self.profilRequest?.updateProfil(dicoParameters, success: {
+            success()
             
             }, fail: { (error, listErrors) in
                 failure(error: error, listError: listErrors)

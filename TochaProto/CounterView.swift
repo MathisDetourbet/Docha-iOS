@@ -17,6 +17,7 @@ enum CounterViewAfterType {
 
 class CounterView: UIImageView {
     let NUMBER_MAX = 10
+    let DURATION_COUNTER_ANIMATION = 0.2 as CGFloat
     var counterImage: JDFlipImageView! {
         didSet {
             self.counterImage.translatesAutoresizingMaskIntoConstraints = false
@@ -78,7 +79,7 @@ class CounterView: UIImageView {
                 return
             }
             self.currentNumber! = newNumber
-            self.counterImage.setImageAnimated(UIImage(named: "counter_base"), duration: 0.3, completion: { (finished) -> Void in
+            self.counterImage.setImageAnimated(UIImage(named: "counter_base"), duration: DURATION_COUNTER_ANIMATION, completion: { (finished) -> Void in
                 if finished {
                     completion(finished: false)
                 }
@@ -110,7 +111,7 @@ class CounterView: UIImageView {
             let currentNumberStr = String(self.currentNumber!)
             self.counterImage.setImageAnimated(
                 UIImage(named: String("counter_" + currentNumberStr)),
-                duration: 0.3,
+                duration: DURATION_COUNTER_ANIMATION,
                 completion: { (finished) -> Void in
                 if finished {
                     self.isSelected = false
@@ -126,7 +127,7 @@ class CounterView: UIImageView {
                 let opBlock: NSBlockOperation = NSBlockOperation(block: ({ () -> Void in
                     self.counterImage.setImageAnimated(
                         UIImage(named: String("counter_" + currentNumberStr)),
-                        duration: 0.3,
+                        duration: self.DURATION_COUNTER_ANIMATION,
                         completion: { (finished) -> Void in
                         if finished {
                             currentNumberStr = String(self.currentNumber!)

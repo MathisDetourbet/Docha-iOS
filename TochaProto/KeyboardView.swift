@@ -47,7 +47,15 @@ class KeyboardView: UIView {
 class CounterContainerView: UIView {
     
     var numbersArray: [Int]?
-    var numberOfCounterDisplayed: Int = 3
+    var numberOfCounterDisplayed: Int = 3 {
+        didSet {
+            if numberOfCounterDisplayed == 2 {
+                centaineCounterView.hidden = true
+            } else if numberOfCounterDisplayed == 3 {
+                centaineCounterView.hidden = false
+            }
+        }
+    }
     
     @IBOutlet var counterViewArray: [CounterView]!
     @IBOutlet weak var centaineCounterView: CounterView!
@@ -102,12 +110,15 @@ class CounterContainerView: UIView {
             if numberOfCounterDisplayed == 2 {
                 newIndex += 1
             }
-            counterViewArray[newIndex].setCounterViewAfterWithCounterViewAfterType(typeArray[index])
+            
+            runAfterDelay(0.2, block: { 
+                self.counterViewArray[newIndex].setCounterViewAfterWithCounterViewAfterType(typeArray[index])
+            })
         }
     }
     
-    func hideCounterView() {
-        centaineCounterView.hidden = true
-        numberOfCounterDisplayed = 2
+    func runAfterDelay(delay: NSTimeInterval, block: dispatch_block_t) {
+        let time = dispatch_time(DISPATCH_TIME_NOW, Int64(delay * Double(NSEC_PER_SEC)))
+        dispatch_after(time, dispatch_get_main_queue(), block)
     }
 }

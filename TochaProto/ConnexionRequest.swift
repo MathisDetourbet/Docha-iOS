@@ -41,11 +41,13 @@ class ConnexionRequest {
                                     session.password = jsonResponse["data"]["user"][UserDataKey.kPassword].string
                                     session.authToken = jsonResponse["data"][UserDataKey.kAuthToken].string
                                     
-                                    let dateFormatter = NSDateFormatter()
-                                    dateFormatter.dateFormat = "yyyy-MM-dd"
-                                    let dateString = jsonResponse["data"]["user"][UserDataKey.kDateBirthday].string
-                                    session.dateBirthday = dateFormatter.dateFromString(dateString!)
+                                    if let dateString = jsonResponse["data"]["user"][UserDataKey.kDateBirthday].string {
+                                        let dateFormatter = NSDateFormatter()
+                                        dateFormatter.dateFormat = "yyyy-MM-dd"
+                                        session.dateBirthday = dateFormatter.dateFromString(dateString)
+                                    }
                                     
+                                    session.username = jsonResponse["data"]["user"][UserDataKey.kUsername].string
                                     session.firstName = jsonResponse["data"]["user"][UserDataKey.kFirstName].string
                                     session.lastName = jsonResponse["data"]["user"][UserDataKey.kLastName].string
                                     session.categoryFavorite = jsonResponse["data"]["user"][UserDataKey.kCategoryFavorite].string
@@ -82,7 +84,7 @@ class ConnexionRequest {
         }
     }
     
-    func connexionWithFacebook(dicoParameters: [String:AnyObject], success: (session: UserSessionFacebook) -> Void, fail failure: (error: NSError?, listErrors: [AnyObject]?) -> Void) {
+    func connexionWithFacebook(dicoParameters: [String:AnyObject]!, success: (session: UserSessionFacebook) -> Void, fail failure: (error: NSError?, listErrors: [AnyObject]?) -> Void) {
         
         var dicoInscriptionApi = [String:AnyObject]()
         dicoInscriptionApi["user"] = dicoParameters
@@ -94,7 +96,7 @@ class ConnexionRequest {
             .validate()
             .responseJSON { (response) in
                 
-                let statusCode = (response.response?.statusCode)!
+                if let statusCode = (response.response?.statusCode) {
                 print("Status code : \(statusCode)")
                 
                 if let value: AnyObject = response.result.value {
@@ -120,6 +122,7 @@ class ConnexionRequest {
                                         session.dateBirthday = dateFormatter.dateFromString(dateString)
                                     }
                                     
+                                    session.username = jsonResponse["data"]["user"][UserDataKey.kUsername].string
                                     session.firstName = jsonResponse["data"]["user"][UserDataKey.kFirstName].string
                                     session.lastName = jsonResponse["data"]["user"][UserDataKey.kLastName].string
                                     session.categoryFavorite = jsonResponse["data"]["user"][UserDataKey.kCategoryFavorite].string
@@ -127,6 +130,10 @@ class ConnexionRequest {
                                     session.facebookImageURL = jsonResponse["data"]["user"][UserDataKey.kFacebookImageURL].string
                                     session.facebookID = jsonResponse["data"]["user"][UserDataKey.kFacebookID].string
                                     session.facebookAccessToken = jsonResponse["data"]["user"][UserDataKey.kFacebookToken].string
+                                    session.dochos = jsonResponse["data"]["user"][UserDataKey.kDochos].intValue
+                                    session.experience = jsonResponse["data"]["user"][UserDataKey.kExperience].intValue
+                                    session.levelMaxUnlocked = jsonResponse["data"]["user"][UserDataKey.kLevelMaxUnlocked].intValue
+                                    session.perfectPriceCpt = jsonResponse["data"]["user"][UserDataKey.kPerfectPriceCpt].intValue
                                     
                                     success(session: session)
                                     
@@ -149,6 +156,7 @@ class ConnexionRequest {
                         // success = false
                     }
                 }
+            }
         }
     }
     
@@ -184,11 +192,13 @@ class ConnexionRequest {
                                     session.email = jsonResponse["data"]["user"][UserDataKey.kEmail].string
                                     session.authToken = jsonResponse["data"][UserDataKey.kAuthToken].string
                                     
-                                    let dateFormatter = NSDateFormatter()
-                                    dateFormatter.dateFormat = "yyyy-MM-dd"
-                                    let dateString = jsonResponse["data"]["user"][UserDataKey.kDateBirthday].string
-                                    session.dateBirthday = dateFormatter.dateFromString(dateString!)
+                                    if let dateString = jsonResponse["data"]["user"][UserDataKey.kDateBirthday].string {
+                                        let dateFormatter = NSDateFormatter()
+                                        dateFormatter.dateFormat = "yyyy-MM-dd"
+                                        session.dateBirthday = dateFormatter.dateFromString(dateString)
+                                    }
                                     
+                                    session.username = jsonResponse["data"]["user"][UserDataKey.kUsername].string
                                     session.firstName = jsonResponse["data"]["user"][UserDataKey.kFirstName].string
                                     session.lastName = jsonResponse["data"]["user"][UserDataKey.kLastName].string
                                     session.categoryFavorite = jsonResponse["data"]["user"][UserDataKey.kCategoryFavorite].string

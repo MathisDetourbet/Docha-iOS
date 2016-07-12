@@ -22,6 +22,7 @@ class NavSchemeManager {
             window.rootViewController = window.rootViewController?.storyboard?.instantiateViewControllerWithIdentifier("idDochaTabBarController") as! UITabBarController
             let tabBarController = window.rootViewController as! UITabBarController
             tabBarController.selectedIndex = 1
+            (window.rootViewController as! UITabBarController).tabBar.tintColor = UIColor.redDochaColor()
         } else {
             window.rootViewController = window.rootViewController?.storyboard?.instantiateViewControllerWithIdentifier("idStarterNavController")
         }

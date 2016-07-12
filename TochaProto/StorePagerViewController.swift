@@ -8,12 +8,14 @@
 
 import Foundation
 
-class StorePagerViewController: RootViewController, CAPSPageMenuDelegate {
+class StorePagerViewController: GameViewController, CAPSPageMenuDelegate {
     
     var pageMenu: CAPSPageMenu?
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        configGameNavigationBar()
+        configTitleViewDocha()
         
         var controllerArray: [RootViewController] = []
         
@@ -38,7 +40,8 @@ class StorePagerViewController: RootViewController, CAPSPageMenuDelegate {
             .SelectedMenuItemLabelColor(UIColor.whiteColor()),
             .UnselectedMenuItemLabelColor(UIColor.whiteColor()),
             .MenuHeight(50),
-            .MenuItemWidth(self.view.frame.width/CGFloat(controllerArray.count)-20)
+            .MenuItemWidth(self.view.frame.width/CGFloat(controllerArray.count)-20),
+            .MenuItemFont(UIFont(name: "Montserrat-SemiBold", size: 13.0)!)
         ]
         
         self.pageMenu = CAPSPageMenu(viewControllers: controllerArray, frame: CGRectMake(0.0, 44.0, self.view.frame.width, self.view.frame.height-44), pageMenuOptions: pageMenuOptions)

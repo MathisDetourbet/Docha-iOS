@@ -8,6 +8,31 @@
 
 import Foundation
 
+struct UserDataKey {
+    static let kUserID = "id"
+    static let kUsername = "username"
+    static let kLastName = "last_name"
+    static let kFirstName = "first_name"
+    static let kEmail = "email"
+    static let kPassword = "password"
+    static let kGender = "sexe"
+    static let kDateBirthday = "date_birthday"
+    static let kCategoryFavorite = "category_favorite"
+    static let kAvatar = "avatar"
+    static let kDochos = "dochos"
+    static let kExperience = "experience"
+    static let kLevelMaxUnlocked = "levelUser"
+    static let kPerfectPriceCpt = "perfects"
+    static let kFacebookID = "fb_id"
+    static let kFacebookToken = "fb_token"
+    static let kFacebookImageURL = "fb_image_url"
+    static let kImageFBURL = "fb_image_url"
+    static let kGooglePlusID = "gplus_id"
+    static let kGooglePlusToken = "oauth_token"
+    static let kAuthToken = "auth_token"
+    static let kSessionID = "session_id"
+}
+
 struct Constants {
     struct UserDefaultsKey {
         // User object key
@@ -35,6 +60,7 @@ struct Constants {
         static let kUserInfosFacebookImageURL = "userInfosFacebookImageURL"
         static let kUserInfosGooglePlusID = "userInfosGooglePlusID"
         static let kUserInfosGooglePlusAccessToken = "userInfosGooglePlusAccessToken"
+        static let kUserInfosProfileImageFilePath = "userInfosProfileImageFilePath"
     }
     
     struct UserAuthentificationKey {
@@ -45,7 +71,7 @@ struct Constants {
     
     struct UrlServer {
         
-        static let UrlBase = "https://afternoon-beyond-49404.herokuapp.com" //"http://localhost:3000"
+        static let UrlBase = testing ? "http://localhost:3000" : "https://afternoon-beyond-49404.herokuapp.com"
         
         struct UrlProfil {
             static let UrlProfilUpdate = "/users"
@@ -54,7 +80,7 @@ struct Constants {
         struct UrlRegister {
             static let UrlFacebookRegister = "/users/auth/facebook"
             static let UrlGooglePlusRegister = "/users"
-            static let UrlEmailRegister = "/users"
+            static let UrlEmailRegister = "/users.json"
         }
         
         struct UrlConnexion {

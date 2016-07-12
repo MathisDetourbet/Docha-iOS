@@ -25,7 +25,7 @@ class ConnexionViewController: RootViewController, GIDSignInUIDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.configNavigationBarWithTitle("Connexion")
+        self.configNavigationBarWithTitle("Connexion", andFontSize: 13.0)
         hideKeyboardWhenTappedAround()
         self.connexionEmailButton.enabled = false
     }
@@ -123,20 +123,25 @@ class ConnexionViewController: RootViewController, GIDSignInUIDelegate {
         appDelegate.facebookSignIn({
             // Success
             DochaPopupHelper.sharedInstance.dismissAlertView()
+            
             if UserSessionManager.sharedInstance.currentSession()?.categoryFavorite != nil {
                 self.goToHome()
             } else {
                 let categoryViewController = self.storyboard?.instantiateViewControllerWithIdentifier("idInscriptionCategorySelectionViewController") as! InscriptionCategorySelectionViewController
+                categoryViewController.comeFromConnexionVC = true
                 self.navigationController?.pushViewController(categoryViewController, animated: true)
             }
         }) { (error, listError) in
             // Fail
             print("Error fetching user facebook data : \(error)")
             print("list error : \(listError)")
+            SCLAlertView.init().showError("Oups...", subTitle: "Une erreure est survenue. Veuillez réessayer ultérieurement. Vérifiez si vous êtes connectés à internet.")
         }
     }
     
     @IBAction func emailConnexionTouched(sender: UIButton) {
+        DochaPopupHelper.sharedInstance.showLoadingPopup()
+        
         if self.emailString != nil && passwordString != nil {
             var dicoParams = [String:AnyObject]()
             dicoParams["email"] = self.emailString!
@@ -144,10 +149,12 @@ class ConnexionViewController: RootViewController, GIDSignInUIDelegate {
             
         UserSessionManager.sharedInstance.connectByEmail(dicoParams,
             success: {
+                DochaPopupHelper.sharedInstance.dismissAlertView()
                 print("User connexion by email : success !")
                 self.goToHome()
                 
             }, fail: { (error, listError) in
+                DochaPopupHelper.sharedInstance.dismissAlertView()
                 print("User connexion by email failed...")
                 SCLAlertView.init().showError("Oups...", subTitle: "L'email ou le mot de passe est incorrecte")
             })

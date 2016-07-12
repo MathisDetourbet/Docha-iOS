@@ -19,12 +19,12 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
-		<key>CNPPopupController.xcscheme</key>
+		<key>Amplitude-iOS.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
 		</dict>
-		<key>DeepLinkKit.xcscheme</key>
+		<key>CNPPopupController.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
@@ -74,6 +74,11 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>RSKImageCropper.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>ReachabilitySwift.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -107,6 +112,11 @@
 			<key>primary</key>
 			<true/>
 		</dict>
+		<key>0A68327C907EBE8B2ADCEBB8DF984D4D</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>0ACFACC96CD1B9C8E8E2AE8DCDB626EC</key>
 		<dict>
 			<key>primary</key>
@@ -127,12 +137,12 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>237CCFDA8A9F0E1A628DBFD0545BD530</key>
+		<key>32E03C331CBF15141DA12648D4F86C0A</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>32E03C331CBF15141DA12648D4F86C0A</key>
+		<key>3F9391BC9DFA3FC5C152A9320EAA31DE</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -142,17 +152,17 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>497C933BB74AFD04823469F43AC7FC88</key>
+		<key>629412CCEBD22B40ECC93D2E808055EA</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>4F55274738859E81EE61B415CA09BB8D</key>
+		<key>6FC54EFBDBF29A43E6981688522423C7</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>55F0B8B13DE7EBFFA9E4F2C658EC0D03</key>
+		<key>73A3AA6A8165812B0021F6175796EA51</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -167,22 +177,17 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>8CF82B71E490603990540C35372DD599</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
 		<key>8FC4B2785BB68892651401B8A26A15AD</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>9801D1AD85A4B4CDFAE4AC933EFB9FB9</key>
+		<key>AC62DE0CD1A44407BEBCA0497320D6A0</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>A10648D23C41070024983D1671D11F0A</key>
+		<key>B1F2B1DB06A0C2247956DC24C0E31C31</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -193,6 +198,11 @@
 			<true/>
 		</dict>
 		<key>D2D17D2E6A8AD8B5A2D1F30A3032805E</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>E6E124BDBD4D64A25442CD30664AF42D</key>
 		<dict>
 			<key>primary</key>
 			<true/>

@@ -21,7 +21,8 @@ target 'Docha' do
     pod 'PBWebViewController'
     pod 'Fabric'
     pod 'Crashlytics'
-    pod 'DeepLinkKit'
+    pod 'Amplitude-iOS', '~> 3.7.0'
+    pod 'RSKImageCropper'
 end
 
 target 'DochaTests' do

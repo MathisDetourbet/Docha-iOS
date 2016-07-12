@@ -26,20 +26,6 @@ public class DochaPopupHelper {
         case Error
     }
     
-    func showPopupWithType(popupType: DochaPopupHelperType) {
-        switch popupType {
-        case .Loading:
-            showLoadingPopup()
-            break
-        case .Infos:
-            showInfosPopup()
-            break
-        default:
-            showErrorPopup()
-            break
-        }
-    }
-    
     func showLoadingPopup() {
         let appearance = SCLAlertView.SCLAppearance(
             kTitleFont: UIFont(name: "Montserrat-ExtraBold", size: 20)!,
@@ -78,7 +64,7 @@ public class DochaPopupHelper {
         self.alertViewResponder = alert.showInfo("", subTitle: "")
     }
     
-    func showErrorPopup() {
+    func showErrorPopupWithTitle(title: String, subTitle: String) {
         let appearance = SCLAlertView.SCLAppearance(
             kTitleFont: UIFont(name: "Montserrat-ExtraBold", size: 20)!,
             kTextFont: UIFont(name: "Montserrat-SemiBold", size: 14)!,
@@ -94,7 +80,7 @@ public class DochaPopupHelper {
         
         // Add the subview to the alert's UI property
         alert.customSubview = subview
-        self.alertViewResponder = alert.showError("", subTitle: "")
+        self.alertViewResponder = alert.showError(title, subTitle: subTitle)
     }
     
     func dismissAlertView() {

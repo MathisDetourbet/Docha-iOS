@@ -54,10 +54,11 @@ class InscriptionRequest {
                                     session.password = jsonResponse["data"]["user"][UserDataKey.kPassword].string
                                     session.authToken = jsonResponse["data"][UserDataKey.kAuthToken].string
                                     
-                                    let dateFormatter = NSDateFormatter()
-                                    dateFormatter.dateFormat = "yyyy-MM-dd"
-                                    let dateString = jsonResponse["data"]["user"][UserDataKey.kDateBirthday].string
-                                    session.dateBirthday = dateFormatter.dateFromString(dateString!)
+                                    if let dateString = jsonResponse["data"]["user"][UserDataKey.kDateBirthday].string {
+                                        let dateFormatter = NSDateFormatter()
+                                        dateFormatter.dateFormat = "yyyy-MM-dd"
+                                        session.dateBirthday = dateFormatter.dateFromString(dateString)
+                                    }
                                     
                                     session.firstName = jsonResponse["data"]["user"][UserDataKey.kFirstName].string
                                     session.lastName = jsonResponse["data"]["user"][UserDataKey.kLastName].string
@@ -136,10 +137,11 @@ class InscriptionRequest {
                                     session.email = jsonResponse["data"]["user"][UserDataKey.kEmail].string
                                     session.authToken = jsonResponse["data"][UserDataKey.kAuthToken].string
                                     
-                                    let dateFormatter = NSDateFormatter()
-                                    dateFormatter.dateFormat = "yyyy-MM-dd"
-                                    let dateString = jsonResponse["data"]["user"][UserDataKey.kDateBirthday].string
-                                    session.dateBirthday = dateFormatter.dateFromString(dateString!)
+                                    if let dateString = jsonResponse["data"]["user"][UserDataKey.kDateBirthday].string {
+                                        let dateFormatter = NSDateFormatter()
+                                        dateFormatter.dateFormat = "yyyy-MM-dd"
+                                        session.dateBirthday = dateFormatter.dateFromString(dateString)
+                                    }
                                     
                                     session.firstName = jsonResponse["data"]["user"][UserDataKey.kFirstName].string
                                     session.lastName = jsonResponse["data"]["user"][UserDataKey.kLastName].string
@@ -218,10 +220,11 @@ class InscriptionRequest {
                                     session.email = jsonResponse["data"]["user"][UserDataKey.kEmail].string
                                     session.authToken = jsonResponse["data"][UserDataKey.kAuthToken].string
                                     
-                                    let dateFormatter = NSDateFormatter()
-                                    dateFormatter.dateFormat = "yyyy-MM-dd"
-                                    let dateString = jsonResponse["data"]["user"][UserDataKey.kDateBirthday].string
-                                    session.dateBirthday = dateFormatter.dateFromString(dateString!)
+                                    if let dateString = jsonResponse["data"]["user"][UserDataKey.kDateBirthday].string {
+                                        let dateFormatter = NSDateFormatter()
+                                        dateFormatter.dateFormat = "yyyy-MM-dd"
+                                        session.dateBirthday = dateFormatter.dateFromString(dateString)
+                                    }
                                     
                                     session.firstName = jsonResponse["data"]["user"][UserDataKey.kFirstName].string
                                     session.lastName = jsonResponse["data"]["user"][UserDataKey.kLastName].string

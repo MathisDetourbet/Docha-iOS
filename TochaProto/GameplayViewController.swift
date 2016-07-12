@@ -28,15 +28,9 @@ class GameplayViewController: GameViewController, KeyboardViewDelegate {
     
     var productsList: [Product]?
     var currentProduct: Product?
-    var currentPriceInArray: (euros: [Int], cents: String)?
+    var currentRealPriceArray: (euros: [Int], cents: String)?
+    var psyAndRealPriceArray: [(psyPrice: Int, realPrice: Int)] = []
     var estimationResultArray: [EstimationResult]?
-    var currentNumberOfCounter: Int? {
-        didSet {
-            if currentNumberOfCounter == 2 {
-                counterContainerView.hideCounterView()
-            }
-        }
-    }
     
     var cursorProduct: Int = 0 {
         didSet {
@@ -45,8 +39,8 @@ class GameplayViewController: GameViewController, KeyboardViewDelegate {
     }
     var cursorCounter: Int = 0
     
-    let kCooldownForPreview: Double! = 3.0
-    let kCooldownForMain: Double! = 5.0
+    let kCooldownForPreview: Double! = 4.0
+    let kCooldownForMain: Double! = 6.0
     let kCooldownForAfter: Double! = 3.0
     var currentTotalCooldown: Double? {
         didSet {
@@ -130,6 +124,22 @@ class GameplayViewController: GameViewController, KeyboardViewDelegate {
         startGameplayMode(self.gameplayMode)
     }
     
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(GameplayViewController.applicationDidEnterBackground(_:)), name: UIApplicationDidEnterBackgroundNotification, object: nil)
+        
+    }
+    
+    override func viewDidDisappear(animated: Bool) {
+        super.viewDidDisappear(animated)
+        NSNotificationCenter.defaultCenter().removeObserver(self)
+    }
+    
+    func applicationDidEnterBackground(notification: NSNotification?) {
+        cancelGame()
+        goToHome()
+    }
+    
     func configureView() {
         self.hidesBottomBarWhenPushed = true
         self.heightFeaturesContainerConstraint.constant = self.view.frame.height - (self.topInfosContainerView.frame.height + self.productImageView.frame.height)
@@ -192,13 +202,13 @@ class GameplayViewController: GameViewController, KeyboardViewDelegate {
             self.topFeaturesContainerConstraint.constant = self.topInfosContainerView.frame.height + self.productImageView.frame.height
             self.topFeaturesSubContainerConstraint.constant = (self.bottomFeaturesContainer.frame.height - self.bottomFeaturesLabelsContainer.frame.height) / 2
             
-            UIView.animateWithDuration(0.5, animations: { 
+            UIView.animateWithDuration(0.5, animations: {
                 self.topInfosContainerView.alpha = 1.0
                 self.bottomFeaturesContainer.alpha = 1.0
                 self.initTimer()
                 self.startTimer()
             })
-
+            
             self.view.layoutIfNeeded()
             
         } else {
@@ -219,8 +229,8 @@ class GameplayViewController: GameViewController, KeyboardViewDelegate {
                 self.featuresLabelsCollection[index].text = currentProduct?.caracteristiques[index]
             }
         }
-        currentPriceInArray = convertPriceToArrayOfInt((currentProduct?.price)!)
-        counterContainerView.centsLabel.text = currentPriceInArray?.1
+        currentRealPriceArray = convertPriceToArrayOfInt((currentProduct?.price)!)
+        counterContainerView.centsLabel.text = currentRealPriceArray?.cents
     }
     
     func startMainMode() {
@@ -245,7 +255,7 @@ class GameplayViewController: GameViewController, KeyboardViewDelegate {
         self.heightFeaturesContainerConstraint.constant = self.view.frame.height - (self.keyboardContainerView.frame.height + self.productImageView.frame.height)
         self.topFeaturesSubContainerConstraint.constant = 8.0
         
-        UIView.animateWithDuration(0.5) { 
+        UIView.animateWithDuration(0.5) {
             self.topInfosContainerView.alpha = 1.0
             self.bottomFeaturesContainer.alpha = 1.0
         }
@@ -254,7 +264,7 @@ class GameplayViewController: GameViewController, KeyboardViewDelegate {
     }
     
     func startAfterMode() {
-        UIView.animateWithDuration(0.5) { 
+        UIView.animateWithDuration(0.5) {
             self.afterView.alpha = 1.0
         }
         initTimer()
@@ -262,12 +272,18 @@ class GameplayViewController: GameViewController, KeyboardViewDelegate {
     }
     
     func startDebriefMode() {
-        UserGameStateManager.sharedInstance.estimationResultsArray = self.estimationResultArray
+        let userGameState = UserGameStateManager.sharedInstance
+        userGameState.estimationResultsArray = self.estimationResultArray
+        userGameState.psyAndRealPriceArray = self.psyAndRealPriceArray
         
         let debriefVC = self.storyboard?.instantiateViewControllerWithIdentifier("idDebriefViewController") as! GameplayDebriefViewController
         debriefVC.productsPlayed = self.productsList
         debriefVC.timelineView = self.timelineView
         self.navigationController?.pushViewController(debriefVC, animated: true)
+    }
+    
+    func cancelGame() {
+        stopTimer()
     }
     
     func hideKeyboardCounterContainerView(hide: Bool) {
@@ -284,8 +300,8 @@ class GameplayViewController: GameViewController, KeyboardViewDelegate {
                                        initialSpringVelocity: 3.0,
                                        options: .AllowUserInteraction,
                                        animations: {
-                self.topKeyboardCounterConstraint.constant = self.view.frame.size.height - self.keyboardCounterContainerView.frame.size.height
-                self.view.layoutSubviews()
+                                        self.topKeyboardCounterConstraint.constant = self.view.frame.size.height - self.keyboardCounterContainerView.frame.size.height
+                                        self.view.layoutSubviews()
                                         
                 }, completion: { (finished: Bool) in
                     if finished {
@@ -305,6 +321,7 @@ class GameplayViewController: GameViewController, KeyboardViewDelegate {
     }
     
     func stopTimer() {
+        self.currentMillisecondTime = 0.0
         self.timerFinished = true
         self.timer?.invalidate()
         self.mainCircularProgress.stopTimer()
@@ -365,14 +382,10 @@ class GameplayViewController: GameViewController, KeyboardViewDelegate {
         }
         
         let cursor = self.counterContainerView.numberOfCounterDisplayed == 2 ? self.cursorCounter+1 : self.cursorCounter
-        
-        self.counterContainerView.counterViewArray[cursor].startCounterAnimationWithNumber(number: number)
-        { (finished) in
-            
-            if self.cursorCounter <= self.counterContainerView.numberOfCounterDisplayed {
-                self.counterContainerView.numbersArray![self.cursorCounter] = number
-                self.cursorCounter += 1
-            }
+        self.counterContainerView.counterViewArray[cursor].startCounterAnimationWithNumber(number: number) { (finished) in }
+        if self.cursorCounter <= self.counterContainerView.numberOfCounterDisplayed {
+            self.counterContainerView.numbersArray![self.cursorCounter] = number
+            self.cursorCounter += 1
         }
     }
     
@@ -380,16 +393,18 @@ class GameplayViewController: GameViewController, KeyboardViewDelegate {
         self.stopTimer()
         
         var counterViewTypeArray: [CounterViewAfterType] = []
-        let counterNumberArray = self.counterContainerView.numbersArray!
+        var counterPsyPriceArray = self.counterContainerView.numbersArray!
         
-        if counterNumberArray == currentPriceInArray!.0 {
+        self.psyAndRealPriceArray.append((convertPriceArrayToInt(counterPsyPriceArray), convertPriceArrayToInt(self.currentRealPriceArray!.euros)))
+        
+        if counterPsyPriceArray == currentRealPriceArray!.euros {
             // Perfect price !
-            for _ in 0...counterNumberArray.count-1 {
+            for _ in 0...counterPsyPriceArray.count-1 {
                 counterViewTypeArray.append(CounterViewAfterType.Perfect)
             }
             
             afterView.displayEstimationResults(counterViewTypeArray)
-            counterContainerView.revealCounterViewAfterWithArrayType(counterViewTypeArray)
+            self.counterContainerView.revealCounterViewAfterWithArrayType(counterViewTypeArray)
             self.afterView.counterViewTypeArray = counterViewTypeArray
             self.estimationResultArray?.append(.Perfect)
             self.gameplayMode = .After
@@ -397,17 +412,27 @@ class GameplayViewController: GameViewController, KeyboardViewDelegate {
             return
         }
         
-        for index in 0...counterNumberArray.count-1 {
-            
-            if counterNumberArray[index] == currentPriceInArray!.0[index] {
-                counterViewTypeArray.append(CounterViewAfterType.Green)
-                
-            } else {
+        if missingAnNumberInPsyPriceArray(counterPsyPriceArray) {
+            for index in 0...counterPsyPriceArray.count-1 {
+                counterPsyPriceArray[index] = -1
+            }
+            for _ in 0...counterPsyPriceArray.count-1 {
                 counterViewTypeArray.append(CounterViewAfterType.Red)
+            }
+            
+        } else {
+            for index in 0...counterPsyPriceArray.count-1 {
+                
+                if counterPsyPriceArray[index] == currentRealPriceArray!.euros[index] {
+                    counterViewTypeArray.append(CounterViewAfterType.Green)
+                    
+                } else {
+                    counterViewTypeArray.append(CounterViewAfterType.Red)
+                }
             }
         }
         afterView.displayEstimationResults(counterViewTypeArray)
-        counterContainerView.revealCounterViewAfterWithArrayType(counterViewTypeArray)
+        self.counterContainerView.revealCounterViewAfterWithArrayType(counterViewTypeArray)
         self.afterView.counterViewTypeArray = counterViewTypeArray
         self.estimationResultArray?.append(self.afterView.estimationResult!)
         self.gameplayMode = .After
@@ -433,16 +458,27 @@ class GameplayViewController: GameViewController, KeyboardViewDelegate {
             centsString += "0"
         }
         
-        if price >= 10 {
-            if price >= 100 && price < 1000 {
-                currentNumberOfCounter = 3
-                self.counterContainerView.numberOfCounterDisplayed = currentNumberOfCounter!
-            } else {
-                currentNumberOfCounter = 2
-                self.counterContainerView.numberOfCounterDisplayed = currentNumberOfCounter!
-            }
-        }
+        self.counterContainerView.numberOfCounterDisplayed = eurosArray.count
         
         return (eurosArray, centsString)
+    }
+    
+    func convertPriceArrayToInt(psyPriceArray: [Int]) -> Int {
+        var psyPriceInt = 0
+        let reversePsyPriceArray = Array(psyPriceArray.reverse())
+        for index in 0...reversePsyPriceArray.count-1 {
+            psyPriceInt += reversePsyPriceArray[index] * Int(pow(Double(10), Double(index)))
+        }
+        
+        return psyPriceInt
+    }
+    
+    func missingAnNumberInPsyPriceArray(psyPriceArray: [Int]) -> Bool {
+        for psyPrice in psyPriceArray {
+            if psyPrice == -1 {
+                return true
+            }
+        }
+        return false
     }
 }

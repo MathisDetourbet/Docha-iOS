@@ -8,6 +8,7 @@
 
 import Foundation
 import SCLAlertView
+import Amplitude_iOS
 
 class PreferencesCategoriesViewController: RootViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
@@ -26,13 +27,17 @@ class PreferencesCategoriesViewController: RootViewController, UICollectionViewD
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        // Amplitude
+        Amplitude.instance().logEvent("Preferences category selection opened")
+        
         self.navigationController!.setNavigationBarHidden(false, animated: false)
         self.footerValidateView.alpha = 0.0
         
         self.collectionView.backgroundColor = UIColor.clearColor()
         self.collectionView.backgroundView = nil
         
-        self.configNavigationBarWithTitle("Choisissez votre catégorie préférée")
+        self.configNavigationBarWithTitle("Choisissez votre catégorie préférée", andFontSize: 13.0)
         
         self.categoryPrefered = UserSessionManager.sharedInstance.currentSession()?.categoryFavorite
         
@@ -41,11 +46,6 @@ class PreferencesCategoriesViewController: RootViewController, UICollectionViewD
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-    }
-    
-    override func viewWillDisappear(animated: Bool) {
-        super.viewWillAppear(animated)
-        
     }
     
     func loadData() {
@@ -58,6 +58,21 @@ class PreferencesCategoriesViewController: RootViewController, UICollectionViewD
         
         let currentSession = UserSessionManager.sharedInstance.currentSession()
         self.categoryPrefered = currentSession?.categoryFavorite
+    }
+    
+    func saveCategorieFavoriteWithUserSession(userSession: UserSession, completion: ( (success: Bool) -> Void)) {
+        let params = userSession.generateJSONFromUserSession()
+        if let param = params {
+            UserSessionManager.sharedInstance.updateUserProfil(param, success: {
+                print("Success categories VC")
+                //SCLAlertView().showSuccess("Succès", subTitle: "La categorie préférée a bien été modifiée.")
+                completion(success: true)
+            }, fail: { (error, listError) in
+                print("Fail categories VC")
+                SCLAlertView().showError("Oups...", subTitle: "Il semblerait que vous n'avez pas de connexion à internet, la catégorie n'a pas pu être modifée... Veuillez réessayer ultérieurement.")
+                completion(success: false)
+            })
+        }
     }
     
     
@@ -101,17 +116,31 @@ class PreferencesCategoriesViewController: RootViewController, UICollectionViewD
         let cellSelected = collectionView.cellForItemAtIndexPath(indexPath) as! InscriptionCategoryCollectionViewCell
         cellSelected.imageSelected = true
         self.categoryPrefered = cellSelected.categoryName!
-        self.oldCategoryIndexPath = indexPath
-    }
-    
-    
-// MARK: @IBAction
-    
-    @IBAction func backButtonTouched(sender: UIBarButtonItem) {
+        
         let currentSession = UserSessionManager.sharedInstance.currentSession()
         currentSession?.categoryFavorite = self.categoryPrefered
         currentSession?.saveSession()
-        // Need to update the BDD !!
+        
+        if let userSession = currentSession {
+            saveCategorieFavoriteWithUserSession(userSession, completion: { (success) in
+                if success {
+                    self.oldCategoryIndexPath = indexPath
+                } else {
+                    let cellSelected = collectionView.cellForItemAtIndexPath(self.oldCategoryIndexPath!) as! InscriptionCategoryCollectionViewCell
+                    cellSelected.imageSelected = true
+                    self.categoryPrefered = cellSelected.categoryName!
+                    
+                    let cellDeselected = collectionView.cellForItemAtIndexPath(indexPath) as! InscriptionCategoryCollectionViewCell
+                    cellDeselected.imageSelected = false
+                }
+            })
+        }
+    }
+    
+    
+//MARK: @IBActions
+    
+    @IBAction func backButtonTouched(sender: UIBarButtonItem) {
         self.navigationController?.popViewControllerAnimated(true)
     }
     

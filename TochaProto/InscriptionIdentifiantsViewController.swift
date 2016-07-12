@@ -49,7 +49,7 @@ class InscriptionIdentifiantsViewController: RootViewController, UITextFieldDele
         self.registerButton.enabled = true
         self.navigationController!.setNavigationBarHidden(false, animated: false)
         self.navigationItem.setHidesBackButton(true, animated: false)
-        self.configNavigationBarWithTitle("Inscription")
+        self.configNavigationBarWithTitle("Inscription", andFontSize: 13.0)
     }
     
     func textFieldShouldReturn(textField: UITextField) -> Bool {

@@ -18,6 +18,7 @@ class InscriptionCategorySelectionViewController: RootViewController, UICollecti
     var categoriesImages = [UIImage]?()
     var categoryPrefered: String?
     var oldCategoryIndexPath: NSIndexPath?
+    var comeFromConnexionVC: Bool = false
     
     @IBOutlet weak var backButton: UIBarButtonItem!
     @IBOutlet weak var infoButton: UIBarButtonItem!
@@ -32,7 +33,7 @@ class InscriptionCategorySelectionViewController: RootViewController, UICollecti
         self.collectionView.backgroundColor = UIColor.clearColor()
         self.collectionView.backgroundView = nil
         
-        self.configNavigationBarWithTitle("Choisissez votre catégorie préférée")
+        self.configNavigationBarWithTitle("Choisissez votre catégorie préférée", andFontSize: 13.0)
         
         loadData()
     }
@@ -92,19 +93,27 @@ class InscriptionCategorySelectionViewController: RootViewController, UICollecti
     @IBAction func validButtonTouched(sender: UIButton) {
         let currentSessionManager = UserSessionManager.sharedInstance
         
+        if self.comeFromConnexionVC {
+            if let categoryFavorite = self.categoryPrefered {
+                
+                var params = currentSessionManager.currentSession()?.generateJSONFromUserSession()
+                params?["category_favorite"] = categoryFavorite
+                
+                if let param = params {
+                    UserSessionManager.sharedInstance.updateUserProfil(param, success: {
+                        print("Success categories VC")
+                    }, fail: { (error, listError) in
+                        print("Fail categories VC")
+                    })
+                }
+            }
+        } else {
+            
+        }
+        
         if currentSessionManager.dicoUserDataInscription == nil {
             currentSessionManager.dicoUserDataInscription = [String:AnyObject]()
-        }
-        if let categoryFavorite = self.categoryPrefered {
-            currentSessionManager.dicoUserDataInscription!["category_favorite"] = categoryFavorite
-            currentSessionManager.currentSession()?.categoryFavorite = categoryFavorite
-            let params = currentSessionManager.currentSession()?.generateJSONFromUserSession()
-            let request = ProfilRequest()
-//            request.updateProfil(params!, success: {
-//                print("Success categories VC")
-//                }, fail: { (error, listErrors) in
-//                    print("Fail categories VC")
-//            })
+            currentSessionManager.dicoUserDataInscription!["category_favorite"] = self.categoryPrefered
         }
         
         if currentSessionManager.isLogged() {
@@ -112,8 +121,8 @@ class InscriptionCategorySelectionViewController: RootViewController, UICollecti
             self.goToHome()
             
         } else {
-            let viewController = self.storyboard?.instantiateViewControllerWithIdentifier("idInscriptionIdentifiantsViewController")
-            self.navigationController?.pushViewController(viewController!, animated: true)
+            let viewController = self.storyboard?.instantiateViewControllerWithIdentifier("idInscriptionIdentifiantsViewController") as! InscriptionIdentifiantsViewController
+            self.navigationController?.pushViewController(viewController, animated: true)
         }
     }
     

@@ -7,26 +7,34 @@
 //
 
 import Foundation
+import Amplitude_iOS
 
 class PreferencesViewController: GameViewController, UITableViewDelegate, UITableViewDataSource {
     
     let idNormalTableViewCell = "idNormalTableViewCell"
     let idSwitchTableViewCell = "idSwitchTableViewCell"
     let sections: [String] = ["COMPTE", "PARAMÈTRES", "AUTRES"]
-    let cellContent: [[[String:String]]] = [[["title":"Modifier le profil","iconPath": "profil_icon"], ["title":"Changer le mot de passe","iconPath": "password_change_icon"], ["title":"Catégorie préférées","iconPath": "category_selection_icon"]],
+    let cellContent: [[[String:String]]] = [[["title":"Modifier le profil","iconPath": "profil_icon"], ["title":"Changer le mot de passe","iconPath": "password_change_icon"], ["title":"Catégorie préférée","iconPath": "category_selection_icon"]],
                                             [["title":"Notifications","iconPath": "notifications_icon"], ["title":"Newsletter","iconPath": "newsletter_icon"], ["title":"Langue","iconPath": "language_icon"]],
                                             [["title":"À propos","iconPath": "rocket_icon"], ["title":"Nous contacter","iconPath": "mail_icon"]]]
+    let categorieTranslator: [String: String] = ["lifestyle":"Lifestyle", "high-tech":"Hi-tech", "maison_deco": "Maison & décoration", "bijoux_montres": "Bijoux & montres", "electromenager": "Électroménager", "objets_connectes": "Objets connectés", "gastronomie_vin": "Gastronomie & vin", "beauty": "Beauté", "art": "Art", "sport": "Sport"]
     
     @IBOutlet weak var tableView: UITableView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        // Amplitude
+        Amplitude.instance().logEvent("Preferences tab opened")
+        
         self.buildUI()
     }
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         configGameNavigationBar()
+        configTitleViewDocha()
+        self.tableView.reloadData()
     }
     
     override func viewDidLayoutSubviews() {
@@ -58,7 +66,7 @@ class PreferencesViewController: GameViewController, UITableViewDelegate, UITabl
     }
     
     
-    //MARK: Table View Data Source Methods
+//MARK: Table View Data Source Methods
     
     func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         return self.sections[section]
@@ -84,7 +92,7 @@ class PreferencesViewController: GameViewController, UITableViewDelegate, UITabl
             let cell = tableView.dequeueReusableCellWithIdentifier(self.idNormalTableViewCell, forIndexPath: indexPath) as? PreferencesNormalTableViewCell
             let title = self.cellContent[indexPath.section][indexPath.row]["title"]
             cell?.titleLabel.text = title
-            (title == "Categorie préférée") ? (cell?.categoryFavoriteLabel.text = title) : (cell?.categoryFavoriteLabel.text = "")
+            (title! == "Catégorie préférée") ? (cell?.categoryFavoriteLabel.text = self.categorieTranslator[(UserSessionManager.sharedInstance.currentSession()?.categoryFavorite)!]) : (cell?.categoryFavoriteLabel.text = "")
             cell?.iconImageView.image = UIImage(named: self.cellContent[indexPath.section][indexPath.row]["iconPath"]!)
             
             return cell!
@@ -92,7 +100,7 @@ class PreferencesViewController: GameViewController, UITableViewDelegate, UITabl
     }
     
     
-    //MARK: Table View Delegate Methods
+//MARK: Table View Delegate Methods
     
     func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 32.0
@@ -105,6 +113,8 @@ class PreferencesViewController: GameViewController, UITableViewDelegate, UITabl
             switch indexPath.row {
             case 0:
                 // Modifier le profil
+                let changeProfilVC = self.storyboard?.instantiateViewControllerWithIdentifier("idPreferencesChangeProfilViewController") as! PreferencesChangeProfilViewController
+                self.navigationController?.pushViewController(changeProfilVC, animated: true)
                 break
             case 1:
                 // Changer le mdp
@@ -120,6 +130,15 @@ class PreferencesViewController: GameViewController, UITableViewDelegate, UITabl
             // Paramètres section
             break
         default:
+            if indexPath.row == 0 {
+                // A propos
+                let aboutVC = self.storyboard?.instantiateViewControllerWithIdentifier("idPreferencesAboutViewController") as! PreferencesAboutViewController
+                self.navigationController?.pushViewController(aboutVC, animated: true)
+                
+            } else if indexPath.row == 1 {
+                // Nous contacter
+                
+            }
             // Autres section
             break
         }
@@ -133,13 +152,17 @@ class PreferencesViewController: GameViewController, UITableViewDelegate, UITabl
     }
     
     
-    //MARK: IBAction Methods
+//MARK: @IBAction Methods
     
     func inviteFacebookFriendsButtonTouched() {
-        
+        // Amplitude
+        Amplitude.instance().logEvent("ClickInviteFriends")
     }
     
     func logoutButtonTouched() {
+        // Amplitude
+        Amplitude.instance().logEvent("LogOutUser")
+        
         UserSessionManager.sharedInstance.logout()
         let connexionViewController = self.storyboard?.instantiateViewControllerWithIdentifier("idStarterNavController")
         NavSchemeManager.sharedInstance.changeRootViewController(connexionViewController!)

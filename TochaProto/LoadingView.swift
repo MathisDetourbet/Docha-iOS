@@ -28,7 +28,7 @@ class LoadingView: UIView {
         self.init(frame: frame)
         
         self.loadingType = loadingType
-        let rect = CGRectMake((self.frame.width / 2) - 50, (self.frame.height / 2) - 50, 70.0, 70.0)
+        let rect = CGRectMake((self.frame.width / 2) - 35, (self.frame.height / 2) - 35, 70.0, 70.0)
         self.indicatorView = NVActivityIndicatorView(frame: rect, type: NVActivityIndicatorType.BallPulseSync, color: UIColor.whiteColor(), padding: 0.0)
         self.addSubview(indicatorView!)
         self.backgroundColor = UIColor.darkBlueDochaColor()

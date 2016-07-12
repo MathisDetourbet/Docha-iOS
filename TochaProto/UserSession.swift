@@ -56,11 +56,39 @@ class UserSession: User, NSCoding {
     }
     
     func saveSession() {
-        // Saving user state
         let userDefaults = NSUserDefaults.standardUserDefaults()
         let encodedData = NSKeyedArchiver.archivedDataWithRootObject(self)
         userDefaults.setObject(encodedData, forKey: Constants.UserDefaultsKey.kUserSessionObject)
         userDefaults.synchronize()
+    }
+    
+    func getUserProfileImage() -> UIImage? {
+        let imagePath = NSUserDefaults.standardUserDefaults().objectForKey(Constants.UserDefaultsKey.kUserInfosProfileImageFilePath) as? String
+        if let oldImagePath = imagePath {
+            let oldFullPath = self.documentsPathForFileName(oldImagePath)
+            let oldImageData = NSData(contentsOfFile: oldFullPath)
+            let oldImage = UIImage(data: oldImageData!)
+            
+            return oldImage!
+        }
+        
+        return nil
+    }
+    
+    func saveProfileImage(image: UIImage) {
+        let imageData = UIImageJPEGRepresentation(image, 1)
+        let relativePath = "image_\(NSDate.timeIntervalSinceReferenceDate()).jpg"
+        let path = self.documentsPathForFileName(relativePath)
+        imageData?.writeToFile(path, atomically: true)
+        NSUserDefaults.standardUserDefaults().setObject(relativePath, forKey: Constants.UserDefaultsKey.kUserInfosProfileImageFilePath)
+        NSUserDefaults.standardUserDefaults().synchronize()
+    }
+    
+    func documentsPathForFileName(name: String) -> String {
+        let path = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as String
+        let url = NSURL(fileURLWithPath: path)
+        let filePath = url.URLByAppendingPathComponent(name).path!
+        return filePath
     }
     
     override func initPropertiesWithResponseObject(responseObject: AnyObject) {
@@ -80,13 +108,19 @@ class UserSession: User, NSCoding {
         if let firstName = self.firstName { dataUser[UserDataKey.kFirstName] = firstName }
         if let email = self.email { dataUser[UserDataKey.kEmail] = email }
         if let gender = self.gender { dataUser[UserDataKey.kGender] = gender }
-        if let dateBirthday = self.dateBirthday { dataUser[UserDataKey.kDateBirthday] = dateBirthday }
+        if let dateBirthday = self.dateBirthday {
+            let dateFormatter = NSDateFormatter()
+            dateFormatter.dateFormat = "dd MMMM yyyy"
+            dataUser[UserDataKey.kDateBirthday] = dateFormatter.stringFromDate(dateBirthday)
+        }
         if let categoryFavorite = self.categoryFavorite { dataUser[UserDataKey.kCategoryFavorite] = categoryFavorite }
         if let avatar = self.avatar { dataUser[UserDataKey.kAvatar] = avatar }
         if let authToken = self.authToken { dataUser[UserDataKey.kAuthToken] = authToken }
         if let sessionID = self.sessionID { dataUser[UserDataKey.kSessionID] = sessionID }
         dataUser[UserDataKey.kDochos] = dochos
         dataUser[UserDataKey.kExperience] = experience
+        dataUser[UserDataKey.kLevelMaxUnlocked] = levelMaxUnlocked
+        dataUser[UserDataKey.kPerfectPriceCpt] = perfectPriceCpt
         
         return dataUser
     }

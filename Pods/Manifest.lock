@@ -23,10 +23,10 @@ PODS:
   - Alamofire (3.4.0)
   - AlamofireImage (2.4.0):
     - Alamofire (~> 3.3)
+  - Amplitude-iOS (3.7.1)
   - CNPPopupController (0.3.1)
   - Crashlytics (3.7.2):
     - Fabric (~> 1.6.3)
-  - DeepLinkKit (1.2.1)
   - Fabric (1.6.7)
   - FirebaseAnalytics (3.2.0):
     - FirebaseInstanceID (~> 1.0)
@@ -62,6 +62,7 @@ PODS:
   - PageMenu (1.2.9)
   - PBWebViewController (0.5.0)
   - ReachabilitySwift (2.3.3)
+  - RSKImageCropper (1.5.1)
   - SCLAlertView (0.5.8)
   - SwiftyJSON (2.3.2)
   - SwiftyTimer (1.4.0)
@@ -71,9 +72,9 @@ DEPENDENCIES:
   - AFNetworking (~> 2.6)
   - Alamofire (~> 3.0)
   - AlamofireImage (~> 2.0)
+  - Amplitude-iOS (~> 3.7.0)
   - CNPPopupController
   - Crashlytics
-  - DeepLinkKit
   - Fabric
   - Google/SignIn
   - IQKeyboardManagerSwift
@@ -82,6 +83,7 @@ DEPENDENCIES:
   - PageMenu
   - PBWebViewController
   - ReachabilitySwift
+  - RSKImageCropper
   - SCLAlertView
   - SwiftyJSON (~> 2.3)
   - SwiftyTimer
@@ -91,9 +93,9 @@ SPEC CHECKSUMS:
   AFNetworking: cb8d14a848e831097108418f5d49217339d4eb60
   Alamofire: c19a627cefd6a95f840401c49ab1f124e07f54ee
   AlamofireImage: 87408b652e0f5ae5fe364035f15aea8b9b24c77e
+  Amplitude-iOS: 4c49e5b00ebe5bf3800f219aaba8a55cf667c6c9
   CNPPopupController: 67dc2ca5a3f88cd49a27bb1b0aeb78a24d423d79
   Crashlytics: 130ab943f8c78cda7a814b434f270b2e2c8a3cba
-  DeepLinkKit: 4c3a713b7ecc6c6e25ba56c87d0c728f6035a9ef
   Fabric: caf7580c725e64db144f610ac65cd60956911dc7
   FirebaseAnalytics: 6f75b04e6bfb8e0b6e9ef298e04c24eea3b13863
   FirebaseInstanceID: d014d574053a2fe84478f12f7bae96979e7051bb
@@ -111,11 +113,12 @@ SPEC CHECKSUMS:
   PageMenu: ba19ff267f7a19e444e93c20a7847b78954a7011
   PBWebViewController: 6537990155ca850fb8d0563efbc12becebc953ef
   ReachabilitySwift: e0f6b6f280effb47731acfaaa2d5ffe223703793
+  RSKImageCropper: edd65fedb3734332818deb139906d6b7f54b8a44
   SCLAlertView: 653e84d1f9fd95333bc54671fbadb7d0c47fce49
   SwiftyJSON: 04ccea08915aa0109039157c7974cf0298da292a
   SwiftyTimer: db4458cfaf67fc71e16ad6e4637c60b86f76a649
   TextFieldEffects: bc4fd3bd557321bd61a0762f3f50965477a36f62
 
-PODFILE CHECKSUM: 088eabf8362023ca22a7bba0f6541087e7a2151b
+PODFILE CHECKSUM: 4d0f4dcfc7bb2ad086ea12b22ae43e9b6fbd0178
 
 COCOAPODS: 1.0.1

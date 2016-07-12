@@ -18,8 +18,7 @@ class HomePlayTableViewCell: UITableViewCell {
     
     @IBOutlet weak var nextRecompenseLabel: UILabel!
     @IBOutlet weak var levelLabel: UILabel!
-    @IBOutlet weak var constraintWidthProgressBar: NSLayoutConstraint!
-    @IBOutlet weak var levelBackgroundImageView: UIImageView!
+    @IBOutlet weak var levelBarView: LevelBarView!
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -31,5 +30,9 @@ class HomePlayTableViewCell: UITableViewCell {
     
     @IBAction func playButtonTouched(sender: UIButton) {
         delegate?.playButtonTouched()
+    }
+    
+    @IBAction func levelBarViewTouched(sender: AnyObject) {
+        
     }
 }

@@ -28,6 +28,7 @@
 			<key>CFBundleURLSchemes</key>
 			<array>
 				<string>fb273418713002986</string>
+				<string>home</string>
 			</array>
 		</dict>
 		<dict>
@@ -103,6 +104,10 @@
 		<string>Montserrat-Regular.otf</string>
 		<string>Montserrat-SemiBold.otf</string>
 		<string>Montserrat-UltraLight.otf</string>
+		<string>CaviarDreams_Bold.ttf</string>
+		<string>CaviarDreams_BoldItalic.ttf</string>
+		<string>CaviarDreams_Italic.ttf</string>
+		<string>CaviarDreams.ttf</string>
 	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>

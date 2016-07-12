@@ -26,7 +26,7 @@ class InscriptionInfosUserViewController: RootViewController, UITextFieldDelegat
         self.validProfilButton.enabled = false
         self.navigationController!.setNavigationBarHidden(false, animated: false)
         self.navigationItem.setHidesBackButton(true, animated: false)
-        self.configNavigationBarWithTitle("Qui êtes-vous ?")
+        self.configNavigationBarWithTitle("Qui êtes-vous ?", andFontSize: 13.0)
     }
     
     func textFieldShouldReturn(textField: UITextField) -> Bool {
@@ -67,12 +67,21 @@ class InscriptionInfosUserViewController: RootViewController, UITextFieldDelegat
             self.birthdayTextField.borderInactiveColor = UIColor.blueDochaColor()
             self.birthdayTextField.placeholder = ""
             self.validProfilButton.enabled = true
+            
         } else {
             self.validProfilButton.enabled = false
             self.birthdayTextField.borderActiveColor = UIColor.redDochaColor()
             self.birthdayTextField.borderInactiveColor = UIColor.redDochaColor()
             self.birthdayTextField.placeholder = "Exemple : 1er Janvier 1990"
         }
+    }
+    
+    @IBAction func skipButtonTouched(sender: UIButton) {
+        self.genderSelected = "M"
+        self.dateOfBirthday = "1 Janvier 1990"
+        self.validProfilButtonTouched(nil)
+        let inscriptionAvatarVC = self.storyboard?.instantiateViewControllerWithIdentifier("idInscriptionProfilViewController") as! InscriptionProfilViewController
+        self.navigationController?.pushViewController(inscriptionAvatarVC, animated: true)
     }
     
     @IBAction func genderButtonTouched(sender: UIButton) {
@@ -82,6 +91,7 @@ class InscriptionInfosUserViewController: RootViewController, UITextFieldDelegat
             self.manButton.setImage(UIImage(named: "avatar_homme_selected_infos_user.png"), forState: .Normal)
             self.womanButton.setImage(UIImage(named: "avatar_femme_infos_user.png"), forState: .Normal)
             self.manButton.animatedLikeBubbleWithDelay(0.0, duration: 0.5)
+            
         } else {
             // Woman selected
             self.genderSelected = "F"
@@ -91,7 +101,7 @@ class InscriptionInfosUserViewController: RootViewController, UITextFieldDelegat
         }
     }
     
-    @IBAction func validProfilButtonTouched(sender: UIButton) {
+    @IBAction func validProfilButtonTouched(sender: UIButton?) {
         let userSessionManager = UserSessionManager.sharedInstance
         
         if userSessionManager.dicoUserDataInscription == nil {

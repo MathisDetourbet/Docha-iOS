@@ -42,8 +42,7 @@ class ProductManager {
     }
     
     func loadProductsWithCurrentCategory() {
-        //let category = UserSessionManager.sharedInstance.currentSession()?.categoryFavorite
-        let jsonName = "decoration"
+        let jsonName = "products_beta"
         guard
             let jsonPath = NSBundle.mainBundle().pathForResource(jsonName, ofType: "json"),
             let jsonData = NSData.init(contentsOfFile: jsonPath),

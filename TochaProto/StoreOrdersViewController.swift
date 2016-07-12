@@ -7,7 +7,14 @@
 //
 
 import Foundation
+import Amplitude_iOS
 
 class StoreOrdersViewController: RootViewController {
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        // Amplitude
+        Amplitude.instance().logEvent("StoreViewOrders")
+    }
 }

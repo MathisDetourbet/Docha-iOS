@@ -14,6 +14,9 @@ import Google
 import SwiftyJSON
 import Fabric
 import Crashlytics
+import Amplitude_iOS
+
+public var testing = false
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
@@ -28,38 +31,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
         
         IQKeyboardManager.sharedManager().enable = true
         
+        initManagers()
+        
         NavSchemeManager.sharedInstance.initRootController()
         
         // Facebook SDK
         FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
         
-        // GooglePlus SDK : Initialize sign-in
-//        var configureError: NSError?
-//        GGLContext.sharedInstance().configureWithError(&configureError)
-//        assert(configureError == nil, "Error configuring Google services: \(configureError)")
-//        
-//        GIDSignIn.sharedInstance().delegate = self
+        // Amplitude Init
+        Amplitude.instance().initializeApiKey("792a2eced82bad1ee03a8f0f874c70f5")
         
-        //        let tabBarController = self.window?.rootViewController as! UITabBarController
-        //        let tabBar = tabBarController.tabBar as UITabBar
-        //        tabBar.backgroundImage = UIImage(named: "bottom-menu_tab")
-        //
-        //        let tabBarHomeItem = tabBar.items![0]
-        //        let tabBarRankingItem = tabBar.items![1]
-        //        let tabBarPlayItem = tabBar.items![2]
-        //        let tabBarCategoriesItem = tabBar.items![3]
-        //        let tabBarCouponsItem = tabBar.items![4]
-        //
-        //        tabBarHomeItem.image = UIImage(named: "home_150x117")?.imageWithRenderingMode(.AlwaysOriginal)
-        //        tabBarHomeItem.selectedImage = UIImage(named: "home_selected_150x117")?.imageWithRenderingMode(.AlwaysOriginal)
-        //        tabBarRankingItem.image = UIImage(named: "ranking_150x117")?.imageWithRenderingMode(.AlwaysOriginal)
-        //        tabBarRankingItem.selectedImage = UIImage(named: "ranking_selected_150x117")?.imageWithRenderingMode(.AlwaysOriginal)
-        //        tabBarPlayItem.image = UIImage(named: "play_150x117")?.imageWithRenderingMode(.AlwaysOriginal)
-        //        tabBarPlayItem.selectedImage = UIImage(named: "play_selected_150x117")?.imageWithRenderingMode(.AlwaysOriginal)
-        //        tabBarCategoriesItem.image = UIImage(named: "categories_150x117")?.imageWithRenderingMode(.AlwaysOriginal)
-        //        tabBarCategoriesItem.selectedImage = UIImage(named: "categories_selected_150x117")?.imageWithRenderingMode(.AlwaysOriginal)
-        //        tabBarCouponsItem.image = UIImage(named: "coupons_150x117")?.imageWithRenderingMode(.AlwaysOriginal)
-        //        tabBarCouponsItem.selectedImage = UIImage(named: "coupons_selected_150x117")?.imageWithRenderingMode(.AlwaysOriginal)
+        if  UserSessionManager.sharedInstance.isLogged() {
+            UserSessionManager.sharedInstance.login({}) { (error, listErrors) in
+                DochaPopupHelper.sharedInstance.showErrorPopupWithTitle("Oups !", subTitle: "La connexion internet semble interrompue...")
+            }
+        }
+        
         return true
     }
         
@@ -77,6 +64,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
     func applicationDidEnterBackground(application: UIApplication) {
         // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
         // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
+        Amplitude.instance().logEvent("ApplicationDidEnterBackground")
+        NSNotificationCenter.defaultCenter().postNotificationName(UIApplicationDidEnterBackgroundNotification, object: nil)
     }
 
     func applicationWillEnterForeground(application: UIApplication) {
@@ -86,12 +75,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
     func applicationDidBecomeActive(application: UIApplication) {
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
         FBSDKAppEvents.activateApp()
+        Amplitude.instance().logEvent("ApplicationOpened")
     }
 
     func applicationWillTerminate(application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
         let loginManager: FBSDKLoginManager = FBSDKLoginManager()
         loginManager.logOut()
+        
+        // Amplitude Event
+        Amplitude.instance().logEvent("ApplicationWillTerminate")
     }
     
     // MARK: Facebook Sign In
@@ -147,6 +140,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
                     
                         if UserSessionManager.sharedInstance.dicoUserDataInscription == nil {
                             let categoryViewController = viewController?.storyboard?.instantiateViewControllerWithIdentifier("idInscriptionCategorySelectionViewController") as!InscriptionCategorySelectionViewController
+                            categoryViewController.comeFromConnexionVC = true
                             viewController?.navigationController?.pushViewController(categoryViewController, animated: true)
                         } else {
                             let categoryViewController = viewController?.storyboard?.instantiateViewControllerWithIdentifier("idMenuNavController") as! UINavigationController
@@ -169,6 +163,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
                                 
                                 if UserSessionManager.sharedInstance.dicoUserDataInscription == nil {
                                     let categoryViewController = viewController?.storyboard?.instantiateViewControllerWithIdentifier("idInscriptionCategorySelectionViewController") as!InscriptionCategorySelectionViewController
+                                    categoryViewController.comeFromConnexionVC = true
                                     viewController?.navigationController?.pushViewController(categoryViewController, animated: true)
                                 } else {
                                     let categoryViewController = viewController?.storyboard?.instantiateViewControllerWithIdentifier("idDochaTabBarController") as! UITabBarController
@@ -187,6 +182,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
             print("GooglePlus get user data : error : \(error)")
             print("\(error.localizedDescription)")
         }
+    }
+    
+    func initManagers() {
+        UserSessionManager.sharedInstance
+        UserGameStateManager.sharedInstance
+        ProductManager.sharedInstance
+        NavSchemeManager.sharedInstance
     }
 }
 

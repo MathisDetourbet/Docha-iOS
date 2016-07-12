@@ -36,7 +36,7 @@ class InscriptionProfilViewController: RootViewController {
         super.viewDidLoad()
         
         self.navigationItem.setHidesBackButton(true, animated: false)
-        self.configNavigationBarWithTitle("Choisissez votre avatar")
+        self.configNavigationBarWithTitle("Choisissez votre avatar", andFontSize: 13.0)
         
         let userGender = UserSessionManager.sharedInstance.dicoUserDataInscription!["sexe"] as? String
         
