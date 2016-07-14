@@ -31,7 +31,10 @@ extension UIImageView {
 
 
 class ProductManager {
+    let PACK_PRODUCT_COUNT = 5
+    
     var products: [Product]?
+    var currentPackOfProducts: [Product]?
     var productsImages: [String:UIImage]?
     
     class var sharedInstance: ProductManager {
@@ -86,20 +89,138 @@ class ProductManager {
     }
     
     func loadPackOfProducts() -> [Product]? {
-        if self.products != nil {
-            let productsShuffled = self.products!.shuffle()
-            var packOfProducts: [Product]? = []
-            
-            for index in 0...4 {
-                packOfProducts!.append(productsShuffled[index])
-            }
-            
-            return packOfProducts
-            
-        } else {
+        if self.products == nil {
             print("products of productManager is nil... Need to call loadPacksOfProductsWithCurrentCategory() before")
             return nil
         }
+        
+        var packOfProducts: [Product]? = []
+        var userGender: Gender = Gender.Universal
+        
+        if let gender = UserSessionManager.sharedInstance.currentSession()?.gender {
+            switch gender {
+            case "M":
+                userGender = Gender.Male
+                break
+            case "F":
+                userGender = Gender.Female
+                break
+            default:
+                userGender = Gender.Universal
+                break
+            }
+        }
+        
+        let productsCountMax = getProductsCountForGender(userGender)
+        let productsID = UserSessionManager.sharedInstance.currentSession()!.productsIDPlayed
+        
+        if var productsIDPlayed = productsID {
+            var index = 0
+            var productsShuffled = self.products!.shuffle()
+            
+            if productsIDPlayed.count == productsCountMax {
+                productsIDPlayed.removeAll()
+                let userSession = UserSessionManager.sharedInstance.currentSession()
+                userSession?.productsIDPlayed = productsIDPlayed
+                userSession?.saveSession()
+            }
+            
+            while (packOfProducts?.count < PACK_PRODUCT_COUNT) || (index == self.products?.count) {
+                let product = productsShuffled[index]
+                if (!(productsIDPlayed.contains(product.id)) && ((product.gender == userGender) || (product.gender == .Universal))) {
+                    packOfProducts?.append(product)
+                    productsIDPlayed.append(product.id)
+                }
+                index += 1
+            }
+            
+            if packOfProducts?.count == PACK_PRODUCT_COUNT {
+                self.currentPackOfProducts = packOfProducts
+                return self.currentPackOfProducts
+                
+            } else {
+                productsIDPlayed.removeAll()
+                for product in packOfProducts! {
+                    productsIDPlayed.append(product.id)
+                }
+                productsShuffled = self.products!.shuffle()
+                index = 0
+                
+                while (packOfProducts?.count < PACK_PRODUCT_COUNT) || (index == self.products?.count) {
+                    let product = productsShuffled[index]
+                    if (!(productsIDPlayed.contains(product.id)) && ((product.gender == userGender) || (product.gender == .Universal))) {
+                        packOfProducts?.append(product)
+                        productsIDPlayed.append(product.id)
+                    }
+                    index += 1
+                }
+                
+                if packOfProducts?.count == PACK_PRODUCT_COUNT {
+                    self.currentPackOfProducts = packOfProducts
+                    return self.currentPackOfProducts
+                }
+            }
+            
+        } else {
+            var index = 0
+            var productsShuffled = self.products!.shuffle()
+            var productsIDPlayed = [Int]()
+            
+            while (packOfProducts?.count < PACK_PRODUCT_COUNT) || (index == self.products?.count) {
+                let product = productsShuffled[index]
+                if (!(productsIDPlayed.contains(product.id)) && ((product.gender == userGender) || (product.gender == .Universal))) {
+                    packOfProducts?.append(product)
+                    productsIDPlayed.append(product.id)
+                }
+                index += 1
+            }
+        }
+        
+        if packOfProducts?.count == PACK_PRODUCT_COUNT {
+            self.currentPackOfProducts = packOfProducts
+            return self.currentPackOfProducts
+            
+        } else {
+            return nil
+        }
+    }
+    
+    func getProductsCountForGender(gender: Gender) -> Int {
+        if self.products == nil {
+            return 0
+        }
+        
+        if gender == .Universal {
+            return (self.products?.count)!
+        }
+        
+        var cptProducts = 0
+        
+        for product in self.products! {
+            if (product.gender == gender) || (product.gender == .Universal) {
+                cptProducts += 1
+            }
+        }
+        
+        return cptProducts
+    }
+    
+    func saveProductsIDPlayed() {
+        let currentPackOfProducts = self.currentPackOfProducts
+        let userSession = UserSessionManager.sharedInstance.currentSession()
+        var productsIDPlayed = userSession!.productsIDPlayed
+        
+        if productsIDPlayed == nil {
+            productsIDPlayed = [Int]()
+        }
+        
+        if let currentPackOfProducts = currentPackOfProducts {
+            for product in currentPackOfProducts {
+                productsIDPlayed?.append(product.id)
+            }
+        }
+        userSession?.productsIDPlayed = productsIDPlayed
+        userSession?.saveSession()
     }
     
     func downloadProductsImages(packOfProducts: [Product]!, WithCompletion completion: (finished: Bool) -> Void) {
@@ -110,11 +231,11 @@ class ProductManager {
             let imageView = UIImageView()
             
             dispatch_async(dispatch_get_main_queue(), {
-                imageView.downloadedFrom(link: imageURL, contentMode: .ScaleAspectFit, WithCompletion: { 
+                imageView.downloadedFrom(link: imageURL, contentMode: .ScaleAspectFit, WithCompletion: {
                     self.productsImages!["\(product.id)"] = imageView.image!
                     
                     if self.productsImages?.count == packOfProducts.count {
-                            completion(finished: true)
+                        completion(finished: true)
                     }
                 })
                 

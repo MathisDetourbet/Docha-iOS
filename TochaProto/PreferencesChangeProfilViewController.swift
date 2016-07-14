@@ -19,6 +19,7 @@ class PreferencesChangeProfilViewController: RootViewController, UITableViewDele
     var imageViewPicked: UIImageView?
     var genderNotConverted: String?
     var birthdayString: String?
+    var avatarImageName: String?
     
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var cancelBarButtonItem: UIBarButtonItem!
@@ -69,7 +70,6 @@ class PreferencesChangeProfilViewController: RootViewController, UITableViewDele
             }
             
             cell.imageViewCell.image = UIImage(named: "profil_icon")
-            
             self.pseudoIndexPath = indexPath
             
             return cell
@@ -129,7 +129,8 @@ class PreferencesChangeProfilViewController: RootViewController, UITableViewDele
             alertController.view.tintColor = UIColor.redDochaColor()
             var action = UIAlertAction(title: "Choisir un avatar Docha", style: .Default, handler: { (_) in
                 let chooseAvatarVC = self.storyboard?.instantiateViewControllerWithIdentifier("idChooseAvatarViewController") as! PreferencesChoosAvatarViewController
-                self.navigationController?.pushViewController(chooseAvatarVC, animated: true)
+                chooseAvatarVC.delegate = self
+                self.presentViewController(chooseAvatarVC, animated: true, completion: nil)
             })
             alertController.addAction(action)
             
@@ -159,6 +160,7 @@ class PreferencesChangeProfilViewController: RootViewController, UITableViewDele
             })
             alertController.addAction(cancelAction)
             self.presentViewController(alertController, animated: true, completion: nil)
+            alertController.view.tintColor = UIColor.redDochaColor()
             
         } else if  indexPath.row == 2 {
             let cell = tableView.cellForRowAtIndexPath(indexPath) as! PreferencesChangePseudoTableViewCell
@@ -185,11 +187,14 @@ class PreferencesChangeProfilViewController: RootViewController, UITableViewDele
             alertController.addAction(cancelAction)
             
             self.presentViewController(alertController, animated: true, completion: nil)
+            alertController.view.tintColor = UIColor.redDochaColor()
         }
+        self.tableView.deselectRowAtIndexPath(indexPath, animated: true)
     }
     
 
 //MARK: UIImagePickerControllerDelegate Methods
+    
     func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
         if let pickedImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
             self.imageViewPicked = UIImageView(image: pickedImage)
@@ -269,6 +274,11 @@ class PreferencesChangeProfilViewController: RootViewController, UITableViewDele
         // Save other user data
         if var dicoParameters = self.userSession?.generateJSONFromUserSession() {
             
+            if let _ = self.avatarImageName {
+                needToUpdateProfil = true
+                dicoParameters[UserDataKey.kAvatar] = self.avatarImageName
+            }
+            
             if let genderNotConvertedString = self.genderNotConverted {
                 var finalGender = ""
                 if genderNotConvertedString == "Homme" {
@@ -324,9 +334,12 @@ class PreferencesChangeProfilViewController: RootViewController, UITableViewDele
         return false
     }
     
-    func didChosenAvatarDochaWithImage(image: UIImage) {
-        self.imageViewPicked = UIImageView(image: image)
+    func didChosenAvatarDochaWithImage(imageName: String) {
+        self.avatarImageName = imageName
     }
+    
+
+//MARK: @IBActions
     
     @IBAction func validBarButtonItemTouched(sender: UIBarButtonItem) {
         DochaPopupHelper.sharedInstance.showLoadingPopup()

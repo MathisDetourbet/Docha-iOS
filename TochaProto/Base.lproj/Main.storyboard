@@ -1504,10 +1504,10 @@ Notre objectif
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="phone" translatesAutoresizingMaskIntoConstraints="NO" id="XI6-KQ-f65">
                                 <rect key="frame" x="66" y="237" width="189" height="242"/>
                             </imageView>
-                            <stackView opaque="NO" contentMode="scaleToFill" distribution="equalCentering" alignment="center" spacing="56" translatesAutoresizingMaskIntoConstraints="NO" id="Dj9-iv-T27">
+                            <stackView opaque="NO" contentMode="scaleToFill" misplaced="YES" distribution="equalCentering" alignment="center" spacing="56" translatesAutoresizingMaskIntoConstraints="NO" id="Dj9-iv-T27">
                                 <rect key="frame" x="22" y="488" width="277" height="60"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eXw-dT-FwR">
+                                    <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eXw-dT-FwR">
                                         <rect key="frame" x="0.0" y="15" width="99" height="31"/>
                                         <fontDescription key="fontDescription" name="Montserrat-SemiBold" family="Montserrat" pointSize="15"/>
                                         <state key="normal" title="Se connecter">
@@ -1517,7 +1517,7 @@ Notre objectif
                                             <segue destination="xDt-My-EAi" kind="push" id="A1d-GY-ui1"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zXo-wx-4pO">
+                                    <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zXo-wx-4pO">
                                         <rect key="frame" x="155" y="0.0" width="122" height="60"/>
                                         <fontDescription key="fontDescription" name="Montserrat-SemiBold" family="Montserrat" pointSize="15"/>
                                         <state key="normal" backgroundImage="btn_signup">
@@ -2926,7 +2926,7 @@ Notre objectif
             </objects>
             <point key="canvasLocation" x="1781" y="-627"/>
         </scene>
-        <!--Avatars Docha-->
+        <!--Preferences Choos Avatar View Controller-->
         <scene sceneID="PfA-Ec-fkl">
             <objects>
                 <viewController storyboardIdentifier="idChooseAvatarViewController" id="gaV-3C-pa5" customClass="PreferencesChoosAvatarViewController" customModule="Docha" customModuleProvider="target" sceneMemberID="viewController">
@@ -2941,13 +2941,6 @@ Notre objectif
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="background_avatar" translatesAutoresizingMaskIntoConstraints="NO" id="Ajq-jq-cJv">
                                 <rect key="frame" x="0.0" y="44" width="320" height="170"/>
                             </imageView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="29L-Ge-Zhe">
-                                <rect key="frame" x="99" y="449" width="122" height="60"/>
-                                <state key="normal" image="btn_valid_profil"/>
-                                <connections>
-                                    <action selector="validButtonTouched:" destination="gaV-3C-pa5" eventType="touchUpInside" id="Hum-eZ-iDq"/>
-                                </connections>
-                            </button>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="avatar_woman_blond_profil" translatesAutoresizingMaskIntoConstraints="NO" id="Zhv-Ba-aFC">
                                 <rect key="frame" x="110" y="79" width="101" height="100"/>
                             </imageView>
@@ -3011,6 +3004,13 @@ Notre objectif
                                     <action selector="avatarButtonTouched:" destination="gaV-3C-pa5" eventType="touchUpInside" id="3YP-79-oRP"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="29L-Ge-Zhe">
+                                <rect key="frame" x="99" y="418" width="122" height="60"/>
+                                <state key="normal" image="btn_valid_profil"/>
+                                <connections>
+                                    <action selector="validButtonTouched:" destination="gaV-3C-pa5" eventType="touchUpInside" id="Hum-eZ-iDq"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -3022,7 +3022,7 @@ Notre objectif
                             <constraint firstItem="Zhv-Ba-aFC" firstAttribute="centerY" secondItem="Ajq-jq-cJv" secondAttribute="centerY" id="DHY-Og-13j"/>
                             <constraint firstAttribute="trailing" secondItem="Ajq-jq-cJv" secondAttribute="trailing" id="aNt-Qa-tu1"/>
                             <constraint firstItem="H87-eI-KqO" firstAttribute="top" secondItem="Ajq-jq-cJv" secondAttribute="bottom" constant="50" id="acD-Ib-ONy"/>
-                            <constraint firstItem="ITx-8D-Vzt" firstAttribute="top" secondItem="29L-Ge-Zhe" secondAttribute="bottom" constant="10" id="fVT-kN-nBO"/>
+                            <constraint firstItem="ITx-8D-Vzt" firstAttribute="top" secondItem="29L-Ge-Zhe" secondAttribute="bottom" constant="41" id="fVT-kN-nBO"/>
                             <constraint firstItem="H87-eI-KqO" firstAttribute="centerX" secondItem="ODZ-Vy-ajZ" secondAttribute="centerX" id="gAr-pA-CdG"/>
                             <constraint firstItem="llL-3V-Rbt" firstAttribute="leading" secondItem="H87-eI-KqO" secondAttribute="trailing" constant="30" id="hDf-EJ-1fK"/>
                             <constraint firstItem="Ajq-jq-cJv" firstAttribute="leading" secondItem="ODZ-Vy-ajZ" secondAttribute="leading" id="mCP-2N-Gs8"/>
@@ -3035,14 +3035,6 @@ Notre objectif
                             <constraint firstItem="Ajq-jq-cJv" firstAttribute="top" secondItem="a1d-ah-Cn9" secondAttribute="bottom" id="zu7-Ta-eSA"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="Avatars Docha" id="uUo-ji-eOQ">
-                        <barButtonItem key="leftBarButtonItem" image="return" id="z1G-3d-zJ3">
-                            <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                            <connections>
-                                <action selector="backButtonTouched:" destination="gaV-3C-pa5" id="cyU-nn-68c"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
                     <nil key="simulatedStatusBarMetrics"/>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics" translucent="NO"/>

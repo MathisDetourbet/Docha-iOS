@@ -85,6 +85,12 @@ class HomeViewController: GameViewController, UITableViewDelegate, UITableViewDa
                 } else {
                     if let fbImageURL = userSessionFacebook.facebookImageURL {
                         avatarImageView.downloadedFrom(link: fbImageURL, contentMode: .ScaleToFill, WithCompletion: nil)
+                        
+                    } else if let avatarImage = userSessionFacebook.avatar {
+                        avatarImageView.image = UIImage(named: avatarImage)
+                        
+                    } else {
+                        avatarImageView.image = UIImage(named: "avatar_man_profil")
                     }
                 }
             } else {

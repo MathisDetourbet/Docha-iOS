@@ -145,10 +145,15 @@ class PreferencesViewController: GameViewController, UITableViewDelegate, UITabl
         self.tableView.deselectRowAtIndexPath(indexPath, animated: true)
     }
     
-    func tableView(tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
-        let header = view as! UITableViewHeaderFooterView
-        header.textLabel?.font = UIFont(name: "Montserrat-Semibold", size: 12)
-        header.textLabel?.textColor = UIColor.darkBlueDochaColor()
+    func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let viewHeader = UIView(frame: CGRectMake(0.0, 0.0, tableView.frame.width, 28))
+        let sectionLabel = UILabel(frame: CGRectMake(5.0, 5.0, 100.0, 28.0))
+        sectionLabel.textColor = UIColor.darkBlueDochaColor()
+        sectionLabel.text = self.sections[section]
+        sectionLabel.font = UIFont(name: "Montserrat-Semibold", size: 12)
+        viewHeader.addSubview(sectionLabel)
+        
+        return viewHeader
     }
     
     

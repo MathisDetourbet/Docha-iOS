@@ -61,6 +61,7 @@ struct Constants {
         static let kUserInfosGooglePlusID = "userInfosGooglePlusID"
         static let kUserInfosGooglePlusAccessToken = "userInfosGooglePlusAccessToken"
         static let kUserInfosProfileImageFilePath = "userInfosProfileImageFilePath"
+        static let kProductsIDPlayed = "userInfosProductsIDPlayed"
     }
     
     struct UserAuthentificationKey {

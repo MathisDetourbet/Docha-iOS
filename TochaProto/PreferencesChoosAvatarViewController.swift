@@ -8,10 +8,8 @@
 
 import Foundation
 
-
-
 protocol ChooseAvatarDochaDelegate {
-    func didChosenAvatarDochaWithImage(image: UIImage)
+    func didChosenAvatarDochaWithImage(imageName: String)
 }
 
 class PreferencesChoosAvatarViewController: RootViewController {
@@ -25,8 +23,6 @@ class PreferencesChoosAvatarViewController: RootViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        configNavigationBarWithTitle("Avatars Docha", andFontSize: 15.0)
-        setTabBarVisible(false, animated: true)
         
         let userGender = UserSessionManager.sharedInstance.currentSession()?.gender
         if let gender = userGender {
@@ -65,12 +61,9 @@ class PreferencesChoosAvatarViewController: RootViewController {
     }
     
     @IBAction func validButtonTouched(sender: UIButton) {
-        self.delegate?.didChosenAvatarDochaWithImage(self.userAvatarImageView!.image!)
-        self.navigationController?.popViewControllerAnimated(true)
-    }
-    
-    @IBAction func backButtonTouched(sender: UIBarButtonItem) {
-        self.delegate?.didChosenAvatarDochaWithImage(self.userAvatarImageView!.image!)
-        self.navigationController?.popViewControllerAnimated(true)
+        if let avatarString = self.avatarImageSelected {
+            self.delegate?.didChosenAvatarDochaWithImage(avatarString)
+        }
+        self.dismissViewControllerAnimated(true, completion: nil)
     }
 }

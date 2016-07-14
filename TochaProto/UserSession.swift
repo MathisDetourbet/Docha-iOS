@@ -11,6 +11,7 @@ import Foundation
 class UserSession: User, NSCoding {
     var authToken: String?
     var sessionID: Int?
+    var productsIDPlayed: [Int]?
     
     override init() {
         super.init()
@@ -32,11 +33,13 @@ class UserSession: User, NSCoding {
         let perfectPriceCpt = aDecoder.decodeIntegerForKey(Constants.UserDefaultsKey.kUserInfosPerfectPriceCpt) as Int
         let authToken = aDecoder.decodeObjectForKey(Constants.UserDefaultsKey.kUserInfosAuthToken) as? String
         let sessionID = aDecoder.decodeIntegerForKey(Constants.UserDefaultsKey.kUserInfosSessionID) as Int
+        let productsIDPlayed = aDecoder.decodeObjectForKey(Constants.UserDefaultsKey.kProductsIDPlayed) as? [Int]
         
         super.init(userID: userID, username: username, lastName: lastName, firstName: firstName, email: email, gender: gender, dateBirthday: dateBirthday, categoryFavorite: categoryFavorite, avatar: avatar, levelMaxUnlocked: levelMaxUnlocked, dochos: dochos, experience: experience, perfectPriceCpt: perfectPriceCpt)
         
         self.authToken = authToken
         self.sessionID = sessionID
+        self.productsIDPlayed = productsIDPlayed
     }
     
     func encodeWithCoder(aCoder: NSCoder) {
@@ -53,6 +56,8 @@ class UserSession: User, NSCoding {
         aCoder.encodeInteger(experience, forKey: Constants.UserDefaultsKey.kUserInfosExperience)
         aCoder.encodeInteger(perfectPriceCpt, forKey: Constants.UserDefaultsKey.kUserInfosPerfectPriceCpt)
         aCoder.encodeObject(avatar, forKey: Constants.UserDefaultsKey.kUserInfosAvatar)
+        aCoder.encodeObject(authToken, forKey: Constants.UserDefaultsKey.kUserInfosAuthToken)
+        aCoder.encodeObject(productsIDPlayed, forKey: Constants.UserDefaultsKey.kProductsIDPlayed)
     }
     
     func saveSession() {

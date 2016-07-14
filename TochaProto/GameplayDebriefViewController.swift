@@ -60,6 +60,9 @@ class GameplayDebriefViewController: GameViewController, UITableViewDelegate, UI
         let newExperience = gameManager.getExperienceProgressionInPercent()
         self.levelBarView.updateLevelBarWithWidth(CGFloat(newExperience))
         
+        // Save products ID Played
+        ProductManager.sharedInstance.saveProductsIDPlayed()
+        
         // Update rewards in the BDD
         updateRewards()
         
