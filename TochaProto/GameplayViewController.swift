@@ -68,7 +68,7 @@ class GameplayViewController: GameViewController, KeyboardViewDelegate {
     }
     
     
-    // MARK: @IBOutlets
+// MARK: @IBOutlets
     @IBOutlet weak var previewCircularProgress: MBCircularProgressBarView!
     @IBOutlet weak var mainCircularProgress: MBCircularProgressBarView!
     @IBOutlet weak var productBrandLabel: UILabel!
@@ -87,7 +87,7 @@ class GameplayViewController: GameViewController, KeyboardViewDelegate {
     @IBOutlet weak var timelineView: TimelineView!
     
     
-    //MARK: @IBOutlets Constraints
+//MARK: @IBOutlets Constraints
     
     // Product ImageView Constraints
     @IBOutlet weak var topProductImageViewConstraint: NSLayoutConstraint!
@@ -156,7 +156,7 @@ class GameplayViewController: GameViewController, KeyboardViewDelegate {
     }
     
     
-    //MARK: Gameplay Life Cycle Methods
+//MARK: Gameplay Life Cycle Methods
     
     func startGameplayMode(mode: GameplayMode) {
         switch mode {
@@ -313,7 +313,7 @@ class GameplayViewController: GameViewController, KeyboardViewDelegate {
     }
     
     
-    //MARK: Timer Methods
+//MARK: Timer Methods
     
     func startTimer() {
         self.timerFinished = false
@@ -374,7 +374,7 @@ class GameplayViewController: GameViewController, KeyboardViewDelegate {
     }
     
     
-    //MARK: Keyboard Action Methods
+//MARK: Keyboard Action Methods
     
     func clickOnPadWithNumber(number: Int) {
         if cursorCounter == counterContainerView.numberOfCounterDisplayed {
@@ -403,6 +403,8 @@ class GameplayViewController: GameViewController, KeyboardViewDelegate {
                 counterViewTypeArray.append(CounterViewAfterType.Perfect)
             }
             
+            savePsyPriceInDatabase()
+            
             afterView.displayEstimationResults(counterViewTypeArray)
             self.counterContainerView.revealCounterViewAfterWithArrayType(counterViewTypeArray)
             self.afterView.counterViewTypeArray = counterViewTypeArray
@@ -421,6 +423,9 @@ class GameplayViewController: GameViewController, KeyboardViewDelegate {
             }
             
         } else {
+            
+            savePsyPriceInDatabase()
+            
             for index in 0...counterPsyPriceArray.count-1 {
                 
                 if counterPsyPriceArray[index] == currentRealPriceArray!.euros[index] {
@@ -443,8 +448,23 @@ class GameplayViewController: GameViewController, KeyboardViewDelegate {
         cursorCounter = 0
     }
     
+    func savePsyPriceInDatabase() {
+        let userID = UserSessionManager.sharedInstance.currentSession()!.userID
+        let productID = self.currentProduct?.id
+        let psyPrice = self.psyAndRealPriceArray.last?.psyPrice
+        
+        if let userID = userID, productID = productID, psyPrice = psyPrice {
+            let request = PriceRecordsRequest()
+            request.createPriceRecordWithUserID(userID, productID: productID, psyPrice: psyPrice, success: {
+                    print("Record psy price : success.")
+                }, fail: { (error, listErrors) in
+                    print("Record psy price : failed.")
+            })
+        }
+    }
     
-    //MARK: Helpers Methods
+    
+//MARK: Helpers Methods
     
     func convertPriceToArrayOfInt(price: Double!) -> ([Int], String) {
         let string = String(price)

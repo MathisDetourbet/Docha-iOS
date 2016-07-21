@@ -16,7 +16,7 @@ import Fabric
 import Crashlytics
 import Amplitude_iOS
 
-public var testing = true
+public var testing = false
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {

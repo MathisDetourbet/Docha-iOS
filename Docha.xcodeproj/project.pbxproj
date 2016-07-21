@@ -33,6 +33,7 @@
 		6733B6221C963E2100CB7AC8 /* NavSchemeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6733B6211C963E2100CB7AC8 /* NavSchemeManager.swift */; };
 		6757AAFD1D12C0B8005ABE72 /* TimelineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6757AAFC1D12C0B8005ABE72 /* TimelineView.swift */; };
 		67584CBC1D37D2760082F506 /* PreferencesChangePasswordTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67584CBB1D37D2760082F506 /* PreferencesChangePasswordTableViewCell.swift */; };
+		67748A2B1D41774600525091 /* PriceRecordsRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67748A2A1D41774600525091 /* PriceRecordsRequest.swift */; };
 		6775CE431C494BB700550041 /* JDFlipImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6775CE3E1C494BB700550041 /* JDFlipImageView.m */; };
 		6775CE441C494BB700550041 /* JDFlipNumberViewImageFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 6775CE401C494BB700550041 /* JDFlipNumberViewImageFactory.m */; };
 		6775CE451C494BB700550041 /* UIView+JDFlipImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6775CE421C494BB700550041 /* UIView+JDFlipImageView.m */; };
@@ -170,6 +171,7 @@
 		674055401C4664F30047B369 /* TochaProto-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "TochaProto-Bridging-Header.h"; sourceTree = "<group>"; };
 		6757AAFC1D12C0B8005ABE72 /* TimelineView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimelineView.swift; sourceTree = "<group>"; };
 		67584CBB1D37D2760082F506 /* PreferencesChangePasswordTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreferencesChangePasswordTableViewCell.swift; sourceTree = "<group>"; };
+		67748A2A1D41774600525091 /* PriceRecordsRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PriceRecordsRequest.swift; sourceTree = "<group>"; };
 		6775CE3D1C494BB700550041 /* JDFlipImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JDFlipImageView.h; sourceTree = "<group>"; };
 		6775CE3E1C494BB700550041 /* JDFlipImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JDFlipImageView.m; sourceTree = "<group>"; };
 		6775CE3F1C494BB700550041 /* JDFlipNumberViewImageFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JDFlipNumberViewImageFactory.h; sourceTree = "<group>"; };
@@ -463,6 +465,7 @@
 				67DA29AF1CEB327400CE621F /* ConnexionRequest.swift */,
 				67DA29B51CEB384700CE621F /* InscriptionRequest.swift */,
 				67D482791D1D9203009F1992 /* ProfilRequest.swift */,
+				67748A2A1D41774600525091 /* PriceRecordsRequest.swift */,
 			);
 			name = Requests;
 			sourceTree = "<group>";
@@ -1154,6 +1157,7 @@
 				679273E71CFB5D5D00DABA88 /* UserSessionGooglePlus.swift in Sources */,
 				67D4826E1D1C074F009F1992 /* DebriefTableViewCell.swift in Sources */,
 				677EDF5B1D044AD000192C9D /* LxTabBarController.swift in Sources */,
+				67748A2B1D41774600525091 /* PriceRecordsRequest.swift in Sources */,
 				67E5C55C1CF88639009F3FCA /* InscriptionCategorySelectionViewController.swift in Sources */,
 				67D4827F1D216FAC009F1992 /* GameViewController.swift in Sources */,
 				6791CDE81D3450080091DDB0 /* PreferencesChoosAvatarViewController.swift in Sources */,

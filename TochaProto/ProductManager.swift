@@ -53,10 +53,11 @@ class ProductManager {
             let jsonArray = json["products"].array
             else { return }
         
-        var id = 0
+        //var id = 0
         self.products = []
         
         for jsonDico in jsonArray {
+            let id = jsonDico["id"].intValue
             let pageURL = jsonDico["page_url"].stringValue
             let category = "Lifestyle"
             let model = jsonDico["name"].stringValue
@@ -83,7 +84,6 @@ class ProductManager {
             let product = Product(id: id, category: category, model: model, brand: brand, price: price, imageURL: imageURL, caracteristiques: caracteristiques, image: nil, pageURL: pageURL, gender: gender)
             
             self.products!.append(product)
-            id += 1
         }
         print("\(jsonName).json loaded with \(products!.count) products")
     }

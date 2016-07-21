@@ -64,6 +64,12 @@ struct Constants {
         static let kProductsIDPlayed = "userInfosProductsIDPlayed"
     }
     
+    struct DataRecordsKey {
+        static let kDataRecordUserID = "user_id"
+        static let kDataRecordProductID = "product_id"
+        static let kDataRecordPsyPrice = "psy_price"
+    }
+    
     struct UserAuthentificationKey {
         static let kUserAuthentificationToken = "userAuthTokenKey"
         // Google Plus ID
@@ -77,6 +83,10 @@ struct Constants {
         struct UrlProfil {
             static let UrlProfilUpdate = "/users"
             static let UrlGetFriendsDochaInstalled = "/users/friends/dochainstalled"
+        }
+        
+        struct UrlDataRecords {
+            static let UrlPriceRecords = "/price_records"
         }
         
         struct UrlRegister {
