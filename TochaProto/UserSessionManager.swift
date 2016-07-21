@@ -14,6 +14,7 @@ class UserSessionManager {
     var inscriptionRequest: InscriptionRequest?
     var profilRequest: ProfilRequest?
     var dicoUserDataInscription: [String: AnyObject]?
+    var needsToUpdateHome: Bool = false
     
     class var sharedInstance: UserSessionManager {
         struct Singleton {
@@ -47,11 +48,8 @@ class UserSessionManager {
     func inscriptionEmail(dicoParams: [String:AnyObject], success: () -> Void, fail failure: (error: NSError?, listError: [AnyObject]?) -> Void) {
         self.inscriptionRequest = InscriptionRequest()
         
-        inscriptionRequest?.inscriptionWithDicoParameters(dicoParams,
+        inscriptionRequest?.inscriptionEmailWithDicoParameters(dicoParams,
             success: { (session) in
-                
-                session.password = dicoParams[UserDataKey.kPassword] as? String
-                
                 // Saving user data in the device
                 session.saveSession()
                 
@@ -116,21 +114,29 @@ class UserSessionManager {
 
 // MARK: Connexion Methods
     
-    func login(success: () -> Void, fail failure: (error: NSError?, listErrors: [AnyObject]?) -> Void) {
+    func signIn(success: () -> Void, fail failure: (error: NSError?, listErrors: [AnyObject]?) -> Void) {
         let userSession = self.currentSession()!
-        let dicoParams = userSession.generateJSONFromUserSession()
         self.connexionRequest = ConnexionRequest()
         
         if userSession.isKindOfClass(UserSessionEmail) {
-            self.connexionRequest?.connexionWithEmail(dicoParams,
-                success: { (session) in
-                    session.saveSession()
+            let userSessionEmail = userSession as! UserSessionEmail
+            let dicoParams = userSessionEmail.generateJSONFromUserSession()
+            let email = dicoParams![UserDataKey.kEmail] as? String
+            let password = dicoParams![UserDataKey.kPassword] as? String
+            if let email = email, password = password {
+                connectByEmail(email, andPassword: password, success: { 
                     success()
                     
-                }, fail: { (error, listErrors) in
-                    failure(error: error, listErrors: listErrors)
-            })
+                    }, fail: { (error, listError) in
+                    failure(error: error, listErrors: listError)
+                })
+            } else {
+                print("Email or password are nil")
+                failure(error: nil, listErrors: nil)
+            }
         } else if userSession.isKindOfClass(UserSessionFacebook) {
+            let userSessionEmail = userSession as! UserSessionFacebook
+            let dicoParams = userSessionEmail.generateJSONFromUserSession()
             self.connexionRequest?.connexionWithFacebook(dicoParams,
                 success: { (session) in
                     session.saveSession()
@@ -142,10 +148,10 @@ class UserSessionManager {
         }
     }
     
-    func connectByEmail(dicoParams: [String: AnyObject], success: () -> Void, fail failure: (error: NSError?, listError: [AnyObject]?) -> Void) {
+    func connectByEmail(email: String, andPassword password: String, success: () -> Void, fail failure: (error: NSError?, listError: [AnyObject]?) -> Void) {
         self.connexionRequest = ConnexionRequest()
             
-        connexionRequest?.connexionWithEmail(dicoParams,
+        connexionRequest?.connexionWithEmail(email, password: password,
             success: { (session) in
                 
                 session.saveSession()
@@ -222,6 +228,14 @@ class UserSessionManager {
     
     func logout() {
         if let currentSession = self.currentSession() {
+            let dicoParams = currentSession.generateJSONFromUserSession()!
+            self.connexionRequest = ConnexionRequest()
+            self.connexionRequest!.disconnectUserSession(dicoParams,
+                success: { (_) in
+                    print("Logout successful")
+                }, fail: { (error, listErrors) in
+                    print("Logout error : \(error)")
+            })
             
             if currentSession.isKindOfClass(UserSessionFacebook) {
                 let loginManager = FBSDKLoginManager()
@@ -230,9 +244,9 @@ class UserSessionManager {
             } else if currentSession.isKindOfClass(UserSessionGooglePlus) {
                 GIDSignIn.sharedInstance().disconnect()
             }
+            
+            currentSession.deleteSession()
+            currentSession.deleteProfilImage()
         }
-        
-        NSUserDefaults.standardUserDefaults().removeObjectForKey(Constants.UserDefaultsKey.kUserSessionObject)
-        NSUserDefaults.standardUserDefaults().synchronize()
     }
 }

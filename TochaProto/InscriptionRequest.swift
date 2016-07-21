@@ -12,7 +12,7 @@ import SwiftyJSON
 
 class InscriptionRequest {
     
-    func inscriptionWithDicoParameters(dicoParameters: [String:AnyObject], success: (session: UserSessionEmail) -> Void, fail failure: (error: NSError?, listErrors: [AnyObject]?) -> Void) {
+    func inscriptionEmailWithDicoParameters(dicoParameters: [String:AnyObject], success: (session: UserSessionEmail) -> Void, fail failure: (error: NSError?, listErrors: [AnyObject]?) -> Void) {
         
         let url = "\(Constants.UrlServer.UrlBase)\(Constants.UrlServer.UrlRegister.UrlEmailRegister)"
         print("URL Request inscription : \(url)")
@@ -51,7 +51,7 @@ class InscriptionRequest {
                                     let session = UserSessionEmail()
                                     session.userID = jsonResponse["data"]["user"][UserDataKey.kUserID].intValue
                                     session.email = jsonResponse["data"]["user"][UserDataKey.kEmail].string
-                                    session.password = jsonResponse["data"]["user"][UserDataKey.kPassword].string
+                                    session.password = dicoParameters[UserDataKey.kPassword] as? String
                                     session.authToken = jsonResponse["data"][UserDataKey.kAuthToken].string
                                     
                                     if let dateString = jsonResponse["data"]["user"][UserDataKey.kDateBirthday].string {
@@ -67,6 +67,27 @@ class InscriptionRequest {
                                     session.avatar = jsonResponse["data"]["user"][UserDataKey.kAvatar].string
                                     
                                     success(session: session)
+                                    
+                                    let signIn = jsonResponse["data"]["sign_in"].boolValue
+                                    
+                                    if signIn == false {
+                                        let params = session.generateJSONFromUserSession()!
+                                        let email = params[UserDataKey.kEmail] as? String
+                                        let password = params[UserDataKey.kPassword] as? String
+                                        if let email = email, password = password {
+                                            UserSessionManager.sharedInstance.connectByEmail(email, andPassword: password,
+                                                success: {
+                                                    success(session: session)
+                                            
+                                                }, fail: { (error, listError) in
+                                                    failure(error: error, listErrors: listError)
+                                            })
+                                        
+                                        } else {
+                                            failure(error: nil, listErrors: nil)
+                                            print("Email or password are nil")
+                                        }
+                                    }
                                     
                                 } else {
                                     // JSON doesn't contain the key "user"
@@ -151,6 +172,21 @@ class InscriptionRequest {
                                     
                                     success(session: session)
                                     
+                                    let signIn = jsonResponse["data"]["sign_in"].boolValue
+                                    
+                                    if signIn == false {
+                                        let params = session.generateJSONFromUserSession()!
+                                        let connexionRequest = ConnexionRequest()
+                                        connexionRequest.connexionWithFacebook(params,
+                                            
+                                            success: { (session) in
+                                                success(session: session)
+                                                
+                                            }, fail: { (error, listErrors) in
+                                                failure(error: error, listErrors: listErrors)
+                                        })
+                                    }
+                                    
                                 } else {
                                     // JSON doesn't contain the key "user"
                                     print("json doesn't contain the key 'user'")
@@ -233,6 +269,21 @@ class InscriptionRequest {
                                     session.avatar = jsonResponse["data"]["user"][UserDataKey.kAvatar].string
                                     
                                     success(session: session)
+                                    
+                                    let signIn = jsonResponse["data"]["sign_in"].boolValue
+                                    
+                                    if signIn == false {
+                                        let params = session.generateJSONFromUserSession()!
+                                        let connexionRequest = ConnexionRequest()
+                                        
+                                        connexionRequest.connexionWithGooglePlus(params,
+                                            success: { (session) in
+                                                success(session: session)
+                                                
+                                            }, fail: { (error, listErrors) in
+                                                failure(error: error, listErrors: listErrors)
+                                        })
+                                    }
                                     
                                 } else {
                                     // JSON doesn't contain the key "user"

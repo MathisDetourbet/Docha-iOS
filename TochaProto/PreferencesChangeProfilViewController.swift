@@ -36,10 +36,6 @@ class PreferencesChangeProfilViewController: RootViewController, UITableViewDele
         self.cancelBarButtonItem.setTitleTextAttributes([NSFontAttributeName: UIFont(name: "Montserrat-SemiBold", size: 11.0)!], forState: .Normal)
 
         self.heightTableViewConstraint.constant = 4 * tableView.rowHeight + tableView.sectionHeaderHeight + tableView.sectionFooterHeight
-        self.tableView.tableFooterView?.layer.borderWidth = 1.0
-        self.tableView.tableFooterView?.layer.borderColor = UIColor.redColor().CGColor
-        self.tableView.tableHeaderView?.layer.borderWidth = 1.0
-        self.tableView.tableHeaderView?.layer.borderColor = UIColor.redColor().CGColor
         
         self.imagePicker.delegate = self
     }
@@ -58,13 +54,15 @@ class PreferencesChangeProfilViewController: RootViewController, UITableViewDele
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         if indexPath.row == 0 {
             let cell = tableView.dequeueReusableCellWithIdentifier("idPreferencesChangePseudoCell") as! PreferencesChangePseudoTableViewCell
-            if userSession!.username != nil {
-                cell.pseudoTextField.text = userSession!.username
+            let userName = userSession?.username
+            if userName != nil && userName != "" {
+                cell.pseudoTextField.text = userName
                 cell.pseudoTextField.font = UIFont(name: "Montserrat-Regular", size: 15.0)
                 cell.pseudoTextField.placeholder = nil
                 cell.delegate = self
                 
             } else {
+                cell.pseudoTextField.placeholder = "Pseudo"
                 cell.pseudoTextField.attributedPlaceholder = NSAttributedString(string: "Pseudo", attributes: [NSFontAttributeName: UIFont(name: "Montserrat-Regular", size: 15.0)!])
                 cell.pseudoTextField.text = nil
             }
@@ -84,12 +82,16 @@ class PreferencesChangeProfilViewController: RootViewController, UITableViewDele
                 
             } else if indexPath.row == 2 {
                 let newCell = tableView.dequeueReusableCellWithIdentifier("idPreferencesChangePseudoCell") as! PreferencesChangePseudoTableViewCell
+                newCell.pseudoTextField.attributedPlaceholder = NSAttributedString(string: "Anniversaire", attributes: [NSFontAttributeName: UIFont(name: "Montserrat-Regular", size: 15.0)!])
+                
                 if let dateOfBirthday = userSession!.dateBirthday {
                     let dateFormatter = NSDateFormatter()
                     dateFormatter.dateFormat = "dd MMMM yyyy"
                     newCell.pseudoTextField.text = dateFormatter.stringFromDate(dateOfBirthday)
+                    newCell.pseudoTextField.placeholder = nil
                 } else {
-                    newCell.pseudoTextField.text = "Anniversaire"
+                    newCell.pseudoTextField.placeholder = "Anniversaire"
+                    newCell.pseudoTextField.text = nil
                 }
                 newCell.imageViewCell.image = UIImage(named: "cake_icon")
                 newCell.delegate = self
@@ -206,6 +208,8 @@ class PreferencesChangeProfilViewController: RootViewController, UITableViewDele
         imageCropVC.moveAndScaleLabel.text = "Recadrer"
         imageCropVC.cancelButton.setTitle("Annuler", forState: .Normal)
         imageCropVC.chooseButton.setTitle("Choisir", forState: .Normal)
+        
+        self.hidesBottomBarWhenPushed = true
         self.navigationController?.pushViewController(imageCropVC, animated: true)
     }
     
@@ -342,14 +346,15 @@ class PreferencesChangeProfilViewController: RootViewController, UITableViewDele
 //MARK: @IBActions
     
     @IBAction func validBarButtonItemTouched(sender: UIBarButtonItem) {
-        DochaPopupHelper.sharedInstance.showLoadingPopup()
-        
-        saveUserProfilDataWithCompletion { (success) in
-            DochaPopupHelper.sharedInstance.dismissAlertView()
+        self.presentViewController(DochaPopupHelper.sharedInstance.showLoadingPopup("Mise à jour de ton profil...")!, animated: false, completion: nil)
+        self.saveUserProfilDataWithCompletion { (success) in
+            self.dismissViewControllerAnimated(false, completion: nil)
+
             if success {
+                UserSessionManager.sharedInstance.needsToUpdateHome = true
                 self.navigationController?.popViewControllerAnimated(true)
             } else {
-                SCLAlertView().showError("Oups...", subTitle: "La connexion internet semble interrompue...")
+                self.presentViewController(DochaPopupHelper.sharedInstance.showErrorPopup("Oups...", message: "La connexion internet semble interrompue...")!, animated: true, completion: nil)
             }
         }
     }

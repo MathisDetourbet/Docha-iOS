@@ -31,6 +31,8 @@ class ProfilRequest {
                     let jsonResponse = JSON(value)
                     if jsonResponse["success"].bool != nil {
                         
+                        print("User updated json response : \(jsonResponse)")
+                        
                         if let dicoValid = jsonResponse["data"].dictionary {
                             
                             if !dicoValid.isEmpty {
@@ -84,24 +86,92 @@ class ProfilRequest {
                 } else {
                     // User need to be authenticated
                     if statusCode == 401 {
-                        let userSession = UserSessionManager.sharedInstance.currentSession()!.generateJSONFromUserSession()!
-                        let request = ConnexionRequest()
-                        request.connexionWithFacebook(userSession, success: { (session) in
-                            print("success Login facebook identification !")
-                            self.updateProfil(userSession,
-                                success: {
-                                    success()
-                                }, fail: { (error, listErrors) in
+                        if let userSession = UserSessionManager.sharedInstance.currentSession() {
+                        
+                            if userSession.isKindOfClass(UserSessionEmail) {
+                                let params = userSession.generateJSONFromUserSession()!
+                                let email = params[UserDataKey.kEmail] as? String
+                                let password = params[UserDataKey.kPassword] as? String
+                                if let email = email, password = password {
+                                    UserSessionManager.sharedInstance.connectByEmail(email, andPassword: password,
+                                        success: {
+                                            success()
+                                            
+                                        }, fail: { (error, listError) in
+                                            failure(error: error, listErrors: listError)
+                                    })
+                                    
+                                } else {
                                     failure(error: nil, listErrors: nil)
-                            })
-                            }, fail: { (error, listErrors) in
-                                print("Fail authentification test")
-                                failure(error: nil, listErrors: nil)
-                        })
+                                    print("Email or password are nil")
+                                }
+                                
+                            } else if userSession.isKindOfClass(UserSessionFacebook) {
+                                
+                                let dicoParams = userSession.generateJSONFromUserSession()!
+                                let request = ConnexionRequest()
+                                request.connexionWithFacebook(dicoParams, success: { (session) in
+                                    print("success Login facebook identification !")
+                                    self.updateProfil(dicoParams,
+                                        success: {
+                                            success()
+                                        }, fail: { (error, listErrors) in
+                                            failure(error: nil, listErrors: nil)
+                                    })
+                                    }, fail: { (error, listErrors) in
+                                        print("Fail authentification test")
+                                        failure(error: nil, listErrors: nil)
+                                })
+                                
+                            } else if userSession.isKindOfClass(UserSessionGooglePlus) {
+                                
+                                let dicoParams = userSession.generateJSONFromUserSession()!
+                                let request = ConnexionRequest()
+                                request.connexionWithGooglePlus(dicoParams, success: { (session) in
+                                    print("success Login facebook identification !")
+                                    self.updateProfil(dicoParams,
+                                        success: {
+                                            success()
+                                        }, fail: { (error, listErrors) in
+                                            failure(error: nil, listErrors: nil)
+                                    })
+                                    }, fail: { (error, listErrors) in
+                                        print("Fail authentification test")
+                                        failure(error: nil, listErrors: nil)
+                                })
+                            }
+                        }
+                        
                     } else {
                         failure(error: nil, listErrors: nil)
                     }
                 }
         }
+    }
+    
+    func getUserFriendsDochaInstalled(facebookToken: String, success: (friendsList: [User]?) -> Void, fail failure: (error: NSError?, listErrors: [AnyObject]?) -> Void) {
+        
+        let parameters = [UserDataKey.kFacebookToken : facebookToken]
+        let url = "\(Constants.UrlServer.UrlBase)\(Constants.UrlServer.UrlProfil.UrlGetFriendsDochaInstalled).json"
+        print("URL GET FRIENDSLIST DOCHA INSTALLED : \(url)")
+        
+        Alamofire.request(.POST, url, parameters: parameters, encoding: .JSON)
+            .validate()
+            .responseJSON { (response) in
+                if let statusCode = response.response?.statusCode {
+                    // Gets HTTP status code, useful for debugging
+                    print("Status code : \(statusCode)")
+                }
+                if let value: AnyObject = response.result.value {
+                    let jsonResponse = JSON(value)
+                    if jsonResponse["success"].bool != nil {
+                        let array = jsonResponse["data"]["friends"].arrayValue
+                        let dico = jsonResponse["data"]["friends"].dictionaryValue
+                        print(array)
+                        print(dico)
+                    }
+                }
+        }
+        
     }
 }

@@ -149,7 +149,7 @@ class GameplayDebriefViewController: GameViewController, UITableViewDelegate, UI
                 
             } else {
                 print("Error when loading products...")
-                DochaPopupHelper.sharedInstance.showErrorPopupWithTitle("Oups !", subTitle: "Il semblerait que vous ne soyez pas connecté à internet... :( Essayer à nouveau utlérieurement")
+                self.presentViewController(DochaPopupHelper.sharedInstance.showErrorPopup("Oups !", message: "Il semblerait que vous ne soyez pas connecté à internet... :( Essayer à nouveau utlérieurement")!, animated: true, completion: nil)
             }
         })
     }

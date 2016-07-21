@@ -67,7 +67,7 @@ class InscriptionProfilViewController: RootViewController {
     }
     
     @IBAction func validProfilButtonTouched(sender: UIButton) {
-        DochaPopupHelper.sharedInstance.showLoadingPopup()
+        self.presentViewController(DochaPopupHelper.sharedInstance.showLoadingPopup()!, animated: true, completion: nil)
         
         let userSessionManager = UserSessionManager.sharedInstance
         
@@ -84,34 +84,45 @@ class InscriptionProfilViewController: RootViewController {
             success: { (session) in
                                                             
                 print("Saving in the database : success !")
-                                                            
-                // On lance une connexion avec le token reçu
-                if let currentSession = UserSessionManager.sharedInstance.currentSession() {
-                    if currentSession.isKindOfClass(UserSessionEmail) {
-                        var connexionEmailParams = [String:String]()
-                        
-                        connexionEmailParams["email"] = registrationParams["email"] as? String
-                        connexionEmailParams["password"] = registrationParams["password"] as? String
-                        
-                        UserSessionManager.sharedInstance.connectByEmail(connexionEmailParams,
-                            success: {
-                                DochaPopupHelper.sharedInstance.dismissAlertView()
-                                self.goToHome()
-                                
-                            }, fail: { (error, listError) in
-                                
-                        })
-                    } else {
-                        print("Error : class saved in the device isn't an UserSessionEmail class")
-                    }
-                }
-                                                            
+                
+                self.dismissViewControllerAnimated(false, completion: nil)
+                self.goToHome()
+                
+//                // On lance une connexion avec le token reçu
+//                if let currentSession = UserSessionManager.sharedInstance.currentSession() {
+//                    if currentSession.isKindOfClass(UserSessionEmail) {
+//                        
+//                        let email = registrationParams["email"] as? String
+//                        let password = registrationParams["password"] as? String
+//                        
+//                        if let email = email, password = password {
+//                            
+//                            UserSessionManager.sharedInstance.connectByEmail(email, andPassword: password,
+//                                success: {
+//                                    DochaPopupHelper.sharedInstance.dismissCurrentPopup()
+//                                    self.goToHome()
+//                                    
+//                                }, fail: { (error, listError) in
+//                                    print("Error connexion by email : \(error)")
+//                                    DochaPopupHelper.sharedInstance.dismissCurrentPopup()
+//                                    self.presentViewController(DochaPopupHelper.sharedInstance.showErrorPopup("Oups...", message: "Une erreur est survenue. Réessayer utltérieurement")!, animated: true, completion: nil)
+//                            })
+//                        }
+//                        
+//                    } else {
+//                        print("Error : class saved in the device isn't an UserSessionEmail class")
+//                        DochaPopupHelper.sharedInstance.dismissCurrentPopup()
+//                        self.presentViewController(DochaPopupHelper.sharedInstance.showErrorPopup("Oups...", message: "Une erreur est survenue. Réessayer utltérieurement")!, animated: true, completion: nil)
+//                        self.popToViewControllerClass(StarterPageViewController)
+//                    }
+//                }
+                
             }, fail: { (error, listErrors) in
+                self.dismissViewControllerAnimated(false, completion: nil)
+                
                 if let error = error {
                     if error.code == 422 {
-                        SCLAlertView().showError("Oups...", subTitle: (error.userInfo["message"])! as! String).setDismissBlock({
-                            self.popToViewControllerClass(InscriptionIdentifiantsViewController)
-                        })
+                        self.presentViewController(DochaPopupHelper.sharedInstance.showErrorPopup("Oups...", message: (error.userInfo["message"])! as? String)!, animated: true, completion: nil)
                     }
                 }
                 print("Error inscription : \(error)")

@@ -21,6 +21,12 @@ class PreferencesChangePseudoTableViewCell: UITableViewCell, UITextFieldDelegate
     @IBOutlet weak var imageViewCell: UIImageView!
     @IBOutlet weak var pseudoTextField: UITextField!
     
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        
+        self.pseudoTextField.font = UIFont(name: "Montserrat-Regular", size: 15.0)
+    }
+    
     func textFieldShouldReturn(textField: UITextField) -> Bool {
         return (self.delegate?.textFieldShouldReturn(textField))!
     }

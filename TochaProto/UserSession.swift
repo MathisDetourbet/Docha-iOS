@@ -67,6 +67,11 @@ class UserSession: User, NSCoding {
         userDefaults.synchronize()
     }
     
+    func deleteSession() {
+        NSUserDefaults.standardUserDefaults().removeObjectForKey(Constants.UserDefaultsKey.kUserSessionObject)
+        NSUserDefaults.standardUserDefaults().synchronize()
+    }
+    
     func getUserProfileImage() -> UIImage? {
         let imagePath = NSUserDefaults.standardUserDefaults().objectForKey(Constants.UserDefaultsKey.kUserInfosProfileImageFilePath) as? String
         if let oldImagePath = imagePath {
@@ -86,6 +91,11 @@ class UserSession: User, NSCoding {
         let path = self.documentsPathForFileName(relativePath)
         imageData?.writeToFile(path, atomically: true)
         NSUserDefaults.standardUserDefaults().setObject(relativePath, forKey: Constants.UserDefaultsKey.kUserInfosProfileImageFilePath)
+        NSUserDefaults.standardUserDefaults().synchronize()
+    }
+    
+    func deleteProfilImage() {
+        NSUserDefaults.standardUserDefaults().removeObjectForKey(Constants.UserDefaultsKey.kUserInfosProfileImageFilePath)
         NSUserDefaults.standardUserDefaults().synchronize()
     }
     
@@ -112,6 +122,7 @@ class UserSession: User, NSCoding {
         if let lastName = self.lastName { dataUser[UserDataKey.kLastName] = lastName }
         if let firstName = self.firstName { dataUser[UserDataKey.kFirstName] = firstName }
         if let email = self.email { dataUser[UserDataKey.kEmail] = email }
+        
         if let gender = self.gender { dataUser[UserDataKey.kGender] = gender }
         if let dateBirthday = self.dateBirthday {
             let dateFormatter = NSDateFormatter()

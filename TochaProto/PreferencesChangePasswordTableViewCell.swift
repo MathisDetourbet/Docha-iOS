@@ -7,3 +7,16 @@
 //
 
 import Foundation
+
+class PreferencesChangePasswordTableViewCell: UITableViewCell {
+    
+    var placeholderString: String? {
+        didSet {
+            self.textField.placeholder = placeholderString
+            
+
+        }
+    }
+    
+    @IBOutlet weak var textField: UITextField!
+}

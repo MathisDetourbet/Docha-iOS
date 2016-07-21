@@ -7,7 +7,7 @@
 //
 
 import XCTest
-@testable import TochaProto
+//@testable import Docha
 
 class TochaProtoTests: XCTestCase {
     

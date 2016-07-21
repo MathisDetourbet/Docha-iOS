@@ -42,6 +42,8 @@ class PreferencesViewController: GameViewController, UITableViewDelegate, UITabl
     }
     
     func buildUI() {
+        self.view.backgroundColor = UIColor.lightGrayDochaColor()
+        
         let footerView = UIView(frame: CGRectMake(0, 0, self.view.frame.width, 123))
         
         let inviteFacebookFriendsButton = UIButton(type: .Custom)
@@ -63,6 +65,7 @@ class PreferencesViewController: GameViewController, UITableViewDelegate, UITabl
         footerView.addConstraint(NSLayoutConstraint(item: logoutButton, attribute: .CenterX, relatedBy: .Equal, toItem: footerView, attribute: .CenterX, multiplier: 1, constant: 0))
         
         self.tableView.tableFooterView = footerView
+        self.tableView.backgroundColor = UIColor.lightGrayDochaColor()
     }
     
     
@@ -83,7 +86,11 @@ class PreferencesViewController: GameViewController, UITableViewDelegate, UITabl
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         if (indexPath.section == 1) && (indexPath.row < self.cellContent[indexPath.section][indexPath.row].count) {
             let cell = tableView.dequeueReusableCellWithIdentifier(self.idSwitchTableViewCell, forIndexPath: indexPath) as? PreferencesSwitchTableViewCell
-            cell?.titleLabel.text = self.cellContent[1][indexPath.row]["title"]
+            let cellTitle = self.cellContent[1][indexPath.row]["title"]
+            cell?.titleLabel.text = cellTitle
+            if cellTitle == "Langue" {
+                cell?.selectionStyle = .None
+            }
             cell?.iconImageView.image = UIImage(named: self.cellContent[indexPath.section][indexPath.row]["iconPath"]!)
             
             return cell!
@@ -92,7 +99,13 @@ class PreferencesViewController: GameViewController, UITableViewDelegate, UITabl
             let cell = tableView.dequeueReusableCellWithIdentifier(self.idNormalTableViewCell, forIndexPath: indexPath) as? PreferencesNormalTableViewCell
             let title = self.cellContent[indexPath.section][indexPath.row]["title"]
             cell?.titleLabel.text = title
-            (title! == "Catégorie préférée") ? (cell?.categoryFavoriteLabel.text = self.categorieTranslator[(UserSessionManager.sharedInstance.currentSession()?.categoryFavorite)!]) : (cell?.categoryFavoriteLabel.text = "")
+            if title! == "Catégorie préférée" {
+                cell?.categoryFavoriteLabel.text = self.categorieTranslator[(UserSessionManager.sharedInstance.currentSession()?.categoryFavorite)!]
+                cell?.accessoryType = .DisclosureIndicator
+            } else {
+                (cell?.categoryFavoriteLabel.text = "")
+            }
+            cell?.widthCategoryLabelConstraint.constant = (cell?.frame.width)! - ((cell?.titleLabel.frame.origin.x)! + (cell?.titleLabel.frame.width)! + 20.0 + 20.0)
             cell?.iconImageView.image = UIImage(named: self.cellContent[indexPath.section][indexPath.row]["iconPath"]!)
             
             return cell!
@@ -118,6 +131,8 @@ class PreferencesViewController: GameViewController, UITableViewDelegate, UITabl
                 break
             case 1:
                 // Changer le mdp
+                let changePasswordVC = self.storyboard?.instantiateViewControllerWithIdentifier("idPreferencesChangePasswordViewController") as! PreferencesChangePasswordViewController
+                self.navigationController?.pushViewController(changePasswordVC, animated: true)
                 break
             default:
                 // Catégories préférées
@@ -128,6 +143,12 @@ class PreferencesViewController: GameViewController, UITableViewDelegate, UITabl
             break
         case 1:
             // Paramètres section
+            switch indexPath.row {
+            case 2:
+                self.presentViewController(DochaPopupHelper.sharedInstance.showInfoPopup("Info", message: "Encore un peu de patience, cette fonctionnalité sera bientôt disponible.")!, animated: true, completion: nil)
+            default:
+                break
+            }
             break
         default:
             if indexPath.row == 0 {
@@ -147,6 +168,7 @@ class PreferencesViewController: GameViewController, UITableViewDelegate, UITabl
     
     func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let viewHeader = UIView(frame: CGRectMake(0.0, 0.0, tableView.frame.width, 28))
+        viewHeader.backgroundColor = UIColor.lightGrayDochaColor()
         let sectionLabel = UILabel(frame: CGRectMake(5.0, 5.0, 100.0, 28.0))
         sectionLabel.textColor = UIColor.darkBlueDochaColor()
         sectionLabel.text = self.sections[section]

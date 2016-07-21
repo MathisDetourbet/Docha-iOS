@@ -36,7 +36,7 @@ class TimelineView: UIView {
         self.initTimeline()
         var cursor = 0
         for type in counterViewAfterType {
-            
+            type
             cursor += 1
         }
     }

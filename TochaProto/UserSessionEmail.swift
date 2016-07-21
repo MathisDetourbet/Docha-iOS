@@ -31,7 +31,7 @@ class UserSessionEmail: UserSession {
     override func initPropertiesWithResponseObject(responseObject: AnyObject) {
         super.initPropertiesWithResponseObject(responseObject)
         if let dicoUser = responseObject["user"] as? [String: AnyObject] {
-            if let password = dicoUser["password"]?.string { self.password = password }
+            if let password = dicoUser[UserDataKey.kPassword]?.string { self.password = password }
         }
     }
     

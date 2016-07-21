@@ -8,6 +8,7 @@
 
 import Foundation
 import SCLAlertView
+import NVActivityIndicatorView
 
 public class DochaPopupHelper {
     
@@ -18,7 +19,7 @@ public class DochaPopupHelper {
         return Singleton.instance
     }
     
-    var alertViewResponder: SCLAlertViewResponder?
+    var alertController: UIAlertController?
     
     public enum DochaPopupHelperType {
         case Loading
@@ -26,64 +27,53 @@ public class DochaPopupHelper {
         case Error
     }
     
-    func showLoadingPopup() {
-        let appearance = SCLAlertView.SCLAppearance(
-            kTitleFont: UIFont(name: "Montserrat-ExtraBold", size: 20)!,
-            kTextFont: UIFont(name: "Montserrat-SemiBold", size: 14)!,
-            kButtonFont: UIFont(name: "Montserrat-SemiBold", size: 14)!,
-            showCloseButton: false
-        )
+    func showErrorPopup(title: String?="", message: String?) -> UIAlertController? {
+        self.alertController = UIAlertController(title: title, message: message, preferredStyle: .Alert)
+        self.alertController?.addAction(UIAlertAction(title: "D'accord", style: .Default, handler: { (_) in
+            self.alertController?.dismissViewControllerAnimated(true, completion: nil)
+        }))
         
-        // Initialize SCLAlertView using custom Appearance
-        let alert = SCLAlertView(appearance: appearance)
-        
-        // Creat the subview
-        let subview = UIView(frame: CGRectMake(0,0,216,70))
-        
-        // Add the subview to the alert's UI property
-        alert.customSubview = subview
-        self.alertViewResponder = alert.showWait("Connexion...", subTitle: "Veuillez patientez quelques instants")
+        return self.alertController
     }
     
-    func showInfosPopup() {
-        let appearance = SCLAlertView.SCLAppearance(
-            kTitleFont: UIFont(name: "Montserrat-ExtraBold", size: 20)!,
-            kTextFont: UIFont(name: "Montserrat-SemiBold", size: 14)!,
-            kButtonFont: UIFont(name: "Montserrat-SemiBold", size: 14)!,
-            showCloseButton: true
-        )
+    func showInfoPopup(title: String?="", message: String?) -> UIAlertController? {
+        self.alertController = UIAlertController(title: title, message: message, preferredStyle: .Alert)
+        self.alertController?.addAction(UIAlertAction(title: "D'accord", style: .Default, handler: { (_) in
+            self.alertController?.dismissViewControllerAnimated(true, completion: nil)
+        }))
         
-        // Initialize SCLAlertView using custom Appearance
-        let alert = SCLAlertView(appearance: appearance)
-        
-        // Creat the subview
-        let subview = UIView(frame: CGRectMake(0,0,216,70))
-        
-        // Add the subview to the alert's UI property
-        alert.customSubview = subview
-        self.alertViewResponder = alert.showInfo("", subTitle: "")
+        return self.alertController
     }
     
-    func showErrorPopupWithTitle(title: String, subTitle: String) {
-        let appearance = SCLAlertView.SCLAppearance(
-            kTitleFont: UIFont(name: "Montserrat-ExtraBold", size: 20)!,
-            kTextFont: UIFont(name: "Montserrat-SemiBold", size: 14)!,
-            kButtonFont: UIFont(name: "Montserrat-SemiBold", size: 14)!,
-            showCloseButton: true
-        )
+    func showSuccessPopup(title: String?="", message: String?) -> UIAlertController? {
+        self.alertController = UIAlertController(title: title, message: message, preferredStyle: .Alert)
+        self.alertController?.addAction(UIAlertAction(title: "D'accord", style: .Default, handler: { (_) in
+            self.alertController?.dismissViewControllerAnimated(true, completion: nil)
+        }))
         
-        // Initialize SCLAlertView using custom Appearance
-        let alert = SCLAlertView(appearance: appearance)
-        
-        // Creat the subview
-        let subview = UIView(frame: CGRectMake(0,0,216,70))
-        
-        // Add the subview to the alert's UI property
-        alert.customSubview = subview
-        self.alertViewResponder = alert.showError(title, subTitle: subTitle)
+        return self.alertController
     }
     
-    func dismissAlertView() {
-        self.alertViewResponder?.close()
+    func showLoadingPopup(title: String?="") -> UIAlertController? {
+        self.alertController = UIAlertController(title: title, message: nil, preferredStyle: .Alert)
+        self.alertController?.view.frame = CGRectMake(0.0, 0.0, 200, 200)
+        let heightConstraint = NSLayoutConstraint(item: self.alertController!.view, attribute: .Height, relatedBy: .Equal, toItem: nil, attribute: .NotAnAttribute, multiplier: 1, constant: 120)
+        self.alertController!.view.addConstraint(heightConstraint)
+        let widthConstraint = NSLayoutConstraint(item: self.alertController!.view, attribute: .Width, relatedBy: .Equal, toItem: nil, attribute: .NotAnAttribute, multiplier: 1, constant: 300)
+        self.alertController!.view.addConstraint(widthConstraint)
+        
+        //create an activity indicator
+        let rect = self.alertController?.view.frame
+        let indicatorView = NVActivityIndicatorView(frame: CGRectMake((rect?.width)!/2 + 10.0, 60.0, 50.0, 50.0), type: NVActivityIndicatorType.BallClipRotate, color: UIColor.blueDochaColor(), padding: 0.0)
+        self.alertController?.view.addSubview(indicatorView)
+        
+        indicatorView.startAnimation()
+        
+        return self.alertController
+    }
+    
+    func dismissCurrentPopup() {
+        self.alertController?.dismissViewControllerAnimated(false, completion: nil)
+        self.alertController = nil
     }
 }

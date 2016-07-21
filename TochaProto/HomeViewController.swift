@@ -11,8 +11,10 @@ import AlamofireImage
 import ReachabilitySwift
 import SCLAlertView
 import Amplitude_iOS
+import FBSDKShareKit
+import SwiftyJSON
 
-class HomeViewController: GameViewController, UITableViewDelegate, UITableViewDataSource, HomePlayCellDelegate, HomeFriendsCellDelegate {
+class HomeViewController: GameViewController, UITableViewDelegate, UITableViewDataSource, HomePlayCellDelegate, HomeFriendsCellDelegate, FBSDKAppInviteDialogDelegate {
     
     let idsTableViewCell: [String] = ["idHomePlayTableViewCell", "idHomeFriendsTableViewCell", "idHomeBadgesTableViewCell"]
     let userGameManager: UserGameStateManager = UserGameStateManager.sharedInstance
@@ -27,6 +29,58 @@ class HomeViewController: GameViewController, UITableViewDelegate, UITableViewDa
     override func viewDidLoad() {
         super.viewDidLoad()
         loadUserInfos()
+        //getFriendsList()
+    }
+    
+    func getFriendsList() {
+        
+        let userSession = UserSessionManager.sharedInstance.currentSession() as? UserSessionFacebook
+        let fbID = (userSession?.facebookID)! as String
+        let request = FBSDKGraphRequest(graphPath: "\(fbID)/friends", parameters: ["fields": "id, email"], HTTPMethod: "GET")
+        request.startWithCompletionHandler({ (connexion, result, error) in
+            let jsonResult = JSON(result)
+            let array = jsonResult["data"].arrayValue
+            let dico = jsonResult["data"].dictionaryValue
+            print(array)
+        })
+        
+        /*
+        let fbLoginManager : FBSDKLoginManager = FBSDKLoginManager()
+        
+        fbLoginManager.logInWithReadPermissions(["user_friends"],
+                                                fromViewController: self)
+        { (result, error) -> Void in
+            
+            if error != nil {
+                print("Facebook login : process error : \(error)")
+                
+                return
+            } else if (result.isCancelled) {
+                print("Facebook login : cancelled")
+                return
+            } else {
+                //let fbloginresult : FBSDKLoginManagerLoginResult = result
+                
+                //if(fbloginresult.grantedPermissions.contains("data")) {
+                    //print("Facebook Access token : \(FBSDKAccessToken.currentAccessToken().tokenString)")
+                    
+                    if((FBSDKAccessToken.currentAccessToken()) != nil) {
+                        
+//                        let profilRequest = ProfilRequest()
+//                        profilRequest.getUserFriendsDochaInstalled(FBSDKAccessToken.currentAccessToken().tokenString,
+//                            success: { (friendsList) in
+//                                print("Success get friends ! : \(friendsList)")
+//                            }, fail: { (error, listErrors) in
+//                                print("Error get user friends list")
+//                        })
+                        
+                    } else {
+                        print("Token is nil")
+                    }
+                //}
+            }
+        }
+         */
     }
     
     override func viewDidLayoutSubviews() {
@@ -37,6 +91,11 @@ class HomeViewController: GameViewController, UITableViewDelegate, UITableViewDa
         super.viewWillAppear(animated)
         configGameNavigationBar()
         configTitleViewDocha()
+        
+        if UserSessionManager.sharedInstance.needsToUpdateHome {
+            loadUserInfos()
+            UserSessionManager.sharedInstance.needsToUpdateHome = false
+        }
         
         // Amplitude
         Amplitude.instance().logEvent("TabNavHome")
@@ -74,8 +133,10 @@ class HomeViewController: GameViewController, UITableViewDelegate, UITableViewDa
                 
             } else if userSession.isKindOfClass(UserSessionFacebook) {
                 let userSessionFacebook = userSession as! UserSessionFacebook
-                
-                if let firstName = userSessionFacebook.firstName, lastName = userSessionFacebook.lastName {
+                if let userName = userSessionFacebook.username {
+                    self.userNameLabel.text = userName
+                    
+                } else if let firstName = userSessionFacebook.firstName, lastName = userSessionFacebook.lastName {
                     self.userNameLabel.text = "\(firstName) \(lastName[0])."
                 }
                 
@@ -149,9 +210,7 @@ class HomeViewController: GameViewController, UITableViewDelegate, UITableViewDa
         // Amplitude Event
         Amplitude.instance().logEvent("HomeGameLaunched")
         
-        let loadingView = LoadingView(frame: self.view.frame, loadingType: .Gameplay)
-        self.navigationController?.view.addSubview(loadingView)
-        loadingView.startLoading()
+        self.presentViewController(DochaPopupHelper.sharedInstance.showLoadingPopup("Nous préparons tes produits...")!, animated: false, completion: nil)
         
         let productManager = ProductManager.sharedInstance
         productManager.loadProductsWithCurrentCategory()
@@ -161,12 +220,11 @@ class HomeViewController: GameViewController, UITableViewDelegate, UITableViewDa
         productManager.downloadProductsImages(packOfProducts!, WithCompletion: { (finished) in
             if finished {
                 UIView.animateWithDuration(0.2, animations: {
-                    loadingView.alpha = 0.0
                     
                     }, completion: { (finished) in
-                        loadingView.dismissView()
+                        self.dismissViewControllerAnimated(false, completion: nil)
                 })
-                loadingView.dismissView()
+                self.dismissViewControllerAnimated(false, completion: nil)
                 
                 let productsImages = productManager.productsImages
                 
@@ -180,19 +238,40 @@ class HomeViewController: GameViewController, UITableViewDelegate, UITableViewDa
                 
             } else {
                 print("Error when loading products...")
-                SCLAlertView.init().showError("Oups !", subTitle: "Il semblerait que vous ne soyez pas connecté à internet... :( Essayer à nouveau utlérieurement")
+                self.presentViewController(DochaPopupHelper.sharedInstance.showErrorPopup("Oups", message: "Il semblerait que vous ne soyez pas connecté à internet... :( Essayer à nouveau ultérieurement")!, animated: true, completion: nil)
             }
         })
     }
+    
+
+//MARK: HomeFriendsCellDelegate Methods
     
     func displayAllFriendsButtonTouched() {
         
     }
     
+    func inviteFacebookFriendsCellTouched() {
+        let content = FBSDKAppInviteContent()
+        content.appLinkURL = NSURL(string: "URL_IOS_APP")
+        FBSDKAppInviteDialog.showFromViewController(self, withContent: content, delegate: self)
+    }
+    
+    func appInviteDialog(appInviteDialog: FBSDKAppInviteDialog!, didCompleteWithResults results: [NSObject : AnyObject]!) {
+        self.presentViewController(DochaPopupHelper.sharedInstance.showSuccessPopup("Succès", message: "Vos amis ont bien été invités. Docha te remercie beaucoup pour ton aide.")!, animated: true, completion: nil)
+    }
+    
+    func appInviteDialog(appInviteDialog: FBSDKAppInviteDialog!, didFailWithError error: NSError!) {
+        
+    }
+    
+    
+//MARK: @IBActions Methods
+    
     @IBAction func profilImageTouched(sender: AnyObject) {
         // Amplitude
         Amplitude.instance().logEvent("HomeClickPhoto")
     }
+    
     
 //MARK: Push Segue Methods
     

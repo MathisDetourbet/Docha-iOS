@@ -76,6 +76,7 @@ struct Constants {
         
         struct UrlProfil {
             static let UrlProfilUpdate = "/users"
+            static let UrlGetFriendsDochaInstalled = "/users/friends/dochainstalled"
         }
         
         struct UrlRegister {
@@ -88,6 +89,7 @@ struct Constants {
             static let UrlFacebookConnexion = "/users/auth/facebook"
             static let UrlGooglePlusConnexion = "/users/sign_in" //"/users/auth/google"
             static let UrlEmailConnexion = "/users/sign_in"
+            static let UrlLogOut = "/users/sign_out"
         }
     }
 }

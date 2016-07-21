@@ -107,8 +107,6 @@ class InscriptionCategorySelectionViewController: RootViewController, UICollecti
                     })
                 }
             }
-        } else {
-            
         }
         
         if currentSessionManager.dicoUserDataInscription == nil {
@@ -131,6 +129,7 @@ class InscriptionCategorySelectionViewController: RootViewController, UICollecti
     }
     
     @IBAction func infosButtonTouched(sender: UIBarButtonItem) {
-        SCLAlertView().showInfo("Info", subTitle: "Nous souhaitons vous proposer au maximum des produits qui vous correspondent.")
+        self.presentViewController(DochaPopupHelper.sharedInstance.showInfoPopup("Info", message: "Nous souhaitons vous proposer au maximum des produits qui vous correspondent.")!, animated: true, completion: nil)
+        //SCLAlertView().showInfo("Info", subTitle: "Nous souhaitons vous proposer au maximum des produits qui vous correspondent.")
     }
 }

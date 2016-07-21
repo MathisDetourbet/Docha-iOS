@@ -7,10 +7,10 @@
 //
 
 import Foundation
-import FBSDKShareKit
 
 protocol HomeFriendsCellDelegate {
     func displayAllFriendsButtonTouched()
+    func inviteFacebookFriendsCellTouched()
 }
 
 class HomeFriendCollectionViewCell: UICollectionViewCell {
@@ -62,8 +62,7 @@ class HomeFriendsTableViewCell: UITableViewCell, UICollectionViewDelegate, UICol
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         if indexPath.item == ((self.friendsCollection?.count)!-1) {
-            let content = FBSDKAppInviteContent()
-            content.appLinkURL = NSURL(string: "https://")
+            self.delegate?.inviteFacebookFriendsCellTouched()
         }
     }
     

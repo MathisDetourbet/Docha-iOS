@@ -16,7 +16,7 @@ import Fabric
 import Crashlytics
 import Amplitude_iOS
 
-public var testing = false
+public var testing = true
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
@@ -33,6 +33,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
         
         initManagers()
         
+        // Sign in user
+        if  UserSessionManager.sharedInstance.isLogged() {
+            UserSessionManager.sharedInstance.signIn({
+                    print("Sign in successful")
+                }) { (error, listErrors) in
+                    self.window?.currentViewController()?.presentViewController(DochaPopupHelper.sharedInstance.showErrorPopup("Oups !", message: "La connexion internet semble interrompue...")!, animated: true, completion: nil)
+                    UserSessionManager.sharedInstance.logout()
+            }
+        }
+        
         NavSchemeManager.sharedInstance.initRootController()
         
         // Facebook SDK
@@ -40,12 +50,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
         
         // Amplitude Init
         Amplitude.instance().initializeApiKey("792a2eced82bad1ee03a8f0f874c70f5")
-        
-        if  UserSessionManager.sharedInstance.isLogged() {
-            UserSessionManager.sharedInstance.login({}) { (error, listErrors) in
-                DochaPopupHelper.sharedInstance.showErrorPopupWithTitle("Oups !", subTitle: "La connexion internet semble interrompue...")
-            }
-        }
         
         return true
     }
@@ -99,14 +103,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
                     
                     // User access token
                     dicoUserData[UserDataKey.kFacebookToken] = FBSDKAccessToken.currentAccessToken().tokenString
+                    //dicoUserData[UserDataKey.kFacebookID] =
                     
-                    DochaPopupHelper.sharedInstance.showLoadingPopup()
+                    self.window?.currentViewController()?.presentViewController(DochaPopupHelper.sharedInstance.showLoadingPopup()!, animated: true, completion: nil)
                     
                     UserSessionManager.sharedInstance.connectByFacebook(
                         dicoUserData,
                         success: {
+                            self.window?.currentViewController()?.dismissViewControllerAnimated(false, completion: nil)
                             success()
                         }, fail: { (error, listError) in
+                            self.window?.currentViewController()?.dismissViewControllerAnimated(false, completion: nil)
                             print("error saving Facebook user data in database : \(error)")
                             failure(error: error, listError: listError)
                     })
@@ -150,8 +157,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
                         print("error saving GooglePlus user data in database : \(error)")
                         print("list error : \(listError)")
                 })
-            } else {
                 
+            } else {
                 UserSessionManager.sharedInstance.inscriptionByGooglePlus(dicoUserData,
                     success: { (session) in
                         

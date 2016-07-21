@@ -42,26 +42,41 @@ class UserGameStateManager {
         return Singleton.instance
     }
     
-    func calculProgressionAndLevel() -> (progression: Double, level: Int) {
-        let experience = Double(self.userSession.experience / 100)
-        
-        if experience == 0 {
-            return (0.0, 0)
-        }
-        
-        let currentLevel = log(experience + 1.0) + (1 - log(2.0)) * 1.25
-        let progression = currentLevel - (floor(currentLevel) * 1)
-        
-        return (progression, Int(floor(currentLevel)))
-    }
+//    func calculProgressionInPercent() -> Double {
+//        
+//        let currentExperience = getUserExperience()
+//        
+//        
+////        let experience = Double(self.userSession.experience / 100)
+////        
+////        if experience == 0 {
+////            return (0.0, 1)
+////        }
+////        
+////        let currentLevel = log(experience + 1.0) + (1 - log(2.0)) * 1.25
+////        let progression = currentLevel - (floor(currentLevel) * 1)
+////        
+////        return (progression, Int(floor(currentLevel)))
+//    }
     
     func getExperienceProgressionInPercent() -> Double {
-        return calculProgressionAndLevel().progression
+        let currentExperience = getUserExperience()
+        let currentLevel = getUserLevel()
+        
+        let nextLevelXP = currentLevel * 100
+        let currentExperienceInPercent = Double((currentExperience * 100) / nextLevelXP)
+        
+        return currentExperienceInPercent
     }
     
     func getUserLevel() -> Int {
-        self.userSession.levelMaxUnlocked = calculProgressionAndLevel().level
+        self.userSession = UserSessionManager.sharedInstance.currentSession()!
         return self.userSession.levelMaxUnlocked
+    }
+    
+    func getUserExperience() -> Int {
+        self.userSession = UserSessionManager.sharedInstance.currentSession()!
+        return self.userSession.experience
     }
     
     func getCurrentDochos() -> Int {
@@ -120,8 +135,12 @@ class UserGameStateManager {
     func saveRewards() {
         self.userSession = UserSessionManager.sharedInstance.currentSession()!
         var newTotalDochos = userSession.dochos
-        var newTotalExperience = userSession.experience
+        var currentExperience = userSession.experience
+        var newCurrentExperience = currentExperience
+        var newGameExperience = 0
         var newTotalPerfect = userSession.perfectPriceCpt
+        let currentLevel = getUserLevel()
+        var newCurrentLevel = currentLevel
         
         if self.gameRewards == nil {
             return
@@ -129,17 +148,28 @@ class UserGameStateManager {
         
         for reward in self.gameRewards! {
             newTotalDochos += reward.dochos!
-            newTotalExperience += reward.experience!
+            newGameExperience += reward.experience!
             if reward.perfect! {
                 newTotalPerfect += 1
             }
         }
         
+        currentExperience += newGameExperience
+        let nextLevelExperience = currentLevel * 100
+        
+        if currentExperience >= nextLevelExperience {
+            newCurrentLevel += 1
+            newCurrentExperience = currentExperience - nextLevelExperience
+            
+        } else {
+            newCurrentExperience = currentExperience
+        }
+        
         self.userSession.dochos = newTotalDochos
-        self.userSession.experience = newTotalExperience
+        
+        self.userSession.experience = newCurrentExperience
         self.userSession.perfectPriceCpt = newTotalPerfect
-        let newUserLevel = calculProgressionAndLevel().level
-        self.userSession.levelMaxUnlocked = newUserLevel
+        self.userSession.levelMaxUnlocked = newCurrentLevel
         
         self.userSession.saveSession()
     }
