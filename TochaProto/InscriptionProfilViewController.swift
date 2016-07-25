@@ -67,65 +67,37 @@ class InscriptionProfilViewController: RootViewController {
     }
     
     @IBAction func validProfilButtonTouched(sender: UIButton) {
-        self.presentViewController(DochaPopupHelper.sharedInstance.showLoadingPopup()!, animated: true, completion: nil)
-        
-        let userSessionManager = UserSessionManager.sharedInstance
-        
-        if let avatar = self.avatarImageSelected {
+        self.presentViewController(DochaPopupHelper.sharedInstance.showLoadingPopup("Création d'un nouveau Docher en cours...")!, animated: true, completion: {
+            let userSessionManager = UserSessionManager.sharedInstance
+            
+            if let avatar = self.avatarImageSelected {
                 if userSessionManager.dicoUserDataInscription == nil {
-                userSessionManager.dicoUserDataInscription = [String:AnyObject]()
-            }
-            userSessionManager.dicoUserDataInscription!["avatar"] = avatar
-        }
-        
-        let registrationParams = userSessionManager.dicoUserDataInscription!
-        
-        UserSessionManager.sharedInstance.inscriptionEmail(registrationParams,
-            success: { (session) in
-                                                            
-                print("Saving in the database : success !")
-                
-                self.dismissViewControllerAnimated(false, completion: nil)
-                self.goToHome()
-                
-//                // On lance une connexion avec le token reçu
-//                if let currentSession = UserSessionManager.sharedInstance.currentSession() {
-//                    if currentSession.isKindOfClass(UserSessionEmail) {
-//                        
-//                        let email = registrationParams["email"] as? String
-//                        let password = registrationParams["password"] as? String
-//                        
-//                        if let email = email, password = password {
-//                            
-//                            UserSessionManager.sharedInstance.connectByEmail(email, andPassword: password,
-//                                success: {
-//                                    DochaPopupHelper.sharedInstance.dismissCurrentPopup()
-//                                    self.goToHome()
-//                                    
-//                                }, fail: { (error, listError) in
-//                                    print("Error connexion by email : \(error)")
-//                                    DochaPopupHelper.sharedInstance.dismissCurrentPopup()
-//                                    self.presentViewController(DochaPopupHelper.sharedInstance.showErrorPopup("Oups...", message: "Une erreur est survenue. Réessayer utltérieurement")!, animated: true, completion: nil)
-//                            })
-//                        }
-//                        
-//                    } else {
-//                        print("Error : class saved in the device isn't an UserSessionEmail class")
-//                        DochaPopupHelper.sharedInstance.dismissCurrentPopup()
-//                        self.presentViewController(DochaPopupHelper.sharedInstance.showErrorPopup("Oups...", message: "Une erreur est survenue. Réessayer utltérieurement")!, animated: true, completion: nil)
-//                        self.popToViewControllerClass(StarterPageViewController)
-//                    }
-//                }
-                
-            }, fail: { (error, listErrors) in
-                self.dismissViewControllerAnimated(false, completion: nil)
-                
-                if let error = error {
-                    if error.code == 422 {
-                        self.presentViewController(DochaPopupHelper.sharedInstance.showErrorPopup("Oups...", message: (error.userInfo["message"])! as? String)!, animated: true, completion: nil)
-                    }
+                    userSessionManager.dicoUserDataInscription = [String:AnyObject]()
                 }
-                print("Error inscription : \(error)")
+                userSessionManager.dicoUserDataInscription!["avatar"] = avatar
+            }
+            
+            let registrationParams = userSessionManager.dicoUserDataInscription!
+            
+            UserSessionManager.sharedInstance.inscriptionEmail(registrationParams,
+                success: { (session) in
+                    
+                    print("Saving in the database : success !")
+                    UserSessionManager.sharedInstance.currentSession()!.updateProfilImagePrefered(.AvatarDochaImage)
+                    
+                    self.dismissViewControllerAnimated(true, completion: nil)
+                    self.goToHome()
+                    
+                }, fail: { (error, listErrors) in
+                    self.dismissViewControllerAnimated(false, completion: nil)
+                    
+                    if let error = error {
+                        if error.code == 422 {
+                            self.presentViewController(DochaPopupHelper.sharedInstance.showErrorPopup("Oups...", message: (error.userInfo["message"])! as? String)!, animated: true, completion: nil)
+                        }
+                    }
+                    print("Error inscription : \(error)")
+            })
         })
     }
 }

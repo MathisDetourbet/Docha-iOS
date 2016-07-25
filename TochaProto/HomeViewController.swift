@@ -29,20 +29,19 @@ class HomeViewController: GameViewController, UITableViewDelegate, UITableViewDa
     override func viewDidLoad() {
         super.viewDidLoad()
         loadUserInfos()
-        //getFriendsList()
     }
     
     func getFriendsList() {
         
-        let userSession = UserSessionManager.sharedInstance.currentSession() as? UserSessionFacebook
-        let fbID = (userSession?.facebookID)! as String
-        let request = FBSDKGraphRequest(graphPath: "\(fbID)/friends", parameters: ["fields": "id, email"], HTTPMethod: "GET")
-        request.startWithCompletionHandler({ (connexion, result, error) in
-            let jsonResult = JSON(result)
-            let array = jsonResult["data"].arrayValue
-            let dico = jsonResult["data"].dictionaryValue
-            print(array)
-        })
+//        let userSession = UserSessionManager.sharedInstance.currentSession() as? UserSessionFacebook
+//        let fbID = (userSession?.facebookID)! as String
+//        let request = FBSDKGraphRequest(graphPath: "\(fbID)/friends", parameters: ["fields": "id, email"], HTTPMethod: "GET")
+//        request.startWithCompletionHandler({ (connexion, result, error) in
+//            let jsonResult = JSON(result)
+//            let array = jsonResult["data"].arrayValue
+//            let dico = jsonResult["data"].dictionaryValue
+//            print(array)
+//        })
         
         /*
         let fbLoginManager : FBSDKLoginManager = FBSDKLoginManager()
@@ -121,50 +120,76 @@ class HomeViewController: GameViewController, UITableViewDelegate, UITableViewDa
                     self.userNameLabel.text = userSession.username
                 }
                 
-                if let profileImage = userSession.getUserProfileImage() {
-                    self.avatarImageView.image = profileImage
-                    
-                } else if let avatarString = userSessionEmail.avatar {
-                    self.avatarImageView.image = UIImage(named: avatarString)
+                
+                let profilImagePrefered = userSessionEmail.profilImagePrefered
+                var profilImage: UIImage?
+                
+                if profilImagePrefered == .AvatarDochaImage && userSession.avatar != ""  {
+                    if let avatarString = userSessionEmail.avatar {
+                        profilImage = UIImage(named: avatarString)
+                    }
                     
                 } else {
-                    self.avatarImageView.image = UIImage(named: "avatar_man_profil")
+                    if let photoImage = userSessionEmail.getUserProfileImage() {
+                        profilImage = photoImage
+                    }
                 }
+                
+                self.avatarImageView.image = profilImage
                 
             } else if userSession.isKindOfClass(UserSessionFacebook) {
                 let userSessionFacebook = userSession as! UserSessionFacebook
-                if let userName = userSessionFacebook.username {
-                    self.userNameLabel.text = userName
+                
+                if userSession.username != "" {
+                    self.userNameLabel.text = userSession.username
                     
                 } else if let firstName = userSessionFacebook.firstName, lastName = userSessionFacebook.lastName {
                     self.userNameLabel.text = "\(firstName) \(lastName[0])."
                 }
                 
-                if let profileImage = userSession.getUserProfileImage() {
-                    avatarImageView.image = profileImage
+                let profilImagePrefered = userSessionFacebook.profilImagePrefered
+                var profilImage: UIImage?
+                
+                if profilImagePrefered == .AvatarDochaImage && userSession.avatar != ""  {
+                    if let avatarString = userSessionFacebook.avatar {
+                        profilImage = UIImage(named: avatarString)
+                    }
+                    
+                } else if profilImagePrefered == .FacebookImage {
+                    if let fbImageURL = userSessionFacebook.facebookImageURL {
+                        self.avatarImageView.downloadedFrom(link: fbImageURL, contentMode: .ScaleToFill, WithCompletion: { (success) in
+                            if success {
+                                if userSession.gender == "M" || userSession.gender == "U" {
+                                    profilImage = UIImage(named: "avatar_man_profil")
+                                } else {
+                                    profilImage = UIImage(named: "avatar_woman_profil")
+                                }
+                                
+                            } else {
+                                profilImage = self.avatarImageView.image
+                            }
+                        })
+                    }
                     
                 } else {
-                    if let fbImageURL = userSessionFacebook.facebookImageURL {
-                        avatarImageView.downloadedFrom(link: fbImageURL, contentMode: .ScaleToFill, WithCompletion: nil)
-                        
-                    } else if let avatarImage = userSessionFacebook.avatar {
-                        avatarImageView.image = UIImage(named: avatarImage)
-                        
-                    } else {
-                        avatarImageView.image = UIImage(named: "avatar_man_profil")
+                    if let photoImage = userSessionFacebook.getUserProfileImage() {
+                        profilImage = photoImage
                     }
                 }
+                
+                self.avatarImageView.image = profilImage
+                
             } else {
                 self.userNameLabel.text = ""
                 self.avatarImageView.image = UIImage(named: "avatar_man_profil")
             }
         }
         
-        avatarImageView.layer.cornerRadius = self.avatarImageView.frame.size.height/2
-        avatarImageView.layer.borderWidth = 3.0
-        avatarImageView.layer.borderColor = UIColor.whiteColor().CGColor
-        avatarImageView.layer.masksToBounds = false
-        avatarImageView.clipsToBounds = true
+        self.avatarImageView.layer.cornerRadius = self.avatarImageView.frame.size.height/2
+        self.avatarImageView.layer.borderWidth = 3.0
+        self.avatarImageView.layer.borderColor = UIColor.whiteColor().CGColor
+        self.avatarImageView.layer.masksToBounds = false
+        self.avatarImageView.clipsToBounds = true
     }
     
     
@@ -210,36 +235,24 @@ class HomeViewController: GameViewController, UITableViewDelegate, UITableViewDa
         // Amplitude Event
         Amplitude.instance().logEvent("HomeGameLaunched")
         
-        self.presentViewController(DochaPopupHelper.sharedInstance.showLoadingPopup("Nous préparons tes produits...")!, animated: false, completion: nil)
-        
         let productManager = ProductManager.sharedInstance
-        productManager.loadProductsWithCurrentCategory()
         
-        var packOfProducts = productManager.loadPackOfProducts()
-        
-        productManager.downloadProductsImages(packOfProducts!, WithCompletion: { (finished) in
-            if finished {
-                UIView.animateWithDuration(0.2, animations: {
+        self.presentViewController(DochaPopupHelper.sharedInstance.showLoadingPopup("Nous préparons tes produits...")!, animated: true, completion: {
+            
+            productManager.getPackOfProducts({ (finished, packOfProducts) in
+                if finished && packOfProducts != nil {
+                    self.dismissViewControllerAnimated(true, completion: { 
+                        let gameplayVC = self.storyboard?.instantiateViewControllerWithIdentifier("idGameplayViewController") as! GameplayViewController
+                        gameplayVC.productsList = packOfProducts
+                        self.hidesBottomBarWhenPushed = true
+                        self.navigationController?.pushViewController(gameplayVC, animated: true)
+                    })
                     
-                    }, completion: { (finished) in
-                        self.dismissViewControllerAnimated(false, completion: nil)
-                })
-                self.dismissViewControllerAnimated(false, completion: nil)
-                
-                let productsImages = productManager.productsImages
-                
-                for index in 0...productsImages!.count-1 {
-                    packOfProducts![index].image = productsImages!["\(packOfProducts![index].id)"]
+                } else {
+                    print("Error when loading products...")
+                    self.presentViewController(DochaPopupHelper.sharedInstance.showErrorPopup("Oups", message: "Il semblerait que vous ne soyez pas connecté à internet... :( Essayer à nouveau ultérieurement")!, animated: true, completion: nil)
                 }
-                let gameplayVC = self.storyboard?.instantiateViewControllerWithIdentifier("idGameplayViewController") as! GameplayViewController
-                gameplayVC.productsList = packOfProducts
-                self.hidesBottomBarWhenPushed = true
-                self.navigationController?.pushViewController(gameplayVC, animated: true)
-                
-            } else {
-                print("Error when loading products...")
-                self.presentViewController(DochaPopupHelper.sharedInstance.showErrorPopup("Oups", message: "Il semblerait que vous ne soyez pas connecté à internet... :( Essayer à nouveau ultérieurement")!, animated: true, completion: nil)
-            }
+            })
         })
     }
     
@@ -261,7 +274,7 @@ class HomeViewController: GameViewController, UITableViewDelegate, UITableViewDa
     }
     
     func appInviteDialog(appInviteDialog: FBSDKAppInviteDialog!, didFailWithError error: NSError!) {
-        
+        self.presentViewController(DochaPopupHelper.sharedInstance.showErrorPopup("Oups !", message: "Un peu de patience, cette fonctionnalité sera bientôt disponible !")!, animated: true, completion: nil)
     }
     
     

@@ -1190,8 +1190,8 @@ Nous voulons par le jeu, replacer le consommateur au coeur des marques en vous p
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="dochos_icon" translatesAutoresizingMaskIntoConstraints="NO" id="pXy-3U-dpp">
                                                     <rect key="frame" x="276" y="9" width="20" height="20"/>
                                                 </imageView>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="21" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jLA-dS-Mz0">
-                                                    <rect key="frame" x="302" y="13" width="10" height="12"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="21" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jLA-dS-Mz0">
+                                                    <rect key="frame" x="302" y="13" width="10" height="13"/>
                                                     <fontDescription key="fontDescription" name="Montserrat-SemiBold" family="Montserrat" pointSize="10"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
@@ -1522,7 +1522,7 @@ Nous voulons par le jeu, replacer le consommateur au coeur des marques en vous p
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <pageControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="3" translatesAutoresizingMaskIntoConstraints="NO" id="I37-Nh-3wt">
-                                <rect key="frame" x="121" y="266" width="79" height="37"/>
+                                <rect key="frame" x="113" y="266" width="95" height="37"/>
                                 <color key="pageIndicatorTintColor" red="0.84313725490196079" green="0.84313725490196079" blue="0.84313725490196079" alpha="1" colorSpace="calibratedRGB"/>
                                 <color key="currentPageIndicatorTintColor" red="0.47843137254901963" green="0.48627450980392156" blue="0.49411764705882355" alpha="1" colorSpace="calibratedRGB"/>
                             </pageControl>
@@ -1557,9 +1557,9 @@ Nous voulons par le jeu, replacer le consommateur au coeur des marques en vous p
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="I37-Nh-3wt" firstAttribute="leading" secondItem="za6-FW-8EV" secondAttribute="leadingMargin" constant="105" id="8fx-3t-dMp"/>
+                            <constraint firstItem="I37-Nh-3wt" firstAttribute="leading" secondItem="za6-FW-8EV" secondAttribute="leadingMargin" constant="97" id="8fx-3t-dMp"/>
                             <constraint firstItem="I37-Nh-3wt" firstAttribute="top" secondItem="za6-FW-8EV" secondAttribute="topMargin" constant="266" id="Bhv-TA-BMu"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="I37-Nh-3wt" secondAttribute="trailing" constant="104" id="EPt-eH-ate"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="I37-Nh-3wt" secondAttribute="trailing" constant="96" id="EPt-eH-ate"/>
                             <constraint firstItem="XI6-KQ-f65" firstAttribute="width" secondItem="XI6-KQ-f65" secondAttribute="height" multiplier="0.778" constant="1" id="VQY-Kc-8Cj"/>
                             <constraint firstItem="XI6-KQ-f65" firstAttribute="top" secondItem="za6-FW-8EV" secondAttribute="top" constant="237" id="bc0-zK-66p"/>
                             <constraint firstItem="Dj9-iv-T27" firstAttribute="centerX" secondItem="I37-Nh-3wt" secondAttribute="centerX" id="dpQ-hK-vAI"/>
@@ -2294,7 +2294,7 @@ Nous voulons par le jeu, replacer le consommateur au coeur des marques en vous p
                                         </connections>
                                     </collectionViewCell>
                                 </cells>
-                                <collectionReusableView key="sectionFooterView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="rQc-kf-Nyx">
+                                <collectionReusableView key="sectionFooterView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="idCategoryCollectionCell" id="rQc-kf-Nyx">
                                     <rect key="frame" x="0.0" y="102" width="320" height="10"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </collectionReusableView>
@@ -2501,7 +2501,7 @@ Nous voulons par le jeu, replacer le consommateur au coeur des marques en vous p
                     <toolbarItems/>
                     <simulatedStatusBarMetrics key="simulatedStatusBarMetrics"/>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" translucent="NO" prompted="NO"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" backIndicatorImage="return" id="KIr-iK-EDu">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" backIndicatorImage="return" backIndicatorTransitionMaskImage="return" id="KIr-iK-EDu">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -2970,7 +2970,7 @@ Nous voulons par le jeu, replacer le consommateur au coeur des marques en vous p
                                         </connections>
                                     </collectionViewCell>
                                 </cells>
-                                <collectionReusableView key="sectionFooterView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="C8S-Vm-0NO">
+                                <collectionReusableView key="sectionFooterView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="idCategoryCollectionCell" id="C8S-Vm-0NO">
                                     <rect key="frame" x="0.0" y="102" width="320" height="10"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </collectionReusableView>

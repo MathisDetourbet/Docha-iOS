@@ -273,6 +273,7 @@ class PreferencesChangeProfilViewController: RootViewController, UITableViewDele
         if let _ = self.imageViewPicked, imageToSave = self.imageViewPicked?.image {
             needToUpdateProfil = true
             UserSessionManager.sharedInstance.currentSession()?.saveProfileImage(imageToSave)
+            UserSessionManager.sharedInstance.currentSession()!.updateProfilImagePrefered(.PhotoImage)
         }
         
         // Save other user data
@@ -281,6 +282,7 @@ class PreferencesChangeProfilViewController: RootViewController, UITableViewDele
             if let _ = self.avatarImageName {
                 needToUpdateProfil = true
                 dicoParameters[UserDataKey.kAvatar] = self.avatarImageName
+                UserSessionManager.sharedInstance.currentSession()!.updateProfilImagePrefered(.AvatarDochaImage)
             }
             
             if let genderNotConvertedString = self.genderNotConverted {
@@ -346,17 +348,20 @@ class PreferencesChangeProfilViewController: RootViewController, UITableViewDele
 //MARK: @IBActions
     
     @IBAction func validBarButtonItemTouched(sender: UIBarButtonItem) {
-        self.presentViewController(DochaPopupHelper.sharedInstance.showLoadingPopup("Mise à jour de ton profil...")!, animated: false, completion: nil)
-        self.saveUserProfilDataWithCompletion { (success) in
-            self.dismissViewControllerAnimated(false, completion: nil)
-
-            if success {
-                UserSessionManager.sharedInstance.needsToUpdateHome = true
-                self.navigationController?.popViewControllerAnimated(true)
-            } else {
-                self.presentViewController(DochaPopupHelper.sharedInstance.showErrorPopup("Oups...", message: "La connexion internet semble interrompue...")!, animated: true, completion: nil)
+        self.presentViewController(DochaPopupHelper.sharedInstance.showLoadingPopup("Mise à jour de ton profil...")!, animated: true, completion: {
+            self.saveUserProfilDataWithCompletion { (success) in
+                self.dismissViewControllerAnimated(true, completion: {
+                    
+                    if success {
+                        UserSessionManager.sharedInstance.needsToUpdateHome = true
+                        self.navigationController?.popViewControllerAnimated(true)
+                        
+                    } else {
+                        self.presentViewController(DochaPopupHelper.sharedInstance.showErrorPopup("Oups...", message: "La connexion internet semble interrompue...")!, animated: true, completion: nil)
+                    }
+                })
             }
-        }
+        })
     }
     
     @IBAction func cancelBarButtonItemTouched(sender: UIBarButtonItem) {

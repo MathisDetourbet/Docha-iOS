@@ -8,6 +8,12 @@
 
 import Foundation
 
+enum ProfilImageType : Int {
+    case FacebookImage
+    case AvatarDochaImage
+    case PhotoImage
+}
+
 class User: NSObject {
     var userID: Int?
     var username: String?
@@ -22,10 +28,11 @@ class User: NSObject {
     var dochos: Int = 0
     var experience: Int = 0
     var perfectPriceCpt: Int = 0
+    var profilImagePrefered: ProfilImageType = .FacebookImage
     
     override init() {}
     
-    init(userID: Int?, username: String?, lastName: String?, firstName: String?, email: String?, gender: String?, dateBirthday: NSDate?, categoryFavorite: String?, avatar: String?, levelMaxUnlocked: Int?, dochos: Int?, experience: Int?, perfectPriceCpt: Int?) {
+    init(userID: Int?, username: String?, lastName: String?, firstName: String?, email: String?, gender: String?, dateBirthday: NSDate?, categoryFavorite: String?, avatar: String?, levelMaxUnlocked: Int?, dochos: Int?, experience: Int?, perfectPriceCpt: Int?, profilImagePrefered: ProfilImageType?) {
         self.userID = userID
         self.username = username
         self.lastName = lastName
@@ -39,6 +46,7 @@ class User: NSObject {
         self.dochos = dochos!
         self.experience = experience!
         self.perfectPriceCpt = perfectPriceCpt!
+        self.profilImagePrefered = profilImagePrefered!
     }
     
     func initPropertiesWithResponseObject(responseObject: AnyObject) {

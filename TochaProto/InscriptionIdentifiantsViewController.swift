@@ -126,7 +126,9 @@ class InscriptionIdentifiantsViewController: RootViewController, UITextFieldDele
                 
                 if(fbloginresult.grantedPermissions.contains("email"))
                 {
-                    self.getFBUserData()
+                    self.presentViewController(DochaPopupHelper.sharedInstance.showLoadingPopup("Connexion en cours...")!, animated: true, completion: {
+                        self.getFBUserData()
+                    })
                 }
             }
         }
@@ -137,9 +139,15 @@ class InscriptionIdentifiantsViewController: RootViewController, UITextFieldDele
         let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
         appDelegate.facebookSignIn({
             // Success
-            self.goToHome()
+            self.dismissViewControllerAnimated(true, completion: {
+                UserSessionManager.sharedInstance.currentSession()!.updateProfilImagePrefered(.FacebookImage)
+                self.goToHome()
+            })
         }) { (error, listError) in
             // Fail
+            self.dismissViewControllerAnimated(true, completion: {
+                self.presentViewController(DochaPopupHelper.sharedInstance.showErrorPopup("Oups", message: "Une erreur est survenue. Essaie à nouveau utlérieurement.")!, animated: true, completion: nil)
+            })
             print("error saving Facebook user data in database : \(error)")
             print("list error : \(listError)")
         }

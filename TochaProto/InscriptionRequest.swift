@@ -23,8 +23,10 @@ class InscriptionRequest {
         Alamofire.request(.POST, url, parameters: dicoInscriptionApi, encoding: .JSON)
             .validate()
             .responseJSON { response in
-                let statusCode = (response.response?.statusCode)!
-                print("Status code : \(statusCode)")
+                let statusCode = response.response?.statusCode // Gets HTTP status code, useful for debugging
+                if let status = statusCode {
+                    print("Status code : \(status)")
+                }
                 
                 if statusCode == 422 {
                     // Email already registered !
@@ -128,8 +130,10 @@ class InscriptionRequest {
         Alamofire.request(.POST, url, parameters: dicoInscriptionApi, encoding: .JSON)
             .validate()
             .responseJSON { response in
-                let statusCode = (response.response?.statusCode)!
-                print("Status code : \(statusCode)")
+                let statusCode = response.response?.statusCode // Gets HTTP status code, useful for debugging
+                if let status = statusCode {
+                    print("Status code : \(status)")
+                }
                 
                 if statusCode == 422 {
                     // Email already registered !
@@ -226,8 +230,10 @@ class InscriptionRequest {
         Alamofire.request(.POST, url, parameters: dicoInscriptionApi, encoding: .JSON)
             .validate()
             .responseJSON { response in
-                let statusCode = (response.response?.statusCode)!
-                print("Status code : \(statusCode)")
+                let statusCode = response.response?.statusCode // Gets HTTP status code, useful for debugging
+                if let status = statusCode {
+                    print("Status code : \(status)")
+                }
                 
                 if statusCode == 422 {
                     // Email already registered !

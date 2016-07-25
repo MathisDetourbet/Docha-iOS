@@ -22,7 +22,7 @@ class HomeFriendCollectionViewCell: UICollectionViewCell {
 class HomeFriendsTableViewCell: UITableViewCell, UICollectionViewDelegate, UICollectionViewDataSource {
     
     let friendsAvatarsImages: [String] = ["avatar_woman_indian", "avatar_man_geek", "avatar_woman_blond", "facebook_icon_circle"]
-    let friendsNamesString = ["Alice J.", "Marine A.", "Morgane J.", "Inviter"]
+    let friendsNamesString = ["Alice J.", "Pierre A.", "Morgane J.", "Inviter"]
     let idHomeFriendsCollectionViewCell = "idHomeFriendCollectionViewCell"
     
     var friendsCollection: [AnyObject]? = ["", "", "", ""]

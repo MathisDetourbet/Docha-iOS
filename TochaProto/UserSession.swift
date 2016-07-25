@@ -34,8 +34,9 @@ class UserSession: User, NSCoding {
         let authToken = aDecoder.decodeObjectForKey(Constants.UserDefaultsKey.kUserInfosAuthToken) as? String
         let sessionID = aDecoder.decodeIntegerForKey(Constants.UserDefaultsKey.kUserInfosSessionID) as Int
         let productsIDPlayed = aDecoder.decodeObjectForKey(Constants.UserDefaultsKey.kProductsIDPlayed) as? [Int]
+        let profilImagePrefered = ProfilImageType(rawValue: (aDecoder.decodeIntegerForKey(Constants.UserDefaultsKey.kProfilImagePrefered)))
         
-        super.init(userID: userID, username: username, lastName: lastName, firstName: firstName, email: email, gender: gender, dateBirthday: dateBirthday, categoryFavorite: categoryFavorite, avatar: avatar, levelMaxUnlocked: levelMaxUnlocked, dochos: dochos, experience: experience, perfectPriceCpt: perfectPriceCpt)
+        super.init(userID: userID, username: username, lastName: lastName, firstName: firstName, email: email, gender: gender, dateBirthday: dateBirthday, categoryFavorite: categoryFavorite, avatar: avatar, levelMaxUnlocked: levelMaxUnlocked, dochos: dochos, experience: experience, perfectPriceCpt: perfectPriceCpt, profilImagePrefered: profilImagePrefered)
         
         self.authToken = authToken
         self.sessionID = sessionID
@@ -58,6 +59,7 @@ class UserSession: User, NSCoding {
         aCoder.encodeObject(avatar, forKey: Constants.UserDefaultsKey.kUserInfosAvatar)
         aCoder.encodeObject(authToken, forKey: Constants.UserDefaultsKey.kUserInfosAuthToken)
         aCoder.encodeObject(productsIDPlayed, forKey: Constants.UserDefaultsKey.kProductsIDPlayed)
+        aCoder.encodeInteger(profilImagePrefered.rawValue, forKey: Constants.UserDefaultsKey.kProfilImagePrefered)
     }
     
     func saveSession() {
@@ -97,6 +99,11 @@ class UserSession: User, NSCoding {
     func deleteProfilImage() {
         NSUserDefaults.standardUserDefaults().removeObjectForKey(Constants.UserDefaultsKey.kUserInfosProfileImageFilePath)
         NSUserDefaults.standardUserDefaults().synchronize()
+    }
+    
+    func updateProfilImagePrefered(profilImageType: ProfilImageType) {
+        self.profilImagePrefered = profilImageType
+        self.saveSession()
     }
     
     func documentsPathForFileName(name: String) -> String {

@@ -60,6 +60,7 @@ class GameplayViewController: GameViewController, KeyboardViewDelegate {
     }
     var timer: NSTimer?
     var timerFinished: Bool = true
+    var responseTimeForDatabase: Double = 0.0
     
     var gameplayMode: GameplayMode! = .Preview {
         didSet {
@@ -390,6 +391,7 @@ class GameplayViewController: GameViewController, KeyboardViewDelegate {
     }
     
     func validatePricing() {
+        self.responseTimeForDatabase = self.currentMillisecondTime!
         self.stopTimer()
         
         var counterViewTypeArray: [CounterViewAfterType] = []
@@ -403,7 +405,7 @@ class GameplayViewController: GameViewController, KeyboardViewDelegate {
                 counterViewTypeArray.append(CounterViewAfterType.Perfect)
             }
             
-            savePsyPriceInDatabase()
+            saveGameplayDataInDatabase(false)
             
             afterView.displayEstimationResults(counterViewTypeArray)
             self.counterContainerView.revealCounterViewAfterWithArrayType(counterViewTypeArray)
@@ -414,7 +416,7 @@ class GameplayViewController: GameViewController, KeyboardViewDelegate {
             return
         }
         
-        if missingAnNumberInPsyPriceArray(counterPsyPriceArray) {
+        if missingNumberInPsyPriceArray(counterPsyPriceArray) {
             for index in 0...counterPsyPriceArray.count-1 {
                 counterPsyPriceArray[index] = -1
             }
@@ -422,9 +424,11 @@ class GameplayViewController: GameViewController, KeyboardViewDelegate {
                 counterViewTypeArray.append(CounterViewAfterType.Red)
             }
             
+            saveGameplayDataInDatabase(true)
+            
         } else {
             
-            savePsyPriceInDatabase()
+            saveGameplayDataInDatabase(false)
             
             for index in 0...counterPsyPriceArray.count-1 {
                 
@@ -448,14 +452,28 @@ class GameplayViewController: GameViewController, KeyboardViewDelegate {
         cursorCounter = 0
     }
     
-    func savePsyPriceInDatabase() {
+    func saveGameplayDataInDatabase(isMissingNumberInPsyPrice: Bool) {
         let userID = UserSessionManager.sharedInstance.currentSession()!.userID
         let productID = self.currentProduct?.id
         let psyPrice = self.psyAndRealPriceArray.last?.psyPrice
+        print("PsyPrice : \(psyPrice)")
+        var isInIntervalle: Bool = false
+        let responseTime = (kCooldownForMain - self.responseTimeForDatabase).roundToPlaces(2)
+        var hadTimeToGiveAnswer: Bool = true
+        
+        if let psyPrice = psyPrice, realPrice = self.currentProduct?.price {
+            isInIntervalle = UserGameStateManager.sharedInstance.isPsyPriceInIntervalle(Double(psyPrice), andRealPrice: realPrice)
+        }
+        
+        if responseTime >= kCooldownForMain {
+            if isMissingNumberInPsyPrice {
+                hadTimeToGiveAnswer = false
+            }
+        }
         
         if let userID = userID, productID = productID, psyPrice = psyPrice {
             let request = PriceRecordsRequest()
-            request.createPriceRecordWithUserID(userID, productID: productID, psyPrice: psyPrice, success: {
+            request.createPriceRecordWithUserID(userID, productID: productID, psyPrice: psyPrice, isInIntervalle: isInIntervalle, responseTime: responseTime, hadTimeToGiveAnswer: hadTimeToGiveAnswer, success: {
                     print("Record psy price : success.")
                 }, fail: { (error, listErrors) in
                     print("Record psy price : failed.")
@@ -493,7 +511,7 @@ class GameplayViewController: GameViewController, KeyboardViewDelegate {
         return psyPriceInt
     }
     
-    func missingAnNumberInPsyPriceArray(psyPriceArray: [Int]) -> Bool {
+    func missingNumberInPsyPriceArray(psyPriceArray: [Int]) -> Bool {
         for psyPrice in psyPriceArray {
             if psyPrice == -1 {
                 return true

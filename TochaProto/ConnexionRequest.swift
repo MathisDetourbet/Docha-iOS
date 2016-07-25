@@ -34,8 +34,10 @@ class ConnexionRequest {
                 switch response.result {
                 case .Success:
                     print("Validation successful")
-                    let statusCode = (response.response?.statusCode)! // Gets HTTP status code, useful for debugging
-                    print("Status code : \(statusCode)")
+                    let statusCode = response.response?.statusCode // Gets HTTP status code, useful for debugging
+                    if let status = statusCode {
+                        print("Status code : \(status)")
+                    }
                     if let value: AnyObject = response.result.value {
                         let jsonResponse = JSON(value)
                         print("Connexion with email json response : \(jsonResponse)")
@@ -208,9 +210,10 @@ class ConnexionRequest {
                 
                 switch response.result {
                 case .Success:
-                    print("Validation successful")
-                    let statusCode = (response.response?.statusCode)!
-                    print("Status code : \(statusCode)")
+                    let statusCode = response.response?.statusCode // Gets HTTP status code, useful for debugging
+                    if let status = statusCode {
+                        print("Status code : \(status)")
+                    }
                     
                     if let value: AnyObject = response.result.value {
                         let jsonResponse = JSON(value)

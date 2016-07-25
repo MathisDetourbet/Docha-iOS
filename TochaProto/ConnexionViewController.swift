@@ -111,7 +111,9 @@ class ConnexionViewController: RootViewController, GIDSignInUIDelegate {
                 
                 if(fbloginresult.grantedPermissions.contains("email"))
                 {
-                    self.getFBUserData()
+                    self.presentViewController(DochaPopupHelper.sharedInstance.showLoadingPopup("Connexion en cours...")!, animated: true, completion: {
+                        self.getFBUserData()
+                    })
                 }
             }
         }
@@ -120,41 +122,48 @@ class ConnexionViewController: RootViewController, GIDSignInUIDelegate {
     func getFBUserData() {
         let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
         appDelegate.facebookSignIn({
-            self.dismissViewControllerAnimated(false, completion: nil)
             
-            if UserSessionManager.sharedInstance.currentSession()?.categoryFavorite != nil {
-                self.goToHome()
-            } else {
-                let categoryViewController = self.storyboard?.instantiateViewControllerWithIdentifier("idInscriptionCategorySelectionViewController") as! InscriptionCategorySelectionViewController
-                categoryViewController.comeFromConnexionVC = true
-                self.navigationController?.pushViewController(categoryViewController, animated: true)
-            }
+            self.dismissViewControllerAnimated(true, completion: {
+                if UserSessionManager.sharedInstance.currentSession()?.categoryFavorite != nil {
+                    self.goToHome()
+                } else {
+                    UserSessionManager.sharedInstance.currentSession()!.updateProfilImagePrefered(.FacebookImage)
+                    let categoryViewController = self.storyboard?.instantiateViewControllerWithIdentifier("idInscriptionCategorySelectionViewController") as! InscriptionCategorySelectionViewController
+                    categoryViewController.comeFromConnexionVC = true
+                    self.navigationController?.pushViewController(categoryViewController, animated: true)
+                }
+            })
+            
         }) { (error, listError) in
-            print("Error fetching user facebook data : \(error)")
-            print("list error : \(listError)")
-            self.presentViewController(DochaPopupHelper.sharedInstance.showErrorPopup("Oups...", message: "Une erreure est survenue. Vérifie que tu es bien connecté à internet.")!, animated: true, completion: nil)
+            self.dismissViewControllerAnimated(true, completion: {
+                print("Error fetching user facebook data : \(error)")
+                print("list error : \(listError)")
+                self.presentViewController(DochaPopupHelper.sharedInstance.showErrorPopup("Oups...", message: "Une erreure est survenue. Vérifie que tu es bien connecté à internet.")!, animated: true, completion: nil)
+            })
         }
     }
     
     @IBAction func emailConnexionTouched(sender: UIButton) {
-        self.presentViewController(DochaPopupHelper.sharedInstance.showLoadingPopup()!, animated: true, completion: nil)
-        
-        if self.emailString != nil && passwordString != nil {
-            let email = self.emailString!
-            let password = self.passwordString!
-            
-        UserSessionManager.sharedInstance.connectByEmail(email, andPassword: password,
-            success: {
-                self.dismissViewControllerAnimated(false, completion: nil)
-                print("User connexion by email : success !")
-                self.goToHome()
+        self.presentViewController(DochaPopupHelper.sharedInstance.showLoadingPopup()!, animated: true, completion: {
+            if self.emailString != nil && self.passwordString != nil {
+                let email = self.emailString!
+                let password = self.passwordString!
                 
-            }, fail: { (error, listError) in
-                self.dismissViewControllerAnimated(false, completion: nil)
-                print("User connexion by email failed...")
-                self.presentViewController(DochaPopupHelper.sharedInstance.showErrorPopup("Oups...", message: "L'email ou le mot de passe est incorrecte")!, animated: true, completion: nil)
-            })
-        }
+                UserSessionManager.sharedInstance.connectByEmail(email, andPassword: password,
+                    success: {
+                        self.dismissViewControllerAnimated(true, completion: {
+                            self.goToHome()
+                        })
+                        print("User connexion by email : success !")
+                        
+                    }, fail: { (error, listError) in
+                        self.dismissViewControllerAnimated(true, completion: {
+                            self.presentViewController(DochaPopupHelper.sharedInstance.showErrorPopup("Oups...", message: "L'email ou le mot de passe est incorrecte")!, animated: true, completion: nil)
+                        })
+                        print("User connexion by email failed...")
+                })
+            }
+        })
     }
     
     @IBAction func googlePlusButtonTouched(sender: UIButton) {

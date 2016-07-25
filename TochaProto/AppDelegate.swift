@@ -39,7 +39,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
                     print("Sign in successful")
                 }) { (error, listErrors) in
                     self.window?.currentViewController()?.presentViewController(DochaPopupHelper.sharedInstance.showErrorPopup("Oups !", message: "La connexion internet semble interrompue...")!, animated: true, completion: nil)
-                    UserSessionManager.sharedInstance.logout()
             }
         }
         
@@ -91,7 +90,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
         Amplitude.instance().logEvent("ApplicationWillTerminate")
     }
     
-    // MARK: Facebook Sign In
+
+// MARK: Facebook Sign In
+    
     func facebookSignIn(success:() -> Void, fail failure: (error: NSError?, listError: [AnyObject]?) -> Void) {
         if((FBSDKAccessToken.currentAccessToken()) != nil) {
             
@@ -103,17 +104,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
                     
                     // User access token
                     dicoUserData[UserDataKey.kFacebookToken] = FBSDKAccessToken.currentAccessToken().tokenString
-                    //dicoUserData[UserDataKey.kFacebookID] =
-                    
-                    self.window?.currentViewController()?.presentViewController(DochaPopupHelper.sharedInstance.showLoadingPopup()!, animated: true, completion: nil)
                     
                     UserSessionManager.sharedInstance.connectByFacebook(
                         dicoUserData,
                         success: {
-                            self.window?.currentViewController()?.dismissViewControllerAnimated(false, completion: nil)
                             success()
                         }, fail: { (error, listError) in
-                            self.window?.currentViewController()?.dismissViewControllerAnimated(false, completion: nil)
                             print("error saving Facebook user data in database : \(error)")
                             failure(error: error, listError: listError)
                     })
@@ -124,7 +120,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
         }
     }
     
-    // MARK: GooglePlus Sign In
+
+// MARK: GooglePlus Sign In
+    
     func signIn(signIn: GIDSignIn!, didSignInForUser user: GIDGoogleUser!, withError error: NSError!) {
         if (error == nil) {
             var dicoUserData = [String:AnyObject]()
@@ -194,7 +192,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
     func initManagers() {
         UserSessionManager.sharedInstance
         UserGameStateManager.sharedInstance
+        
+        // Load all products
         ProductManager.sharedInstance
+        ProductManager.sharedInstance.loadProductsWithCurrentCategory()
+        
         NavSchemeManager.sharedInstance
     }
 }

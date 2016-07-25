@@ -62,17 +62,20 @@ struct Constants {
         static let kUserInfosGooglePlusAccessToken = "userInfosGooglePlusAccessToken"
         static let kUserInfosProfileImageFilePath = "userInfosProfileImageFilePath"
         static let kProductsIDPlayed = "userInfosProductsIDPlayed"
+        static let kProfilImagePrefered = "userInfoProfilImagePrefered"
     }
     
     struct DataRecordsKey {
         static let kDataRecordUserID = "user_id"
         static let kDataRecordProductID = "product_id"
         static let kDataRecordPsyPrice = "psy_price"
+        static let kDataRecordIsInIntervalle = "is_in_intervalle"
+        static let kDataRecordResponseTime = "response_time"
+        static let kDataRecordHadTimeToGiveAnswer = "had_time_to_give_answer"
     }
     
     struct UserAuthentificationKey {
         static let kUserAuthentificationToken = "userAuthTokenKey"
-        // Google Plus ID
         static let kGooglePlusClientId = "155812467582-3s7hf6qnffet4s5qf4dpuh5shu64celn.apps.googleusercontent.com"
     }
     
@@ -97,7 +100,7 @@ struct Constants {
         
         struct UrlConnexion {
             static let UrlFacebookConnexion = "/users/auth/facebook"
-            static let UrlGooglePlusConnexion = "/users/sign_in" //"/users/auth/google"
+            static let UrlGooglePlusConnexion = "/users/sign_in"
             static let UrlEmailConnexion = "/users/sign_in"
             static let UrlLogOut = "/users/sign_out"
         }

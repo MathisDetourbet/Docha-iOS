@@ -132,6 +132,23 @@ class UserGameStateManager {
         }
     }
     
+    func isPsyPriceInIntervalle(let psyPrice: Double, andRealPrice realPrice: Double) -> Bool {
+        if psyPrice == realPrice {
+            return true
+            
+        } else {
+            let priceMax = realPrice + realPrice * ERROR_PERCENT
+            let priceMin = realPrice - realPrice * ERROR_PERCENT
+            
+            if case priceMin...priceMax = psyPrice {
+                return true
+                
+            } else {
+                return false
+            }
+        }
+    }
+    
     func saveRewards() {
         self.userSession = UserSessionManager.sharedInstance.currentSession()!
         var newTotalDochos = userSession.dochos

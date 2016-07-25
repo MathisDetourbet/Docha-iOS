@@ -25,8 +25,10 @@ class ProfilRequest {
         Alamofire.request(.PUT, url, parameters: parameters, encoding: .JSON)
             .validate()
             .responseJSON { (response) in
-                let statusCode = (response.response?.statusCode)! // Gets HTTP status code, useful for debugging
-                print("Status code : \(statusCode)")
+                let statusCode = response.response?.statusCode // Gets HTTP status code, useful for debugging
+                if let status = statusCode {
+                    print("Status code : \(status)")
+                }
                 if let value: AnyObject = response.result.value {
                     let jsonResponse = JSON(value)
                     if jsonResponse["success"].bool != nil {
@@ -59,6 +61,7 @@ class ProfilRequest {
                                     session.experience = jsonResponse["data"]["user"][UserDataKey.kExperience].intValue
                                     session.levelMaxUnlocked = jsonResponse["data"]["user"][UserDataKey.kLevelMaxUnlocked].intValue
                                     session.perfectPriceCpt = jsonResponse["data"]["user"][UserDataKey.kPerfectPriceCpt].intValue
+                                    session.avatar = jsonResponse["data"]["user"][UserDataKey.kAvatar].string
                                     
                                     session.saveSession()
                                     
