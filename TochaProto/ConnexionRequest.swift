@@ -10,9 +10,7 @@ import Foundation
 import Alamofire
 import SwiftyJSON
 
-class ConnexionRequest {
-    
-    var alamofireManager: Alamofire.Manager?
+class ConnexionRequest: DochaRequest {
     
     func connexionWithEmail(email: String, password: String, success: (session: UserSessionEmail) -> Void, fail failure: (error: NSError?, listErrors: [AnyObject]?) -> Void) {
         
@@ -24,7 +22,7 @@ class ConnexionRequest {
         print("URL connexion with email : \(url)")
         
         let configuration = NSURLSessionConfiguration.defaultSessionConfiguration()
-        configuration.timeoutIntervalForResource = 15
+        configuration.timeoutIntervalForResource = REQUEST_TIME_OUT
         
         self.alamofireManager = Alamofire.Manager(configuration: configuration)
         self.alamofireManager!.request(.POST, url, parameters: parameters, encoding: .JSON)
@@ -113,7 +111,7 @@ class ConnexionRequest {
         print("URL connexion with Facebook : \(url)")
         
         let configuration = NSURLSessionConfiguration.defaultSessionConfiguration()
-        configuration.timeoutIntervalForResource = 15
+        configuration.timeoutIntervalForResource = REQUEST_TIME_OUT
         
         self.alamofireManager = Alamofire.Manager(configuration: configuration)
         self.alamofireManager!.request(.POST, url, parameters: dicoApi, encoding: .JSON, headers: nil)

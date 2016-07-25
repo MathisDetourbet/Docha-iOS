@@ -10,7 +10,7 @@ import Foundation
 import Alamofire
 import SwiftyJSON
 
-class PriceRecordsRequest {
+class PriceRecordsRequest: DochaRequest {
     
     func createPriceRecordWithUserID(userID: Int, productID: Int, psyPrice: Int, isInIntervalle: Bool, responseTime: Double, hadTimeToGiveAnswer: Bool, success: (() -> Void), fail failure: (error: NSError?, listErrors: [AnyObject]?) -> Void) {
         
@@ -28,7 +28,11 @@ class PriceRecordsRequest {
         let url = Constants.UrlServer.UrlBase + Constants.UrlServer.UrlDataRecords.UrlPriceRecords + ".json"
         print("URL POST Psy price record : \(url)")
         
-        Alamofire.request(.POST, url, parameters: parameters as? [String : AnyObject], encoding: .JSON)
+        let configuration = NSURLSessionConfiguration.defaultSessionConfiguration()
+        configuration.timeoutIntervalForResource = REQUEST_TIME_OUT
+        
+        self.alamofireManager = Alamofire.Manager(configuration: configuration)
+        self.alamofireManager!.request(.POST, url, parameters: parameters as? [String : AnyObject], encoding: .JSON)
             .validate()
             .responseJSON { (response) in
                 let statusCode = response.response?.statusCode // Gets HTTP status code, useful for debugging

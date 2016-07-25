@@ -137,27 +137,6 @@ class GameplayDebriefViewController: GameViewController, UITableViewDelegate, UI
                 }
             })
         })
-//        self.presentViewController(DochaPopupHelper.sharedInstance.showLoadingPopup("Nous préparons tes produits...")!, animated: true, completion: {
-//            productManager.downloadProductsImages(packOfProducts!, WithCompletion: { (finished) in
-//                if finished {
-//                    self.dismissViewControllerAnimated(true, completion: {
-//                        let productsImages = productManager.productsImages
-//                        
-//                        for index in 0...productsImages!.count-1 {
-//                            packOfProducts![index].image = productsImages!["\(packOfProducts![index].id)"]
-//                        }
-//                        let gameplayVC = self.storyboard?.instantiateViewControllerWithIdentifier("idGameplayViewController") as! GameplayViewController
-//                        gameplayVC.productsList = packOfProducts
-//                        self.hidesBottomBarWhenPushed = true
-//                        self.navigationController?.pushViewController(gameplayVC, animated: true)
-//                    })
-//                    
-//                } else {
-//                    print("Error when loading products...")
-//                    self.presentViewController(DochaPopupHelper.sharedInstance.showErrorPopup("Oups !", message: "Il semblerait que vous ne soyez pas connecté à internet... :( Essayer à nouveau utlérieurement")!, animated: true, completion: nil)
-//                }
-//            })
-//        })
     }
     
     func discoverProductActionWithURL(url: String) {

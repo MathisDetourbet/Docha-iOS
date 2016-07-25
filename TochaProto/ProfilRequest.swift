@@ -10,7 +10,7 @@ import Foundation
 import Alamofire
 import SwiftyJSON
 
-class ProfilRequest {
+class ProfilRequest: DochaRequest {
     
     func getUserProfilWithID(userID: String!, success: (user: User) -> Void, fail failure: (error: NSError?, listErrors: [AnyObject]?) -> Void) {
         
@@ -22,7 +22,11 @@ class ProfilRequest {
         let url = "\(Constants.UrlServer.UrlBase)\(Constants.UrlServer.UrlProfil.UrlProfilUpdate)/\(parameters["id"]!).json"
         print("URL PUT Update Profil : \(url)")
         
-        Alamofire.request(.PUT, url, parameters: parameters, encoding: .JSON)
+        let configuration = NSURLSessionConfiguration.defaultSessionConfiguration()
+        configuration.timeoutIntervalForResource = REQUEST_TIME_OUT
+        
+        self.alamofireManager = Alamofire.Manager(configuration: configuration)
+        self.alamofireManager!.request(.PUT, url, parameters: parameters, encoding: .JSON)
             .validate()
             .responseJSON { (response) in
                 let statusCode = response.response?.statusCode // Gets HTTP status code, useful for debugging
@@ -158,7 +162,11 @@ class ProfilRequest {
         let url = "\(Constants.UrlServer.UrlBase)\(Constants.UrlServer.UrlProfil.UrlGetFriendsDochaInstalled).json"
         print("URL GET FRIENDSLIST DOCHA INSTALLED : \(url)")
         
-        Alamofire.request(.POST, url, parameters: parameters, encoding: .JSON)
+        let configuration = NSURLSessionConfiguration.defaultSessionConfiguration()
+        configuration.timeoutIntervalForResource = REQUEST_TIME_OUT
+        
+        self.alamofireManager = Alamofire.Manager(configuration: configuration)
+        self.alamofireManager!.request(.POST, url, parameters: parameters, encoding: .JSON)
             .validate()
             .responseJSON { (response) in
                 if let statusCode = response.response?.statusCode {

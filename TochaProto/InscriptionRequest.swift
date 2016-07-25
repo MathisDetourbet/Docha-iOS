@@ -10,7 +10,7 @@ import Foundation
 import Alamofire
 import SwiftyJSON
 
-class InscriptionRequest {
+class InscriptionRequest: DochaRequest {
     
     func inscriptionEmailWithDicoParameters(dicoParameters: [String:AnyObject], success: (session: UserSessionEmail) -> Void, fail failure: (error: NSError?, listErrors: [AnyObject]?) -> Void) {
         
@@ -20,7 +20,11 @@ class InscriptionRequest {
         var dicoInscriptionApi = [String:AnyObject]()
         dicoInscriptionApi["user"] = dicoParameters
         
-        Alamofire.request(.POST, url, parameters: dicoInscriptionApi, encoding: .JSON)
+        let configuration = NSURLSessionConfiguration.defaultSessionConfiguration()
+        configuration.timeoutIntervalForResource = REQUEST_TIME_OUT
+        
+        self.alamofireManager = Alamofire.Manager(configuration: configuration)
+        self.alamofireManager!.request(.POST, url, parameters: dicoInscriptionApi, encoding: .JSON)
             .validate()
             .responseJSON { response in
                 let statusCode = response.response?.statusCode // Gets HTTP status code, useful for debugging
@@ -127,7 +131,11 @@ class InscriptionRequest {
         var dicoInscriptionApi = [String:AnyObject]()
         dicoInscriptionApi["user"] = dicoParameters
         
-        Alamofire.request(.POST, url, parameters: dicoInscriptionApi, encoding: .JSON)
+        let configuration = NSURLSessionConfiguration.defaultSessionConfiguration()
+        configuration.timeoutIntervalForResource = REQUEST_TIME_OUT
+        
+        self.alamofireManager = Alamofire.Manager(configuration: configuration)
+        self.alamofireManager!.request(.POST, url, parameters: dicoInscriptionApi, encoding: .JSON)
             .validate()
             .responseJSON { response in
                 let statusCode = response.response?.statusCode // Gets HTTP status code, useful for debugging
@@ -227,7 +235,11 @@ class InscriptionRequest {
         var dicoInscriptionApi = [String:AnyObject]()
         dicoInscriptionApi["user"] = dicoParameters
         
-        Alamofire.request(.POST, url, parameters: dicoInscriptionApi, encoding: .JSON)
+        let configuration = NSURLSessionConfiguration.defaultSessionConfiguration()
+        configuration.timeoutIntervalForResource = REQUEST_TIME_OUT
+        
+        self.alamofireManager = Alamofire.Manager(configuration: configuration)
+        self.alamofireManager!.request(.POST, url, parameters: dicoInscriptionApi, encoding: .JSON)
             .validate()
             .responseJSON { response in
                 let statusCode = response.response?.statusCode // Gets HTTP status code, useful for debugging

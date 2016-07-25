@@ -8,15 +8,16 @@
 
 import Foundation
 import Amplitude_iOS
+import PBWebViewController
 
 class PreferencesViewController: GameViewController, UITableViewDelegate, UITableViewDataSource {
-    
+
     let idNormalTableViewCell = "idNormalTableViewCell"
     let idSwitchTableViewCell = "idSwitchTableViewCell"
     let sections: [String] = ["COMPTE", "PARAMÈTRES", "AUTRES"]
     let cellContent: [[[String:String]]] = [[["title":"Modifier le profil","iconPath": "profil_icon"], ["title":"Changer le mot de passe","iconPath": "password_change_icon"], ["title":"Catégorie préférée","iconPath": "category_selection_icon"]],
                                             [["title":"Notifications","iconPath": "notifications_icon"], ["title":"Newsletter","iconPath": "newsletter_icon"], ["title":"Langue","iconPath": "language_icon"]],
-                                            [["title":"À propos","iconPath": "rocket_icon"], ["title":"Nous contacter","iconPath": "mail_icon"]]]
+                                            [["title":"À propos","iconPath": "rocket_icon"], ["title":"Que pensez-vous de Docha ?","iconPath": "mail_icon"]]]
     let categorieTranslator: [String: String] = ["lifestyle":"Lifestyle", "high-tech":"Hi-tech", "maison_deco": "Maison & décoration", "bijoux_montres": "Bijoux & montres", "electromenager": "Électroménager", "objets_connectes": "Objets connectés", "gastronomie_vin": "Gastronomie & vin", "beauty": "Beauté", "art": "Art", "sport": "Sport"]
     
     @IBOutlet weak var tableView: UITableView!
@@ -151,16 +152,23 @@ class PreferencesViewController: GameViewController, UITableViewDelegate, UITabl
             }
             break
         default:
+            // Autres section
             if indexPath.row == 0 {
                 // A propos
                 let aboutVC = self.storyboard?.instantiateViewControllerWithIdentifier("idPreferencesAboutViewController") as! PreferencesAboutViewController
                 self.navigationController?.pushViewController(aboutVC, animated: true)
                 
             } else if indexPath.row == 1 {
-                // Nous contacter
+                // Feedbacks
+                let url = NSURL(string: "https://morganegr.typeform.com/to/NbeMZ2")
+                let feedbackWebVC = self.storyboard?.instantiateViewControllerWithIdentifier("idPreferencesFeedbackWebViewController") as! PreferencesFeedbackViewController
+                feedbackWebVC.URL = url
                 
+                let activity = UIActivity()
+                feedbackWebVC.applicationActivities = [activity]
+                feedbackWebVC.hidesBottomBarWhenPushed = true
+                self.navigationController?.pushViewController(feedbackWebVC, animated: true)
             }
-            // Autres section
             break
         }
         self.tableView.deselectRowAtIndexPath(indexPath, animated: true)

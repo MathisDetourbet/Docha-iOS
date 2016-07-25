@@ -1119,6 +1119,35 @@ Nous voulons par le jeu, replacer le consommateur au coeur des marques en vous p
             </objects>
             <point key="canvasLocation" x="2431" y="-627"/>
         </scene>
+        <!--Preferences Feedback View Controller-->
+        <scene sceneID="bhn-dm-hpm">
+            <objects>
+                <viewController storyboardIdentifier="idPreferencesFeedbackWebViewController" id="plF-jg-N3w" customClass="PreferencesFeedbackViewController" customModule="Docha" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Ktl-v9-gRh"/>
+                        <viewControllerLayoutGuide type="bottom" id="jOn-WS-IPR"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="em8-0O-YuO">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="3Ap-sU-6YI">
+                        <barButtonItem key="leftBarButtonItem" image="return" id="PM2-Qx-Bdx">
+                            <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <connections>
+                                <action selector="backButtonItemTouched:" destination="plF-jg-N3w" id="wT5-9A-Lz0"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <nil key="simulatedStatusBarMetrics"/>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
+                    <nil key="simulatedBottomBarMetrics"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Ldq-k6-sfX" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2784" y="-627"/>
+        </scene>
         <!--Gameplay Debrief View Controller-->
         <scene sceneID="rba-ap-pf5">
             <objects>

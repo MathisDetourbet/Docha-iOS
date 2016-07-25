@@ -7,3 +7,9 @@
 //
 
 import Foundation
+import Alamofire
+
+class DochaRequest {
+    var alamofireManager: Alamofire.Manager?
+    let REQUEST_TIME_OUT: NSTimeInterval = 20.0
+}
