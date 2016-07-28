@@ -67,7 +67,7 @@ class InscriptionProfilViewController: RootViewController {
     }
     
     @IBAction func validProfilButtonTouched(sender: UIButton) {
-        self.presentViewController(PopupManager.sharedInstance.showInfosPopup("Connexion...", message: "Création d'un nouveau Docher en cours."), animated: true) {
+        self.presentViewController(PopupManager.sharedInstance.showLoadingPopup("Connexion...", message: "Création d'un nouveau Docher en cours."), animated: true) {
             
             PopupManager.sharedInstance.modalAnimationFinished()
             

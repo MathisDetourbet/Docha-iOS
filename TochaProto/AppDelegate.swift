@@ -46,6 +46,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
         
         NavSchemeManager.sharedInstance.initRootController()
         
+        let apperance = UITabBarItem.appearance()
+        let attributes = [NSFontAttributeName:UIFont(name: "Montserrat-Regular", size: 10)!]
+        apperance.setTitleTextAttributes(attributes, forState: .Normal)
+        
         // Facebook SDK
         FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
         

@@ -47,10 +47,6 @@ platform :ios do
     # frameit
   end
 
-  lane :example do
-  	say "It works"
-  end
-
   # You can define as many lanes as you want
 
   after_all do |lane|

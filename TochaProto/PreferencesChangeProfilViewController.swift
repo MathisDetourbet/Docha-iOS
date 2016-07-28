@@ -144,6 +144,11 @@ class PreferencesChangeProfilViewController: RootViewController, UITableViewDele
                         finalGender = "U"
                     }
                     chooseAvatarVC.userGender = finalGender
+                } else {
+                    let gender = self.userSession!.gender
+                    if let gender = gender {
+                        chooseAvatarVC.userGender = gender
+                    }
                 }
                 self.presentViewController(chooseAvatarVC, animated: true, completion: nil)
             })
@@ -361,7 +366,7 @@ class PreferencesChangeProfilViewController: RootViewController, UITableViewDele
 //MARK: @IBActions
     
     @IBAction func validBarButtonItemTouched(sender: UIBarButtonItem) {
-        self.presentViewController(PopupManager.sharedInstance.showLoadingPopup("Mise à jour de ton profil...", message: nil), animated: true) {
+        self.tabBarController!.presentViewController(PopupManager.sharedInstance.showLoadingPopup("Mise à jour de ton profil...", message: nil), animated: true) {
             PopupManager.sharedInstance.modalAnimationFinished()
             self.saveUserProfilDataWithCompletion { (success) in
                 self.dismissViewControllerAnimated(true, completion: {

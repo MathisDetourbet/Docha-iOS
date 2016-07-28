@@ -14,6 +14,9 @@ protocol ChooseAvatarDochaDelegate {
 
 class PreferencesChoosAvatarViewController: RootViewController {
     
+    var manAvatarsArray = ["avatar_man_black", "avatar_man_geek", "avatar_man_marin", "avatar_man_hipster", "avatar_man", "avatar_man_super"]
+    var womanAvatarsArray = ["avatar_woman_indian", "avatar_woman_blond", "avatar_woman_latina", "avatar_woman_punk", "avatar_woman", "avatar_woman_glasses"]
+    
     var delegate: ChooseAvatarDochaDelegate?
     var avatarImageArray = [String]?()
     var avatarImageSelected: String?
@@ -25,27 +28,30 @@ class PreferencesChoosAvatarViewController: RootViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        //let userGender = UserSessionManager.sharedInstance.currentSession()?.gender
         if let gender = self.userGender {
             if gender == "M" {
-                avatarImageArray = ["avatar_man_black", "avatar_man_geek", "avatar_man_marin", "avatar_man_hipster", "avatar_man", "avatar_man_super"]
-                userAvatarImageView.image = UIImage(named: "avatar_man_profil")
+                avatarImageArray = manAvatarsArray
+                
             } else {
-                avatarImageArray = ["avatar_woman_indian", "avatar_woman_blond", "avatar_woman_latina", "avatar_woman_punk", "avatar_woman", "avatar_woman_glasses"]
-                userAvatarImageView.image = UIImage(named: "avatar_woman_profil")
+                avatarImageArray = womanAvatarsArray
             }
+            
         } else {
-            avatarImageArray = ["avatar_woman_indian", "avatar_woman_blond", "avatar_woman_latina", "avatar_woman_punk", "avatar_woman", "avatar_woman_glasses"]
+            avatarImageArray = womanAvatarsArray
             userAvatarImageView.image = UIImage(named: "avatar_woman_profil")
         }
         
         if let avatarString = UserSessionManager.sharedInstance.currentSession()?.avatar {
-            userAvatarImageView.image = UIImage(named: avatarString)
+            userAvatarImageView.image = UIImage(named: "\(avatarString)_profil")
             if avatarString.rangeOfString("woman") != nil {
-                avatarImageArray = ["avatar_woman_indian", "avatar_woman_blond", "avatar_woman_latina", "avatar_woman_punk", "avatar_woman", "avatar_woman_glasses"]
+                avatarImageArray = womanAvatarsArray
+                
             } else {
-                avatarImageArray = ["avatar_man_black", "avatar_man_geek", "avatar_man_marin", "avatar_man_hipster", "avatar_man", "avatar_man_super"]
+                avatarImageArray = manAvatarsArray
             }
+            
+        } else {
+            userAvatarImageView.image = UIImage(named: "avatar_man_profil")
         }
         
         for (index, avatar) in avatarsButtonsCollection.enumerate() {

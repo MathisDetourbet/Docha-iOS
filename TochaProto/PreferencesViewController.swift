@@ -216,8 +216,7 @@ class PreferencesViewController: GameViewController, UITableViewDelegate, UITabl
         shareDialog.fromViewController = self
         shareDialog.shareContent = content
         shareDialog.mode = .ShareSheet
-        let showing = shareDialog.show()
-        print(showing)
+        shareDialog.show()
     }
     
     func logoutButtonTouched() {

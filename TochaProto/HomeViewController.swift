@@ -36,54 +36,26 @@ class HomeViewController: GameViewController, UITableViewDelegate, UITableViewDa
     }
     
     func getFriendsList() {
-        
-//        let userSession = UserSessionManager.sharedInstance.currentSession() as? UserSessionFacebook
-//        let fbID = (userSession?.facebookID)! as String
-//        let request = FBSDKGraphRequest(graphPath: "\(fbID)/friends", parameters: ["fields": "id, email"], HTTPMethod: "GET")
-//        request.startWithCompletionHandler({ (connexion, result, error) in
-//            let jsonResult = JSON(result)
-//            let array = jsonResult["data"].arrayValue
-//            let dico = jsonResult["data"].dictionaryValue
-//            print(array)
-//        })
-        
         let fbLoginManager : FBSDKLoginManager = FBSDKLoginManager()
         
-        fbLoginManager.logInWithReadPermissions(["user_friends"],
-                                                fromViewController: self)
+        fbLoginManager.logInWithReadPermissions(["user_friends"], fromViewController: self)
         { (result, error) -> Void in
             
             if error != nil {
                 print("Facebook login : process error : \(error)")
-                
                 return
+                
             } else if (result.isCancelled) {
                 print("Facebook login : cancelled")
                 return
-            } else {
-//                let fbloginresult : FBSDKLoginManagerLoginResult = result
-//                var fbRequest = FBSDKGraphRequest(graphPath:"/me/friends", parameters: nil);
-//                fbRequest.startWithCompletionHandler { (connection : FBSDKGraphRequestConnection!, result : AnyObject!, error : NSError!) -> Void in
-//                    
-//                    if error == nil {
-//                        
-//                        print("Friends are : \(result)")
-//                        
-//                    } else {
-//                        
-//                        print("Error Getting Friends \(error)");
-//                        
-//                    }
-//                }
                 
+            } else {
                 let fbloginresult : FBSDKLoginManagerLoginResult = result
                 
                 if(fbloginresult.grantedPermissions.contains("user_friends")) {
                     print("Facebook Access token : \(FBSDKAccessToken.currentAccessToken().tokenString)")
                     
                     if((FBSDKAccessToken.currentAccessToken()) != nil) {
-                        
-                        
                         let fbRequest = FBSDKGraphRequest(graphPath:"/me/friends", parameters: nil);
                         fbRequest.startWithCompletionHandler { (connection : FBSDKGraphRequestConnection!, result : AnyObject!, error : NSError!) -> Void in
                         
@@ -91,22 +63,12 @@ class HomeViewController: GameViewController, UITableViewDelegate, UITableViewDa
                                 print("Friends are : \(result)")
                                 let jsonResponse = JSON(result)
                                 let arrayFriends = jsonResponse["data"].array
-                                print(arrayFriends)
+                                print(arrayFriends!.count)
+                                
                             } else {
                                 print("Error Getting Friends \(error)")
                             }
                         }
-                        
-                        
-                        
-                        
-//                        let profilRequest = ProfilRequest()
-//                        profilRequest.getUserFriendsDochaInstalled(FBSDKAccessToken.currentAccessToken().tokenString,
-//                            success: { (friendsList) in
-//                                print("Success get friends ! : \(friendsList)")
-//                            }, fail: { (error, listErrors) in
-//                                print("Error get user friends list")
-//                        })
                         
                     } else {
                         print("Token is nil")
@@ -266,13 +228,8 @@ class HomeViewController: GameViewController, UITableViewDelegate, UITableViewDa
     }
     
     func playButtonTouched() {
-        
         // Amplitude Event
         Amplitude.instance().logEvent("HomeGameLaunched")
-        
-//        self.presentViewController(PopupManager.sharedInstance.showLoadingPopup("Info", message: "Encore un peu de patience, cette fonctionnalité sera bientôt disponible. 😉"), animated: true) {
-//            PopupManager.sharedInstance.modalAnimationFinished()
-//        }
         
             self.tabBarController!.presentViewController(PopupManager.sharedInstance.showLoadingPopup("Chargement en cours...", message: "Nous préparons tes produits."), animated: true) {
                 PopupManager.sharedInstance.modalAnimationFinished()
@@ -303,7 +260,6 @@ class HomeViewController: GameViewController, UITableViewDelegate, UITableViewDa
 //MARK: HomeFriendsCellDelegate Methods
     
     func displayAllFriendsButtonTouched() {
-        //getFriendsList()
         let params = ["fields" : "id, first_name, last_name, email, picture"]
         let fbRequest = FBSDKGraphRequest(graphPath:"/me/friends", parameters: params);
         fbRequest.startWithCompletionHandler { (connection : FBSDKGraphRequestConnection!, result : AnyObject!, error : NSError!) -> Void in

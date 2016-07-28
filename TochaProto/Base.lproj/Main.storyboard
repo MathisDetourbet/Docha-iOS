@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="Qbv-ht-2nT">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="Qbv-ht-2nT">
     <dependencies>
-        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
@@ -1443,11 +1442,23 @@ Nous voulons par le jeu, replacer le consommateur au coeur des marques en vous p
                                     <constraint firstAttribute="width" constant="240" id="nIw-Iq-ieM"/>
                                 </constraints>
                             </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="e4Y-5V-VIQ">
+                                <rect key="frame" x="40" y="345" width="240" height="71"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="71" id="P9X-6J-B4b"/>
+                                </constraints>
+                                <connections>
+                                    <action selector="inviteFriendsButtonTouched:" destination="ygN-Nv-uJ4" eventType="touchUpInside" id="DEs-As-WsB"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="e4Y-5V-VIQ" firstAttribute="bottom" secondItem="HzU-gc-Si8" secondAttribute="bottom" id="5Le-bg-ahO"/>
+                            <constraint firstItem="e4Y-5V-VIQ" firstAttribute="trailing" secondItem="HzU-gc-Si8" secondAttribute="trailing" id="Ec1-z5-TKd"/>
                             <constraint firstItem="uVQ-QU-sM8" firstAttribute="top" secondItem="yLv-UB-Ney" secondAttribute="bottom" id="W02-wP-qYP"/>
                             <constraint firstItem="HzU-gc-Si8" firstAttribute="centerY" secondItem="Vff-VB-zhc" secondAttribute="centerY" id="jbr-CA-n8u"/>
+                            <constraint firstItem="e4Y-5V-VIQ" firstAttribute="leading" secondItem="HzU-gc-Si8" secondAttribute="leading" id="r3x-hZ-IfV"/>
                             <constraint firstItem="uVQ-QU-sM8" firstAttribute="leading" secondItem="Vff-VB-zhc" secondAttribute="leading" id="r99-ky-Zo2"/>
                             <constraint firstItem="irb-l5-C5f" firstAttribute="top" secondItem="uVQ-QU-sM8" secondAttribute="bottom" id="sAP-ks-PZi"/>
                             <constraint firstAttribute="trailing" secondItem="uVQ-QU-sM8" secondAttribute="trailing" id="tBY-wg-0no"/>
@@ -1482,12 +1493,24 @@ Nous voulons par le jeu, replacer le consommateur au coeur des marques en vous p
                                     <constraint firstAttribute="width" constant="240" id="oLl-8Y-k5b"/>
                                 </constraints>
                             </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="M3f-nh-U8u">
+                                <rect key="frame" x="40" y="357" width="240" height="59"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="59" id="JX2-yI-Gen"/>
+                                </constraints>
+                                <connections>
+                                    <action selector="inviteFriendsButtonTouched:" destination="Rot-dI-xL0" eventType="touchUpInside" id="gSd-Pe-7yH"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="M3f-nh-U8u" firstAttribute="trailing" secondItem="IJK-ts-PgK" secondAttribute="trailing" id="0o6-p7-FKm"/>
+                            <constraint firstItem="M3f-nh-U8u" firstAttribute="leading" secondItem="IJK-ts-PgK" secondAttribute="leading" id="Ldz-JT-OaE"/>
                             <constraint firstItem="PiA-tZ-CSR" firstAttribute="leading" secondItem="dcj-cs-dal" secondAttribute="leading" id="NH7-DF-8Ng"/>
                             <constraint firstItem="IJK-ts-PgK" firstAttribute="centerX" secondItem="dcj-cs-dal" secondAttribute="centerX" id="Qks-Ri-jdm"/>
                             <constraint firstItem="IJK-ts-PgK" firstAttribute="centerY" secondItem="dcj-cs-dal" secondAttribute="centerY" id="SiP-DM-Hez"/>
+                            <constraint firstItem="M3f-nh-U8u" firstAttribute="bottom" secondItem="IJK-ts-PgK" secondAttribute="bottom" id="VHn-oZ-PnS"/>
                             <constraint firstItem="PiA-tZ-CSR" firstAttribute="top" secondItem="JXm-Zn-wLz" secondAttribute="bottom" id="nZh-GE-wVl"/>
                             <constraint firstItem="Dp9-0S-VAp" firstAttribute="top" secondItem="PiA-tZ-CSR" secondAttribute="bottom" id="qFN-hU-R39"/>
                             <constraint firstAttribute="trailing" secondItem="PiA-tZ-CSR" secondAttribute="trailing" id="tH6-uO-OfO"/>
@@ -1521,11 +1544,23 @@ Nous voulons par le jeu, replacer le consommateur au coeur des marques en vous p
                                     <constraint firstAttribute="width" constant="240" id="shF-bI-ueq"/>
                                 </constraints>
                             </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1We-QO-aPR">
+                                <rect key="frame" x="40" y="348" width="240" height="68"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="68" id="sbF-R1-Jzg"/>
+                                </constraints>
+                                <connections>
+                                    <action selector="inviteFriendsButtonTouched:" destination="fTJ-CI-JHb" eventType="touchUpInside" id="T4V-Vz-lsn"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="1We-QO-aPR" firstAttribute="bottom" secondItem="0Y0-HM-FzJ" secondAttribute="bottom" id="4nT-Ym-L9z"/>
                             <constraint firstItem="abm-mQ-tld" firstAttribute="top" secondItem="4Bq-cT-wr6" secondAttribute="bottom" id="8kv-PR-39Q"/>
                             <constraint firstItem="0Y0-HM-FzJ" firstAttribute="centerY" secondItem="zbI-Np-h3o" secondAttribute="centerY" id="DsP-6l-8LG"/>
+                            <constraint firstItem="1We-QO-aPR" firstAttribute="leading" secondItem="0Y0-HM-FzJ" secondAttribute="leading" id="I6J-f1-QM6"/>
+                            <constraint firstItem="1We-QO-aPR" firstAttribute="trailing" secondItem="0Y0-HM-FzJ" secondAttribute="trailing" id="JIM-Zq-O78"/>
                             <constraint firstAttribute="trailing" secondItem="abm-mQ-tld" secondAttribute="trailing" id="QVD-Jy-Leq"/>
                             <constraint firstItem="abm-mQ-tld" firstAttribute="leading" secondItem="zbI-Np-h3o" secondAttribute="leading" id="WKX-cU-kFz"/>
                             <constraint firstItem="0Y0-HM-FzJ" firstAttribute="centerX" secondItem="zbI-Np-h3o" secondAttribute="centerX" id="bNd-yj-KHs"/>
@@ -1551,7 +1586,7 @@ Nous voulons par le jeu, replacer le consommateur au coeur des marques en vous p
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <pageControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="3" translatesAutoresizingMaskIntoConstraints="NO" id="I37-Nh-3wt">
-                                <rect key="frame" x="113" y="266" width="95" height="37"/>
+                                <rect key="frame" x="109" y="266" width="103" height="37"/>
                                 <color key="pageIndicatorTintColor" red="0.84313725490196079" green="0.84313725490196079" blue="0.84313725490196079" alpha="1" colorSpace="calibratedRGB"/>
                                 <color key="currentPageIndicatorTintColor" red="0.47843137254901963" green="0.48627450980392156" blue="0.49411764705882355" alpha="1" colorSpace="calibratedRGB"/>
                             </pageControl>
@@ -1586,9 +1621,9 @@ Nous voulons par le jeu, replacer le consommateur au coeur des marques en vous p
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="I37-Nh-3wt" firstAttribute="leading" secondItem="za6-FW-8EV" secondAttribute="leadingMargin" constant="97" id="8fx-3t-dMp"/>
+                            <constraint firstItem="I37-Nh-3wt" firstAttribute="leading" secondItem="za6-FW-8EV" secondAttribute="leadingMargin" constant="93" id="8fx-3t-dMp"/>
                             <constraint firstItem="I37-Nh-3wt" firstAttribute="top" secondItem="za6-FW-8EV" secondAttribute="topMargin" constant="266" id="Bhv-TA-BMu"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="I37-Nh-3wt" secondAttribute="trailing" constant="96" id="EPt-eH-ate"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="I37-Nh-3wt" secondAttribute="trailing" constant="92" id="EPt-eH-ate"/>
                             <constraint firstItem="XI6-KQ-f65" firstAttribute="width" secondItem="XI6-KQ-f65" secondAttribute="height" multiplier="0.778" constant="1" id="VQY-Kc-8Cj"/>
                             <constraint firstItem="XI6-KQ-f65" firstAttribute="top" secondItem="za6-FW-8EV" secondAttribute="top" constant="237" id="bc0-zK-66p"/>
                             <constraint firstItem="Dj9-iv-T27" firstAttribute="centerX" secondItem="I37-Nh-3wt" secondAttribute="centerX" id="dpQ-hK-vAI"/>

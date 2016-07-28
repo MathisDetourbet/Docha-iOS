@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<testsuites tests='5' failures='1'>
+  <testsuite name='Docha.TochaProtoTests' tests='2' failures='0'>
+    <testcase classname='Docha.TochaProtoTests' name='testExample' time='0.001'/>
+    <testcase classname='Docha.TochaProtoTests' name='testPerformanceExample' time='0.370'/>
+  </testsuite>
+  <testsuite name='Docha.TochaProtoUITests' tests='1' failures='1'>
+    <testcase classname='Docha.TochaProtoUITests' name='testExample'>
+      <failure message='failed: caught &quot;NSInternalInconsistencyException&quot;, &quot;No target application path specified via test configuration: &lt;XCTestConfiguration: 0x7fd0c8f0fce0&gt;'>TochaProtoUITests/TochaProtoUITests.swift:0</failure>
+    </testcase>
+  </testsuite>
+  <testsuite name='DochaFastlaneUITests.DochaFastlaneUITests' tests='1' failures='0'>
+    <testcase classname='DochaFastlaneUITests.DochaFastlaneUITests' name='testExample' time='0.004'/>
+  </testsuite>
+  <testsuite name='DochaFastlaneUITests.TochaProtoUITests' tests='1' failures='0'>
+    <testcase classname='DochaFastlaneUITests.TochaProtoUITests' name='testExample' time='3.891'/>
+  </testsuite>
+</testsuites>
