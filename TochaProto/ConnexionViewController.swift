@@ -111,9 +111,10 @@ class ConnexionViewController: RootViewController, GIDSignInUIDelegate {
                 
                 if(fbloginresult.grantedPermissions.contains("email"))
                 {
-                    self.presentViewController(DochaPopupHelper.sharedInstance.showLoadingPopup("Connexion en cours...")!, animated: true, completion: {
+                    self.presentViewController(PopupManager.sharedInstance.showLoadingPopup("Connexion en cours", message: nil), animated: true) {
+                        PopupManager.sharedInstance.modalAnimationFinished()
                         self.getFBUserData()
-                    })
+                    }
                 }
             }
         }
@@ -138,13 +139,18 @@ class ConnexionViewController: RootViewController, GIDSignInUIDelegate {
             self.dismissViewControllerAnimated(true, completion: {
                 print("Error fetching user facebook data : \(error)")
                 print("list error : \(listError)")
-                self.presentViewController(DochaPopupHelper.sharedInstance.showErrorPopup("Oups...", message: "Une erreure est survenue. Vérifie que tu es bien connecté à internet.")!, animated: true, completion: nil)
+                
+                self.presentViewController(PopupManager.sharedInstance.showErrorPopup("Oups !", message: "Une erreure est survenue. Vérifie que tu es bien connecté à internet."), animated: true) {
+                    PopupManager.sharedInstance.modalAnimationFinished()
+                }
             })
         }
     }
     
     @IBAction func emailConnexionTouched(sender: UIButton) {
-        self.presentViewController(DochaPopupHelper.sharedInstance.showLoadingPopup()!, animated: true, completion: {
+        self.presentViewController(PopupManager.sharedInstance.showLoadingPopup("Connexion en cours...", message: nil), animated: true) {
+            PopupManager.sharedInstance.modalAnimationFinished()
+            
             if self.emailString != nil && self.passwordString != nil {
                 let email = self.emailString!
                 let password = self.passwordString!
@@ -157,13 +163,15 @@ class ConnexionViewController: RootViewController, GIDSignInUIDelegate {
                         print("User connexion by email : success !")
                         
                     }, fail: { (error, listError) in
-                        self.dismissViewControllerAnimated(true, completion: {
-                            self.presentViewController(DochaPopupHelper.sharedInstance.showErrorPopup("Oups...", message: "L'email ou le mot de passe est incorrecte")!, animated: true, completion: nil)
-                        })
                         print("User connexion by email failed...")
+                        self.dismissViewControllerAnimated(true, completion: { 
+                            self.presentViewController(PopupManager.sharedInstance.showErrorPopup("Oups !", message: "L'email ou le mot de passe est incorrecte."), animated: true) {
+                                PopupManager.sharedInstance.modalAnimationFinished()
+                            }
+                        })
                 })
             }
-        })
+        }
     }
     
     @IBAction func googlePlusButtonTouched(sender: UIButton) {

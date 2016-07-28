@@ -9,8 +9,9 @@
 import Foundation
 import Amplitude_iOS
 import PBWebViewController
+import FBSDKShareKit
 
-class PreferencesViewController: GameViewController, UITableViewDelegate, UITableViewDataSource {
+class PreferencesViewController: GameViewController, UITableViewDelegate, UITableViewDataSource, FBSDKSharingDelegate {
 
     let idNormalTableViewCell = "idNormalTableViewCell"
     let idSwitchTableViewCell = "idSwitchTableViewCell"
@@ -146,7 +147,10 @@ class PreferencesViewController: GameViewController, UITableViewDelegate, UITabl
             // Paramètres section
             switch indexPath.row {
             case 2:
-                self.presentViewController(DochaPopupHelper.sharedInstance.showInfoPopup("Info", message: "Encore un peu de patience, cette fonctionnalité sera bientôt disponible.")!, animated: true, completion: nil)
+                // Langue
+                self.tabBarController!.presentViewController(PopupManager.sharedInstance.showInfosPopup("Info", message: "Encore un peu de patience, cette fonctionnalité sera bientôt disponible. 😉"), animated: true) {
+                    PopupManager.sharedInstance.modalAnimationFinished()
+                }
             default:
                 break
             }
@@ -186,12 +190,34 @@ class PreferencesViewController: GameViewController, UITableViewDelegate, UITabl
         return viewHeader
     }
     
+    func sharer(sharer: FBSDKSharing!, didCompleteWithResults results: [NSObject : AnyObject]!) {
+        
+    }
+    
+    func sharer(sharer: FBSDKSharing!, didFailWithError error: NSError!) {
+        
+    }
+    
+    func sharerDidCancel(sharer: FBSDKSharing!) {
+        
+    }
+    
     
 //MARK: @IBAction Methods
     
     func inviteFacebookFriendsButtonTouched() {
         // Amplitude
         Amplitude.instance().logEvent("ClickInviteFriends")
+        
+        // Facebook Sharing
+        let content = FBSDKShareLinkContent()
+        content.contentURL = NSURL(string: "http://www.docha.fr")
+        let shareDialog = FBSDKShareDialog()
+        shareDialog.fromViewController = self
+        shareDialog.shareContent = content
+        shareDialog.mode = .ShareSheet
+        let showing = shareDialog.show()
+        print(showing)
     }
     
     func logoutButtonTouched() {

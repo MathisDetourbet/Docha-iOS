@@ -65,11 +65,12 @@ class PreferencesCategoriesViewController: RootViewController, UICollectionViewD
         if let param = params {
             UserSessionManager.sharedInstance.updateUserProfil(param, success: {
                 print("Success categories VC")
-                //SCLAlertView().showSuccess("Succès", subTitle: "La categorie préférée a bien été modifiée.")
                 completion(success: true)
             }, fail: { (error, listError) in
                 print("Fail categories VC")
-                SCLAlertView().showError("Oups...", subTitle: "Il semblerait que vous n'avez pas de connexion à internet, la catégorie n'a pas pu être modifée... Veuillez réessayer ultérieurement.")
+                self.presentViewController(PopupManager.sharedInstance.showErrorPopup("Oups !", message: "Il semblerait que vous n'avez pas de connexion à internet, la catégorie n'a pas pu être modifée... Veuillez réessayer ultérieurement."), animated: true) {
+                    PopupManager.sharedInstance.modalAnimationFinished()
+                }
                 completion(success: false)
             })
         }
@@ -145,7 +146,8 @@ class PreferencesCategoriesViewController: RootViewController, UICollectionViewD
     }
     
     @IBAction func infosButtonTouched(sender: UIBarButtonItem) {
-        self.presentViewController(DochaPopupHelper.sharedInstance.showInfoPopup("Info", message: "Nous souhaitons vous proposer au maximum des produits qui vous correspondent.")!, animated: true, completion: nil)
-        //SCLAlertView().showInfo("Info", subTitle: "Nous souhaitons vous proposer au maximum des produits qui vous correspondent.")
+        self.tabBarController!.presentViewController(PopupManager.sharedInstance.showInfosPopup("Info", message: "Nous souhaitons vous proposer au maximum des produits qui vous correspondent."), animated: true) {
+            PopupManager.sharedInstance.modalAnimationFinished()
+        }
     }
 }

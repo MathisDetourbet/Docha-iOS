@@ -17,6 +17,7 @@ class PreferencesChoosAvatarViewController: RootViewController {
     var delegate: ChooseAvatarDochaDelegate?
     var avatarImageArray = [String]?()
     var avatarImageSelected: String?
+    var userGender: String?
     
     @IBOutlet weak var userAvatarImageView: UIImageView!
     @IBOutlet var avatarsButtonsCollection: [UIButton]!
@@ -24,8 +25,8 @@ class PreferencesChoosAvatarViewController: RootViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let userGender = UserSessionManager.sharedInstance.currentSession()?.gender
-        if let gender = userGender {
+        //let userGender = UserSessionManager.sharedInstance.currentSession()?.gender
+        if let gender = self.userGender {
             if gender == "M" {
                 avatarImageArray = ["avatar_man_black", "avatar_man_geek", "avatar_man_marin", "avatar_man_hipster", "avatar_man", "avatar_man_super"]
                 userAvatarImageView.image = UIImage(named: "avatar_man_profil")

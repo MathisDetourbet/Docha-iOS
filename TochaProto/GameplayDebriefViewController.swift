@@ -120,7 +120,9 @@ class GameplayDebriefViewController: GameViewController, UITableViewDelegate, UI
         
         let productManager = ProductManager.sharedInstance
         
-        self.presentViewController(DochaPopupHelper.sharedInstance.showLoadingPopup("Nous préparons tes produits...")!, animated: true, completion: {
+        self.tabBarController!.presentViewController(PopupManager.sharedInstance.showLoadingPopup("Chargement en cours...", message: "Nous préparons tes produits."), animated: true) {
+            
+            PopupManager.sharedInstance.modalAnimationFinished()
             
             productManager.getPackOfProducts({ (finished, packOfProducts) in
                 if finished && packOfProducts != nil {
@@ -133,10 +135,12 @@ class GameplayDebriefViewController: GameViewController, UITableViewDelegate, UI
                     
                 } else {
                     print("Error when loading products...")
-                    self.presentViewController(DochaPopupHelper.sharedInstance.showErrorPopup("Oups", message: "Il semblerait que vous ne soyez pas connecté à internet... :( Essayer à nouveau ultérieurement")!, animated: true, completion: nil)
+                    self.tabBarController!.presentViewController(PopupManager.sharedInstance.showErrorPopup("Oups !", message: "La connexion internet semble interrompue. Essaie à nouveau ultérieurement."), animated: true) {
+                        PopupManager.sharedInstance.modalAnimationFinished()
+                    }
                 }
             })
-        })
+        }
     }
     
     func discoverProductActionWithURL(url: String) {

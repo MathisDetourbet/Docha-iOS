@@ -6,16 +6,32 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "No"
+            shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "TochaProto/GameplayViewController.swift"
-            timestampString = "491130174.533303"
+            filePath = "TochaProto/ProfilRequest.swift"
+            timestampString = "491153402.773575"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "474"
-            endingLineNumber = "474"
-            landmarkName = "saveGameplayDataInDatabase(_:)"
+            startingLineNumber = "181"
+            endingLineNumber = "181"
+            landmarkName = "getUserFriendsDochaInstalled(_:success:fail:)"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "TochaProto/ProfilRequest.swift"
+            timestampString = "491153404.193905"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "182"
+            endingLineNumber = "182"
+            landmarkName = "getUserFriendsDochaInstalled(_:success:fail:)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

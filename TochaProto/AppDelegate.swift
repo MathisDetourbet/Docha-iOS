@@ -38,7 +38,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
             UserSessionManager.sharedInstance.signIn({
                     print("Sign in successful")
                 }) { (error, listErrors) in
-                    self.window?.currentViewController()?.presentViewController(DochaPopupHelper.sharedInstance.showErrorPopup("Oups !", message: "La connexion internet semble interrompue...")!, animated: true, completion: nil)
+                    self.window?.currentViewController()?.presentViewController(PopupManager.sharedInstance.showErrorPopup("Oups !", message: "La connexion internet semble interrompue..."), animated: true) {
+                        PopupManager.sharedInstance.modalAnimationFinished()
+                    }
             }
         }
         

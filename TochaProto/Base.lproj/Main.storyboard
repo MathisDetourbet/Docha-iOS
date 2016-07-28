@@ -2091,8 +2091,7 @@ Nous voulons par le jeu, replacer le consommateur au coeur des marques en vous p
                                 <rect key="frame" x="99" y="399" width="122" height="60"/>
                                 <state key="normal" image="btn_inscription_identifiants"/>
                                 <connections>
-                                    <action selector="registerButtonTouched:" destination="DGp-QF-SKV" eventType="touchUpInside" id="ni8-J7-VGi"/>
-                                    <segue destination="Mgl-ri-00g" kind="push" id="8O4-PM-KDJ"/>
+                                    <action selector="registerButtonTouched:" destination="DGp-QF-SKV" eventType="touchUpInside" id="YLc-ze-Sl4"/>
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ou inscription par email" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Um0-xM-0v6">
@@ -2152,11 +2151,11 @@ Nous voulons par le jeu, replacer le consommateur au coeur des marques en vous p
                         <viewControllerLayoutGuide type="bottom" id="ITc-tl-qiJ"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="7kY-eX-m4H">
-                        <rect key="frame" x="0.0" y="64" width="320" height="504"/>
+                        <rect key="frame" x="0.0" y="44" width="320" height="524"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="background_infos_users" translatesAutoresizingMaskIntoConstraints="NO" id="0Kp-mi-z8U">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="524"/>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Votre sexe" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="L3m-mF-Nuk">
                                 <rect key="frame" x="117" y="16" width="86" height="20"/>
@@ -2218,7 +2217,7 @@ Nous voulons par le jeu, replacer le consommateur au coeur des marques en vous p
                                 </connections>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="42s-M7-A7A">
-                                <rect key="frame" x="99" y="399" width="122" height="60"/>
+                                <rect key="frame" x="99" y="419" width="122" height="60"/>
                                 <state key="normal" image="btn_valid_infos_user"/>
                                 <connections>
                                     <action selector="validProfilButtonTouched:" destination="Mgl-ri-00g" eventType="touchUpInside" id="CHj-Ci-CiI"/>
@@ -2226,7 +2225,7 @@ Nous voulons par le jeu, replacer le consommateur au coeur des marques en vous p
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1Lp-uv-MHF">
-                                <rect key="frame" x="110" y="470" width="101" height="26"/>
+                                <rect key="frame" x="110" y="490" width="101" height="26"/>
                                 <fontDescription key="fontDescription" name="Montserrat-Light" family="Montserrat" pointSize="11"/>
                                 <state key="normal" title="Skip. Private policy">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -2269,6 +2268,8 @@ Nous voulons par le jeu, replacer le consommateur au coeur des marques en vous p
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="UoZ-u1-Flr"/>
+                    <nil key="simulatedStatusBarMetrics"/>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" translucent="NO" prompted="NO"/>
                     <connections>
                         <outlet property="birthdayTextField" destination="mLY-tn-lfY" id="PJ6-X3-2Ii"/>
                         <outlet property="manButton" destination="cVu-88-HIK" id="mb4-0V-LnG"/>
@@ -2407,14 +2408,14 @@ Nous voulons par le jeu, replacer le consommateur au coeur des marques en vous p
                         <viewControllerLayoutGuide type="bottom" id="IXe-ue-2YG"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="NG1-7I-1Sa">
-                        <rect key="frame" x="0.0" y="64" width="320" height="504"/>
+                        <rect key="frame" x="0.0" y="44" width="320" height="524"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="background_avatar" translatesAutoresizingMaskIntoConstraints="NO" id="y2z-If-GfV">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="170"/>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Keu-3R-puM">
-                                <rect key="frame" x="99" y="399" width="122" height="60"/>
+                                <rect key="frame" x="99" y="419" width="122" height="60"/>
                                 <state key="normal" image="btn_valid_profil"/>
                                 <connections>
                                     <action selector="validProfilButtonTouched:" destination="7uN-Ue-8KM" eventType="touchUpInside" id="6iI-tT-S1U"/>

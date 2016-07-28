@@ -39,7 +39,7 @@ class GameplayViewController: GameViewController, KeyboardViewDelegate {
     }
     var cursorCounter: Int = 0
     
-    let kCooldownForPreview: Double! = 4.0
+    let kCooldownForPreview: Double! = 5.0
     let kCooldownForMain: Double! = 6.0
     let kCooldownForAfter: Double! = 3.0
     var currentTotalCooldown: Double? {
@@ -456,10 +456,13 @@ class GameplayViewController: GameViewController, KeyboardViewDelegate {
         let userID = UserSessionManager.sharedInstance.currentSession()!.userID
         let productID = self.currentProduct?.id
         let psyPrice = self.psyAndRealPriceArray.last?.psyPrice
-        print("PsyPrice : \(psyPrice)")
         var isInIntervalle: Bool = false
         let responseTime = (kCooldownForMain - self.responseTimeForDatabase).roundToPlaces(2)
         var hadTimeToGiveAnswer: Bool = true
+        
+        if psyPrice <= 0 {
+            return
+        }
         
         if let psyPrice = psyPrice, realPrice = self.currentProduct?.price {
             isInIntervalle = UserGameStateManager.sharedInstance.isPsyPriceInIntervalle(Double(psyPrice), andRealPrice: realPrice)

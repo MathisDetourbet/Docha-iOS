@@ -126,9 +126,10 @@ class InscriptionIdentifiantsViewController: RootViewController, UITextFieldDele
                 
                 if(fbloginresult.grantedPermissions.contains("email"))
                 {
-                    self.presentViewController(DochaPopupHelper.sharedInstance.showLoadingPopup("Connexion en cours...")!, animated: true, completion: {
+                    self.presentViewController(PopupManager.sharedInstance.showLoadingPopup("Connexion en cours...", message: nil), animated: true) {
+                        PopupManager.sharedInstance.modalAnimationFinished()
                         self.getFBUserData()
-                    })
+                    }
                 }
             }
         }
@@ -146,7 +147,9 @@ class InscriptionIdentifiantsViewController: RootViewController, UITextFieldDele
         }) { (error, listError) in
             // Fail
             self.dismissViewControllerAnimated(true, completion: {
-                self.presentViewController(DochaPopupHelper.sharedInstance.showErrorPopup("Oups", message: "Une erreur est survenue. Essaie à nouveau utlérieurement.")!, animated: true, completion: nil)
+                self.presentViewController(PopupManager.sharedInstance.showInfosPopup("Oups !", message: "Une erreur est survenue. Essaie à nouveau ultérieurement."), animated: true) {
+                    PopupManager.sharedInstance.modalAnimationFinished()
+                }
             })
             print("error saving Facebook user data in database : \(error)")
             print("list error : \(listError)")
@@ -159,21 +162,40 @@ class InscriptionIdentifiantsViewController: RootViewController, UITextFieldDele
     }
     
     @IBAction func registerButtonTouched(sender: UIButton) {
-        let currentSessionManager = UserSessionManager.sharedInstance
-        if currentSessionManager.dicoUserDataInscription == nil {
-            currentSessionManager.dicoUserDataInscription = [String:AnyObject]()
-        }
-        if let email = self.emailString, password = self.passwordString {
-            currentSessionManager.dicoUserDataInscription!["email"] = email
-            currentSessionManager.dicoUserDataInscription!["password"] = password
+        if  isEmailValid() {
+            
+            if isPasswordValid() {
+                let currentSessionManager = UserSessionManager.sharedInstance
+                if currentSessionManager.dicoUserDataInscription == nil {
+                    currentSessionManager.dicoUserDataInscription = [String:AnyObject]()
+                }
+                if let email = self.emailString, password = self.passwordString {
+                    currentSessionManager.dicoUserDataInscription!["email"] = email
+                    currentSessionManager.dicoUserDataInscription!["password"] = password
+                    
+                    let inscriptionInfosUserVC = self.storyboard?.instantiateViewControllerWithIdentifier("idInscriptionInfosUserViewController") as! InscriptionInfosUserViewController
+                    self.navigationController?.pushViewController(inscriptionInfosUserVC, animated: true)
+                }
+                
+            } else {
+                self.presentViewController(PopupManager.sharedInstance.showErrorPopup("Oups !", message: "Vérifie que ton mot de passe possède au minimum 6 caractères."), animated: true) {
+                    PopupManager.sharedInstance.modalAnimationFinished()
+                }
+            }
+        } else {
+            self.presentViewController(PopupManager.sharedInstance.showErrorPopup("Oups !", message: "Cette adresse email n'est pas valide."), animated: true) {
+                PopupManager.sharedInstance.modalAnimationFinished()
+            }
         }
     }
     
     @IBAction func EmailTextFieldEditingChanged(sender: HoshiTextField) {
-        self.registerButton.enabled = (isEmailValid() && isPasswordValid()) ? true : false
+        isEmailValid()
+        isPasswordValid()
     }
     
     @IBAction func PasswordTextFieldEditingChanged(sender: HoshiTextField) {
-        self.registerButton.enabled = (isPasswordValid() && isEmailValid()) ? true : false
+        isPasswordValid()
+        isEmailValid()
     }
 }

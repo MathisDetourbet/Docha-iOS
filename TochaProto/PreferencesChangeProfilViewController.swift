@@ -132,6 +132,19 @@ class PreferencesChangeProfilViewController: RootViewController, UITableViewDele
             var action = UIAlertAction(title: "Choisir un avatar Docha", style: .Default, handler: { (_) in
                 let chooseAvatarVC = self.storyboard?.instantiateViewControllerWithIdentifier("idChooseAvatarViewController") as! PreferencesChoosAvatarViewController
                 chooseAvatarVC.delegate = self
+                if let genderNotConvertedString = self.genderNotConverted {
+                    var finalGender = ""
+                    if genderNotConvertedString == "Homme" {
+                        finalGender = "M"
+                        
+                    } else if genderNotConvertedString == "Femme" {
+                        finalGender = "F"
+                        
+                    } else {
+                        finalGender = "U"
+                    }
+                    chooseAvatarVC.userGender = finalGender
+                }
                 self.presentViewController(chooseAvatarVC, animated: true, completion: nil)
             })
             alertController.addAction(action)
@@ -348,7 +361,8 @@ class PreferencesChangeProfilViewController: RootViewController, UITableViewDele
 //MARK: @IBActions
     
     @IBAction func validBarButtonItemTouched(sender: UIBarButtonItem) {
-        self.presentViewController(DochaPopupHelper.sharedInstance.showLoadingPopup("Mise à jour de ton profil...")!, animated: true, completion: {
+        self.presentViewController(PopupManager.sharedInstance.showLoadingPopup("Mise à jour de ton profil...", message: nil), animated: true) {
+            PopupManager.sharedInstance.modalAnimationFinished()
             self.saveUserProfilDataWithCompletion { (success) in
                 self.dismissViewControllerAnimated(true, completion: {
                     
@@ -357,11 +371,13 @@ class PreferencesChangeProfilViewController: RootViewController, UITableViewDele
                         self.navigationController?.popViewControllerAnimated(true)
                         
                     } else {
-                        self.presentViewController(DochaPopupHelper.sharedInstance.showErrorPopup("Oups...", message: "La connexion internet semble interrompue...")!, animated: true, completion: nil)
+                        self.presentViewController(PopupManager.sharedInstance.showErrorPopup("Oups !", message: "La connexion internet semble interrompue. Essaie à nouveau ultérieurement."), animated: true) {
+                            PopupManager.sharedInstance.modalAnimationFinished()
+                        }
                     }
                 })
             }
-        })
+        }
     }
     
     @IBAction func cancelBarButtonItemTouched(sender: UIBarButtonItem) {

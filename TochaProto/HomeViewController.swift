@@ -31,6 +31,10 @@ class HomeViewController: GameViewController, UITableViewDelegate, UITableViewDa
         loadUserInfos()
     }
     
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+    }
+    
     func getFriendsList() {
         
 //        let userSession = UserSessionManager.sharedInstance.currentSession() as? UserSessionFacebook
@@ -43,7 +47,6 @@ class HomeViewController: GameViewController, UITableViewDelegate, UITableViewDa
 //            print(array)
 //        })
         
-        /*
         let fbLoginManager : FBSDKLoginManager = FBSDKLoginManager()
         
         fbLoginManager.logInWithReadPermissions(["user_friends"],
@@ -58,12 +61,44 @@ class HomeViewController: GameViewController, UITableViewDelegate, UITableViewDa
                 print("Facebook login : cancelled")
                 return
             } else {
-                //let fbloginresult : FBSDKLoginManagerLoginResult = result
+//                let fbloginresult : FBSDKLoginManagerLoginResult = result
+//                var fbRequest = FBSDKGraphRequest(graphPath:"/me/friends", parameters: nil);
+//                fbRequest.startWithCompletionHandler { (connection : FBSDKGraphRequestConnection!, result : AnyObject!, error : NSError!) -> Void in
+//                    
+//                    if error == nil {
+//                        
+//                        print("Friends are : \(result)")
+//                        
+//                    } else {
+//                        
+//                        print("Error Getting Friends \(error)");
+//                        
+//                    }
+//                }
                 
-                //if(fbloginresult.grantedPermissions.contains("data")) {
-                    //print("Facebook Access token : \(FBSDKAccessToken.currentAccessToken().tokenString)")
+                let fbloginresult : FBSDKLoginManagerLoginResult = result
+                
+                if(fbloginresult.grantedPermissions.contains("user_friends")) {
+                    print("Facebook Access token : \(FBSDKAccessToken.currentAccessToken().tokenString)")
                     
                     if((FBSDKAccessToken.currentAccessToken()) != nil) {
+                        
+                        
+                        let fbRequest = FBSDKGraphRequest(graphPath:"/me/friends", parameters: nil);
+                        fbRequest.startWithCompletionHandler { (connection : FBSDKGraphRequestConnection!, result : AnyObject!, error : NSError!) -> Void in
+                        
+                            if error == nil {
+                                print("Friends are : \(result)")
+                                let jsonResponse = JSON(result)
+                                let arrayFriends = jsonResponse["data"].array
+                                print(arrayFriends)
+                            } else {
+                                print("Error Getting Friends \(error)")
+                            }
+                        }
+                        
+                        
+                        
                         
 //                        let profilRequest = ProfilRequest()
 //                        profilRequest.getUserFriendsDochaInstalled(FBSDKAccessToken.currentAccessToken().tokenString,
@@ -76,10 +111,10 @@ class HomeViewController: GameViewController, UITableViewDelegate, UITableViewDa
                     } else {
                         print("Token is nil")
                     }
-                //}
+                }
+ 
             }
         }
-         */
     }
     
     override func viewDidLayoutSubviews() {
@@ -235,46 +270,70 @@ class HomeViewController: GameViewController, UITableViewDelegate, UITableViewDa
         // Amplitude Event
         Amplitude.instance().logEvent("HomeGameLaunched")
         
-        let productManager = ProductManager.sharedInstance
+//        self.presentViewController(PopupManager.sharedInstance.showLoadingPopup("Info", message: "Encore un peu de patience, cette fonctionnalité sera bientôt disponible. 😉"), animated: true) {
+//            PopupManager.sharedInstance.modalAnimationFinished()
+//        }
         
-        self.presentViewController(DochaPopupHelper.sharedInstance.showLoadingPopup("Nous préparons tes produits...")!, animated: true, completion: {
-            
-            productManager.getPackOfProducts({ (finished, packOfProducts) in
-                if finished && packOfProducts != nil {
-                    self.dismissViewControllerAnimated(true, completion: { 
-                        let gameplayVC = self.storyboard?.instantiateViewControllerWithIdentifier("idGameplayViewController") as! GameplayViewController
-                        gameplayVC.productsList = packOfProducts
-                        self.hidesBottomBarWhenPushed = true
-                        self.navigationController?.pushViewController(gameplayVC, animated: true)
-                    })
+            self.tabBarController!.presentViewController(PopupManager.sharedInstance.showLoadingPopup("Chargement en cours...", message: "Nous préparons tes produits."), animated: true) {
+                PopupManager.sharedInstance.modalAnimationFinished()
+                
+                dispatch_async(dispatch_get_main_queue(), {
                     
-                } else {
-                    print("Error when loading products...")
-                    self.presentViewController(DochaPopupHelper.sharedInstance.showErrorPopup("Oups", message: "Il semblerait que vous ne soyez pas connecté à internet... :( Essayer à nouveau ultérieurement")!, animated: true, completion: nil)
-                }
-            })
-        })
+                    ProductManager.sharedInstance.getPackOfProducts({ (finished, packOfProducts) in
+                        if finished && packOfProducts != nil {
+                            self.dismissViewControllerAnimated(true, completion: {
+                                let gameplayVC = self.storyboard?.instantiateViewControllerWithIdentifier("idGameplayViewController") as! GameplayViewController
+                                gameplayVC.productsList = packOfProducts
+                                self.hidesBottomBarWhenPushed = true
+                                self.navigationController?.pushViewController(gameplayVC, animated: true)
+                            })
+                            
+                        } else {
+                            print("Error when loading products...")
+                            self.tabBarController!.presentViewController(PopupManager.sharedInstance.showErrorPopup("Oups !", message: "La connexion internet semble interrompue. Essaie ultérieurement"), animated: true) {
+                                PopupManager.sharedInstance.modalAnimationFinished()
+                            }
+                        }
+                    })
+                })
+            }
     }
     
 
 //MARK: HomeFriendsCellDelegate Methods
     
     func displayAllFriendsButtonTouched() {
-        
+        //getFriendsList()
+        let params = ["fields" : "id, first_name, last_name, email, picture"]
+        let fbRequest = FBSDKGraphRequest(graphPath:"/me/friends", parameters: params);
+        fbRequest.startWithCompletionHandler { (connection : FBSDKGraphRequestConnection!, result : AnyObject!, error : NSError!) -> Void in
+            
+            if error == nil {
+                let jsonResponse = JSON(result)
+                let arrayFriends = jsonResponse["data"].array
+                print(arrayFriends!)
+            } else {
+                print("Error Getting Friends \(error)")
+            }
+        }
     }
     
     func inviteFacebookFriendsCellTouched() {
         let content = FBSDKAppInviteContent()
-        content.appLinkURL = NSURL(string: "URL_IOS_APP")
+        content.appLinkURL = NSURL(string: "https://itunes.apple.com/fr/app/docha/id722842223?mt=8")
         FBSDKAppInviteDialog.showFromViewController(self, withContent: content, delegate: self)
     }
     
     func appInviteDialog(appInviteDialog: FBSDKAppInviteDialog!, didCompleteWithResults results: [NSObject : AnyObject]!) {
-        self.presentViewController(DochaPopupHelper.sharedInstance.showSuccessPopup("Succès", message: "Vos amis ont bien été invités. Docha te remercie beaucoup pour ton aide.")!, animated: true, completion: nil)
+        self.tabBarController!.presentViewController(PopupManager.sharedInstance.showSuccessPopup("Succès", message: "Vos amis ont bien été invités."), animated: true) {
+            PopupManager.sharedInstance.modalAnimationFinished()
+        }
     }
     
     func appInviteDialog(appInviteDialog: FBSDKAppInviteDialog!, didFailWithError error: NSError!) {
-        self.presentViewController(DochaPopupHelper.sharedInstance.showErrorPopup("Oups !", message: "Un peu de patience, cette fonctionnalité sera bientôt disponible !")!, animated: true, completion: nil)
+        self.tabBarController!.presentViewController(PopupManager.sharedInstance.showInfosPopup("Oups !", message: "Encore un peu de patience, cette foncitonnalité sera bientôt disponible"), animated: true) {
+            PopupManager.sharedInstance.modalAnimationFinished()
+        }
     }
     
     
