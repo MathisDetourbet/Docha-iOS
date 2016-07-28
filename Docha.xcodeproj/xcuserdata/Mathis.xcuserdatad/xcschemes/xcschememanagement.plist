@@ -9,6 +9,11 @@
 			<key>orderHint</key>
 			<integer>0</integer>
 		</dict>
+		<key>DochaFastlaneUITests.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>21</integer>
+		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
@@ -23,6 +28,11 @@
 			<true/>
 		</dict>
 		<key>6701D98E1C108A2100F87043</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>67C42D951D4A254B00DF4E5D</key>
 		<dict>
 			<key>primary</key>
 			<true/>

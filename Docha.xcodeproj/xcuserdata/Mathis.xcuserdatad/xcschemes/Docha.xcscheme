@@ -48,6 +48,16 @@
                ReferencedContainer = "container:Docha.xcodeproj">
             </BuildableReference>
          </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "67C42D951D4A254B00DF4E5D"
+               BuildableName = "DochaFastlaneUITests.xctest"
+               BlueprintName = "DochaFastlaneUITests"
+               ReferencedContainer = "container:Docha.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
       <MacroExpansion>
          <BuildableReference

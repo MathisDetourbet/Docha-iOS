@@ -13,7 +13,6 @@
 		6701D9791C108A2100F87043 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6701D9771C108A2100F87043 /* Main.storyboard */; };
 		6701D97E1C108A2100F87043 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6701D97C1C108A2100F87043 /* LaunchScreen.storyboard */; };
 		6701D9891C108A2100F87043 /* TochaProtoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6701D9881C108A2100F87043 /* TochaProtoTests.swift */; };
-		6701D9941C108A2100F87043 /* TochaProtoUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6701D9931C108A2100F87043 /* TochaProtoUITests.swift */; };
 		6701D9A21C108AAE00F87043 /* Product.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6701D9A11C108AAE00F87043 /* Product.swift */; };
 		67240CEC1CEF0BCD001F4DC6 /* UserSessionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67240CEB1CEF0BCD001F4DC6 /* UserSessionManager.swift */; };
 		67240CF01CEF5C68001F4DC6 /* UserSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67240CEF1CEF5C68001F4DC6 /* UserSession.swift */; };
@@ -90,6 +89,9 @@
 		679B23D71D05EEAC00692400 /* HomeBadgesTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 679B23D61D05EEAC00692400 /* HomeBadgesTableViewCell.swift */; };
 		67A3021C1C5939C40065D097 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 67A3021B1C5939C40065D097 /* Assets.xcassets */; };
 		67C2E3491C5BBB4500345D27 /* Coupon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67C2E3481C5BBB4500345D27 /* Coupon.swift */; };
+		67C42D991D4A254B00DF4E5D /* DochaFastlaneUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67C42D981D4A254B00DF4E5D /* DochaFastlaneUITests.swift */; };
+		67C42DA11D4A258900DF4E5D /* SnapshotHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67C42DA01D4A258900DF4E5D /* SnapshotHelper.swift */; };
+		67C42DA21D4A26C100DF4E5D /* TochaProtoUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6701D9931C108A2100F87043 /* TochaProtoUITests.swift */; };
 		67C83B011CF498780066B982 /* PasswordForgottenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67C83B001CF498780066B982 /* PasswordForgottenViewController.swift */; };
 		67C8EBF41D11A4E700AF885B /* AfterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67C8EBF31D11A4E700AF885B /* AfterView.swift */; };
 		67D4826C1D1C059C009F1992 /* GameplayDebriefViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67D4826B1D1C059C009F1992 /* GameplayDebriefViewController.swift */; };
@@ -139,6 +141,13 @@
 			proxyType = 1;
 			remoteGlobalIDString = 6701D96F1C108A2100F87043;
 			remoteInfo = TochaProto;
+		};
+		67C42D9B1D4A254B00DF4E5D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 6701D9681C108A2100F87043 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 6701D96F1C108A2100F87043;
+			remoteInfo = Docha;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -236,6 +245,10 @@
 		679B23D61D05EEAC00692400 /* HomeBadgesTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeBadgesTableViewCell.swift; sourceTree = "<group>"; };
 		67A3021B1C5939C40065D097 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		67C2E3481C5BBB4500345D27 /* Coupon.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Coupon.swift; sourceTree = "<group>"; };
+		67C42D961D4A254B00DF4E5D /* DochaFastlaneUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DochaFastlaneUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		67C42D981D4A254B00DF4E5D /* DochaFastlaneUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DochaFastlaneUITests.swift; sourceTree = "<group>"; };
+		67C42D9A1D4A254B00DF4E5D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		67C42DA01D4A258900DF4E5D /* SnapshotHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SnapshotHelper.swift; sourceTree = "<group>"; };
 		67C83B001CF498780066B982 /* PasswordForgottenViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PasswordForgottenViewController.swift; sourceTree = "<group>"; };
 		67C8EBF31D11A4E700AF885B /* AfterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AfterView.swift; sourceTree = "<group>"; };
 		67D4826B1D1C059C009F1992 /* GameplayDebriefViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameplayDebriefViewController.swift; sourceTree = "<group>"; };
@@ -316,6 +329,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		67C42D931D4A254B00DF4E5D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -364,6 +384,7 @@
 				6701D9721C108A2100F87043 /* Docha */,
 				6701D9871C108A2100F87043 /* DochaTests */,
 				6701D9921C108A2100F87043 /* DochaUITests */,
+				67C42D971D4A254B00DF4E5D /* DochaFastlaneUITests */,
 				6701D9711C108A2100F87043 /* Products */,
 				4F0217EA73D099493A640F99 /* Frameworks */,
 				4E795923C5C48DD6B0F7EFDC /* Pods */,
@@ -376,6 +397,7 @@
 				6701D9701C108A2100F87043 /* Docha.app */,
 				6701D9841C108A2100F87043 /* Docha.xctest */,
 				6701D98F1C108A2100F87043 /* Docha.xctest */,
+				67C42D961D4A254B00DF4E5D /* DochaFastlaneUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -660,6 +682,16 @@
 			name = Model;
 			sourceTree = "<group>";
 		};
+		67C42D971D4A254B00DF4E5D /* DochaFastlaneUITests */ = {
+			isa = PBXGroup;
+			children = (
+				67C42DA01D4A258900DF4E5D /* SnapshotHelper.swift */,
+				67C42D981D4A254B00DF4E5D /* DochaFastlaneUITests.swift */,
+				67C42D9A1D4A254B00DF4E5D /* Info.plist */,
+			);
+			path = DochaFastlaneUITests;
+			sourceTree = "<group>";
+		};
 		67C8EBF51D11A4F300AF885B /* Views */ = {
 			isa = PBXGroup;
 			children = (
@@ -907,13 +939,31 @@
 			productReference = 6701D98F1C108A2100F87043 /* Docha.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
+		67C42D951D4A254B00DF4E5D /* DochaFastlaneUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 67C42D9F1D4A254B00DF4E5D /* Build configuration list for PBXNativeTarget "DochaFastlaneUITests" */;
+			buildPhases = (
+				67C42D921D4A254B00DF4E5D /* Sources */,
+				67C42D931D4A254B00DF4E5D /* Frameworks */,
+				67C42D941D4A254B00DF4E5D /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				67C42D9C1D4A254B00DF4E5D /* PBXTargetDependency */,
+			);
+			name = DochaFastlaneUITests;
+			productName = DochaFastlaneUITests;
+			productReference = 67C42D961D4A254B00DF4E5D /* DochaFastlaneUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
 		6701D9681C108A2100F87043 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 0720;
+				LastSwiftUpdateCheck = 0730;
 				LastUpgradeCheck = 0710;
 				ORGANIZATIONNAME = LaTV;
 				TargetAttributes = {
@@ -927,6 +977,10 @@
 					};
 					6701D98E1C108A2100F87043 = {
 						CreatedOnToolsVersion = 7.1.1;
+						TestTargetID = 6701D96F1C108A2100F87043;
+					};
+					67C42D951D4A254B00DF4E5D = {
+						CreatedOnToolsVersion = 7.3.1;
 						TestTargetID = 6701D96F1C108A2100F87043;
 					};
 				};
@@ -947,6 +1001,7 @@
 				6701D96F1C108A2100F87043 /* Docha */,
 				6701D9831C108A2100F87043 /* DochaTests */,
 				6701D98E1C108A2100F87043 /* DochaUITests */,
+				67C42D951D4A254B00DF4E5D /* DochaFastlaneUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -991,6 +1046,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				679274031CFC78A100DABA88 /* GoogleService-Info.plist in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		67C42D941D4A254B00DF4E5D /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1226,7 +1288,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6701D9941C108A2100F87043 /* TochaProtoUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		67C42D921D4A254B00DF4E5D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				67C42D991D4A254B00DF4E5D /* DochaFastlaneUITests.swift in Sources */,
+				67C42DA11D4A258900DF4E5D /* SnapshotHelper.swift in Sources */,
+				67C42DA21D4A26C100DF4E5D /* TochaProtoUITests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1242,6 +1313,11 @@
 			isa = PBXTargetDependency;
 			target = 6701D96F1C108A2100F87043 /* Docha */;
 			targetProxy = 6701D9901C108A2100F87043 /* PBXContainerItemProxy */;
+		};
+		67C42D9C1D4A254B00DF4E5D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 6701D96F1C108A2100F87043 /* Docha */;
+			targetProxy = 67C42D9B1D4A254B00DF4E5D /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -1492,6 +1568,32 @@
 			};
 			name = Release;
 		};
+		67C42D9D1D4A254B00DF4E5D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				INFOPLIST_FILE = DochaFastlaneUITests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = fr.slymoover.DochaFastlaneUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_TARGET_NAME = Docha;
+			};
+			name = Debug;
+		};
+		67C42D9E1D4A254B00DF4E5D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				INFOPLIST_FILE = DochaFastlaneUITests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = fr.slymoover.DochaFastlaneUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_TARGET_NAME = Docha;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -1530,6 +1632,14 @@
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
+		};
+		67C42D9F1D4A254B00DF4E5D /* Build configuration list for PBXNativeTarget "DochaFastlaneUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				67C42D9D1D4A254B00DF4E5D /* Debug */,
+				67C42D9E1D4A254B00DF4E5D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
 		};
 /* End XCConfigurationList section */
 	};
