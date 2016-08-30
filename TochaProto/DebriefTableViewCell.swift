@@ -22,6 +22,7 @@ class DebriefTableViewCell: UITableViewCell {
     @IBOutlet weak var productBrandNameLabel: UILabel!
     @IBOutlet weak var dochosLabel: UILabel!
     @IBOutlet weak var heartLabel: UILabel!
+    @IBOutlet weak var userEstimationLabel: UILabel!
     
     @IBAction func discoverProductButtonTouched(sender: UIButton) {
         delegate?.discoverProductActionWithURL(self.productLink!)

@@ -67,10 +67,7 @@ class InscriptionProfilViewController: RootViewController {
     }
     
     @IBAction func validProfilButtonTouched(sender: UIButton) {
-        self.presentViewController(PopupManager.sharedInstance.showLoadingPopup("Connexion...", message: "Création d'un nouveau Docher en cours."), animated: true) {
-            
-            PopupManager.sharedInstance.modalAnimationFinished()
-            
+        PopupManager.sharedInstance.showLoadingPopup("Connexion...", message: "Création d'un nouveau Docher en cours.", completion: {
             let userSessionManager = UserSessionManager.sharedInstance
             
             if let avatar = self.avatarImageSelected {
@@ -82,27 +79,25 @@ class InscriptionProfilViewController: RootViewController {
             
             let registrationParams = userSessionManager.dicoUserDataInscription!
             
-            UserSessionManager.sharedInstance.inscriptionEmail(registrationParams,
-                                                               success: { (session) in
-                                                                
-                                                                print("Saving in the database : success !")
-                                                                UserSessionManager.sharedInstance.currentSession()!.updateProfilImagePrefered(.AvatarDochaImage)
-                                                                
-                                                                self.dismissViewControllerAnimated(true, completion: nil)
-                                                                self.goToHome()
-                                                                
+            UserSessionManager.sharedInstance.inscriptionEmail(registrationParams,success: { (session) in
+                print("Saving in the database : success !")
+                UserSessionManager.sharedInstance.currentSession()!.updateProfilImagePrefered(.AvatarDochaImage)
+                
+                PopupManager.sharedInstance.dismissPopup(true, completion: {
+                    self.goToHome()
+                })
+                
                 }, fail: { (error, listErrors) in
-                    self.dismissViewControllerAnimated(false, completion: nil)
+                    PopupManager.sharedInstance.dismissPopup(true, completion: {
                     
-                    if let error = error {
-                        if error.code == 422 {
-                            self.presentViewController(PopupManager.sharedInstance.showErrorPopup("Oups !", message: "Une erreur est survenue."), animated: true) {
-                                PopupManager.sharedInstance.modalAnimationFinished()
+                        if let error = error {
+                            if error.code == 422 {
+                                PopupManager.sharedInstance.showErrorPopup("Oups !", message: "Une erreur est survenue.", completion: nil)
                             }
                         }
-                    }
-                    print("Error inscription : \(error)")
+                        print("Error inscription : \(error)")
+                    })
             })
-        }
+        })
     }
 }

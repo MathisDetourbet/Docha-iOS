@@ -39,7 +39,7 @@ class HomeFriendsTableViewCell: UITableViewCell, UICollectionViewDelegate, UICol
     }
     
     
-    //MARK: Collection View Data Source Methods
+//MARK: Collection View Data Source Methods
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return self.friendsCollection!.count
@@ -58,7 +58,7 @@ class HomeFriendsTableViewCell: UITableViewCell, UICollectionViewDelegate, UICol
     }
     
     
-    //MARK: Collection View Delegate Methods
+//MARK: Collection View Delegate Methods
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         if indexPath.item == ((self.friendsCollection?.count)!-1) {
@@ -67,7 +67,7 @@ class HomeFriendsTableViewCell: UITableViewCell, UICollectionViewDelegate, UICol
     }
     
     
-    //MARK: @IBActions
+//MARK: @IBActions
     
     @IBAction func showAllFriendsButtonTouched(sender: UIButton) {
         self.delegate?.displayAllFriendsButtonTouched()

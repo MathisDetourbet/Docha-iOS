@@ -40,7 +40,7 @@ class GameplayViewController: GameViewController, KeyboardViewDelegate {
     var cursorCounter: Int = 0
     
     let kCooldownForPreview: Double! = 5.0
-    let kCooldownForMain: Double! = 6.0
+    let kCooldownForMain: Double! = 10.0
     let kCooldownForAfter: Double! = 3.0
     var currentTotalCooldown: Double? {
         didSet {
@@ -69,7 +69,8 @@ class GameplayViewController: GameViewController, KeyboardViewDelegate {
     }
     
     
-// MARK: @IBOutlets
+//MARK: @IBOutlets
+    
     @IBOutlet weak var previewCircularProgress: MBCircularProgressBarView!
     @IBOutlet weak var mainCircularProgress: MBCircularProgressBarView!
     @IBOutlet weak var productBrandLabel: UILabel!
@@ -128,7 +129,6 @@ class GameplayViewController: GameViewController, KeyboardViewDelegate {
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(GameplayViewController.applicationDidEnterBackground(_:)), name: UIApplicationDidEnterBackgroundNotification, object: nil)
-        
     }
     
     override func viewDidDisappear(animated: Bool) {
@@ -231,7 +231,7 @@ class GameplayViewController: GameViewController, KeyboardViewDelegate {
             }
         }
         currentRealPriceArray = convertPriceToArrayOfInt((currentProduct?.price)!)
-        counterContainerView.centsLabel.text = currentRealPriceArray?.cents
+        counterContainerView.centsLabel.text = (currentRealPriceArray?.cents)! + " €"
     }
     
     func startMainMode() {
@@ -280,6 +280,7 @@ class GameplayViewController: GameViewController, KeyboardViewDelegate {
         let debriefVC = self.storyboard?.instantiateViewControllerWithIdentifier("idDebriefViewController") as! GameplayDebriefViewController
         debriefVC.productsPlayed = self.productsList
         debriefVC.timelineView = self.timelineView
+        debriefVC.psyAndRealPriceArray = self.psyAndRealPriceArray
         self.navigationController?.pushViewController(debriefVC, animated: true)
     }
     

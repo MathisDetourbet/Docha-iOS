@@ -23,6 +23,7 @@ target 'Docha' do
     pod 'Crashlytics'
     pod 'Amplitude-iOS', '~> 3.7.0'
     pod 'RSKImageCropper'
+    pod 'SACountingLabel'
 end
 
 target 'DochaTests' do

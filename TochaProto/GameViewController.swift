@@ -8,6 +8,31 @@
 
 import Foundation
 import Amplitude_iOS
+import SACountingLabel
+
+extension UIView {
+    func rotate360Degrees(duration: CFTimeInterval = 1.0, completionDelegate: AnyObject? = nil) {
+        let rotateAnimation = CABasicAnimation(keyPath: "transform.rotation.y")
+        rotateAnimation.fromValue = 0.0
+        rotateAnimation.toValue = CGFloat(M_PI * 2.0)
+        rotateAnimation.duration = duration
+        rotateAnimation.repeatCount = FLT_MAX
+        
+        let pulseAnimation = CABasicAnimation(keyPath: "transform.scale")
+        pulseAnimation.duration = 0.5
+        pulseAnimation.fromValue = 0.8
+        pulseAnimation.toValue = 1.5
+        pulseAnimation.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
+        pulseAnimation.autoreverses = true
+        pulseAnimation.repeatCount = FLT_MAX
+        
+        if let delegate: AnyObject = completionDelegate {
+            rotateAnimation.delegate = delegate
+        }
+        self.layer.addAnimation(rotateAnimation, forKey: nil)
+        self.layer.addAnimation(pulseAnimation, forKey: nil)
+    }
+}
 
 class GameViewController: RootViewController {
     
@@ -27,8 +52,9 @@ class GameViewController: RootViewController {
         perfectImageView.image = UIImage(named: "perfects_icon")
         perfectImageView.translatesAutoresizingMaskIntoConstraints = false
         
-        let perfectLabel = UILabel(frame: CGRectMake(28.0, 7.0, 10.0, 19.0))
+        let perfectLabel = SACountingLabel(frame: CGRectMake(28.0, 7.0, 10.0, 19.0))
         perfectLabel.text = "\(perfectNumber)"
+        //perfectLabel.countFrom(0, to: Float(perfectNumber), withDuration: 0.7, andAnimationType: .EaseInOut, andCountingType: .Int)
         perfectLabel.font = UIFont(name: "Montserrat-SemiBold", size: 15)
         perfectLabel.textColor = UIColor.whiteColor()
         perfectLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -55,7 +81,8 @@ class GameViewController: RootViewController {
         dochosImageView.image = UIImage(named: "dochos_icon")
         dochosImageView.translatesAutoresizingMaskIntoConstraints = false
         
-        let dochosLabel = UILabel(frame: CGRectMake(43.0, 7.0, 28.0, 19.0))
+        let dochosLabel = SACountingLabel(frame: CGRectMake(43.0, 7.0, 28.0, 19.0))
+        //dochosLabel.countFrom(0, to: Float(dochosNumber), withDuration: 0, andAnimationType: .EaseInOut, andCountingType: .Int)
         dochosLabel.text = "\(dochosNumber)"
         dochosLabel.font = UIFont(name: "Montserrat-SemiBold", size: 15)
         dochosLabel.textColor = UIColor.whiteColor()
@@ -69,6 +96,8 @@ class GameViewController: RootViewController {
         
         rightView.addConstraint(NSLayoutConstraint(item: dochosLabel, attribute: .CenterY, relatedBy: .Equal, toItem: rightView, attribute: .CenterY, multiplier: 1.0, constant: 0.0))
         rightView.addConstraint(NSLayoutConstraint(item: dochosLabel, attribute: .Trailing, relatedBy: .Equal, toItem: rightView, attribute: .Trailing, multiplier: 1.0, constant: 0.0))
+        
+        //dochosImageView.rotate360Degrees(0.5, completionDelegate: nil)
         
         let tapGestureDochos = UITapGestureRecognizer()
         tapGestureDochos.numberOfTapsRequired = 1

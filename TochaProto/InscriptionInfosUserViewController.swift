@@ -26,7 +26,7 @@ class InscriptionInfosUserViewController: RootViewController, UITextFieldDelegat
         self.validProfilButton.enabled = false
         self.navigationController!.setNavigationBarHidden(false, animated: false)
         self.navigationItem.setHidesBackButton(true, animated: false)
-        self.configNavigationBarWithTitle("Qui êtes-vous ?", andFontSize: 13.0)
+        self.configNavigationBarWithTitle("Qui es-tu ?", andFontSize: 13.0)
     }
     
     func textFieldShouldReturn(textField: UITextField) -> Bool {

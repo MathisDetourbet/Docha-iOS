@@ -35,8 +35,9 @@ class UserSession: User, NSCoding {
         let sessionID = aDecoder.decodeIntegerForKey(Constants.UserDefaultsKey.kUserInfosSessionID) as Int
         let productsIDPlayed = aDecoder.decodeObjectForKey(Constants.UserDefaultsKey.kProductsIDPlayed) as? [Int]
         let profilImagePrefered = ProfilImageType(rawValue: (aDecoder.decodeIntegerForKey(Constants.UserDefaultsKey.kProfilImagePrefered)))
+        let badgesUnlockedIdentifiers = aDecoder.decodeObjectForKey(Constants.UserDefaultsKey.kUserInfosBadgesUnlockedIdentifiers) as? [String]
         
-        super.init(userID: userID, username: username, lastName: lastName, firstName: firstName, email: email, gender: gender, dateBirthday: dateBirthday, categoryFavorite: categoryFavorite, avatar: avatar, levelMaxUnlocked: levelMaxUnlocked, dochos: dochos, experience: experience, perfectPriceCpt: perfectPriceCpt, profilImagePrefered: profilImagePrefered)
+        super.init(userID: userID, username: username, lastName: lastName, firstName: firstName, email: email, gender: gender, dateBirthday: dateBirthday, categoryFavorite: categoryFavorite, avatar: avatar, levelMaxUnlocked: levelMaxUnlocked, dochos: dochos, experience: experience, perfectPriceCpt: perfectPriceCpt, profilImagePrefered: profilImagePrefered, badgesUnlockedIdentifiers: badgesUnlockedIdentifiers)
         
         self.authToken = authToken
         self.sessionID = sessionID
@@ -60,6 +61,7 @@ class UserSession: User, NSCoding {
         aCoder.encodeObject(authToken, forKey: Constants.UserDefaultsKey.kUserInfosAuthToken)
         aCoder.encodeObject(productsIDPlayed, forKey: Constants.UserDefaultsKey.kProductsIDPlayed)
         aCoder.encodeInteger(profilImagePrefered.rawValue, forKey: Constants.UserDefaultsKey.kProfilImagePrefered)
+        aCoder.encodeObject(badgesUnlockedIdentifiers, forKey: Constants.UserDefaultsKey.kUserInfosBadgesUnlockedIdentifiers)
     }
     
     func saveSession() {

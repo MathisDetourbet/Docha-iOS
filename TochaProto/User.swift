@@ -29,10 +29,11 @@ class User: NSObject {
     var experience: Int = 0
     var perfectPriceCpt: Int = 0
     var profilImagePrefered: ProfilImageType = .FacebookImage
+    var badgesUnlockedIdentifiers: [String]?
     
     override init() {}
     
-    init(userID: Int?, username: String?, lastName: String?, firstName: String?, email: String?, gender: String?, dateBirthday: NSDate?, categoryFavorite: String?, avatar: String?, levelMaxUnlocked: Int?, dochos: Int?, experience: Int?, perfectPriceCpt: Int?, profilImagePrefered: ProfilImageType?) {
+    init(userID: Int?, username: String?, lastName: String?, firstName: String?, email: String?, gender: String?, dateBirthday: NSDate?, categoryFavorite: String?, avatar: String?, levelMaxUnlocked: Int?, dochos: Int?, experience: Int?, perfectPriceCpt: Int?, profilImagePrefered: ProfilImageType?, badgesUnlockedIdentifiers: [String]?) {
         self.userID = userID
         self.username = username
         self.lastName = lastName
@@ -47,6 +48,7 @@ class User: NSObject {
         self.experience = experience!
         self.perfectPriceCpt = perfectPriceCpt!
         self.profilImagePrefered = profilImagePrefered!
+        self.badgesUnlockedIdentifiers = badgesUnlockedIdentifiers
     }
     
     func initPropertiesWithResponseObject(responseObject: AnyObject) {
@@ -64,6 +66,7 @@ class User: NSObject {
             if let dochos = dicoUser["dochos"]?.integerValue { self.dochos = dochos }
             if let experience = dicoUser["experience"]?.integerValue { self.experience = experience }
             if let perfectPriceCpt = dicoUser["perfect_price_cpt"]?.integerValue { self.perfectPriceCpt = perfectPriceCpt }
+            if let badgesUnlockedIdentifiers = dicoUser["badges_unlocked"]?.array as? [String] { self.badgesUnlockedIdentifiers = badgesUnlockedIdentifiers }
         }
     }
 }

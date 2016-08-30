@@ -148,9 +148,7 @@ class PreferencesViewController: GameViewController, UITableViewDelegate, UITabl
             switch indexPath.row {
             case 2:
                 // Langue
-                self.tabBarController!.presentViewController(PopupManager.sharedInstance.showInfosPopup("Info", message: "Encore un peu de patience, cette fonctionnalité sera bientôt disponible. 😉"), animated: true) {
-                    PopupManager.sharedInstance.modalAnimationFinished()
-                }
+                PopupManager.sharedInstance.showInfosPopup("Info", message: "Encore un peu de patience, cette fonctionnalité sera bientôt disponible. 😉", completion: nil)
             default:
                 break
             }

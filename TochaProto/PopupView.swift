@@ -10,7 +10,6 @@ import Foundation
 
 class PopupView: UIView {
     
-    @IBOutlet weak var shadowView: UIView!
     @IBOutlet weak var backgroundImageView: UIImageView!
     @IBOutlet weak var circleImageView: UIImageView!
     @IBOutlet weak var titleLabel: UILabel!
@@ -19,11 +18,5 @@ class PopupView: UIView {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-    }
-    
-    func shadowAnimation() {
-        UIView.animateWithDuration(0.3, animations: {
-            self.shadowView!.alpha = 0.5
-        }) { (_) in }
     }
 }

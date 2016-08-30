@@ -66,11 +66,14 @@ class PreferencesCategoriesViewController: RootViewController, UICollectionViewD
             UserSessionManager.sharedInstance.updateUserProfil(param, success: {
                 print("Success categories VC")
                 completion(success: true)
+                PopupManager.sharedInstance.dismissPopup(true, completion: {
+                    PopupManager.sharedInstance.showSuccessPopup("Succès !", message: "Ta catégorie a été mise à jour 😎", completion: nil)
+                })
             }, fail: { (error, listError) in
-                print("Fail categories VC")
-                self.presentViewController(PopupManager.sharedInstance.showErrorPopup("Oups !", message: "Il semblerait que vous n'avez pas de connexion à internet, la catégorie n'a pas pu être modifée... Veuillez réessayer ultérieurement."), animated: true) {
-                    PopupManager.sharedInstance.modalAnimationFinished()
-                }
+                self.dismissViewControllerAnimated(true, completion: { 
+                    print("Fail categories VC")
+                    PopupManager.sharedInstance.showErrorPopup("Oups !", message: "Il semblerait que tu ne possède pas de connexion à internet, la catégorie n'a pas pu être modifée... Essaie ultérieurement.", completion: nil)
+                })
                 completion(success: false)
             })
         }
@@ -108,6 +111,7 @@ class PreferencesCategoriesViewController: RootViewController, UICollectionViewD
 //MARK: Collection View Delegate Methods
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+        PopupManager.sharedInstance.showLoadingPopup("Chargement...", message: "Mise à jour de ton profil Docha...", completion: nil)
         // Deselect old cell
         if self.oldCategoryIndexPath != nil {
             let oldCellSelected = collectionView.cellForItemAtIndexPath(oldCategoryIndexPath!) as! InscriptionCategoryCollectionViewCell
@@ -146,8 +150,6 @@ class PreferencesCategoriesViewController: RootViewController, UICollectionViewD
     }
     
     @IBAction func infosButtonTouched(sender: UIBarButtonItem) {
-        self.tabBarController!.presentViewController(PopupManager.sharedInstance.showInfosPopup("Info", message: "Nous souhaitons vous proposer au maximum des produits qui vous correspondent."), animated: true) {
-            PopupManager.sharedInstance.modalAnimationFinished()
-        }
+        PopupManager.sharedInstance.showInfosPopup("Info", message: "Nous souhaitons te proposer au maximum des produits qui te correspondent.", completion: nil)
     }
 }

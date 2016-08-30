@@ -14,7 +14,7 @@ import Amplitude_iOS
 import FBSDKShareKit
 import SwiftyJSON
 
-class HomeViewController: GameViewController, UITableViewDelegate, UITableViewDataSource, HomePlayCellDelegate, HomeFriendsCellDelegate, FBSDKAppInviteDialogDelegate {
+class HomeViewController: GameViewController, UITableViewDelegate, UITableViewDataSource, HomePlayCellDelegate, HomeFriendsCellDelegate, HomeBadgeDelegate, FBSDKAppInviteDialogDelegate {
     
     let idsTableViewCell: [String] = ["idHomePlayTableViewCell", "idHomeFriendsTableViewCell", "idHomeBadgesTableViewCell"]
     let userGameManager: UserGameStateManager = UserGameStateManager.sharedInstance
@@ -29,6 +29,7 @@ class HomeViewController: GameViewController, UITableViewDelegate, UITableViewDa
     override func viewDidLoad() {
         super.viewDidLoad()
         loadUserInfos()
+        UserGameStateManager.sharedInstance.authenticateLocalPlayer()
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -216,6 +217,7 @@ class HomeViewController: GameViewController, UITableViewDelegate, UITableViewDa
             
         } else {
             let cell = self.tableView.dequeueReusableCellWithIdentifier(self.idsTableViewCell[indexPath.row], forIndexPath: indexPath) as! HomeBadgesTableViewCell
+            cell.delegate = self
             return cell
         }
     }
@@ -231,29 +233,26 @@ class HomeViewController: GameViewController, UITableViewDelegate, UITableViewDa
         // Amplitude Event
         Amplitude.instance().logEvent("HomeGameLaunched")
         
-            self.tabBarController!.presentViewController(PopupManager.sharedInstance.showLoadingPopup("Chargement en cours...", message: "Nous préparons tes produits."), animated: true) {
-                PopupManager.sharedInstance.modalAnimationFinished()
+        PopupManager.sharedInstance.showLoadingPopup("Chargement en cours...", message: "Nous préparons tes produits.", completion: {
+            dispatch_async(dispatch_get_main_queue(), {
                 
-                dispatch_async(dispatch_get_main_queue(), {
+                ProductManager.sharedInstance.getPackOfProducts({ (finished, packOfProducts) in
                     
-                    ProductManager.sharedInstance.getPackOfProducts({ (finished, packOfProducts) in
-                        if finished && packOfProducts != nil {
-                            self.dismissViewControllerAnimated(true, completion: {
-                                let gameplayVC = self.storyboard?.instantiateViewControllerWithIdentifier("idGameplayViewController") as! GameplayViewController
-                                gameplayVC.productsList = packOfProducts
-                                self.hidesBottomBarWhenPushed = true
-                                self.navigationController?.pushViewController(gameplayVC, animated: true)
-                            })
-                            
-                        } else {
-                            print("Error when loading products...")
-                            self.tabBarController!.presentViewController(PopupManager.sharedInstance.showErrorPopup("Oups !", message: "La connexion internet semble interrompue. Essaie ultérieurement"), animated: true) {
-                                PopupManager.sharedInstance.modalAnimationFinished()
-                            }
-                        }
-                    })
+                    if finished && packOfProducts != nil {
+                        PopupManager.sharedInstance.dismissPopup(true, completion: {
+                            let gameplayVC = self.storyboard?.instantiateViewControllerWithIdentifier("idGameplayViewController") as! GameplayViewController
+                            gameplayVC.productsList = packOfProducts
+                            self.hidesBottomBarWhenPushed = true
+                            self.navigationController?.pushViewController(gameplayVC, animated: true)
+                        })
+                        
+                    } else {
+                        print("Error when loading products...")
+                        PopupManager.sharedInstance.showErrorPopup("Oups !", message: "La connexion internet semble interrompue. Essaie ultérieurement", completion: nil)
+                    }
                 })
-            }
+            })
+        })
     }
     
 
@@ -274,22 +273,26 @@ class HomeViewController: GameViewController, UITableViewDelegate, UITableViewDa
         }
     }
     
+//MARK: HomeBadgeDelegate Methods
+    
+    func showAllBadges() {
+        let badgesVC = self.storyboard?.instantiateViewControllerWithIdentifier("idBadgeViewController") as! BadgesViewController
+        self.navigationController?.pushViewController(badgesVC, animated: true)
+    }
+    
     func inviteFacebookFriendsCellTouched() {
-        let content = FBSDKAppInviteContent()
-        content.appLinkURL = NSURL(string: "https://itunes.apple.com/fr/app/docha/id722842223?mt=8")
-        FBSDKAppInviteDialog.showFromViewController(self, withContent: content, delegate: self)
+        PopupManager.sharedInstance.showInfosPopup("Info", message: "Encore un peu de patience, cette fonctionnalité sera prochainement disponible. 😉", completion: nil)
+//        let content = FBSDKAppInviteContent()
+//        content.appLinkURL = NSURL(string: "https://itunes.apple.com/fr/app/docha/id722842223?mt=8")
+//        FBSDKAppInviteDialog.showFromViewController(self, withContent: content, delegate: self)
     }
     
     func appInviteDialog(appInviteDialog: FBSDKAppInviteDialog!, didCompleteWithResults results: [NSObject : AnyObject]!) {
-        self.tabBarController!.presentViewController(PopupManager.sharedInstance.showSuccessPopup("Succès", message: "Vos amis ont bien été invités."), animated: true) {
-            PopupManager.sharedInstance.modalAnimationFinished()
-        }
+        PopupManager.sharedInstance.showSuccessPopup("Succès", message: "Tes amis ont bien été invités.", completion: nil)
     }
     
     func appInviteDialog(appInviteDialog: FBSDKAppInviteDialog!, didFailWithError error: NSError!) {
-        self.tabBarController!.presentViewController(PopupManager.sharedInstance.showInfosPopup("Oups !", message: "Encore un peu de patience, cette foncitonnalité sera bientôt disponible"), animated: true) {
-            PopupManager.sharedInstance.modalAnimationFinished()
-        }
+        PopupManager.sharedInstance.showInfosPopup("Oups !", message: "Encore un peu de patience, cette foncitonnalité sera bientôt disponible !", completion: nil)
     }
     
     

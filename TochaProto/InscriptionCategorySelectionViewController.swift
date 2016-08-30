@@ -129,8 +129,6 @@ class InscriptionCategorySelectionViewController: RootViewController, UICollecti
     }
     
     @IBAction func infosButtonTouched(sender: UIBarButtonItem) {
-        self.presentViewController(PopupManager.sharedInstance.showInfosPopup("Information", message: "Nous souhaitons vous proposer au maximum des produits qui vous correspondent."), animated: true) { 
-            PopupManager.sharedInstance.modalAnimationFinished()
-        }
+        PopupManager.sharedInstance.showInfosPopup("Information", message: "Nous souhaitons vous proposer au maximum des produits qui vous correspondent.", completion: nil)
     }
 }

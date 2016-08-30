@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
-        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
     </dependencies>
     <customFonts key="customFonts">
@@ -19,52 +18,44 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
-                <view alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ivq-Ox-akd" userLabel="shadowView">
-                    <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
-                    <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                </view>
                 <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="popup_large" translatesAutoresizingMaskIntoConstraints="NO" id="06j-4U-M4H">
                     <rect key="frame" x="20" y="119" width="280" height="330"/>
                 </imageView>
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="img_levelup" translatesAutoresizingMaskIntoConstraints="NO" id="5tH-WV-an3">
                     <rect key="frame" x="115" y="124" width="90" height="90"/>
                 </imageView>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jpK-Lb-eEH">
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jpK-Lb-eEH">
                     <rect key="frame" x="140" y="219" width="40" height="21"/>
                     <fontDescription key="fontDescription" name="Montserrat-ExtraBold" family="Montserrat" pointSize="17"/>
                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <stackView opaque="NO" contentMode="scaleToFill" misplaced="YES" axis="vertical" distribution="fillEqually" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="FeC-Zf-K6H">
-                    <rect key="frame" x="20" y="240" width="280" height="200"/>
+                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="FeC-Zf-K6H">
+                    <rect key="frame" x="20" y="240" width="280" height="209"/>
                     <subviews>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qhS-kr-09N">
-                            <rect key="frame" x="125" y="0.0" width="30" height="200"/>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qhS-kr-09N">
+                            <rect key="frame" x="124" y="0.0" width="33" height="209"/>
                             <fontDescription key="fontDescription" name="Montserrat-Regular" family="Montserrat" pointSize="12"/>
                             <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                             <nil key="highlightedColor"/>
                         </label>
                     </subviews>
                     <constraints>
-                        <constraint firstAttribute="width" constant="280" id="F5X-wa-J35"/>
+                        <constraint firstAttribute="width" constant="280" id="ACg-OP-n6i"/>
                     </constraints>
                 </stackView>
             </subviews>
             <constraints>
                 <constraint firstItem="5tH-WV-an3" firstAttribute="top" secondItem="06j-4U-M4H" secondAttribute="top" constant="5" id="7ZC-le-qD7"/>
-                <constraint firstItem="FeC-Zf-K6H" firstAttribute="trailing" secondItem="06j-4U-M4H" secondAttribute="trailing" id="Ahn-Ax-Z9X"/>
+                <constraint firstItem="FeC-Zf-K6H" firstAttribute="bottom" secondItem="06j-4U-M4H" secondAttribute="bottom" id="F8m-xF-y6B"/>
                 <constraint firstItem="jpK-Lb-eEH" firstAttribute="top" secondItem="5tH-WV-an3" secondAttribute="bottom" constant="5" id="IZq-7o-89w"/>
-                <constraint firstItem="Ivq-Ox-akd" firstAttribute="leading" secondItem="Z4o-BU-PKx" secondAttribute="leading" id="Qm5-fT-u3Y"/>
-                <constraint firstItem="FeC-Zf-K6H" firstAttribute="bottom" secondItem="06j-4U-M4H" secondAttribute="bottom" constant="-10" id="Txq-5l-dBo"/>
-                <constraint firstItem="FeC-Zf-K6H" firstAttribute="top" secondItem="jpK-Lb-eEH" secondAttribute="bottom" id="V69-sQ-Tmr"/>
-                <constraint firstAttribute="bottom" secondItem="Ivq-Ox-akd" secondAttribute="bottom" id="WGT-wb-ZsM"/>
+                <constraint firstItem="FeC-Zf-K6H" firstAttribute="top" secondItem="jpK-Lb-eEH" secondAttribute="bottom" id="QWj-z5-h6o"/>
                 <constraint firstItem="06j-4U-M4H" firstAttribute="centerY" secondItem="Z4o-BU-PKx" secondAttribute="centerY" id="dSO-hV-0PP"/>
-                <constraint firstAttribute="trailing" secondItem="Ivq-Ox-akd" secondAttribute="trailing" id="dke-rG-kaJ"/>
+                <constraint firstItem="FeC-Zf-K6H" firstAttribute="trailing" secondItem="06j-4U-M4H" secondAttribute="trailing" id="iRw-PR-Mac"/>
                 <constraint firstItem="5tH-WV-an3" firstAttribute="centerX" secondItem="Z4o-BU-PKx" secondAttribute="centerX" id="lu8-DB-xVr"/>
                 <constraint firstItem="06j-4U-M4H" firstAttribute="centerX" secondItem="Z4o-BU-PKx" secondAttribute="centerX" id="nYp-2L-xaJ"/>
+                <constraint firstItem="FeC-Zf-K6H" firstAttribute="leading" secondItem="06j-4U-M4H" secondAttribute="leading" id="pNA-u2-ltF"/>
                 <constraint firstItem="jpK-Lb-eEH" firstAttribute="centerX" secondItem="Z4o-BU-PKx" secondAttribute="centerX" id="pnh-yR-7dD"/>
-                <constraint firstItem="FeC-Zf-K6H" firstAttribute="leading" secondItem="06j-4U-M4H" secondAttribute="leading" id="tpE-Bf-SRN"/>
-                <constraint firstItem="Ivq-Ox-akd" firstAttribute="top" secondItem="Z4o-BU-PKx" secondAttribute="top" id="z4g-lR-jD2"/>
             </constraints>
             <nil key="simulatedStatusBarMetrics"/>
             <nil key="simulatedBottomBarMetrics"/>
@@ -73,7 +64,6 @@
                 <outlet property="circleImageView" destination="5tH-WV-an3" id="gYQ-6A-PVB"/>
                 <outlet property="containerStackView" destination="FeC-Zf-K6H" id="FDk-Ig-KHq"/>
                 <outlet property="messageLabel" destination="qhS-kr-09N" id="aQ2-uG-apu"/>
-                <outlet property="shadowView" destination="Ivq-Ox-akd" id="4xM-mO-jCr"/>
                 <outlet property="titleLabel" destination="jpK-Lb-eEH" id="YDm-kF-y2K"/>
             </connections>
             <point key="canvasLocation" x="240" y="471"/>

@@ -31,24 +31,18 @@ class PriceRecordsRequest: DochaRequest {
         let configuration = NSURLSessionConfiguration.defaultSessionConfiguration()
         configuration.timeoutIntervalForResource = REQUEST_TIME_OUT
         
-        self.alamofireManager = Alamofire.Manager(configuration: configuration)
-        self.alamofireManager!.request(.POST, url, parameters: parameters as? [String : AnyObject], encoding: .JSON)
+        Alamofire.request(.POST, url, parameters: parameters as? [String: AnyObject], encoding: .JSON)
             .validate()
             .responseJSON { (response) in
+                
                 let statusCode = response.response?.statusCode // Gets HTTP status code, useful for debugging
                 if let status = statusCode {
                     print("Status code : \(status)")
-                }
-                if statusCode == 201 || statusCode == 200 {
-                    if let value: AnyObject = response.result.value {
-                        let jsonResponse = JSON(value)
-                        print(jsonResponse)
-                        success()
-                    }
+                    success()
+                    
                 } else {
-                    failure(error: nil, listErrors: nil)
+                    failure(error: response.result.error, listErrors: nil)
                 }
-        }
-
+            }
     }
 }

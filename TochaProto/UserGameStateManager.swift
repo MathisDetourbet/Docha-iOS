@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import GameKit
 
 struct Reward {
     var dochos: Int?
@@ -34,6 +35,9 @@ class UserGameStateManager {
     var estimationResultsArray: [EstimationResult]?
     var psyAndRealPriceArray: [(psyPrice: Int, realPrice: Int)]?
     var gameRewards: [Reward]?
+    var hasLevelUp: Bool = false
+    var hasUnlockedBadge: Bool = false
+    var dochosAchievement: Int = 0
     
     class var sharedInstance: UserGameStateManager {
         struct Singleton {
@@ -41,23 +45,6 @@ class UserGameStateManager {
         }
         return Singleton.instance
     }
-    
-//    func calculProgressionInPercent() -> Double {
-//        
-//        let currentExperience = getUserExperience()
-//        
-//        
-////        let experience = Double(self.userSession.experience / 100)
-////        
-////        if experience == 0 {
-////            return (0.0, 1)
-////        }
-////        
-////        let currentLevel = log(experience + 1.0) + (1 - log(2.0)) * 1.25
-////        let progression = currentLevel - (floor(currentLevel) * 1)
-////        
-////        return (progression, Int(floor(currentLevel)))
-//    }
     
     func getExperienceProgressionInPercent() -> Double {
         let currentExperience = getUserExperience()
@@ -142,7 +129,6 @@ class UserGameStateManager {
             
             if case priceMin...priceMax = psyPrice {
                 return true
-                
             } else {
                 return false
             }
@@ -150,6 +136,8 @@ class UserGameStateManager {
     }
     
     func saveRewards() {
+        self.hasLevelUp = false
+        self.hasUnlockedBadge = false
         self.userSession = UserSessionManager.sharedInstance.currentSession()!
         var newTotalDochos = userSession.dochos
         var currentExperience = userSession.experience
@@ -177,17 +165,148 @@ class UserGameStateManager {
         if currentExperience >= nextLevelExperience {
             newCurrentLevel += 1
             newCurrentExperience = currentExperience - nextLevelExperience
+            self.hasLevelUp = true
             
         } else {
             newCurrentExperience = currentExperience
         }
         
-        self.userSession.dochos = newTotalDochos
+        // Game Center Achievements
+        let achievementsArray = updateAchievements(newTotalPerfect)
+        if let achievementsArray = achievementsArray {
+            self.reportAchievements(achievementsArray)
+        }
         
+        self.userSession.dochos = newTotalDochos + self.dochosAchievement
         self.userSession.experience = newCurrentExperience
         self.userSession.perfectPriceCpt = newTotalPerfect
         self.userSession.levelMaxUnlocked = newCurrentLevel
-        
         self.userSession.saveSession()
+    }
+    
+    
+//MARK: Game Center Methods
+    
+    func authenticateLocalPlayer() {
+        let localPlayer = GKLocalPlayer.localPlayer()
+        localPlayer.authenticateHandler = {(viewController, error) -> Void in
+            if ((viewController) != nil) {
+                UIApplication.topViewController()!.presentViewController(viewController!, animated: true, completion: nil)
+                
+            } else {
+                UserGameStateManager.sharedInstance.loadAchievementsFromGameCenter()
+            }
+        }
+    }
+    
+    func loadAchievementsFromGameCenter() {
+        let userSession = UserSessionManager.sharedInstance.currentSession()
+        var badgesUnlockedIdentifiers = userSession?.badgesUnlockedIdentifiers
+        if badgesUnlockedIdentifiers == nil {
+            badgesUnlockedIdentifiers = []
+        }
+        
+        GKAchievement.loadAchievementsWithCompletionHandler { (allAchievementsArray, error) in
+            if error != nil {
+                print("Game Center error : Couldn't load user achievements whith error : \(error)")
+                
+            } else {
+                if(allAchievementsArray != nil) {
+                    for achievement in allAchievementsArray! {
+                        if let achievement: GKAchievement = achievement {
+                            if ((badgesUnlockedIdentifiers?.contains(achievement.identifier!))! == false) {
+                                badgesUnlockedIdentifiers?.append(achievement.identifier!)
+                            }
+                        }
+                    }
+                    
+                    userSession?.badgesUnlockedIdentifiers = badgesUnlockedIdentifiers
+                    userSession?.saveSession()
+                }
+            }
+        }
+    }
+    
+    func updateAchievements(newTotalPerfect: Int) -> [GKAchievement]? {
+        self.dochosAchievement = 0
+        var badgesUnlockedArray = self.userSession.badgesUnlockedIdentifiers
+        if badgesUnlockedArray == nil {
+            badgesUnlockedArray = []
+        }
+        
+        var achievementsArray: [GKAchievement] = []
+        let allBadgesIdentifiers = Constants.GameCenterLeaderBoardIdentifiers.kBadgesIdentifiers
+        let perfectNumberBadgeDico = [allBadgesIdentifiers[0] : 5, allBadgesIdentifiers[1] : 25, allBadgesIdentifiers[2] : 100, allBadgesIdentifiers[3] : 500]
+        let dochosRewardsPerfects = [allBadgesIdentifiers[0] : 25, allBadgesIdentifiers[1] : 100, allBadgesIdentifiers[2] : 500, allBadgesIdentifiers[3] : 3000]
+        
+        for (identifier, perfects) in perfectNumberBadgeDico {
+            if newTotalPerfect >= perfects && ((badgesUnlockedArray?.contains(identifier))! == false) {
+                badgesUnlockedArray?.append(identifier)
+                self.hasUnlockedBadge = true
+                self.dochosAchievement += dochosRewardsPerfects[identifier]!
+                let achievement = GKAchievement(identifier: identifier)
+                if newTotalPerfect >= perfects {
+                    achievement.percentComplete = 100.0
+                } else {
+                    achievement.percentComplete = (Double(newTotalPerfect) / Double(perfects)) * 100
+                }
+                achievementsArray.append(achievement)
+            }
+        }
+        
+        let newPerfects = newTotalPerfect - userSession.perfectPriceCpt
+        let perfectFollowingNumberBadgeDico = [allBadgesIdentifiers[4] : 3, allBadgesIdentifiers[5] : 4, allBadgesIdentifiers[6] : 5]
+        let dochosRewardsPerfectsFollowing = [allBadgesIdentifiers[4] : 500, allBadgesIdentifiers[5] : 1000, allBadgesIdentifiers[6] : 5000]
+        
+        if newPerfects >= 3 {
+            for (identifier, perfects) in perfectFollowingNumberBadgeDico {
+                if newPerfects >= perfects && ((badgesUnlockedArray?.contains(identifier))! == false) {
+                    badgesUnlockedArray?.append(identifier)
+                    self.hasUnlockedBadge = true
+                    self.dochosAchievement += dochosRewardsPerfectsFollowing[identifier]!
+                    let achievement = GKAchievement(identifier: identifier)
+                    if newPerfects >= perfects {
+                        achievement.percentComplete = 100.0
+                    } else {
+                        achievement.percentComplete = (Double(newTotalPerfect) / Double(perfects)) * 100
+                    }
+                    achievementsArray.append(achievement)
+                }
+            }
+        }
+        self.userSession.badgesUnlockedIdentifiers = badgesUnlockedArray
+        
+        return achievementsArray
+    }
+    
+    func reportAchievement(identifier: String, percentComplete: Double) {
+        if GKLocalPlayer.localPlayer().authenticated {
+            let achievement = GKAchievement(identifier: identifier)
+            achievement.percentComplete = percentComplete
+            let achievementArray: [GKAchievement] = [achievement]
+            GKAchievement.reportAchievements(achievementArray, withCompletionHandler: { (error) in
+                if error != nil {
+                    print("Game Center report achievement error: \(error)")
+                    
+                } else {
+                    print("Game Center report achievement successful")
+                    
+                }
+            })
+        }
+    }
+    
+    func reportAchievements(achievementsArray: [GKAchievement]) {
+        if GKLocalPlayer.localPlayer().authenticated {
+            GKAchievement.reportAchievements(achievementsArray, withCompletionHandler: { (error) in
+                if error != nil {
+                    print("Game Center report achievements error: \(error)")
+                    
+                } else {
+                    print("Game Center report achievements successful")
+                    
+                }
+            })
+        }
     }
 }

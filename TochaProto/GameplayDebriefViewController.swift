@@ -15,6 +15,7 @@ class GameplayDebriefViewController: GameViewController, UITableViewDelegate, UI
     var productsPlayed: [Product]?
     var webViewController: PBWebViewController?
     var rewards: [Reward]?
+    var psyAndRealPriceArray: [(psyPrice: Int, realPrice: Int)]?
     
     @IBOutlet weak var tableView: UITableView!
     
@@ -22,8 +23,6 @@ class GameplayDebriefViewController: GameViewController, UITableViewDelegate, UI
     @IBOutlet weak var rewardDochosLabel: UILabel!
     @IBOutlet weak var rewardPerfectLabel: UILabel!
     @IBOutlet weak var timelineView: TimelineView!
-    @IBOutlet weak var perfectLabel: UILabel!
-    @IBOutlet weak var dochosLabel: UILabel!
     @IBOutlet weak var levelBarView: LevelBarView!
     
     override func viewDidLoad() {
@@ -32,7 +31,6 @@ class GameplayDebriefViewController: GameViewController, UITableViewDelegate, UI
         // Amplitude
         Amplitude.instance().logEvent("DebriefingGameFinished")
         buildUI()
-        
     }
     
     func buildUI() {
@@ -60,6 +58,14 @@ class GameplayDebriefViewController: GameViewController, UITableViewDelegate, UI
         let newExperience = gameManager.getExperienceProgressionInPercent()
         self.levelBarView.updateLevelBarWithWidth(CGFloat(newExperience))
         
+        if gameManager.hasLevelUp {
+            PopupManager.sharedInstance.showRewardPopup(message: "Bravo, tu viens de débloquer le niveau \(gameManager.getUserLevel()) 😎", completion: nil)
+        }
+        
+        if gameManager.hasUnlockedBadge {
+            PopupManager.sharedInstance.showRewardPopup("Incroyable !", message: "Bien joué, tu as débloqué un nouveau badge ! 👏", completion: nil)
+        }
+        
         // Save products ID Played
         ProductManager.sharedInstance.saveProductsIDPlayed()
         
@@ -73,7 +79,6 @@ class GameplayDebriefViewController: GameViewController, UITableViewDelegate, UI
     func updateRewards() {
         let params = UserSessionManager.sharedInstance.currentSession()?.generateJSONFromUserSession()
         UserSessionManager.sharedInstance.updateUserProfil(params!, success: {
-                
                 print("Success categories VC")
             }) { (error, listError) in
                 print("Fail categories VC")
@@ -96,6 +101,12 @@ class GameplayDebriefViewController: GameViewController, UITableViewDelegate, UI
         cell?.productLink = self.productsPlayed![indexPath.row].pageURL
         cell?.delegate = self
         cell?.dochosLabel.text = "\(String(self.rewards![indexPath.row].dochos!))"
+        let psyPrice = psyAndRealPriceArray![indexPath.row].psyPrice
+        if psyPrice >= 0 {
+            cell?.userEstimationLabel.text = "Ton estimation : \(psyPrice) €"
+        } else {
+            cell?.userEstimationLabel.text = ""
+        }
         
         return cell!
     }
@@ -120,27 +131,25 @@ class GameplayDebriefViewController: GameViewController, UITableViewDelegate, UI
         
         let productManager = ProductManager.sharedInstance
         
-        self.tabBarController!.presentViewController(PopupManager.sharedInstance.showLoadingPopup("Chargement en cours...", message: "Nous préparons tes produits."), animated: true) {
-            
-            PopupManager.sharedInstance.modalAnimationFinished()
-            
-            productManager.getPackOfProducts({ (finished, packOfProducts) in
-                if finished && packOfProducts != nil {
-                    self.dismissViewControllerAnimated(true, completion: {
-                        let gameplayVC = self.storyboard?.instantiateViewControllerWithIdentifier("idGameplayViewController") as! GameplayViewController
-                        gameplayVC.productsList = packOfProducts
-                        self.hidesBottomBarWhenPushed = true
-                        self.navigationController?.pushViewController(gameplayVC, animated: true)
-                    })
-                    
-                } else {
-                    print("Error when loading products...")
-                    self.tabBarController!.presentViewController(PopupManager.sharedInstance.showErrorPopup("Oups !", message: "La connexion internet semble interrompue. Essaie à nouveau ultérieurement."), animated: true) {
-                        PopupManager.sharedInstance.modalAnimationFinished()
+        PopupManager.sharedInstance.showLoadingPopup("Chargement en cours...", message: "Nous préparons tes produits.", completion: {
+            dispatch_async(dispatch_get_main_queue(), {
+                
+                productManager.getPackOfProducts({ (finished, packOfProducts) in
+                    if finished && packOfProducts != nil {
+                        PopupManager.sharedInstance.dismissPopup(true, completion: {
+                            let gameplayVC = self.storyboard?.instantiateViewControllerWithIdentifier("idGameplayViewController") as! GameplayViewController
+                            gameplayVC.productsList = packOfProducts
+                            self.hidesBottomBarWhenPushed = true
+                            self.navigationController?.pushViewController(gameplayVC, animated: true)
+                        })
+                        
+                    } else {
+                        print("Error when loading products...")
+                        PopupManager.sharedInstance.showErrorPopup("Oups !", message: "La connexion internet semble interrompue. Essaie à nouveau ultérieurement.", completion: nil)
                     }
-                }
+                })
             })
-        }
+        })
     }
     
     func discoverProductActionWithURL(url: String) {

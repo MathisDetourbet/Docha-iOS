@@ -31,6 +31,7 @@ struct UserDataKey {
     static let kGooglePlusToken = "oauth_token"
     static let kAuthToken = "auth_token"
     static let kSessionID = "session_id"
+    static let kBadgesUnlockedIdentifiers = "badges_unlocked_identifiers"
 }
 
 struct Constants {
@@ -63,6 +64,7 @@ struct Constants {
         static let kUserInfosProfileImageFilePath = "userInfosProfileImageFilePath"
         static let kProductsIDPlayed = "userInfosProductsIDPlayed"
         static let kProfilImagePrefered = "userInfoProfilImagePrefered"
+        static let kUserInfosBadgesUnlockedIdentifiers = "userInfosBadgesUnlockedIdentifiers"
     }
     
     struct DataRecordsKey {
@@ -77,6 +79,10 @@ struct Constants {
     struct UserAuthentificationKey {
         static let kUserAuthentificationToken = "userAuthTokenKey"
         static let kGooglePlusClientId = "155812467582-3s7hf6qnffet4s5qf4dpuh5shu64celn.apps.googleusercontent.com"
+    }
+    
+    struct GameCenterLeaderBoardIdentifiers {
+        static let kBadgesIdentifiers = ["docha.leaderboard_total_perfects_5", "docha.leaderboard_total_perfects_25", "docha.leaderboard_total_perfects_100", "docha.leaderboard_total_perfects_500", "docha.leaderboard_following_perfects_3", "docha.leaderboard_following_perfects_4", "docha.leaderboard_following_perfects_5"]
     }
     
     struct UrlServer {

@@ -320,8 +320,9 @@ class PreferencesChangeProfilViewController: RootViewController, UITableViewDele
             
             let pseudoCell = self.tableView.cellForRowAtIndexPath(self.pseudoIndexPath!) as! PreferencesChangePseudoTableViewCell
             let pseudoString = pseudoCell.pseudoTextField.text
+            let currentPseudo = UserSessionManager.sharedInstance.currentSession()?.username
             if let pseudo = pseudoString {
-                if pseudo != "" {
+                if pseudo != currentPseudo {
                     needToUpdateProfil = true
                     dicoParameters[UserDataKey.kUsername] = pseudo
                 }
@@ -366,23 +367,19 @@ class PreferencesChangeProfilViewController: RootViewController, UITableViewDele
 //MARK: @IBActions
     
     @IBAction func validBarButtonItemTouched(sender: UIBarButtonItem) {
-        self.tabBarController!.presentViewController(PopupManager.sharedInstance.showLoadingPopup("Mise à jour de ton profil...", message: nil), animated: true) {
-            PopupManager.sharedInstance.modalAnimationFinished()
+        PopupManager.sharedInstance.showLoadingPopup("Mise à jour de ton profil...", message: nil, completion: {
             self.saveUserProfilDataWithCompletion { (success) in
-                self.dismissViewControllerAnimated(true, completion: {
-                    
+                PopupManager.sharedInstance.dismissPopup(true, completion: {
                     if success {
                         UserSessionManager.sharedInstance.needsToUpdateHome = true
                         self.navigationController?.popViewControllerAnimated(true)
                         
                     } else {
-                        self.presentViewController(PopupManager.sharedInstance.showErrorPopup("Oups !", message: "La connexion internet semble interrompue. Essaie à nouveau ultérieurement."), animated: true) {
-                            PopupManager.sharedInstance.modalAnimationFinished()
-                        }
+                        PopupManager.sharedInstance.showErrorPopup("Oups !", message: "La connexion internet semble interrompue. Essaie à nouveau ultérieurement.", completion: nil)
                     }
                 })
             }
-        }
+        })
     }
     
     @IBAction func cancelBarButtonItemTouched(sender: UIBarButtonItem) {

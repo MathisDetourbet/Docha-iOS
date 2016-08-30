@@ -126,10 +126,9 @@ class InscriptionIdentifiantsViewController: RootViewController, UITextFieldDele
                 
                 if(fbloginresult.grantedPermissions.contains("email"))
                 {
-                    self.presentViewController(PopupManager.sharedInstance.showLoadingPopup("Connexion en cours...", message: nil), animated: true) {
-                        PopupManager.sharedInstance.modalAnimationFinished()
+                    PopupManager.sharedInstance.showLoadingPopup("Connexion en cours...", message: nil, completion: {
                         self.getFBUserData()
-                    }
+                    })
                 }
             }
         }
@@ -147,9 +146,7 @@ class InscriptionIdentifiantsViewController: RootViewController, UITextFieldDele
         }) { (error, listError) in
             // Fail
             self.dismissViewControllerAnimated(true, completion: {
-                self.presentViewController(PopupManager.sharedInstance.showInfosPopup("Oups !", message: "Une erreur est survenue. Essaie à nouveau ultérieurement."), animated: true) {
-                    PopupManager.sharedInstance.modalAnimationFinished()
-                }
+                PopupManager.sharedInstance.showInfosPopup("Oups !", message: "Une erreur est survenue. Essaie à nouveau ultérieurement.", completion: nil)
             })
             print("error saving Facebook user data in database : \(error)")
             print("list error : \(listError)")
@@ -178,14 +175,10 @@ class InscriptionIdentifiantsViewController: RootViewController, UITextFieldDele
                 }
                 
             } else {
-                self.presentViewController(PopupManager.sharedInstance.showErrorPopup("Oups !", message: "Vérifie que ton mot de passe possède au minimum 6 caractères."), animated: true) {
-                    PopupManager.sharedInstance.modalAnimationFinished()
-                }
+                PopupManager.sharedInstance.showErrorPopup("Oups !", message: "Vérifie que ton mot de passe possède au minimum 6 caractères.", completion: nil)
             }
         } else {
-            self.presentViewController(PopupManager.sharedInstance.showErrorPopup("Oups !", message: "Cette adresse email n'est pas valide."), animated: true) {
-                PopupManager.sharedInstance.modalAnimationFinished()
-            }
+            PopupManager.sharedInstance.showErrorPopup("Oups !", message: "Cette adresse email n'est pas valide.", completion: nil)
         }
     }
     

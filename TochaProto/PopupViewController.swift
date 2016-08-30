@@ -8,7 +8,7 @@
 
 import Foundation
 
-public enum PopupType {
+public enum PopupType: Int {
     case Loading
     case Infos
     case Error
@@ -57,10 +57,6 @@ class PopupViewController: UIViewController {
     override func prefersStatusBarHidden() -> Bool {
         return true
     }
-    
-    func startShadowAnimation() {
-        self.popupView!.shadowAnimation()
-    }
 }
 
 class DonePopupViewController: PopupViewController {
@@ -79,8 +75,8 @@ class DonePopupViewController: PopupViewController {
     }
     
     func doneButtonTouched() {
-        self.popupView?.shadowView?.alpha = 0.0
-        self.dismissViewControllerAnimated(true, completion: nil)
+        PopupManager.sharedInstance.dismissPopup(true, completion: nil)
+        //self.dismissViewControllerAnimated(true, completion: nil)
     }
 }
 
@@ -135,11 +131,6 @@ class LoadingPopViewController: PopupViewController {
         self.popupView!.circleImageView.addConstraint(NSLayoutConstraint(item: loaderImageView!, attribute: .CenterX, relatedBy: .Equal, toItem: self.popupView!.circleImageView, attribute: .CenterX, multiplier: 1.0, constant: 0.0))
         self.popupView!.circleImageView.addConstraint(NSLayoutConstraint(item: loaderImageView!, attribute: .CenterY, relatedBy: .Equal, toItem: self.popupView!.circleImageView, attribute: .CenterY, multiplier: 1.0, constant: 0.0))
         loaderImageView!.startAnimating()
-    }
-    
-    override func dismissViewControllerAnimated(flag: Bool, completion: (() -> Void)?) {
-        super.dismissViewControllerAnimated(flag, completion: completion)
-        self.loaderImageView?.stopAnimating()
     }
 }
 

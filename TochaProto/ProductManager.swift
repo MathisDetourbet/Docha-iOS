@@ -71,7 +71,7 @@ class ProductManager {
     }
     
     func loadProductsWithCurrentCategory() {
-        let jsonName = "products_beta_1"
+        let jsonName = "products_beta_v0.2"
         guard
             let jsonPath = NSBundle.mainBundle().pathForResource(jsonName, ofType: "json"),
             let jsonData = NSData.init(contentsOfFile: jsonPath),
@@ -155,7 +155,7 @@ class ProductManager {
                 let product = productsShuffled[index]
                 
                 if (!(productsIDPlayed.contains(product.id)) &&
-                    ((product.gender == userGender) || (product.gender == .Universal)) ||
+                    ((product.gender == userGender) || (product.gender == .Universal)) &&
                     (self.currentPackOfProducts?.contains(product) == false)) {
                     
                     packOfProducts?.append(product)
@@ -180,7 +180,7 @@ class ProductManager {
                     let product = productsShuffled[index]
                     
                     if (!(productsIDPlayed.contains(product.id)) &&
-                        ((product.gender == userGender) || (product.gender == .Universal)) ||
+                        ((product.gender == userGender) || (product.gender == .Universal)) &&
                         (self.currentPackOfProducts?.contains(product) == false)) {
                         
                         packOfProducts?.append(product)
@@ -204,7 +204,7 @@ class ProductManager {
                 let product = productsShuffled[index]
                 
                 if (!(productsIDPlayed.contains(product.id)) &&
-                    ((product.gender == userGender) || (product.gender == .Universal)) ||
+                    ((product.gender == userGender) || (product.gender == .Universal)) &&
                     (self.currentPackOfProducts?.contains(product) == false)) {
                     
                     packOfProducts?.append(product)

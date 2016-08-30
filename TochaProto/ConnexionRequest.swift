@@ -67,6 +67,15 @@ class ConnexionRequest: DochaRequest {
                                         session.gender = jsonResponse["data"]["user"][UserDataKey.kGender].string
                                         session.avatar = jsonResponse["data"]["user"][UserDataKey.kAvatar].string
                                         
+//                                        let badgesArrayJSON = jsonResponse["data"]["user"][UserDataKey.kBadgesUnlockedIdentifiers].array
+//                                        if let badgesArrayJSON = badgesArrayJSON {
+//                                            var badgesUnlockedArray: [String] = []
+//                                            for badge in badgesArrayJSON {
+//                                                badgesUnlockedArray.append(badge.stringValue)
+//                                            }
+//                                            session.badgesUnlockedIdentifiers = badgesUnlockedArray
+//                                        }
+                                        
                                         success(session: session)
                                         
                                     } else {
