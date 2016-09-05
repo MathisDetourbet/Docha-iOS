@@ -36,7 +36,7 @@ class InscriptionProfilViewController: RootViewController {
         super.viewDidLoad()
         
         self.navigationItem.setHidesBackButton(true, animated: false)
-        self.configNavigationBarWithTitle("Choisissez votre avatar", andFontSize: 13.0)
+        self.configNavigationBarWithTitle("Choisissez votre avatar")
         
         let userGender = UserSessionManager.sharedInstance.dicoUserDataInscription!["sexe"] as? String
         
@@ -81,7 +81,6 @@ class InscriptionProfilViewController: RootViewController {
             
             UserSessionManager.sharedInstance.inscriptionEmail(registrationParams,success: { (session) in
                 print("Saving in the database : success !")
-                UserSessionManager.sharedInstance.currentSession()!.updateProfilImagePrefered(.AvatarDochaImage)
                 
                 PopupManager.sharedInstance.dismissPopup(true, completion: {
                     self.goToHome()

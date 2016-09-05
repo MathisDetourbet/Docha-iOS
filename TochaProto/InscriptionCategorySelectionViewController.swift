@@ -9,15 +9,15 @@
 import Foundation
 import SCLAlertView
 
-class InscriptionCategorySelectionViewController: RootViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+class InscriptionCategorySelectionViewController: RootViewController, UICollectionViewDelegate, UICollectionViewDataSource {
     
     let CATEGORY_NUMBER = 10
     let reuseIdentifier = "idCategoryCollectionCell"
     
     let categoriesImagesPathArray = ["lifestyle", "high-tech", "maison_deco", "bijoux_montres", "electromenager", "art", "objets_connectes", "gastronomie_vin", "beauty", "sport"]
+    let categoriesNames = ["Lifestyle", "High-Tech", "Maison / déco", "Bijoux / Montres", "Électroménager", "Art", "Objets connectés", "Gastronomie", "Beauté", "Sport"]
     var categoriesImages = [UIImage]?()
-    var categoryPrefered: String?
-    var oldCategoryIndexPath: NSIndexPath?
+    var categoryPrefered: [String]?
     var comeFromConnexionVC: Bool = false
     
     @IBOutlet weak var backButton: UIBarButtonItem!
@@ -32,8 +32,9 @@ class InscriptionCategorySelectionViewController: RootViewController, UICollecti
         
         self.collectionView.backgroundColor = UIColor.clearColor()
         self.collectionView.backgroundView = nil
+        self.categoryPrefered = []
         
-        self.configNavigationBarWithTitle("Choisissez votre catégorie préférée", andFontSize: 13.0)
+        self.configNavigationBarWithTitle("Choisis tes catégories préférées")
         
         loadData()
     }
@@ -50,8 +51,9 @@ class InscriptionCategorySelectionViewController: RootViewController, UICollecti
         
         self.collectionView.reloadData()
     }
+
     
-    //MARK: Collection View Data Source Methods
+//MARK: Collection View Data Source Methods
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return CATEGORY_NUMBER
@@ -67,29 +69,33 @@ class InscriptionCategorySelectionViewController: RootViewController, UICollecti
         cell.categoryImageView.image = self.categoriesImages![indexPath.item]
         cell.categoryName = self.categoriesImagesPathArray[indexPath.item]
         cell.imageSelected = false
+        cell.categoryNameLabel.text = self.categoriesNames[indexPath.item]
+        
         return cell
     }
     
-    //MARK: Collection View Delegate Methods
+    
+//MARK: Collection View Delegate Methods
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-        // Deselect old cell
-        if self.oldCategoryIndexPath != nil {
-            let oldCellSelected = collectionView.cellForItemAtIndexPath(oldCategoryIndexPath!) as! InscriptionCategoryCollectionViewCell
-            oldCellSelected.imageSelected = false
-        }
-        
         let cellSelected = collectionView.cellForItemAtIndexPath(indexPath) as! InscriptionCategoryCollectionViewCell
-        cellSelected.imageSelected = true
-        self.categoryPrefered = cellSelected.categoryName!
-        self.oldCategoryIndexPath = indexPath
+        if cellSelected.imageSelected {
+            cellSelected.imageSelected = false
+            self.categoryPrefered?.removeObject(cellSelected.categoryName)
+            
+        } else {
+            cellSelected.imageSelected = true
+            self.categoryPrefered?.append(cellSelected.categoryName)
+        }
         
         UIView.animateWithDuration(0.3) {
             self.footerValidateView.alpha = 1.0
         }
     }
+  
     
-    // MARK: @IBAction
+//MARK: @IBAction
+    
     @IBAction func validButtonTouched(sender: UIButton) {
         let currentSessionManager = UserSessionManager.sharedInstance
         

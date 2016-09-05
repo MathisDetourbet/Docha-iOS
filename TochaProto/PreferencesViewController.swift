@@ -15,12 +15,14 @@ class PreferencesViewController: GameViewController, UITableViewDelegate, UITabl
 
     let idNormalTableViewCell = "idNormalTableViewCell"
     let idSwitchTableViewCell = "idSwitchTableViewCell"
-    let sections: [String] = ["COMPTE", "PARAMÈTRES", "AUTRES"]
-    let cellContent: [[[String:String]]] = [[["title":"Modifier le profil","iconPath": "profil_icon"], ["title":"Changer le mot de passe","iconPath": "password_change_icon"], ["title":"Catégorie préférée","iconPath": "category_selection_icon"]],
-                                            [["title":"Notifications","iconPath": "notifications_icon"], ["title":"Newsletter","iconPath": "newsletter_icon"], ["title":"Langue","iconPath": "language_icon"]],
-                                            [["title":"À propos","iconPath": "rocket_icon"], ["title":"Que pensez-vous de Docha ?","iconPath": "mail_icon"]]]
-    let categorieTranslator: [String: String] = ["lifestyle":"Lifestyle", "high-tech":"Hi-tech", "maison_deco": "Maison & décoration", "bijoux_montres": "Bijoux & montres", "electromenager": "Électroménager", "objets_connectes": "Objets connectés", "gastronomie_vin": "Gastronomie & vin", "beauty": "Beauté", "art": "Art", "sport": "Sport"]
-    
+    let sections: [String] = ["COMPTE", "INFORMATIONS"]
+    let cellContent: [[[String:String]]] = [[["title" : "Modifier le profil", "iconPath" : "profil_icon"],
+                                            ["title" : "Changer le mot de passe", "iconPath" : "password_change_icon"],
+                                            ["title" : "Catégories préférées", "iconPath" : "category_selection_icon"]],
+                                            [["title" :"Notifications", "iconPath" : "notifications_icon"],
+                                            ["title" : "À propos", "iconPath" : "rocket_icon"],
+                                            ["title" : "Tutoriel", "iconPath" : "play_icon"],
+                                            ["title" :"Donne nous ton avis !","iconPath": "mail_icon"]]]
     @IBOutlet weak var tableView: UITableView!
     
     override func viewDidLoad() {
@@ -34,8 +36,7 @@ class PreferencesViewController: GameViewController, UITableViewDelegate, UITabl
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        configGameNavigationBar()
-        configTitleViewDocha()
+        self.configNavigationBarWithTitle("Préférences")
         self.tableView.reloadData()
     }
     
@@ -86,13 +87,10 @@ class PreferencesViewController: GameViewController, UITableViewDelegate, UITabl
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        if (indexPath.section == 1) && (indexPath.row < self.cellContent[indexPath.section][indexPath.row].count) {
+        if cellContent[indexPath.section][indexPath.row]["title"] == "Notifications" {
             let cell = tableView.dequeueReusableCellWithIdentifier(self.idSwitchTableViewCell, forIndexPath: indexPath) as? PreferencesSwitchTableViewCell
             let cellTitle = self.cellContent[1][indexPath.row]["title"]
             cell?.titleLabel.text = cellTitle
-            if cellTitle == "Langue" {
-                cell?.selectionStyle = .None
-            }
             cell?.iconImageView.image = UIImage(named: self.cellContent[indexPath.section][indexPath.row]["iconPath"]!)
             
             return cell!
@@ -101,14 +99,8 @@ class PreferencesViewController: GameViewController, UITableViewDelegate, UITabl
             let cell = tableView.dequeueReusableCellWithIdentifier(self.idNormalTableViewCell, forIndexPath: indexPath) as? PreferencesNormalTableViewCell
             let title = self.cellContent[indexPath.section][indexPath.row]["title"]
             cell?.titleLabel.text = title
-            if title! == "Catégorie préférée" {
-                cell?.categoryFavoriteLabel.text = self.categorieTranslator[(UserSessionManager.sharedInstance.currentSession()?.categoryFavorite)!]
-                cell?.accessoryType = .DisclosureIndicator
-            } else {
-                (cell?.categoryFavoriteLabel.text = "")
-            }
-            cell?.widthCategoryLabelConstraint.constant = (cell?.frame.width)! - ((cell?.titleLabel.frame.origin.x)! + (cell?.titleLabel.frame.width)! + 20.0 + 20.0)
             cell?.iconImageView.image = UIImage(named: self.cellContent[indexPath.section][indexPath.row]["iconPath"]!)
+            cell?.accessoryType = .DisclosureIndicator
             
             return cell!
         }
@@ -144,23 +136,17 @@ class PreferencesViewController: GameViewController, UITableViewDelegate, UITabl
             }
             break
         case 1:
-            // Paramètres section
-            switch indexPath.row {
-            case 2:
-                // Langue
-                PopupManager.sharedInstance.showInfosPopup("Info", message: "Encore un peu de patience, cette fonctionnalité sera bientôt disponible. 😉", completion: nil)
-            default:
-                break
-            }
-            break
-        default:
-            // Autres section
-            if indexPath.row == 0 {
+            // Informations section
+            if indexPath.row == 1 {
                 // A propos
                 let aboutVC = self.storyboard?.instantiateViewControllerWithIdentifier("idPreferencesAboutViewController") as! PreferencesAboutViewController
                 self.navigationController?.pushViewController(aboutVC, animated: true)
                 
-            } else if indexPath.row == 1 {
+            } else if indexPath.row == 2 {
+                // Tutoriel
+                
+                
+            } else if indexPath.row == 3 {
                 // Feedbacks
                 let url = NSURL(string: "https://morganegr.typeform.com/to/NbeMZ2")
                 let feedbackWebVC = self.storyboard?.instantiateViewControllerWithIdentifier("idPreferencesFeedbackWebViewController") as! PreferencesFeedbackViewController
@@ -171,6 +157,8 @@ class PreferencesViewController: GameViewController, UITableViewDelegate, UITabl
                 feedbackWebVC.hidesBottomBarWhenPushed = true
                 self.navigationController?.pushViewController(feedbackWebVC, animated: true)
             }
+        default:
+            // Autres section
             break
         }
         self.tableView.deselectRowAtIndexPath(indexPath, animated: true)
@@ -215,6 +203,9 @@ class PreferencesViewController: GameViewController, UITableViewDelegate, UITabl
         shareDialog.shareContent = content
         shareDialog.mode = .ShareSheet
         shareDialog.show()
+    }
+    @IBAction func doneButtonTouched(sender: UIBarButtonItem) {
+        self.dismissViewControllerAnimated(true, completion: nil)
     }
     
     func logoutButtonTouched() {

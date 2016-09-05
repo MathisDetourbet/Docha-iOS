@@ -20,7 +20,12 @@ class BadgesViewController: RootViewController, UITableViewDelegate, UITableView
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.configNavigationBarWithTitle("Badges", andFontSize: 15.0)
+        self.configNavigationBarWithTitle("Badges")
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        self.navigationController?.navigationBarHidden = false
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

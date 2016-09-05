@@ -10,17 +10,22 @@ import Foundation
 
 class InscriptionCategoryCollectionViewCell: UICollectionViewCell {
     
-    var categoryName: String?
+    var categoryName: String! {
+        didSet {
+            self.categoryNameLabel.text = categoryName
+        }
+    }
     
     var imageSelected: Bool = false {
         didSet {
             if imageSelected {
-                self.categoryImageView.image = UIImage(named: "\(self.categoryName!)_selected")
+                self.categoryImageView.image = UIImage(named: "\(self.categoryName)_selected")
             } else {
-                self.categoryImageView.image = UIImage(named: self.categoryName!)
+                self.categoryImageView.image = UIImage(named: self.categoryName)
             }
         }
     }
     
     @IBOutlet weak var categoryImageView: UIImageView!
+    @IBOutlet weak var categoryNameLabel: UILabel!
 }

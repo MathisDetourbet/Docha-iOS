@@ -19,10 +19,8 @@ class NavSchemeManager {
         let window: UIWindow = ((UIApplication.sharedApplication().delegate?.window)!)!
         
         if UserSessionManager.sharedInstance.isLogged() {
-            window.rootViewController = window.rootViewController?.storyboard?.instantiateViewControllerWithIdentifier("idDochaTabBarController") as! UITabBarController
-            let tabBarController = window.rootViewController as! UITabBarController
-            tabBarController.selectedIndex = 1
-            (window.rootViewController as! UITabBarController).tabBar.tintColor = UIColor.redDochaColor()
+            window.rootViewController = window.rootViewController?.storyboard?.instantiateViewControllerWithIdentifier("idHomeNavController") as! UINavigationController
+            
         } else {
             window.rootViewController = window.rootViewController?.storyboard?.instantiateViewControllerWithIdentifier("idStarterNavController")
         }

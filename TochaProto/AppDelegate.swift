@@ -16,7 +16,7 @@ import Fabric
 import Crashlytics
 import Amplitude_iOS
 
-public var testing = false
+public var testing = true
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
@@ -119,6 +119,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
                     })
                 } else {
                     print("Facebook get user data : error : \(error)")
+                    failure(error: error, listError: nil)
                 }
             })
         }
@@ -175,8 +176,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
                                     categoryViewController.comeFromConnexionVC = true
                                     viewController?.navigationController?.pushViewController(categoryViewController, animated: true)
                                 } else {
-                                    let categoryViewController = viewController?.storyboard?.instantiateViewControllerWithIdentifier("idDochaTabBarController") as! UITabBarController
-                                    NavSchemeManager.sharedInstance.changeRootViewController(categoryViewController)
+                                    let homeViewController = viewController?.storyboard?.instantiateViewControllerWithIdentifier("idHomeNavController") as! HomeViewController
+                                    NavSchemeManager.sharedInstance.changeRootViewController(homeViewController)
                                 }
                             }, fail: { (error, listError) in
                                 print("error saving GooglePlus user data in database : \(error)")

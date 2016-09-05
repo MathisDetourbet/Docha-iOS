@@ -15,7 +15,6 @@ class StorePagerViewController: GameViewController, CAPSPageMenuDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         configGameNavigationBar()
-        configTitleViewDocha()
         
         var controllerArray: [RootViewController] = []
         

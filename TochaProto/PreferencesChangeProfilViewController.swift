@@ -44,7 +44,7 @@ class PreferencesChangeProfilViewController: RootViewController, UITableViewDele
 //MARK: UITableViewDataSource Methods
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 4
+        return 3
     }
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
@@ -54,7 +54,7 @@ class PreferencesChangeProfilViewController: RootViewController, UITableViewDele
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         if indexPath.row == 0 {
             let cell = tableView.dequeueReusableCellWithIdentifier("idPreferencesChangePseudoCell") as! PreferencesChangePseudoTableViewCell
-            let userName = userSession?.username
+            let userName = userSession?.pseudo
             if userName != nil && userName != "" {
                 cell.pseudoTextField.text = userName
                 cell.pseudoTextField.font = UIFont(name: "Montserrat-Regular", size: 15.0)
@@ -74,13 +74,13 @@ class PreferencesChangeProfilViewController: RootViewController, UITableViewDele
             
         } else {
             let cell = tableView.dequeueReusableCellWithIdentifier("idPreferencesChangeProfilCell") as! PreferencesChangeProfilTableViewCell
+//            if indexPath.row == 1 {
+//                cell.titleLabel.text = "Avatar / Photo de profil"
+//                cell.imageViewCell.image = UIImage(named: "smile_icon")
+//                cell.accessoryType = .DisclosureIndicator
+//                self.avatarIndexPath = indexPath
+            
             if indexPath.row == 1 {
-                cell.titleLabel.text = "Avatar / Photo de profil"
-                cell.imageViewCell.image = UIImage(named: "smile_icon")
-                cell.accessoryType = .DisclosureIndicator
-                self.avatarIndexPath = indexPath
-                
-            } else if indexPath.row == 2 {
                 let newCell = tableView.dequeueReusableCellWithIdentifier("idPreferencesChangePseudoCell") as! PreferencesChangePseudoTableViewCell
                 newCell.pseudoTextField.attributedPlaceholder = NSAttributedString(string: "Anniversaire", attributes: [NSFontAttributeName: UIFont(name: "Montserrat-Regular", size: 15.0)!])
                 
@@ -100,7 +100,7 @@ class PreferencesChangeProfilViewController: RootViewController, UITableViewDele
                 
                 return newCell
                 
-            } else if indexPath.row == 3 {
+            } else if indexPath.row == 2 {
                 let gender = userSession!.gender
                 
                 if let genderString = gender {
@@ -126,68 +126,68 @@ class PreferencesChangeProfilViewController: RootViewController, UITableViewDele
 //MARK: UITableViewDelegate Methods
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        if indexPath.row == 1 {
-            let alertController = UIAlertController(title: "Choisir une action", message: nil, preferredStyle: .ActionSheet)
-            alertController.view.tintColor = UIColor.redDochaColor()
-            var action = UIAlertAction(title: "Choisir un avatar Docha", style: .Default, handler: { (_) in
-                let chooseAvatarVC = self.storyboard?.instantiateViewControllerWithIdentifier("idChooseAvatarViewController") as! PreferencesChoosAvatarViewController
-                chooseAvatarVC.delegate = self
-                if let genderNotConvertedString = self.genderNotConverted {
-                    var finalGender = ""
-                    if genderNotConvertedString == "Homme" {
-                        finalGender = "M"
-                        
-                    } else if genderNotConvertedString == "Femme" {
-                        finalGender = "F"
-                        
-                    } else {
-                        finalGender = "U"
-                    }
-                    chooseAvatarVC.userGender = finalGender
-                } else {
-                    let gender = self.userSession!.gender
-                    if let gender = gender {
-                        chooseAvatarVC.userGender = gender
-                    }
-                }
-                self.presentViewController(chooseAvatarVC, animated: true, completion: nil)
-            })
-            alertController.addAction(action)
+//        if indexPath.row == 1 {
+//            let alertController = UIAlertController(title: "Choisir une action", message: nil, preferredStyle: .ActionSheet)
+//            alertController.view.tintColor = UIColor.redDochaColor()
+//            var action = UIAlertAction(title: "Choisir un avatar Docha", style: .Default, handler: { (_) in
+//                let chooseAvatarVC = self.storyboard?.instantiateViewControllerWithIdentifier("idChooseAvatarViewController") as! PreferencesChoosAvatarViewController
+//                chooseAvatarVC.delegate = self
+//                if let genderNotConvertedString = self.genderNotConverted {
+//                    var finalGender = ""
+//                    if genderNotConvertedString == "Homme" {
+//                        finalGender = "M"
+//                        
+//                    } else if genderNotConvertedString == "Femme" {
+//                        finalGender = "F"
+//                        
+//                    } else {
+//                        finalGender = "U"
+//                    }
+//                    chooseAvatarVC.userGender = finalGender
+//                } else {
+//                    let gender = self.userSession!.gender
+//                    if let gender = gender {
+//                        chooseAvatarVC.userGender = gender
+//                    }
+//                }
+//                self.presentViewController(chooseAvatarVC, animated: true, completion: nil)
+//            })
+//            alertController.addAction(action)
+//            
+//            action = UIAlertAction(title: "Choisir dans vos albums", style: .Default, handler: { (_) in
+//                self.imagePicker.allowsEditing = false
+//                self.imagePicker.sourceType = .PhotoLibrary
+//                self.presentViewController(self.imagePicker, animated: true, completion: nil)
+//            })
+//            alertController.addAction(action)
+//            
+//            action = UIAlertAction(title: "Prendre une photo", style: .Default, handler: { (_) in
+//                if (UIImagePickerController.availableCaptureModesForCameraDevice(.Front) != nil) || (UIImagePickerController.availableCaptureModesForCameraDevice(.Rear) != nil) {
+//                    self.imagePicker.allowsEditing = false
+//                    self.imagePicker.sourceType = .Camera
+//                    self.imagePicker.cameraCaptureMode = .Photo
+//                    self.imagePicker.modalPresentationStyle = .FullScreen
+//                    self.presentViewController(self.imagePicker, animated: true, completion: nil)
+//                    
+//                } else {
+//                    self.noCameraAlert()
+//                }
+//            })
+//            alertController.addAction(action)
+//            
+//            let cancelAction = UIAlertAction(title: "Annuler", style: .Cancel, handler: { (_) in
+//                self.tableView.deselectRowAtIndexPath(indexPath, animated: true)
+//            })
+//            alertController.addAction(cancelAction)
+//            self.presentViewController(alertController, animated: true, completion: nil)
+//            alertController.view.tintColor = UIColor.redDochaColor()
             
-            action = UIAlertAction(title: "Choisir dans vos albums", style: .Default, handler: { (_) in
-                self.imagePicker.allowsEditing = false
-                self.imagePicker.sourceType = .PhotoLibrary
-                self.presentViewController(self.imagePicker, animated: true, completion: nil)
-            })
-            alertController.addAction(action)
-            
-            action = UIAlertAction(title: "Prendre une photo", style: .Default, handler: { (_) in
-                if (UIImagePickerController.availableCaptureModesForCameraDevice(.Front) != nil) || (UIImagePickerController.availableCaptureModesForCameraDevice(.Rear) != nil) {
-                    self.imagePicker.allowsEditing = false
-                    self.imagePicker.sourceType = .Camera
-                    self.imagePicker.cameraCaptureMode = .Photo
-                    self.imagePicker.modalPresentationStyle = .FullScreen
-                    self.presentViewController(self.imagePicker, animated: true, completion: nil)
-                    
-                } else {
-                    self.noCameraAlert()
-                }
-            })
-            alertController.addAction(action)
-            
-            let cancelAction = UIAlertAction(title: "Annuler", style: .Cancel, handler: { (_) in
-                self.tableView.deselectRowAtIndexPath(indexPath, animated: true)
-            })
-            alertController.addAction(cancelAction)
-            self.presentViewController(alertController, animated: true, completion: nil)
-            alertController.view.tintColor = UIColor.redDochaColor()
-            
-        } else if  indexPath.row == 2 {
+        if  indexPath.row == 1 {
             let cell = tableView.cellForRowAtIndexPath(indexPath) as! PreferencesChangePseudoTableViewCell
             textFieldTouched(cell.pseudoTextField)
             self.tableView.deselectRowAtIndexPath(indexPath, animated: true)
             
-        } else if indexPath.row == 3 {
+        } else if indexPath.row == 2 {
             let alertController = UIAlertController(title: "Sexe", message: nil, preferredStyle: .ActionSheet)
             alertController.view.tintColor = UIColor.redDochaColor()
             let genderArray = ["Homme", "Femme", "Autre"]
@@ -288,20 +288,18 @@ class PreferencesChangeProfilViewController: RootViewController, UITableViewDele
         var needToUpdateProfil = false
         
         // Save Profile Image
-        if let _ = self.imageViewPicked, imageToSave = self.imageViewPicked?.image {
-            needToUpdateProfil = true
-            UserSessionManager.sharedInstance.currentSession()?.saveProfileImage(imageToSave)
-            UserSessionManager.sharedInstance.currentSession()!.updateProfilImagePrefered(.PhotoImage)
-        }
+//        if let _ = self.imageViewPicked, imageToSave = self.imageViewPicked?.image {
+//            needToUpdateProfil = true
+//            UserSessionManager.sharedInstance.currentSession()?.saveProfileImage(imageToSave)
+//        }
         
         // Save other user data
         if var dicoParameters = self.userSession?.generateJSONFromUserSession() {
             
-            if let _ = self.avatarImageName {
-                needToUpdateProfil = true
-                dicoParameters[UserDataKey.kAvatar] = self.avatarImageName
-                UserSessionManager.sharedInstance.currentSession()!.updateProfilImagePrefered(.AvatarDochaImage)
-            }
+//            if let _ = self.avatarImageName {
+//                needToUpdateProfil = true
+//                dicoParameters[UserDataKey.kAvatar] = self.avatarImageName
+//            }
             
             if let genderNotConvertedString = self.genderNotConverted {
                 var finalGender = ""
@@ -320,11 +318,11 @@ class PreferencesChangeProfilViewController: RootViewController, UITableViewDele
             
             let pseudoCell = self.tableView.cellForRowAtIndexPath(self.pseudoIndexPath!) as! PreferencesChangePseudoTableViewCell
             let pseudoString = pseudoCell.pseudoTextField.text
-            let currentPseudo = UserSessionManager.sharedInstance.currentSession()?.username
+            let currentPseudo = UserSessionManager.sharedInstance.currentSession()?.pseudo
             if let pseudo = pseudoString {
                 if pseudo != currentPseudo {
                     needToUpdateProfil = true
-                    dicoParameters[UserDataKey.kUsername] = pseudo
+                    dicoParameters[UserDataKey.kPseudo] = pseudo
                 }
             }
             
@@ -367,7 +365,7 @@ class PreferencesChangeProfilViewController: RootViewController, UITableViewDele
 //MARK: @IBActions
     
     @IBAction func validBarButtonItemTouched(sender: UIBarButtonItem) {
-        PopupManager.sharedInstance.showLoadingPopup("Mise à jour de ton profil...", message: nil, completion: {
+        PopupManager.sharedInstance.showLoadingPopup("Mise à jour de ton profil...", message: nil, viewController: self, completion: {
             self.saveUserProfilDataWithCompletion { (success) in
                 PopupManager.sharedInstance.dismissPopup(true, completion: {
                     if success {

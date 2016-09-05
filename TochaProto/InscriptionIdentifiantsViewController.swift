@@ -49,7 +49,7 @@ class InscriptionIdentifiantsViewController: RootViewController, UITextFieldDele
         self.registerButton.enabled = true
         self.navigationController!.setNavigationBarHidden(false, animated: false)
         self.navigationItem.setHidesBackButton(true, animated: false)
-        self.configNavigationBarWithTitle("Inscription", andFontSize: 13.0)
+        self.configNavigationBarWithTitle("Inscription")
     }
     
     func textFieldShouldReturn(textField: UITextField) -> Bool {
@@ -139,13 +139,12 @@ class InscriptionIdentifiantsViewController: RootViewController, UITextFieldDele
         let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
         appDelegate.facebookSignIn({
             // Success
-            self.dismissViewControllerAnimated(true, completion: {
-                UserSessionManager.sharedInstance.currentSession()!.updateProfilImagePrefered(.FacebookImage)
+            PopupManager.sharedInstance.dismissPopup(true, completion: { 
                 self.goToHome()
             })
         }) { (error, listError) in
             // Fail
-            self.dismissViewControllerAnimated(true, completion: {
+            PopupManager.sharedInstance.dismissPopup(true, completion: { 
                 PopupManager.sharedInstance.showInfosPopup("Oups !", message: "Une erreur est survenue. Essaie à nouveau ultérieurement.", completion: nil)
             })
             print("error saving Facebook user data in database : \(error)")

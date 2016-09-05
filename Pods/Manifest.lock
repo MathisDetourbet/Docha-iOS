@@ -61,12 +61,14 @@ PODS:
   - NVActivityIndicatorView (2.7)
   - PageMenu (1.2.9)
   - PBWebViewController (0.5.0)
+  - PullToRefresher (1.4.0)
   - ReachabilitySwift (2.3.3)
   - RSKImageCropper (1.5.1)
   - SACountingLabel (0.1.1)
   - SCLAlertView (0.5.8)
   - SwiftyJSON (2.3.2)
   - SwiftyTimer (1.4.0)
+  - SWTableViewCell (0.3.7)
   - TextFieldEffects (1.2.0)
 
 DEPENDENCIES:
@@ -83,12 +85,14 @@ DEPENDENCIES:
   - NVActivityIndicatorView
   - PageMenu
   - PBWebViewController
+  - PullToRefresher (~> 1.4.0)
   - ReachabilitySwift
   - RSKImageCropper
   - SACountingLabel
   - SCLAlertView
   - SwiftyJSON (~> 2.3)
   - SwiftyTimer
+  - SWTableViewCell (~> 0.3.7)
   - TextFieldEffects
 
 SPEC CHECKSUMS:
@@ -114,14 +118,16 @@ SPEC CHECKSUMS:
   NVActivityIndicatorView: dc80f18fb27ac92f0aa87246cc13dc39ed3e9ee0
   PageMenu: ba19ff267f7a19e444e93c20a7847b78954a7011
   PBWebViewController: 6537990155ca850fb8d0563efbc12becebc953ef
+  PullToRefresher: c4629a459f305c14a66d35f52c2feeaccf85c49e
   ReachabilitySwift: e0f6b6f280effb47731acfaaa2d5ffe223703793
   RSKImageCropper: edd65fedb3734332818deb139906d6b7f54b8a44
   SACountingLabel: 6b0c2a177b77e65ea63772e50f4d4285bb6d5a71
   SCLAlertView: 653e84d1f9fd95333bc54671fbadb7d0c47fce49
   SwiftyJSON: 04ccea08915aa0109039157c7974cf0298da292a
   SwiftyTimer: db4458cfaf67fc71e16ad6e4637c60b86f76a649
+  SWTableViewCell: 2a94aadc9d47b2b611fa064566bf57948b95b579
   TextFieldEffects: bc4fd3bd557321bd61a0762f3f50965477a36f62
 
-PODFILE CHECKSUM: 2158673e9b8b1d04a4a8e9955c154fc9552d176a
+PODFILE CHECKSUM: 2e5714217d6c0101a2416469d9147f77f5412fe9
 
 COCOAPODS: 1.0.1

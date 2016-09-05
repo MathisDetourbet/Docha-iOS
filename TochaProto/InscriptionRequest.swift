@@ -58,6 +58,7 @@ class InscriptionRequest: DochaRequest {
                                     session.userID = jsonResponse["data"]["user"][UserDataKey.kUserID].intValue
                                     session.email = jsonResponse["data"]["user"][UserDataKey.kEmail].string
                                     session.password = dicoParameters[UserDataKey.kPassword] as? String
+                                    session.pseudo = dicoParameters[UserDataKey.kPseudo] as? String
                                     session.authToken = jsonResponse["data"][UserDataKey.kAuthToken].string
                                     
                                     if let dateString = jsonResponse["data"]["user"][UserDataKey.kDateBirthday].string {
@@ -68,7 +69,14 @@ class InscriptionRequest: DochaRequest {
                                     
                                     session.firstName = jsonResponse["data"]["user"][UserDataKey.kFirstName].string
                                     session.lastName = jsonResponse["data"]["user"][UserDataKey.kLastName].string
-                                    session.categoryFavorite = jsonResponse["data"]["user"][UserDataKey.kCategoryFavorite].string
+                                    let categoriesFavoritesJSON = jsonResponse["data"]["user"][UserDataKey.kCategoryFavorite].array
+                                    if let categoriesFavoritesJSON = categoriesFavoritesJSON {
+                                        var categoriesFavorites: [String] = []
+                                        for category in categoriesFavoritesJSON {
+                                            categoriesFavorites.append(category.stringValue)
+                                        }
+                                        session.categoriesFavorites = categoriesFavorites
+                                    }
                                     session.gender = jsonResponse["data"]["user"][UserDataKey.kGender].string
                                     session.avatar = jsonResponse["data"]["user"][UserDataKey.kAvatar].string
                                     
@@ -178,7 +186,14 @@ class InscriptionRequest: DochaRequest {
                                     
                                     session.firstName = jsonResponse["data"]["user"][UserDataKey.kFirstName].string
                                     session.lastName = jsonResponse["data"]["user"][UserDataKey.kLastName].string
-                                    session.categoryFavorite = jsonResponse["data"]["user"][UserDataKey.kCategoryFavorite].string
+                                    let categoriesFavoritesJSON = jsonResponse["data"]["user"][UserDataKey.kCategoryFavorite].array
+                                    if let categoriesFavoritesJSON = categoriesFavoritesJSON {
+                                        var categoriesFavorites: [String] = []
+                                        for category in categoriesFavoritesJSON {
+                                            categoriesFavorites.append(category.stringValue)
+                                        }
+                                        session.categoriesFavorites = categoriesFavorites
+                                    }
                                     session.gender = jsonResponse["data"]["user"][UserDataKey.kGender].string
                                     session.avatar = jsonResponse["data"]["user"][UserDataKey.kAvatar].string
                                     
@@ -282,7 +297,14 @@ class InscriptionRequest: DochaRequest {
                                     
                                     session.firstName = jsonResponse["data"]["user"][UserDataKey.kFirstName].string
                                     session.lastName = jsonResponse["data"]["user"][UserDataKey.kLastName].string
-                                    session.categoryFavorite = jsonResponse["data"]["user"][UserDataKey.kCategoryFavorite].string
+                                    let categoriesFavoritesJSON = jsonResponse["data"]["user"][UserDataKey.kCategoryFavorite].array
+                                    if let categoriesFavoritesJSON = categoriesFavoritesJSON {
+                                        var categoriesFavorites: [String] = []
+                                        for category in categoriesFavoritesJSON {
+                                            categoriesFavorites.append(category.stringValue)
+                                        }
+                                        session.categoriesFavorites = categoriesFavorites
+                                    }
                                     session.gender = jsonResponse["data"]["user"][UserDataKey.kGender].string
                                     session.avatar = jsonResponse["data"]["user"][UserDataKey.kAvatar].string
                                     

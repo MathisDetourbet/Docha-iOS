@@ -348,8 +348,10 @@ class GameplayViewController: GameViewController, KeyboardViewDelegate {
         timer = NSTimer.new(every: 0.01, { (timer: NSTimer) in
             if self.timerFinished {
                 timer.invalidate()
+                
+            } else {
+                self.updateTimer()
             }
-            self.updateTimer()
         })
     }
     

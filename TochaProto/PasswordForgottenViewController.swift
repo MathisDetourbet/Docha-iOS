@@ -12,7 +12,7 @@ class PasswordForgottenViewController: RootViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.configNavigationBarWithTitle("Mot de passe oublié", andFontSize: 13.0)
+        self.configNavigationBarWithTitle("Mot de passe oublié")
         hideKeyboardWhenTappedAround()
     }
     

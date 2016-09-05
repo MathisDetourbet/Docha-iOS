@@ -175,8 +175,8 @@ class UserSessionManager {
             success: { (session) in
                 
                 // If user have already choose his favorite category (Inscription -> facebook inscription)
-                if let categoryFavorite = UserSessionManager.sharedInstance.dicoUserDataInscription?["category_favorite"] {
-                    session.categoryFavorite = categoryFavorite as? String
+                if let categoriesFavorites = UserSessionManager.sharedInstance.dicoUserDataInscription?["category_favorite"] {
+                    session.categoriesFavorites = categoriesFavorites as? [String]
                 }
                 // Save user infos in the device
                 session.saveSession()
@@ -189,7 +189,7 @@ class UserSessionManager {
                 }
                 
             }, fail: { (error, listError) in
-                
+                failure(error: error, listError: listError)
         })
     }
     

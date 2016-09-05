@@ -11,8 +11,8 @@ import TextFieldEffects
 
 class InscriptionInfosUserViewController: RootViewController, UITextFieldDelegate {
     
-    var genderSelected: String?
-    var dateOfBirthday: String?
+    var genderSelected: String? = "M"
+    var dateOfBirthday: String? = "1 Janvier 1990"
     
     @IBOutlet weak var manButton: UIButton!
     @IBOutlet weak var womanButton: UIButton!
@@ -26,7 +26,8 @@ class InscriptionInfosUserViewController: RootViewController, UITextFieldDelegat
         self.validProfilButton.enabled = false
         self.navigationController!.setNavigationBarHidden(false, animated: false)
         self.navigationItem.setHidesBackButton(true, animated: false)
-        self.configNavigationBarWithTitle("Qui es-tu ?", andFontSize: 13.0)
+        self.configNavigationBarWithTitle("Qui es-tu ?")
+        self.birthdayTextField.placeholderColor = UIColor.blueDochaColor()
     }
     
     func textFieldShouldReturn(textField: UITextField) -> Bool {
@@ -59,7 +60,6 @@ class InscriptionInfosUserViewController: RootViewController, UITextFieldDelegat
         let dateFormatter = NSDateFormatter()
         dateFormatter.dateFormat = "dd MMMM yyyy"
         self.birthdayTextField.text = dateFormatter.stringFromDate(sender.date)
-        //self.dateOfBirthday = dateFormatter.dateFromString(self.birthdayTextField.text!) // la date doit être une string pour être serialisée (JSON)
         self.dateOfBirthday = birthdayTextField.text
         
         if self.birthdayTextField.text != nil || !((self.birthdayTextField.text?.isEmpty)!) {
@@ -77,11 +77,11 @@ class InscriptionInfosUserViewController: RootViewController, UITextFieldDelegat
     }
     
     @IBAction func skipButtonTouched(sender: UIButton) {
-        self.genderSelected = "M"
-        self.dateOfBirthday = "1 Janvier 1990"
-        self.validProfilButtonTouched(nil)
-        let inscriptionAvatarVC = self.storyboard?.instantiateViewControllerWithIdentifier("idInscriptionProfilViewController") as! InscriptionProfilViewController
-        self.navigationController?.pushViewController(inscriptionAvatarVC, animated: true)
+//        self.genderSelected = "M"
+//        self.dateOfBirthday = "1 Janvier 1990"
+//        self.validButtonTouched(nil)
+//        let inscriptionAvatarVC = self.storyboard?.instantiateViewControllerWithIdentifier("idInscriptionProfilViewController") as! InscriptionProfilViewController
+//        self.navigationController?.pushViewController(inscriptionAvatarVC, animated: true)
     }
     
     @IBAction func genderButtonTouched(sender: UIButton) {
@@ -101,7 +101,7 @@ class InscriptionInfosUserViewController: RootViewController, UITextFieldDelegat
         }
     }
     
-    @IBAction func validProfilButtonTouched(sender: UIButton?) {
+    @IBAction func validButtonTouched(sender: UIButton?) {
         let userSessionManager = UserSessionManager.sharedInstance
         
         if userSessionManager.dicoUserDataInscription == nil {
@@ -111,6 +111,15 @@ class InscriptionInfosUserViewController: RootViewController, UITextFieldDelegat
         if let genderString = self.genderSelected, birthday = self.dateOfBirthday {
             userSessionManager.dicoUserDataInscription!["sexe"] = genderString
             userSessionManager.dicoUserDataInscription!["date_birthday"] = birthday
+            
+            if genderString == "F" {
+                userSessionManager.dicoUserDataInscription!["avatar"] = "avatar_woman"
+            } else {
+                userSessionManager.dicoUserDataInscription!["avatar"] = "avatar_man"
+            }
         }
+        
+        let inscriptionPseudoVC = self.storyboard?.instantiateViewControllerWithIdentifier("idInscriptionPseudoSelectionViewController") as! InscriptionPseudoSelectionViewController
+        self.navigationController?.pushViewController(inscriptionPseudoVC, animated: true)
     }
 }

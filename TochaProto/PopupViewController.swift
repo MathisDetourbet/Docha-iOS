@@ -62,6 +62,7 @@ class PopupViewController: UIViewController {
 class DonePopupViewController: PopupViewController {
     
     var doneButton: UIButton?
+    var doneActionCompletion: (() -> Void)?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -76,7 +77,7 @@ class DonePopupViewController: PopupViewController {
     
     func doneButtonTouched() {
         PopupManager.sharedInstance.dismissPopup(true, completion: nil)
-        //self.dismissViewControllerAnimated(true, completion: nil)
+        self.doneActionCompletion?()
     }
 }
 
@@ -84,7 +85,6 @@ class SuccessPopupViewController: DonePopupViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         self.popupView!.circleImageView.image = UIImage(named: "icon_popup_success")
         self.popupView!.backgroundImageView.image = UIImage(named: "popup_small")
     }
@@ -95,7 +95,6 @@ class ErrorPopupViewController: DonePopupViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         self.popupView!.circleImageView.image = UIImage(named: "icon_popup_error")
         self.popupView!.backgroundImageView.image = UIImage(named: "popup_small")
     }
@@ -116,6 +115,7 @@ class LoadingPopViewController: PopupViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         self.popupView!.backgroundImageView.image = UIImage(named: "popup_small")
         self.popupView!.circleImageView.image = UIImage(named: "rond_popup_redDocha")
         

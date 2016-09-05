@@ -56,10 +56,18 @@ class ProfilRequest: DochaRequest {
                                         session.dateBirthday = dateFormatter.dateFromString(dateString)
                                     }
                                     
-                                    session.username = jsonResponse["data"]["user"][UserDataKey.kUsername].string
+                                    session.pseudo = jsonResponse["data"]["user"][UserDataKey.kPseudo].string
                                     session.firstName = jsonResponse["data"]["user"][UserDataKey.kFirstName].string
                                     session.lastName = jsonResponse["data"]["user"][UserDataKey.kLastName].string
-                                    session.categoryFavorite = jsonResponse["data"]["user"][UserDataKey.kCategoryFavorite].string
+                                    
+                                    let categoriesFavoritesJSON = jsonResponse["data"]["user"][UserDataKey.kCategoryFavorite].array
+                                    if let categoriesFavoritesJSON = categoriesFavoritesJSON {
+                                        var categoriesFavorites: [String] = []
+                                        for category in categoriesFavoritesJSON {
+                                            categoriesFavorites.append(category.stringValue)
+                                        }
+                                        session.categoriesFavorites = categoriesFavorites
+                                    }
                                     session.gender = jsonResponse["data"]["user"][UserDataKey.kGender].string
                                     session.dochos = jsonResponse["data"]["user"][UserDataKey.kDochos].intValue
                                     session.experience = jsonResponse["data"]["user"][UserDataKey.kExperience].intValue

@@ -24,6 +24,8 @@ target 'Docha' do
     pod 'Amplitude-iOS', '~> 3.7.0'
     pod 'RSKImageCropper'
     pod 'SACountingLabel'
+    pod 'SWTableViewCell', '~> 0.3.7'
+    pod 'PullToRefresher', '~> 1.4.0'
 end
 
 target 'DochaTests' do

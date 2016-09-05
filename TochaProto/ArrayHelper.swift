@@ -30,3 +30,13 @@ extension MutableCollectionType where Index == Int {
         }
     }
 }
+
+extension Array where Element: Equatable {
+    
+    // Remove first collection element that is equal to the given `object`:
+    mutating func removeObject(object: Element) {
+        if let index = indexOf(object) {
+            removeAtIndex(index)
+        }
+    }
+}

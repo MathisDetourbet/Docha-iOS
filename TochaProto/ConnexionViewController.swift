@@ -24,7 +24,7 @@ class ConnexionViewController: RootViewController, GIDSignInUIDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.configNavigationBarWithTitle("Connexion", andFontSize: 13.0)
+        self.configNavigationBarWithTitle("Connexion")
         hideKeyboardWhenTappedAround()
         self.connexionEmailButton.enabled = false
     }
@@ -111,7 +111,7 @@ class ConnexionViewController: RootViewController, GIDSignInUIDelegate {
                 
                 if(fbloginresult.grantedPermissions.contains("email"))
                 {
-                    PopupManager.sharedInstance.showLoadingPopup("Connexion en cours", message: nil, completion: {
+                    PopupManager.sharedInstance.showLoadingPopup("Connexion en cours...", message: nil, completion: {
                         self.getFBUserData()
                     })
                 }
@@ -124,10 +124,10 @@ class ConnexionViewController: RootViewController, GIDSignInUIDelegate {
         appDelegate.facebookSignIn({
             
             PopupManager.sharedInstance.dismissPopup(true, completion: {
-                if UserSessionManager.sharedInstance.currentSession()?.categoryFavorite != nil {
+                if UserSessionManager.sharedInstance.currentSession()?.categoriesFavorites != nil {
                     self.goToHome()
+                    
                 } else {
-                    UserSessionManager.sharedInstance.currentSession()!.updateProfilImagePrefered(.FacebookImage)
                     let categoryViewController = self.storyboard?.instantiateViewControllerWithIdentifier("idInscriptionCategorySelectionViewController") as! InscriptionCategorySelectionViewController
                     categoryViewController.comeFromConnexionVC = true
                     self.navigationController?.pushViewController(categoryViewController, animated: true)
@@ -137,8 +137,6 @@ class ConnexionViewController: RootViewController, GIDSignInUIDelegate {
         }) { (error, listError) in
             PopupManager.sharedInstance.dismissPopup(true, completion: {
                 print("Error fetching user facebook data : \(error)")
-                print("list error : \(listError)")
-                
                 PopupManager.sharedInstance.showErrorPopup("Oups !", message: "Une erreure est survenue. Vérifie que tu es bien connecté à internet.", completion: nil)
             })
         }

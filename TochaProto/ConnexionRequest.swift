@@ -60,10 +60,17 @@ class ConnexionRequest: DochaRequest {
                                             session.dateBirthday = dateFormatter.dateFromString(dateString)
                                         }
                                         
-                                        session.username = jsonResponse["data"]["user"][UserDataKey.kUsername].string
+                                        session.pseudo = jsonResponse["data"]["user"][UserDataKey.kPseudo].string
                                         session.firstName = jsonResponse["data"]["user"][UserDataKey.kFirstName].string
                                         session.lastName = jsonResponse["data"]["user"][UserDataKey.kLastName].string
-                                        session.categoryFavorite = jsonResponse["data"]["user"][UserDataKey.kCategoryFavorite].string
+                                        let categoriesFavoritesJSON = jsonResponse["data"]["user"][UserDataKey.kCategoryFavorite].array
+                                        if let categoriesFavoritesJSON = categoriesFavoritesJSON {
+                                            var categoriesFavorites: [String] = []
+                                            for category in categoriesFavoritesJSON {
+                                                categoriesFavorites.append(category.stringValue)
+                                            }
+                                            session.categoriesFavorites = categoriesFavorites
+                                        }
                                         session.gender = jsonResponse["data"]["user"][UserDataKey.kGender].string
                                         session.avatar = jsonResponse["data"]["user"][UserDataKey.kAvatar].string
                                         
@@ -156,10 +163,17 @@ class ConnexionRequest: DochaRequest {
                                                 session.dateBirthday = dateFormatter.dateFromString(dateString)
                                             }
                                             
-                                            session.username = jsonResponse["data"]["user"][UserDataKey.kUsername].string
+                                            session.pseudo = jsonResponse["data"]["user"][UserDataKey.kPseudo].string
                                             session.firstName = jsonResponse["data"]["user"][UserDataKey.kFirstName].string
                                             session.lastName = jsonResponse["data"]["user"][UserDataKey.kLastName].string
-                                            session.categoryFavorite = jsonResponse["data"]["user"][UserDataKey.kCategoryFavorite].string
+                                            let categoriesFavoritesJSON = jsonResponse["data"]["user"][UserDataKey.kCategoryFavorite].array
+                                            if let categoriesFavoritesJSON = categoriesFavoritesJSON {
+                                                var categoriesFavorites: [String] = []
+                                                for category in categoriesFavoritesJSON {
+                                                    categoriesFavorites.append(category.stringValue)
+                                                }
+                                                session.categoriesFavorites = categoriesFavorites
+                                            }
                                             session.gender = jsonResponse["data"]["user"][UserDataKey.kGender].string
                                             session.facebookImageURL = jsonResponse["data"]["user"][UserDataKey.kFacebookImageURL].string
                                             session.facebookID = jsonResponse["data"]["user"][UserDataKey.kFacebookID].string
@@ -245,10 +259,17 @@ class ConnexionRequest: DochaRequest {
                                             session.dateBirthday = dateFormatter.dateFromString(dateString)
                                         }
                                         
-                                        session.username = jsonResponse["data"]["user"][UserDataKey.kUsername].string
+                                        session.pseudo = jsonResponse["data"]["user"][UserDataKey.kPseudo].string
                                         session.firstName = jsonResponse["data"]["user"][UserDataKey.kFirstName].string
                                         session.lastName = jsonResponse["data"]["user"][UserDataKey.kLastName].string
-                                        session.categoryFavorite = jsonResponse["data"]["user"][UserDataKey.kCategoryFavorite].string
+                                        let categoriesFavoritesJSON = jsonResponse["data"]["user"][UserDataKey.kCategoryFavorite].array
+                                        if let categoriesFavoritesJSON = categoriesFavoritesJSON {
+                                            var categoriesFavorites: [String] = []
+                                            for category in categoriesFavoritesJSON {
+                                                categoriesFavorites.append(category.stringValue)
+                                            }
+                                            session.categoriesFavorites = categoriesFavorites
+                                        }
                                         session.gender = jsonResponse["data"]["user"][UserDataKey.kGender].string
                                         session.avatar = jsonResponse["data"]["user"][UserDataKey.kAvatar].string
                                         

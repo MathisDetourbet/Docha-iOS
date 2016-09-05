@@ -309,8 +309,10 @@ class ProductManager {
                                 userSession?.productsIDPlayed = errorProductID
                                 userSession?.saveSession()
                                 
-                                for index in 0...successImages.count-1 {
-                                    packOfProducts![index].image = successImages["\(packOfProducts![index].id)"]
+                                if successImages.isEmpty == false {
+                                    for index in 0...successImages.count-1 {
+                                        packOfProducts![index].image = successImages["\(packOfProducts![index].id)"]
+                                    }
                                 }
                                 
                                 finalPackOfProducts += packOfProducts!

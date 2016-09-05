@@ -9,3 +9,4 @@
 #import <MBCircularProgressBar/MBCircularProgressBarView.h>
 #import <PBWebViewController/PBWebViewController.h>
 #import <RSKImageCropper/RSKImageCropper.h>
+#import <SWTableViewCell/SWTableViewCell.h>

@@ -26,15 +26,6 @@ class Product: NSObject {
     let pageURL: String
     let gender: Gender
     
-//    init(id: Int, name: String, price: Double, imageName: String, brand: String, distributeur: String) {
-//        self.id = id
-//        self.name = name
-//        self.price = price
-//        self.imageName = imageName
-//        self.brand = brand
-//        self.distributeur = distributeur
-//    }
-    
     init(id: Int, category: String, model: String, brand: String, price: Double, imageURL: String, caracteristiques: [String], image: UIImage?, pageURL: String, gender: Gender) {
         self.id = id
         self.category = category

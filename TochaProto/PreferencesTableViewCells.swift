@@ -10,10 +10,8 @@ import Foundation
 
 class PreferencesNormalTableViewCell: UITableViewCell {
     
-    @IBOutlet weak var categoryFavoriteLabel: UILabel!
     @IBOutlet weak var iconImageView: UIImageView!
     @IBOutlet weak var titleLabel: UILabel!
-    @IBOutlet weak var widthCategoryLabelConstraint: NSLayoutConstraint!
     
     override func awakeFromNib() {
         super.awakeFromNib()

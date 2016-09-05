@@ -42,69 +42,67 @@ class GameViewController: RootViewController {
     }
     
     func configGameNavigationBar() {
-        let userGameManager = UserGameStateManager.sharedInstance
-        let perfectNumber = userGameManager.getPerfectPriceNumber()
-        let dochosNumber = userGameManager.getCurrentDochos()
-        
-        // Left bar button item : number of perfect price
-        let leftView = UIView(frame: CGRectMake(0.0, 0.0, 71.0, 33.0))
-        let perfectImageView = UIImageView(frame: CGRectMake(0.0, 7.0, 20.0, 20.0))
-        perfectImageView.image = UIImage(named: "perfects_icon")
-        perfectImageView.translatesAutoresizingMaskIntoConstraints = false
-        
-        let perfectLabel = SACountingLabel(frame: CGRectMake(28.0, 7.0, 10.0, 19.0))
-        perfectLabel.text = "\(perfectNumber)"
-        //perfectLabel.countFrom(0, to: Float(perfectNumber), withDuration: 0.7, andAnimationType: .EaseInOut, andCountingType: .Int)
-        perfectLabel.font = UIFont(name: "Montserrat-SemiBold", size: 15)
-        perfectLabel.textColor = UIColor.whiteColor()
-        perfectLabel.translatesAutoresizingMaskIntoConstraints = false
-        
-        leftView.addSubview(perfectImageView)
-        leftView.addSubview(perfectLabel)
-        
-        leftView.addConstraint(NSLayoutConstraint(item: perfectImageView, attribute: .CenterY, relatedBy: .Equal, toItem: leftView, attribute: .CenterY, multiplier: 1.0, constant: 0.0))
-        leftView.addConstraint(NSLayoutConstraint(item: perfectImageView, attribute: .Leading, relatedBy: .Equal, toItem: leftView, attribute: .Leading, multiplier: 1.0, constant: 0.0))
-        
-        leftView.addConstraint(NSLayoutConstraint(item: perfectImageView, attribute: .Trailing, relatedBy: .Equal, toItem: perfectLabel, attribute: .Leading, multiplier: 1.0, constant: -8.0))
-        leftView.addConstraint(NSLayoutConstraint(item: perfectLabel, attribute: .CenterY, relatedBy: .Equal, toItem: leftView, attribute: .CenterY, multiplier: 1.0, constant: 0.0))
-        
-        let tapGesturePerfect = UITapGestureRecognizer()
-        tapGesturePerfect.numberOfTapsRequired = 1
-        tapGesturePerfect.addTarget(self, action: #selector(perfectNavBarTouched))
-        leftView.addGestureRecognizer(tapGesturePerfect)
-        
-        self.navigationItem.leftBarButtonItem = UIBarButtonItem(customView: leftView)
-        
-        // Right bar button item : number of dochos
-        let rightView = UIView(frame: CGRectMake(0.0, 0.0, 71.0, 33.0))
-        let dochosImageView = UIImageView(frame: CGRectMake(15.0, 7.0, 20.0, 20.0))
-        dochosImageView.image = UIImage(named: "dochos_icon")
-        dochosImageView.translatesAutoresizingMaskIntoConstraints = false
-        
-        let dochosLabel = SACountingLabel(frame: CGRectMake(43.0, 7.0, 28.0, 19.0))
-        //dochosLabel.countFrom(0, to: Float(dochosNumber), withDuration: 0, andAnimationType: .EaseInOut, andCountingType: .Int)
-        dochosLabel.text = "\(dochosNumber)"
-        dochosLabel.font = UIFont(name: "Montserrat-SemiBold", size: 15)
-        dochosLabel.textColor = UIColor.whiteColor()
-        dochosLabel.translatesAutoresizingMaskIntoConstraints = false
-        
-        rightView.addSubview(dochosImageView)
-        rightView.addSubview(dochosLabel)
-        
-        rightView.addConstraint(NSLayoutConstraint(item: dochosImageView, attribute: .CenterY, relatedBy: .Equal, toItem: rightView, attribute: .CenterY, multiplier: 1.0, constant: 0.0))
-        rightView.addConstraint(NSLayoutConstraint(item: dochosImageView, attribute: .Trailing, relatedBy: .Equal, toItem: dochosLabel, attribute: .Leading, multiplier: 1.0, constant: -8.0))
-        
-        rightView.addConstraint(NSLayoutConstraint(item: dochosLabel, attribute: .CenterY, relatedBy: .Equal, toItem: rightView, attribute: .CenterY, multiplier: 1.0, constant: 0.0))
-        rightView.addConstraint(NSLayoutConstraint(item: dochosLabel, attribute: .Trailing, relatedBy: .Equal, toItem: rightView, attribute: .Trailing, multiplier: 1.0, constant: 0.0))
-        
-        //dochosImageView.rotate360Degrees(0.5, completionDelegate: nil)
-        
-        let tapGestureDochos = UITapGestureRecognizer()
-        tapGestureDochos.numberOfTapsRequired = 1
-        tapGestureDochos.addTarget(self, action: #selector(dochosNavBarTouched))
-        rightView.addGestureRecognizer(tapGestureDochos)
-        
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: rightView)
+//        let userGameManager = UserGameStateManager.sharedInstance
+//        let perfectNumber = userGameManager.getPerfectPriceNumber()
+//        let dochosNumber = userGameManager.getCurrentDochos()
+//        
+//        // Left bar button item : number of perfect price
+//        let leftView = UIView(frame: CGRectMake(0.0, 0.0, 71.0, 33.0))
+//        let perfectImageView = UIImageView(frame: CGRectMake(0.0, 7.0, 20.0, 20.0))
+//        perfectImageView.image = UIImage(named: "perfects_icon")
+//        perfectImageView.translatesAutoresizingMaskIntoConstraints = false
+//        
+//        let perfectLabel = SACountingLabel(frame: CGRectMake(28.0, 7.0, 10.0, 19.0))
+//        perfectLabel.text = "\(perfectNumber)"
+//        //perfectLabel.countFrom(0, to: Float(perfectNumber), withDuration: 0.7, andAnimationType: .EaseInOut, andCountingType: .Int)
+//        perfectLabel.font = UIFont(name: "Montserrat-SemiBold", size: 15)
+//        perfectLabel.textColor = UIColor.whiteColor()
+//        perfectLabel.translatesAutoresizingMaskIntoConstraints = false
+//        
+//        leftView.addSubview(perfectImageView)
+//        leftView.addSubview(perfectLabel)
+//        
+//        leftView.addConstraint(NSLayoutConstraint(item: perfectImageView, attribute: .CenterY, relatedBy: .Equal, toItem: leftView, attribute: .CenterY, multiplier: 1.0, constant: 0.0))
+//        leftView.addConstraint(NSLayoutConstraint(item: perfectImageView, attribute: .Leading, relatedBy: .Equal, toItem: leftView, attribute: .Leading, multiplier: 1.0, constant: 0.0))
+//        
+//        leftView.addConstraint(NSLayoutConstraint(item: perfectImageView, attribute: .Trailing, relatedBy: .Equal, toItem: perfectLabel, attribute: .Leading, multiplier: 1.0, constant: -8.0))
+//        leftView.addConstraint(NSLayoutConstraint(item: perfectLabel, attribute: .CenterY, relatedBy: .Equal, toItem: leftView, attribute: .CenterY, multiplier: 1.0, constant: 0.0))
+//        
+//        let tapGesturePerfect = UITapGestureRecognizer()
+//        tapGesturePerfect.numberOfTapsRequired = 1
+//        tapGesturePerfect.addTarget(self, action: #selector(perfectNavBarTouched))
+//        leftView.addGestureRecognizer(tapGesturePerfect)
+//        
+//        self.navigationItem.leftBarButtonItem = UIBarButtonItem(customView: leftView)
+//        
+//        // Right bar button item : number of dochos
+//        let rightView = UIView(frame: CGRectMake(0.0, 0.0, 71.0, 33.0))
+//        let dochosImageView = UIImageView(frame: CGRectMake(15.0, 7.0, 20.0, 20.0))
+//        dochosImageView.image = UIImage(named: "dochos_icon")
+//        dochosImageView.translatesAutoresizingMaskIntoConstraints = false
+//        
+//        let dochosLabel = SACountingLabel(frame: CGRectMake(43.0, 7.0, 28.0, 19.0))
+//        //dochosLabel.countFrom(0, to: Float(dochosNumber), withDuration: 0, andAnimationType: .EaseInOut, andCountingType: .Int)
+//        dochosLabel.text = "\(dochosNumber)"
+//        dochosLabel.font = UIFont(name: "Montserrat-SemiBold", size: 15)
+//        dochosLabel.textColor = UIColor.whiteColor()
+//        dochosLabel.translatesAutoresizingMaskIntoConstraints = false
+//        
+//        rightView.addSubview(dochosImageView)
+//        rightView.addSubview(dochosLabel)
+//        
+//        rightView.addConstraint(NSLayoutConstraint(item: dochosImageView, attribute: .CenterY, relatedBy: .Equal, toItem: rightView, attribute: .CenterY, multiplier: 1.0, constant: 0.0))
+//        rightView.addConstraint(NSLayoutConstraint(item: dochosImageView, attribute: .Trailing, relatedBy: .Equal, toItem: dochosLabel, attribute: .Leading, multiplier: 1.0, constant: -8.0))
+//        
+//        rightView.addConstraint(NSLayoutConstraint(item: dochosLabel, attribute: .CenterY, relatedBy: .Equal, toItem: rightView, attribute: .CenterY, multiplier: 1.0, constant: 0.0))
+//        rightView.addConstraint(NSLayoutConstraint(item: dochosLabel, attribute: .Trailing, relatedBy: .Equal, toItem: rightView, attribute: .Trailing, multiplier: 1.0, constant: 0.0))
+//        
+//        let tapGestureDochos = UITapGestureRecognizer()
+//        tapGestureDochos.numberOfTapsRequired = 1
+//        tapGestureDochos.addTarget(self, action: #selector(dochosNavBarTouched))
+//        rightView.addGestureRecognizer(tapGestureDochos)
+//        
+//        self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: rightView)
     }
     
     func configTitleViewDocha() {

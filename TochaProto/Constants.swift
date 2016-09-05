@@ -10,7 +10,7 @@ import Foundation
 
 struct UserDataKey {
     static let kUserID = "id"
-    static let kUsername = "username"
+    static let kPseudo = "pseudo"
     static let kLastName = "last_name"
     static let kFirstName = "first_name"
     static let kEmail = "email"
@@ -41,7 +41,7 @@ struct Constants {
         
         // User infos keys
         static let kUserInfosUserID = "userInfosUserID"
-        static let kUserInfosUsername = "userInfosUsername"
+        static let kUserInfosPseudo = "userInfosPseudo"
         static let kUserInfosLastName = "userInfosLastName"
         static let kUserInfosFirstName = "userInfosFirstName"
         static let kUserInfosEmail = "userInfosEmail"

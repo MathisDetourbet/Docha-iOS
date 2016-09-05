@@ -13,12 +13,12 @@ import Amplitude_iOS
 class PreferencesCategoriesViewController: RootViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     let CATEGORY_NUMBER = 10
-    let reuseIdentifier = "idCategoryCollectionCell"
+    let reuseIdentifier = "idPreferencesCategoryCollectionCell"
     
     let categoriesImagesPathArray = ["lifestyle", "high-tech", "maison_deco", "bijoux_montres", "electromenager", "art", "objets_connectes", "gastronomie_vin", "beauty", "sport"]
+    let categoriesNames = ["Lifestyle", "High-Tech", "Maison / déco", "Bijoux / Montres", "Électroménager", "Art", "Objets connectés", "Gastronomie", "Beauté", "Sport"]
     var categoriesImages = [UIImage]?()
-    var categoryPrefered: String?
-    var oldCategoryIndexPath: NSIndexPath?
+    var categoriesPrefered: [String]?
     
     @IBOutlet weak var backButton: UIBarButtonItem!
     @IBOutlet weak var infoButton: UIBarButtonItem!
@@ -39,8 +39,6 @@ class PreferencesCategoriesViewController: RootViewController, UICollectionViewD
         
         self.configNavigationBarWithTitle("Choisissez votre catégorie préférée", andFontSize: 13.0)
         
-        self.categoryPrefered = UserSessionManager.sharedInstance.currentSession()?.categoryFavorite
-        
         loadData()
     }
     
@@ -57,24 +55,30 @@ class PreferencesCategoriesViewController: RootViewController, UICollectionViewD
         self.collectionView.reloadData()
         
         let currentSession = UserSessionManager.sharedInstance.currentSession()
-        self.categoryPrefered = currentSession?.categoryFavorite
+        self.categoriesPrefered = currentSession?.categoriesFavorites
+        if self.categoriesPrefered == nil {
+            self.categoriesPrefered = []
+        }
     }
     
     func saveCategorieFavoriteWithUserSession(userSession: UserSession, completion: ( (success: Bool) -> Void)) {
         let params = userSession.generateJSONFromUserSession()
+        
         if let param = params {
             UserSessionManager.sharedInstance.updateUserProfil(param, success: {
                 print("Success categories VC")
-                completion(success: true)
                 PopupManager.sharedInstance.dismissPopup(true, completion: {
-                    PopupManager.sharedInstance.showSuccessPopup("Succès !", message: "Ta catégorie a été mise à jour 😎", completion: nil)
+                    PopupManager.sharedInstance.showSuccessPopup("Succès !", message: "Tes catégories préférées ont été mise à jour 😎", viewController: self, completion: nil, doneActionCompletion: {
+                        completion(success: true)
+                    })
                 })
             }, fail: { (error, listError) in
-                self.dismissViewControllerAnimated(true, completion: { 
+                PopupManager.sharedInstance.dismissPopup(true, completion: {
                     print("Fail categories VC")
-                    PopupManager.sharedInstance.showErrorPopup("Oups !", message: "Il semblerait que tu ne possède pas de connexion à internet, la catégorie n'a pas pu être modifée... Essaie ultérieurement.", completion: nil)
+                    PopupManager.sharedInstance.showErrorPopup("Oups !", message: "Il semblerait que tu ne possède pas de connexion à internet... Essaie ultérieurement.", viewController: self, completion: nil, doneActionCompletion: {
+                        completion(success: false)
+                    })
                 })
-                completion(success: false)
             })
         }
     }
@@ -95,11 +99,13 @@ class PreferencesCategoriesViewController: RootViewController, UICollectionViewD
         
         cell.categoryImageView.image = self.categoriesImages![indexPath.item]
         cell.categoryName = self.categoriesImagesPathArray[indexPath.item]
+        cell.categoryNameLabel.text = self.categoriesNames[indexPath.item]
         
-        if let categoryFavorite = self.categoryPrefered {
-            if cell.categoryName! == categoryFavorite {
+        if let categoriesPrefered = self.categoriesPrefered {
+            if categoriesPrefered.contains(cell.categoryName!) == true {
                 cell.imageSelected = true
-                self.oldCategoryIndexPath = indexPath
+            } else {
+                cell.imageSelected = false
             }
         } else {
             cell.imageSelected = false
@@ -111,34 +117,14 @@ class PreferencesCategoriesViewController: RootViewController, UICollectionViewD
 //MARK: Collection View Delegate Methods
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-        PopupManager.sharedInstance.showLoadingPopup("Chargement...", message: "Mise à jour de ton profil Docha...", completion: nil)
-        // Deselect old cell
-        if self.oldCategoryIndexPath != nil {
-            let oldCellSelected = collectionView.cellForItemAtIndexPath(oldCategoryIndexPath!) as! InscriptionCategoryCollectionViewCell
-            oldCellSelected.imageSelected = false
-        }
-        
         let cellSelected = collectionView.cellForItemAtIndexPath(indexPath) as! InscriptionCategoryCollectionViewCell
-        cellSelected.imageSelected = true
-        self.categoryPrefered = cellSelected.categoryName!
-        
-        let currentSession = UserSessionManager.sharedInstance.currentSession()
-        currentSession?.categoryFavorite = self.categoryPrefered
-        currentSession?.saveSession()
-        
-        if let userSession = currentSession {
-            saveCategorieFavoriteWithUserSession(userSession, completion: { (success) in
-                if success {
-                    self.oldCategoryIndexPath = indexPath
-                } else {
-                    let cellSelected = collectionView.cellForItemAtIndexPath(self.oldCategoryIndexPath!) as! InscriptionCategoryCollectionViewCell
-                    cellSelected.imageSelected = true
-                    self.categoryPrefered = cellSelected.categoryName!
-                    
-                    let cellDeselected = collectionView.cellForItemAtIndexPath(indexPath) as! InscriptionCategoryCollectionViewCell
-                    cellDeselected.imageSelected = false
-                }
-            })
+        if cellSelected.imageSelected {
+            cellSelected.imageSelected = false
+            self.categoriesPrefered?.removeObject(cellSelected.categoryName)
+            
+        } else {
+            cellSelected.imageSelected = true
+            self.categoriesPrefered?.append(cellSelected.categoryName)
         }
     }
     
@@ -146,10 +132,33 @@ class PreferencesCategoriesViewController: RootViewController, UICollectionViewD
 //MARK: @IBActions
     
     @IBAction func backButtonTouched(sender: UIBarButtonItem) {
-        self.navigationController?.popViewControllerAnimated(true)
+        let currentSession = UserSessionManager.sharedInstance.currentSession()
+        
+        if self.categoriesPrefered == nil || (self.categoriesPrefered?.isEmpty)! {
+            self.navigationController?.popViewControllerAnimated(true)
+            
+        } else if self.categoriesPrefered! == (currentSession?.categoriesFavorites)! {
+            self.navigationController?.popViewControllerAnimated(true)
+            
+        } else {
+            PopupManager.sharedInstance.showLoadingPopup("Chargement...", message: "Mise à jour de ton profil Docha...", viewController: self, completion: nil)
+            let categoriesFavoritesTemp = currentSession?.categoriesFavorites
+            currentSession?.categoriesFavorites = self.categoriesPrefered
+            
+            if let currentSession = currentSession {
+                saveCategorieFavoriteWithUserSession(currentSession, completion: { (success) in
+                    if success {
+                        self.navigationController?.popViewControllerAnimated(true)
+                    } else {
+                        self.categoriesPrefered = categoriesFavoritesTemp
+                        self.collectionView.reloadData()
+                    }
+                })
+            }
+        }
     }
     
     @IBAction func infosButtonTouched(sender: UIBarButtonItem) {
-        PopupManager.sharedInstance.showInfosPopup("Info", message: "Nous souhaitons te proposer au maximum des produits qui te correspondent.", completion: nil)
+        PopupManager.sharedInstance.showInfosPopup("Info", message: "Nous souhaitons te proposer au maximum des produits qui te correspondent.", viewController: self, completion: nil)
     }
 }
