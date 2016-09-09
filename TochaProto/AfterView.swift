@@ -59,6 +59,7 @@ class AfterView: UIView {
                 estimationResult = EstimationResult.Perfect
                 break
             }
+            
         } else if results.count == 3 {
             switch greenPerfectCounter {
             case 0:

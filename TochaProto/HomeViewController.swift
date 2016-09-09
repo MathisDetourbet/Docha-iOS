@@ -297,6 +297,8 @@ class HomeViewController: GameViewController, UITableViewDelegate, UITableViewDa
 //MARK: HomeUserTurnCellDelegate Methods
     
     func playButtonTouched() {
+//        let gameplayVC = self.storyboard?.instantiateViewControllerWithIdentifier("idGameplayMainViewController") as! GameplayMainViewController
+//        self.navigationController?.pushViewController(gameplayVC, animated: true)
         //        Amplitude.instance().logEvent("HomeGameLaunched")
         //
         //        PopupManager.sharedInstance.showLoadingPopup("Chargement en cours...", message: "Nous préparons tes produits.", completion: {

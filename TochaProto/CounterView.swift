@@ -20,8 +20,8 @@ class CounterView: UIImageView {
     let DURATION_COUNTER_ANIMATION = 0.2 as CGFloat
     var counterImage: JDFlipImageView! {
         didSet {
-            self.counterImage.translatesAutoresizingMaskIntoConstraints = false
-            self.addSubview(self.counterImage)
+            counterImage.translatesAutoresizingMaskIntoConstraints = false
+            self.addSubview(counterImage)
             
             self.addConstraint(NSLayoutConstraint(item: counterImage, attribute: .Top, relatedBy: .Equal, toItem: self, attribute: .Top, multiplier: 1.0, constant: 0))
             self.addConstraint(NSLayoutConstraint(item: counterImage, attribute: .Bottom, relatedBy: .Equal, toItem: self, attribute: .Bottom, multiplier: 1.0, constant: 0))
@@ -71,17 +71,17 @@ class CounterView: UIImageView {
         super.init(coder: aDecoder)
     }
     
-    func startCounterAnimationWithNumber(number newNumber: Int, completion: (finished: Bool) -> Void) {
+    func startCounterAnimationWithNumber(number newNumber: Int, completion: ((finished: Bool) -> Void)?) {
         if newNumber == -1 {
             if newNumber == currentNumber! {
                 self.isSelected = false
-                completion(finished: true)
+                completion?(finished: true)
                 return
             }
             self.currentNumber! = newNumber
             self.counterImage.setImageAnimated(UIImage(named: "counter_base"), duration: DURATION_COUNTER_ANIMATION, completion: { (finished) -> Void in
                 if finished {
-                    completion(finished: false)
+                    completion?(finished: false)
                 }
             })
         }
@@ -91,10 +91,12 @@ class CounterView: UIImageView {
         if currentNumber != -1 {
             if currentNumber! > newNumber {
                 range = NUMBER_MAX - currentNumber! + newNumber
+                
             } else if currentNumber! == newNumber {
                 self.isSelected = false
-                completion(finished: true)
+                completion?(finished: true)
                 return
+                
             } else {
                 range = newNumber - abs(currentNumber!)
             }
@@ -104,8 +106,9 @@ class CounterView: UIImageView {
         
         if range == 0 {
             self.isSelected = false
-            completion(finished: true)
+            completion?(finished: true)
             return
+            
         } else if range == 1 {
             self.currentNumber! += 1
             let currentNumberStr = String(self.currentNumber!)
@@ -115,9 +118,10 @@ class CounterView: UIImageView {
                 completion: { (finished) -> Void in
                 if finished {
                     self.isSelected = false
-                    completion(finished: true)
+                    completion?(finished: true)
                 }
             })
+            
         } else {
             var opArray: [NSBlockOperation] = []
             let queue: NSOperationQueue = NSOperationQueue.mainQueue()
@@ -145,21 +149,15 @@ class CounterView: UIImageView {
             }
             
             self.isSelected = false
-            completion(finished: true)
+            completion?(finished: true)
         }
     }
     
     func setCounterViewAfterWithCounterViewAfterType(type: CounterViewAfterType) {
         switch type {
-        case .Perfect:
-            counterImage.image = UIImage(named: "counter_perfect")
-            break
-        case .Green:
-            counterImage.image = UIImage(named: "counter_right")
-            break
-        default:
-            counterImage.image = UIImage(named: "counter_wrong")
-            break
+        case .Perfect: counterImage.image = UIImage(named: "counter_perfect"); break
+        case .Green: counterImage.image = UIImage(named: "counter_right"); break
+        default: counterImage.image = UIImage(named: "counter_wrong"); break
         }
     }
 }

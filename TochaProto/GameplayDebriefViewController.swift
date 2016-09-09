@@ -127,29 +127,29 @@ class GameplayDebriefViewController: GameViewController, UITableViewDelegate, UI
     
     @IBAction func newGameButtonTouched(sender: UIButton) {
         // Amplitude Event
-        Amplitude.instance().logEvent("DebriefingClickNewGameButton")
-        
-        let productManager = ProductManager.sharedInstance
-        
-        PopupManager.sharedInstance.showLoadingPopup("Chargement en cours...", message: "Nous préparons tes produits.", completion: {
-            dispatch_async(dispatch_get_main_queue(), {
-                
-                productManager.getPackOfProducts({ (finished, packOfProducts) in
-                    if finished && packOfProducts != nil {
-                        PopupManager.sharedInstance.dismissPopup(true, completion: {
-                            let gameplayVC = self.storyboard?.instantiateViewControllerWithIdentifier("idGameplayViewController") as! GameplayViewController
-                            gameplayVC.productsList = packOfProducts
-                            self.hidesBottomBarWhenPushed = true
-                            self.navigationController?.pushViewController(gameplayVC, animated: true)
-                        })
-                        
-                    } else {
-                        print("Error when loading products...")
-                        PopupManager.sharedInstance.showErrorPopup("Oups !", message: "La connexion internet semble interrompue. Essaie à nouveau ultérieurement.", completion: nil)
-                    }
-                })
-            })
-        })
+//        Amplitude.instance().logEvent("DebriefingClickNewGameButton")
+//        
+//        let productManager = ProductManager.sharedInstance
+//        
+//        PopupManager.sharedInstance.showLoadingPopup("Chargement en cours...", message: "Nous préparons tes produits.", completion: {
+//            dispatch_async(dispatch_get_main_queue(), {
+//                
+//                productManager.getPackOfProducts({ (finished, packOfProducts) in
+//                    if finished && packOfProducts != nil {
+//                        PopupManager.sharedInstance.dismissPopup(true, completion: {
+//                            let gameplayVC = self.storyboard?.instantiateViewControllerWithIdentifier("idGameplayViewController") as! GameplayViewController
+//                            gameplayVC.productsList = packOfProducts
+//                            self.hidesBottomBarWhenPushed = true
+//                            self.navigationController?.pushViewController(gameplayVC, animated: true)
+//                        })
+//                        
+//                    } else {
+//                        print("Error when loading products...")
+//                        PopupManager.sharedInstance.showErrorPopup("Oups !", message: "La connexion internet semble interrompue. Essaie à nouveau ultérieurement.", completion: nil)
+//                    }
+//                })
+//            })
+//        })
     }
     
     func discoverProductActionWithURL(url: String) {

@@ -18,7 +18,7 @@ extension UIColor {
     }
     
     class func darkBlueDochaColor() -> UIColor {
-        return UIColor(red:0.11, green:0.18, blue:0.20, alpha:1.0)
+        return UIColor(red:0.11, green:0.18, blue:0.24, alpha:1.0)
     }
     
     class func lightGrayDochaColor() -> UIColor {

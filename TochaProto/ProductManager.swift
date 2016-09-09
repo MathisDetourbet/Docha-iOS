@@ -56,7 +56,7 @@ extension UIImageView {
 
 
 class ProductManager {
-    let PACK_PRODUCT_COUNT = 5
+    let PACK_PRODUCT_COUNT = 3
     
     var products: [Product]?
     var currentPackOfProducts: [Product]?

@@ -22,7 +22,6 @@
 		67240CF91CF1C8A5001F4DC6 /* StarterPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67240CF81CF1C8A5001F4DC6 /* StarterPageViewController.swift */; };
 		67240CFB1CF1DA6D001F4DC6 /* StarterPageContentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67240CFA1CF1DA6D001F4DC6 /* StarterPageContentViewController.swift */; };
 		67240CFD1CF1DB32001F4DC6 /* ConnexionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67240CFC1CF1DB32001F4DC6 /* ConnexionViewController.swift */; };
-		672D6F0D1D0B145300C0EB01 /* GameplayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 672D6F0C1D0B145300C0EB01 /* GameplayViewController.swift */; };
 		672D6F0F1D0B25AC00C0EB01 /* KeyboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 672D6F0E1D0B25AC00C0EB01 /* KeyboardView.swift */; };
 		67300B811D083B6E0061D06F /* StorePagerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67300B801D083B6E0061D06F /* StorePagerViewController.swift */; };
 		67300B851D0853220061D06F /* CAPSPageMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67300B841D0853220061D06F /* CAPSPageMenu.swift */; };
@@ -47,6 +46,7 @@
 		677BFD5A1D18156E0014878C /* UserGameStateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 677BFD591D18156E0014878C /* UserGameStateManager.swift */; };
 		677BFD641D18C1380014878C /* ArrayHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 677BFD631D18C1380014878C /* ArrayHelper.swift */; };
 		677EDF5B1D044AD000192C9D /* LxTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 677EDF5A1D044AD000192C9D /* LxTabBarController.swift */; };
+		678113651D8168DD00B24234 /* CounterContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 678113641D8168DD00B24234 /* CounterContainerView.swift */; };
 		678338301D04E754002907EC /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6783382F1D04E754002907EC /* HomeViewController.swift */; };
 		6786E4021CF4851C00729D8E /* StarterNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6786E4011CF4851C00729D8E /* StarterNavigationController.swift */; };
 		6786E4041CF485ED00729D8E /* RootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6786E4031CF485ED00729D8E /* RootViewController.swift */; };
@@ -121,6 +121,11 @@
 		67F0CA141CD64F1100C9B4B6 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67F0CA131CD64F1100C9B4B6 /* Constants.swift */; };
 		67F0CA161CD6A18E00C9B4B6 /* ProductManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67F0CA151CD6A18E00C9B4B6 /* ProductManager.swift */; };
 		67F75F701C42E00C00E78102 /* CounterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67F75F6F1C42E00C00E78102 /* CounterView.swift */; };
+		67FDCDC91D7ECEA800FC1264 /* GameplayMainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67FDCDC81D7ECEA800FC1264 /* GameplayMainViewController.swift */; };
+		67FDCDCC1D7EF8EA00FC1264 /* CardProductView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67FDCDCB1D7EF8EA00FC1264 /* CardProductView.swift */; };
+		67FDCDCE1D7EFD2B00FC1264 /* CardProductView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 67FDCDCD1D7EFD2B00FC1264 /* CardProductView.xib */; };
+		67FDCDD01D7F1C1600FC1264 /* PinIconView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 67FDCDCF1D7F1C1600FC1264 /* PinIconView.xib */; };
+		67FDCDD21D7F1CF700FC1264 /* PinIconView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67FDCDD11D7F1CF700FC1264 /* PinIconView.swift */; };
 		67FEE2281C8E1E07008F842C /* Montserrat-Black.otf in Resources */ = {isa = PBXBuildFile; fileRef = 67FEE2201C8E1E07008F842C /* Montserrat-Black.otf */; };
 		67FEE2291C8E1E07008F842C /* Montserrat-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 67FEE2211C8E1E07008F842C /* Montserrat-Bold.otf */; };
 		67FEE22A1C8E1E07008F842C /* Montserrat-ExtraBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 67FEE2221C8E1E07008F842C /* Montserrat-ExtraBold.otf */; };
@@ -181,7 +186,6 @@
 		67240CF81CF1C8A5001F4DC6 /* StarterPageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StarterPageViewController.swift; sourceTree = "<group>"; };
 		67240CFA1CF1DA6D001F4DC6 /* StarterPageContentViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StarterPageContentViewController.swift; sourceTree = "<group>"; };
 		67240CFC1CF1DB32001F4DC6 /* ConnexionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConnexionViewController.swift; sourceTree = "<group>"; };
-		672D6F0C1D0B145300C0EB01 /* GameplayViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameplayViewController.swift; sourceTree = "<group>"; };
 		672D6F0E1D0B25AC00C0EB01 /* KeyboardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyboardView.swift; sourceTree = "<group>"; };
 		67300B801D083B6E0061D06F /* StorePagerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StorePagerViewController.swift; sourceTree = "<group>"; };
 		67300B841D0853220061D06F /* CAPSPageMenu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CAPSPageMenu.swift; sourceTree = "<group>"; };
@@ -210,6 +214,7 @@
 		677BFD591D18156E0014878C /* UserGameStateManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserGameStateManager.swift; sourceTree = "<group>"; };
 		677BFD631D18C1380014878C /* ArrayHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArrayHelper.swift; sourceTree = "<group>"; };
 		677EDF5A1D044AD000192C9D /* LxTabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LxTabBarController.swift; sourceTree = "<group>"; };
+		678113641D8168DD00B24234 /* CounterContainerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CounterContainerView.swift; sourceTree = "<group>"; };
 		6783382F1D04E754002907EC /* HomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		6786E4011CF4851C00729D8E /* StarterNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StarterNavigationController.swift; sourceTree = "<group>"; };
 		6786E4031CF485ED00729D8E /* RootViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RootViewController.swift; sourceTree = "<group>"; };
@@ -283,6 +288,11 @@
 		67F0CA131CD64F1100C9B4B6 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		67F0CA151CD6A18E00C9B4B6 /* ProductManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProductManager.swift; sourceTree = "<group>"; };
 		67F75F6F1C42E00C00E78102 /* CounterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CounterView.swift; sourceTree = "<group>"; };
+		67FDCDC81D7ECEA800FC1264 /* GameplayMainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameplayMainViewController.swift; sourceTree = "<group>"; };
+		67FDCDCB1D7EF8EA00FC1264 /* CardProductView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardProductView.swift; sourceTree = "<group>"; };
+		67FDCDCD1D7EFD2B00FC1264 /* CardProductView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CardProductView.xib; sourceTree = "<group>"; };
+		67FDCDCF1D7F1C1600FC1264 /* PinIconView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PinIconView.xib; sourceTree = "<group>"; };
+		67FDCDD11D7F1CF700FC1264 /* PinIconView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PinIconView.swift; sourceTree = "<group>"; };
 		67FEE2201C8E1E07008F842C /* Montserrat-Black.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-Black.otf"; sourceTree = "<group>"; };
 		67FEE2211C8E1E07008F842C /* Montserrat-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-Bold.otf"; sourceTree = "<group>"; };
 		67FEE2221C8E1E07008F842C /* Montserrat-ExtraBold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-ExtraBold.otf"; sourceTree = "<group>"; };
@@ -469,11 +479,10 @@
 		67300B931D09D6A50061D06F /* Gameplay */ = {
 			isa = PBXGroup;
 			children = (
-				672D6F0C1D0B145300C0EB01 /* GameplayViewController.swift */,
-				67D4826B1D1C059C009F1992 /* GameplayDebriefViewController.swift */,
 				67E7ED081D7D894800D04536 /* Launcher */,
-				67D4826F1D1C0759009F1992 /* Cells */,
-				67C8EBF51D11A4F300AF885B /* Views */,
+				67FDCDD31D7F1D6300FC1264 /* Main */,
+				67FDCDD41D7F1D7D00FC1264 /* Debrief */,
+				67FDCDCA1D7EF3BF00FC1264 /* Old */,
 			);
 			name = Gameplay;
 			sourceTree = "<group>";
@@ -712,9 +721,12 @@
 			isa = PBXGroup;
 			children = (
 				67F75F6F1C42E00C00E78102 /* CounterView.swift */,
+				678113641D8168DD00B24234 /* CounterContainerView.swift */,
 				672D6F0E1D0B25AC00C0EB01 /* KeyboardView.swift */,
-				67C8EBF31D11A4E700AF885B /* AfterView.swift */,
-				6757AAFC1D12C0B8005ABE72 /* TimelineView.swift */,
+				67FDCDCB1D7EF8EA00FC1264 /* CardProductView.swift */,
+				67FDCDCD1D7EFD2B00FC1264 /* CardProductView.xib */,
+				67FDCDD11D7F1CF700FC1264 /* PinIconView.swift */,
+				67FDCDCF1D7F1C1600FC1264 /* PinIconView.xib */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -844,6 +856,33 @@
 				676FEAD11D758BAE006E6B3E /* products_beta_v0.2.json */,
 			);
 			name = ProductsJSON;
+			sourceTree = "<group>";
+		};
+		67FDCDCA1D7EF3BF00FC1264 /* Old */ = {
+			isa = PBXGroup;
+			children = (
+				67C8EBF31D11A4E700AF885B /* AfterView.swift */,
+				6757AAFC1D12C0B8005ABE72 /* TimelineView.swift */,
+				67D4826B1D1C059C009F1992 /* GameplayDebriefViewController.swift */,
+				67D4826F1D1C0759009F1992 /* Cells */,
+			);
+			name = Old;
+			sourceTree = "<group>";
+		};
+		67FDCDD31D7F1D6300FC1264 /* Main */ = {
+			isa = PBXGroup;
+			children = (
+				67FDCDC81D7ECEA800FC1264 /* GameplayMainViewController.swift */,
+				67C8EBF51D11A4F300AF885B /* Views */,
+			);
+			name = Main;
+			sourceTree = "<group>";
+		};
+		67FDCDD41D7F1D7D00FC1264 /* Debrief */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Debrief;
 			sourceTree = "<group>";
 		};
 		67FEE21C1C8E1B30008F842C /* Images */ = {
@@ -1058,6 +1097,7 @@
 			files = (
 				67FEE22A1C8E1E07008F842C /* Montserrat-ExtraBold.otf in Resources */,
 				67FEE22F1C8E1E07008F842C /* Montserrat-UltraLight.otf in Resources */,
+				67FDCDCE1D7EFD2B00FC1264 /* CardProductView.xib in Resources */,
 				67FEE2291C8E1E07008F842C /* Montserrat-Bold.otf in Resources */,
 				6791CDE31D2EA1C20091DDB0 /* CaviarDreams_BoldItalic.ttf in Resources */,
 				6791CDE41D2EA1C20091DDB0 /* CaviarDreams_Italic.ttf in Resources */,
@@ -1070,6 +1110,7 @@
 				676FEAD21D758BAE006E6B3E /* products_beta_v0.2.json in Resources */,
 				6701D9791C108A2100F87043 /* Main.storyboard in Resources */,
 				6791CDE21D2EA1C20091DDB0 /* CaviarDreams_Bold.ttf in Resources */,
+				67FDCDD01D7F1C1600FC1264 /* PinIconView.xib in Resources */,
 				67FEE22C1C8E1E07008F842C /* Montserrat-Light.otf in Resources */,
 				67FEE22D1C8E1E07008F842C /* Montserrat-Regular.otf in Resources */,
 				67FEE22E1C8E1E07008F842C /* Montserrat-SemiBold.otf in Resources */,
@@ -1281,6 +1322,7 @@
 				67DED22F1D47D93E00A4027E /* PopupView.swift in Sources */,
 				67DED2311D47DCA500A4027E /* UIViewHelper.swift in Sources */,
 				67F0CA141CD64F1100C9B4B6 /* Constants.swift in Sources */,
+				67FDCDCC1D7EF8EA00FC1264 /* CardProductView.swift in Sources */,
 				67F0CA161CD6A18E00C9B4B6 /* ProductManager.swift in Sources */,
 				67D4827A1D1D9203009F1992 /* ProfilRequest.swift in Sources */,
 				67240CFB1CF1DA6D001F4DC6 /* StarterPageContentViewController.swift in Sources */,
@@ -1300,9 +1342,11 @@
 				6750B1011D46483100AA33E2 /* PreferencesFeedbackViewController.swift in Sources */,
 				6791CDDB1D2D78F70091DDB0 /* PreferencesChangeProfilTableViewCell.swift in Sources */,
 				6791CDF01D3542AF0091DDB0 /* PreferencesChangePasswordViewController.swift in Sources */,
+				67FDCDD21D7F1CF700FC1264 /* PinIconView.swift in Sources */,
 				679273E71CFB5D5D00DABA88 /* UserSessionGooglePlus.swift in Sources */,
 				67D4826E1D1C074F009F1992 /* DebriefTableViewCell.swift in Sources */,
 				6752037D1D782DFA00BF76B1 /* HomeGameTableViewCell.swift in Sources */,
+				67FDCDC91D7ECEA800FC1264 /* GameplayMainViewController.swift in Sources */,
 				677EDF5B1D044AD000192C9D /* LxTabBarController.swift in Sources */,
 				67748A2B1D41774600525091 /* PriceRecordsRequest.swift in Sources */,
 				67E5C55C1CF88639009F3FCA /* InscriptionCategorySelectionViewController.swift in Sources */,
@@ -1311,7 +1355,6 @@
 				67C83B011CF498780066B982 /* PasswordForgottenViewController.swift in Sources */,
 				67DA29B61CEB384700CE621F /* InscriptionRequest.swift in Sources */,
 				679273E11CFB0FC000DABA88 /* UserSessionEmail.swift in Sources */,
-				672D6F0D1D0B145300C0EB01 /* GameplayViewController.swift in Sources */,
 				678338301D04E754002907EC /* HomeViewController.swift in Sources */,
 				67F75F701C42E00C00E78102 /* CounterView.swift in Sources */,
 				67C8EBF41D11A4E700AF885B /* AfterView.swift in Sources */,
@@ -1322,6 +1365,7 @@
 				670F61F81D6DCD1A00CE96F4 /* BadgeTableViewCell.swift in Sources */,
 				6791CDD91D2D78D40091DDB0 /* PreferencesChangePseudoTableViewCell.swift in Sources */,
 				679273E51CFB5BC000DABA88 /* UserSessionFacebook.swift in Sources */,
+				678113651D8168DD00B24234 /* CounterContainerView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

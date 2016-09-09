@@ -28,7 +28,7 @@ class NavSchemeManager {
     
     func changeRootViewController(viewController: UIViewController) {
         let snapShot = (((UIApplication.sharedApplication().delegate) as! AppDelegate)).window!.snapshotViewAfterScreenUpdates(true)
-        viewController.view .addSubview(snapShot)
+        viewController.view.addSubview(snapShot)
         (((UIApplication.sharedApplication().delegate) as! AppDelegate)).window!.rootViewController = viewController
         UIView.animateWithDuration(0.3,
                                    animations: { 

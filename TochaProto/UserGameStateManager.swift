@@ -9,6 +9,13 @@
 import Foundation
 import GameKit
 
+enum EstimationResult {
+    case Perfect
+    case Amazing
+    case Great
+    case Oups
+}
+
 struct Reward {
     var dochos: Int?
     var experience: Int?
@@ -127,11 +134,8 @@ class UserGameStateManager {
             let priceMax = realPrice + realPrice * ERROR_PERCENT
             let priceMin = realPrice - realPrice * ERROR_PERCENT
             
-            if case priceMin...priceMax = psyPrice {
-                return true
-            } else {
-                return false
-            }
+            if case priceMin...priceMax = psyPrice { return true }
+            else { return false }
         }
     }
     
