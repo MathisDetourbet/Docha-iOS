@@ -29,7 +29,7 @@ class GameplayLauncherViewController: GameViewController {
     }
     
     var timer: NSTimer?
-    var timeleft: Double! = 1.0
+    var timeleft: Double! = 3.0
     
     @IBOutlet weak var userNameLabel: UILabel!
     @IBOutlet weak var userLevelLabel: UILabel!

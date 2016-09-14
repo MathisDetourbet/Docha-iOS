@@ -9,6 +9,13 @@
 import Foundation
 import MBCircularProgressBar
 
+enum TimelineState {
+    case Perfect
+    case Wrong
+    case Current
+    case Unplayed
+}
+
 class GameplayMainViewController: GameViewController, KeyboardViewDelegate, CounterContainerViewDelegate {
     
     var productsData: [Product]?
@@ -25,9 +32,9 @@ class GameplayMainViewController: GameViewController, KeyboardViewDelegate, Coun
     var cursorCard: Int = 0
     var cursorCounter: Int = 0
     
-    let kTimePerProduct: Double = 10.0
+    let kTimePerProduct: Double = 30.0
     var timer: NSTimer?
-    var timeleft: Double?
+    var timeleft: Double!
     
 
 //MARK: @IBOutlets
@@ -59,12 +66,12 @@ class GameplayMainViewController: GameViewController, KeyboardViewDelegate, Coun
         self.currentCard?.addSubview(messageLabel!)
         
         initCardsView()
-        initTimer()
+        initTimer(false)
         startTimer()
+        startTheGame()
         
         messageLabel = UILabel(frame: CGRectMake(self.currentCard!.frame.midX - 150.0, self.currentCard!.frame.midY - 100.0, 200.0, 50.0))
         messageLabel!.font = UIFont(name: "Montserrat-ExtraBold", size: 25.0)
-        messageLabel!.text = "\(self.currentProductData!.price)"
     }
     
     
@@ -95,7 +102,6 @@ class GameplayMainViewController: GameViewController, KeyboardViewDelegate, Coun
         }
         
         self.cardsViews = cardsArray
-        moveToNextCard(self.cardsViews?.first, AndMovePreviousCard: nil, completion: nil)
     }
     
     func moveToNextCard(nextCard: CardProductView!, AndMovePreviousCard previousCard: CardProductView?, completion: ((finished: Bool) -> Void)?) {
@@ -143,14 +149,60 @@ class GameplayMainViewController: GameViewController, KeyboardViewDelegate, Coun
         completion?(finished: true)
     }
     
+    func startTheGame() {
+        moveToNextCard(self.cardsViews?.first, AndMovePreviousCard: nil, completion: nil)
+        updateTimelineWithResult(.Current, isForUser: true)
+    }
+    
+    func gameFinished() {
+        let debriefVC = self.storyboard?.instantiateViewControllerWithIdentifier("") as! GameplayDebriefViewController
+        debriefVC.productsList = self.productsData
+        self.navigationController?.pushViewController(debriefVC, animated: true)
+    }
+    
+    func nextProductWithResult(result: TimelineState) {
+        if self.cursorCard < self.cardsViews!.count-1 {
+            // Display the next card
+            let nextCard = self.cardsViews![self.cursorCard + 1]
+            updateTimelineWithResult(result, isForUser: true)
+            
+            self.initTimer(true)
+            self.moveToNextCard(nextCard, AndMovePreviousCard: self.currentCard, completion: { (_) in
+                self.cursorCounter = 0
+                self.keyboardView.enabledKeyboard(true)
+                self.keyboardView.reset()
+                self.currentCard?.counterContainerView.resetCountersViews()
+                self.startTimer()
+                self.updateTimelineWithResult(.Current, isForUser: true)
+            })
+            
+        } else {
+            // Game Finished !
+            self.timeleft = 0.0
+            stopTimer()
+            gameFinished()
+        }
+    }
+    
     
 //MARK: Timer Methods
     
-    func initTimer() {
+    func initTimer(animated: Bool) {
         self.timeleft = kTimePerProduct
-        self.timer = NSTimer.new(every: 0.01, { (timer: NSTimer) in
-            if self.timeleft <= 0.01 {
-                self.stopTimer()
+        if animated {
+            UIView.animateWithDuration(1.0, animations: { 
+                self.circularProgressBarView.value = CGFloat(self.timeleft!)
+                self.view.layoutIfNeeded()
+            })
+            
+        } else {
+            self.circularProgressBarView.value = CGFloat(self.timeleft!)
+        }
+        
+        self.timer = NSTimer.new(every: 10.milliseconds, { (timer: NSTimer) in
+            if Int(self.timeleft) == 0  {
+                self.timesUp()
+                timer.invalidate()
                 
             } else {
                 self.updateTimer()
@@ -169,6 +221,7 @@ class GameplayMainViewController: GameViewController, KeyboardViewDelegate, Coun
     func updateTimer() {
         self.timeleft = self.timeleft! - 0.01
         self.circularProgressBarView.value = CGFloat(self.timeleft!)
+        
         if Int(self.timeleft!) == 5 {
             animateTimer()
         }
@@ -176,12 +229,43 @@ class GameplayMainViewController: GameViewController, KeyboardViewDelegate, Coun
     
     func stopTimer() {
         self.timer?.invalidate()
+        self.timer = nil
+    }
+    
+    func timesUp() {
+        self.stopTimer()
+        updateTimelineWithResult(.Wrong, isForUser: true)
+        nextProductWithResult(.Wrong)
     }
     
     func animateTimer() {
         self.circularProgressBarView.fontColor = UIColor.redDochaColor()
         self.circularProgressBarView.progressColor = UIColor.redDochaColor()
         self.circularProgressBarView.progressStrokeColor = UIColor.redDochaColor()
+    }
+    
+
+//MARK: Timeline Methods
+    
+    func updateTimelineWithResult(result: TimelineState, isForUser: Bool) {
+        var timelineImageName: String?
+        
+        switch result {
+            case .Perfect:  timelineImageName = "timeline_perfect_found"; break
+            case .Current:  timelineImageName = "timeline_encours"; break
+            case .Wrong:    timelineImageName = "timeline_red_zone"; break
+            case .Unplayed: timelineImageName = "timeline_unlock"; break
+        }
+        if isForUser {
+            if let timelineImageName = timelineImageName {
+                self.userTimelineImageViewCollection[cursorCard].image = UIImage(named: timelineImageName)
+            }
+            
+        } else {
+            if let timelineImageName = timelineImageName {
+                self.opponentTimelineImageViewCollection[cursorCard].image = UIImage(named: timelineImageName)
+            }
+        }
     }
     
     
@@ -215,20 +299,8 @@ class GameplayMainViewController: GameViewController, KeyboardViewDelegate, Coun
             if finished {
                 if self.userEstimation! == self.currentPriceArray! {
                     // Perfect price
-                    if self.cursorCard < self.cardsViews!.count-1 {
-                        let nextCard = self.cardsViews![self.cursorCard + 1]
-                        
-                        // Display the next card
-                        self.moveToNextCard(nextCard, AndMovePreviousCard: self.currentCard, completion: { (_) in
-                            self.cursorCounter = 0
-                            self.keyboardView.enabledKeyboard(true)
-                            self.keyboardView.reset()
-                            self.currentCard?.counterContainerView.resetCountersViews()
-                        })
-                        
-                    } else {
-                        // Game Finished !
-                    }
+                    self.updateTimelineWithResult(.Perfect, isForUser: true)
+                    self.nextProductWithResult(.Perfect)
                     
                 } else {
                     self.cursorCounter = 0
