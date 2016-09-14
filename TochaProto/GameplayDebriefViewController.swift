@@ -8,17 +8,37 @@
 
 import Foundation
 
+enum ResultRoundSentence: String {
+    case winner = "winner_sentence"
+    case looser = "looser_sentence"
+    case nul = "nul_sentence"
+}
+
 class GameplayDebriefViewController: GameViewController, UIPageViewControllerDataSource, UIPageViewControllerDelegate, GameplayDebriefPageContentDelegate {
     
     var productsList: [Product]?
     
     var pageViewController: UIPageViewController!
     
+    @IBOutlet weak var resultRoundSentenceImageView: UIImageView!
+    
+    @IBOutlet weak var userAvatarImageView: UIImageView!
+    @IBOutlet weak var userNameLabel: UILabel!
+    @IBOutlet weak var userLevelLabel: UILabel!
+    @IBOutlet var userTimelineImageViewCollection: [UIImageView]!
+    
+    @IBOutlet weak var opponentAvatarImageView: UIImageView!
+    @IBOutlet weak var opponentNameLabel: UILabel!
+    @IBOutlet weak var opponentLevelLabel: UILabel!
+    @IBOutlet var opponentTimelineImageViewCollection: [UIImageView]!
+    
     @IBOutlet weak var pageControl: UIPageControl!
     @IBOutlet weak var containerPageViewController: UIView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        buildUI()
         
         self.pageViewController = self.storyboard?.instantiateViewControllerWithIdentifier("idDebriefPageViewController") as! UIPageViewController
         self.pageViewController.delegate = self
@@ -27,6 +47,20 @@ class GameplayDebriefViewController: GameViewController, UIPageViewControllerDat
         let pageContentVC = self.viewControllerAtIndex(0)
         pageViewController.setViewControllers([pageContentVC!], direction: .Forward, animated: true, completion: nil)
         self.addChildViewController(pageViewController)
+    }
+    
+    func buildUI() {
+        let userSession = UserSessionManager.sharedInstance.currentSession()
+        if let userSession = userSession {
+            if let avatar = userSession.avatar {
+                self.userAvatarImageView.image = UIImage(named: avatar)
+                
+            } else {
+                
+            }
+            self.userNameLabel.text = userSession.pseudo
+            self.userLevelLabel.text = "Niveau \(userSession.levelMaxUnlocked)"
+        }
     }
     
 
@@ -90,6 +124,13 @@ class GameplayDebriefViewController: GameViewController, UIPageViewControllerDat
     }
     
     func shareButtonTouched() {
+        
+    }
+    
+    
+//MARK: @IBActions Methods
+    
+    @IBAction func nextButtonTouched(sender: UIButton) {
         
     }
 }

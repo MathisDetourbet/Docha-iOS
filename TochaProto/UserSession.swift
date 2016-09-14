@@ -77,16 +77,16 @@ class UserSession: User, NSCoding {
     }
     
     func getUserProfileImage() -> UIImage? {
-        let imagePath = NSUserDefaults.standardUserDefaults().objectForKey(Constants.UserDefaultsKey.kUserInfosProfileImageFilePath) as? String
-        if let oldImagePath = imagePath {
-            let oldFullPath = self.documentsPathForFileName(oldImagePath)
-            let oldImageData = NSData(contentsOfFile: oldFullPath)
-            let oldImage = UIImage(data: oldImageData!)
-            
-            return oldImage!
-        }
-        
-        return nil
+//        let imagePath = NSUserDefaults.standardUserDefaults().objectForKey(Constants.UserDefaultsKey.kUserInfosProfileImageFilePath) as? String
+//        if let oldImagePath = imagePath {
+//            let oldFullPath = self.documentsPathForFileName(oldImagePath)
+//            let oldImageData = NSData(contentsOfFile: oldFullPath)
+//            let oldImage = UIImage(data: oldImageData!)
+//            
+//            return oldImage!
+//        }
+//        
+//        return nil
     }
     
     func saveProfileImage(image: UIImage) {

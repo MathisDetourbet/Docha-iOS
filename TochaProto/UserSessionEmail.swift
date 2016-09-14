@@ -41,4 +41,13 @@ class UserSessionEmail: UserSession {
         
         return dataUser
     }
+    
+    override func getUserProfileImage() -> UIImage? {
+        if let avatarString = self.avatar {
+            return UIImage(named: avatarString)
+            
+        } else {
+            return UIImage(named: "avatar_man")
+        }
+    }
 }
