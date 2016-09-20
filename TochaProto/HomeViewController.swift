@@ -8,7 +8,6 @@
 
 import Foundation
 import AlamofireImage
-import ReachabilitySwift
 import SCLAlertView
 import Amplitude_iOS
 import FBSDKShareKit
@@ -78,15 +77,11 @@ class HomeViewController: GameViewController, UITableViewDelegate, UITableViewDa
         let headerView = UIView(frame: CGRectMake(0, 0, self.view.frame.width, 90.0))
         
         let newGameButton = UIButton(type: .Custom)
-        newGameButton.translatesAutoresizingMaskIntoConstraints = false
-        newGameButton.setImage(UIImage(named: "btn_newgame-1"), forState: .Normal)
+        newGameButton.setImage(UIImage(named: "btn_newgame"), forState: .Normal)
         newGameButton.addTarget(self, action: #selector(HomeViewController.newGameButtonTouched), forControlEvents: .TouchUpInside)
+        newGameButton.translatesAutoresizingMaskIntoConstraints = false
         headerView.addSubview(newGameButton)
         
-        //headerView.addConstraint(NSLayoutConstraint(item: newGameButton, attribute: .Top, relatedBy: .Equal, toItem: headerView, attribute: .Top, multiplier: 1.0, constant: 15.0))
-        //headerView.addConstraint(NSLayoutConstraint(item: newGameButton, attribute: .Bottom, relatedBy: .Equal, toItem: headerView, attribute: .Bottom, multiplier: 1.0, constant: 15.0))
-        //headerView.addConstraint(NSLayoutConstraint(item: newGameButton, attribute: .Leading, relatedBy: .Equal, toItem: headerView, attribute: .Leading, multiplier: 1.0, constant: 8.0))
-        //headerView.addConstraint(NSLayoutConstraint(item: newGameButton, attribute: .Trailing, relatedBy: .Equal, toItem: headerView, attribute: .Trailing, multiplier: 1.0, constant: 8.0))
         headerView.addConstraint(NSLayoutConstraint(item: newGameButton, attribute: .CenterX, relatedBy: .Equal, toItem: headerView, attribute: .CenterX, multiplier: 1.0, constant: 0.0))
         headerView.addConstraint(NSLayoutConstraint(item: newGameButton, attribute: .CenterY, relatedBy: .Equal, toItem: headerView, attribute: .CenterY, multiplier: 1.0, constant: 0.0))
         
@@ -132,17 +127,17 @@ class HomeViewController: GameViewController, UITableViewDelegate, UITableViewDa
                     
                 } else if let gender = userSession.gender {
                     if gender == "M" || userSession.gender == "U" {
-                        profilImage = UIImage(named: "avatar_man_profil")
-                        userSession.avatar = "avatar_man_profil"
+                        profilImage = UIImage(named: "avatar_man_large")
+                        userSession.avatar = "avatar_man_large"
                         
                     } else {
-                        profilImage = UIImage(named: "avatar_woman_profil")
-                        userSession.avatar = "avatar_woman_profil"
+                        profilImage = UIImage(named: "avatar_woman_large")
+                        userSession.avatar = "avatar_woman_large"
                     }
                     userSession.saveSession()
                     
                 } else {
-                    profilImage = UIImage(named: "avatar_man_profil")
+                    profilImage = UIImage(named: "avatar_man_large")
                 }
                 
                 self.avatarImageView.image = profilImage
@@ -164,26 +159,26 @@ class HomeViewController: GameViewController, UITableViewDelegate, UITableViewDa
                         if success == false {
                             if let gender = userSession.gender {
                                 if gender == "M" || gender == "U" {
-                                    profilImage = UIImage(named: "avatar_man_profil")
+                                    profilImage = UIImage(named: "avatar_man_large")
                                     
                                 } else {
-                                    profilImage = UIImage(named: "avatar_woman_profil")
+                                    profilImage = UIImage(named: "avatar_woman_large")
                                 }
                                 self.avatarImageView.image = profilImage
                                 
                             } else {
-                                profilImage = UIImage(named: "avatar_man_profil")
+                                profilImage = UIImage(named: "avatar_man_large")
                             }
                         }
                     })
                     
                 } else {
-                    profilImage = UIImage(named: "avatar_man_profil")
+                    profilImage = UIImage(named: "avatar_man_large")
                 }
                 
             } else {
                 self.userNameLabel.text = ""
-                self.avatarImageView.image = UIImage(named: "avatar_man_profil")
+                self.avatarImageView.image = UIImage(named: "avatar_man_large")
             }
         }
         
@@ -213,7 +208,7 @@ class HomeViewController: GameViewController, UITableViewDelegate, UITableViewDa
             cell.opponentLevelLabel.text = "Niveau 3"
             cell.opponentScoreLabel.text = "1"
             cell.userScoreLabel.text = "0"
-            cell.opponentImageView.image = UIImage(named: "avatar_man_marin")
+            cell.opponentImageView.image = UIImage(named: "avatar_man_medium")
             cell.delegateUserTurn = self
             cell.delegate = self
             cell.rightUtilityButtons = [self.buildDeleteButtonCell()]
@@ -227,7 +222,7 @@ class HomeViewController: GameViewController, UITableViewDelegate, UITableViewDa
             cell.opponentLevelLabel.text = "Niveau 1"
             cell.opponentScoreLabel.text = "1"
             cell.userScoreLabel.text = "2"
-            cell.opponentImageView.image = UIImage(named: "avatar_woman")
+            cell.opponentImageView.image = UIImage(named: "avatar_woman_medium")
             cell.rightUtilityButtons = [self.buildDeleteButtonCell()]
             
             return cell
@@ -239,7 +234,7 @@ class HomeViewController: GameViewController, UITableViewDelegate, UITableViewDa
             cell.opponentLevelLabel.text = "Niveau 8"
             cell.opponentScoreLabel.text = "3"
             cell.userScoreLabel.text = "1"
-            cell.opponentImageView.image = UIImage(named: "avatar_man_super")
+            cell.opponentImageView.image = UIImage(named: "avatar_man_medium")
             cell.wonGame = true
             cell.rightUtilityButtons = [self.buildDeleteButtonCell()]
             
@@ -297,30 +292,7 @@ class HomeViewController: GameViewController, UITableViewDelegate, UITableViewDa
 //MARK: HomeUserTurnCellDelegate Methods
     
     func playButtonTouched() {
-//        let gameplayVC = self.storyboard?.instantiateViewControllerWithIdentifier("idGameplayMainViewController") as! GameplayMainViewController
-//        self.navigationController?.pushViewController(gameplayVC, animated: true)
-        //        Amplitude.instance().logEvent("HomeGameLaunched")
-        //
-        //        PopupManager.sharedInstance.showLoadingPopup("Chargement en cours...", message: "Nous préparons tes produits.", completion: {
-        //            dispatch_async(dispatch_get_main_queue(), {
-        //
-        //                ProductManager.sharedInstance.getPackOfProducts({ (finished, packOfProducts) in
-        //
-        //                    if finished && packOfProducts != nil {
-        //                        PopupManager.sharedInstance.dismissPopup(true, completion: {
-        //                            let gameplayVC = self.storyboard?.instantiateViewControllerWithIdentifier("idGameplayViewController") as! GameplayViewController
-        //                            gameplayVC.productsList = packOfProducts
-        //                            self.hidesBottomBarWhenPushed = true
-        //                            self.navigationController?.pushViewController(gameplayVC, animated: true)
-        //                        })
-        //
-        //                    } else {
-        //                        print("Error when loading products...")
-        //                        PopupManager.sharedInstance.showErrorPopup("Oups !", message: "La connexion internet semble interrompue. Essaie ultérieurement", completion: nil)
-        //                    }
-        //                })
-        //            })
-        //        })
+        
     }
 
 //MARK: HomeFriendsCellDelegate Methods
@@ -461,7 +433,8 @@ class HomeViewController: GameViewController, UITableViewDelegate, UITableViewDa
     }
     
     @IBAction func rankingButtonTouched(sender: UIButton) {
-        
+        let rankingVC = self.storyboard?.instantiateViewControllerWithIdentifier("idRankingViewController") as! RankingViewController
+        self.presentViewController(rankingVC, animated: true, completion: nil)
     }
     
     @IBAction func sharingButtonTouched(sender: UIButton) {
@@ -482,25 +455,6 @@ class HomeViewController: GameViewController, UITableViewDelegate, UITableViewDa
         if segue.identifier == "idPushGameplaySegue" {
             self.hidesBottomBarWhenPushed = true
         }
-    }
-    
-    override func shouldPerformSegueWithIdentifier(identifier: String, sender: AnyObject?) -> Bool {
-        if identifier == "idPushGameplaySegue" {
-            var reachability: Reachability
-            do {
-                reachability = try Reachability.reachabilityForInternetConnection()
-            } catch {
-                print("Unable to create Reachability")
-                return false
-            }
-            
-            reachability.whenUnreachable = { reachability in
-                dispatch_async(dispatch_get_main_queue()) {
-                    print("Not reachable")
-                }
-            }
-        }
-        return true
     }
     
     func buildDeleteButtonCell() -> UIButton! {

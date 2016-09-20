@@ -16,7 +16,6 @@ target 'Docha' do
     pod 'Google/SignIn'
     pod 'MBCircularProgressBar'
     pod 'SwiftyTimer'
-    pod 'ReachabilitySwift'
     pod 'NVActivityIndicatorView'
     pod 'PBWebViewController'
     pod 'Fabric'

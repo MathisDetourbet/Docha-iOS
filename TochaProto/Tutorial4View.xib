@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="foR-OF-CCw" customClass="TutorialView" customModule="Docha" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="background_tuto_4" translatesAutoresizingMaskIntoConstraints="NO" id="Jdb-my-bdn">
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                </imageView>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6fN-fR-7Gi">
+                    <rect key="frame" x="10" y="109" width="300" height="145"/>
+                    <subviews>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="pop_up_tuto_4" translatesAutoresizingMaskIntoConstraints="NO" id="yQq-Ih-rjy">
+                            <rect key="frame" x="0.0" y="0.0" width="300" height="145"/>
+                        </imageView>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="viD-VC-mb8">
+                            <rect key="frame" x="70" y="80" width="160" height="50"/>
+                            <state key="normal" image="btn_next"/>
+                            <connections>
+                                <action selector="nextButtonTouched:" destination="foR-OF-CCw" eventType="touchUpInside" id="S18-gM-bmj"/>
+                            </connections>
+                        </button>
+                    </subviews>
+                    <constraints>
+                        <constraint firstAttribute="bottom" secondItem="yQq-Ih-rjy" secondAttribute="bottom" id="CPr-hQ-upq"/>
+                        <constraint firstAttribute="width" secondItem="6fN-fR-7Gi" secondAttribute="height" multiplier="60:29" id="DOw-5V-Vmp"/>
+                        <constraint firstAttribute="trailing" secondItem="viD-VC-mb8" secondAttribute="trailing" constant="70" id="Lle-dM-BDa"/>
+                        <constraint firstAttribute="bottom" secondItem="viD-VC-mb8" secondAttribute="bottom" constant="15" id="OTh-hH-MOm"/>
+                        <constraint firstItem="yQq-Ih-rjy" firstAttribute="top" secondItem="6fN-fR-7Gi" secondAttribute="top" id="UPg-2i-9Tz"/>
+                        <constraint firstItem="yQq-Ih-rjy" firstAttribute="leading" secondItem="6fN-fR-7Gi" secondAttribute="leading" id="Vb4-JX-sdM"/>
+                        <constraint firstItem="viD-VC-mb8" firstAttribute="leading" secondItem="6fN-fR-7Gi" secondAttribute="leading" constant="70" id="Z0J-CB-CkA"/>
+                        <constraint firstAttribute="trailing" secondItem="yQq-Ih-rjy" secondAttribute="trailing" id="Zu8-ph-8nX"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="Jdb-my-bdn" firstAttribute="leading" secondItem="foR-OF-CCw" secondAttribute="leading" id="2hi-yH-8fV"/>
+                <constraint firstItem="Jdb-my-bdn" firstAttribute="top" secondItem="foR-OF-CCw" secondAttribute="top" id="9kp-Vt-LQZ"/>
+                <constraint firstAttribute="bottom" secondItem="Jdb-my-bdn" secondAttribute="bottom" id="Ruq-cI-mwX"/>
+                <constraint firstAttribute="trailing" secondItem="Jdb-my-bdn" secondAttribute="trailing" id="fGo-Sb-ePH"/>
+                <constraint firstAttribute="trailing" secondItem="6fN-fR-7Gi" secondAttribute="trailing" constant="10" id="gpP-TD-3QJ"/>
+                <constraint firstItem="6fN-fR-7Gi" firstAttribute="leading" secondItem="foR-OF-CCw" secondAttribute="leading" constant="10" id="nsg-C2-AWf"/>
+                <constraint firstItem="6fN-fR-7Gi" firstAttribute="top" secondItem="foR-OF-CCw" secondAttribute="top" constant="109" id="u6u-8G-ZEv"/>
+            </constraints>
+            <nil key="simulatedStatusBarMetrics"/>
+            <nil key="simulatedTopBarMetrics"/>
+            <nil key="simulatedBottomBarMetrics"/>
+            <point key="canvasLocation" x="377" y="280"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="background_tuto_4" width="320" height="568"/>
+        <image name="btn_next" width="160" height="50"/>
+        <image name="pop_up_tuto_4" width="300" height="160"/>
+    </resources>
+</document>

@@ -47,25 +47,19 @@ class CounterContainerView: UIView {
         }
     }
     
+    func updateCountersViewsWithPrice(priceArray: [Int]) {
+        var index = 0
+        for price in priceArray {
+            counterViewArray[index].startCounterAnimationWithNumber(number: price, completion: nil)
+            index += 1
+        }
+    }
+    
     func resetCountersViews() {
         
         for counterView in counterViewArray {
             counterView.counterImage.setImageAnimated(UIImage(named: "counter_base"), duration: 0.5, completion: { (_) in
                 counterView.currentNumber = -1
-            })
-        }
-    }
-    
-    func revealCounterViewAfterWithArrayType(typeArray: [CounterViewAfterType]!) {
-        
-        for index in 0...typeArray.count-1 {
-            var newIndex = index
-            if numberOfCounterDisplayed == 2 {
-                newIndex += 1
-            }
-            
-            runAfterDelay(0.2, block: {
-                self.counterViewArray[newIndex].setCounterViewAfterWithCounterViewAfterType(typeArray[index])
             })
         }
     }

@@ -106,7 +106,8 @@ class NewGameFindOpponentViewController: GameViewController, UITableViewDataSour
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         if indexPath.row == 0 {
-            
+            let newGameFacebookFriendsVC = self.storyboard?.instantiateViewControllerWithIdentifier("idNewGameFindFriendsViewController") as! NewGameFindFriendsViewController
+            self.navigationController?.pushViewController(newGameFacebookFriendsVC, animated: true)
             
         } else if indexPath.row == 1 {
             let newGameCategorieSelectionVC = self.storyboard?.instantiateViewControllerWithIdentifier("idNewGameCategorieSelectionViewController") as! NewGameCategorieSelectionViewController

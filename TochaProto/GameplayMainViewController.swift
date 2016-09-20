@@ -26,6 +26,8 @@ class GameplayMainViewController: GameViewController, KeyboardViewDelegate, Coun
     var currentCard: CardProductView?
     
     var userEstimation: [Int]?
+    var userResultsArray: [TimelineState] = []
+    var opponentResultArray: [TimelineState] = []
     
     var messageLabel:UILabel?
     
@@ -66,9 +68,9 @@ class GameplayMainViewController: GameViewController, KeyboardViewDelegate, Coun
         self.currentCard?.addSubview(messageLabel!)
         
         initCardsView()
-        initTimer(false)
+        initTimer(animated: false)
         startTimer()
-        startTheGame()
+        startTheRound()
         
         messageLabel = UILabel(frame: CGRectMake(self.currentCard!.frame.midX - 150.0, self.currentCard!.frame.midY - 100.0, 200.0, 50.0))
         messageLabel!.font = UIFont(name: "Montserrat-ExtraBold", size: 25.0)
@@ -82,13 +84,10 @@ class GameplayMainViewController: GameViewController, KeyboardViewDelegate, Coun
         
         for product in self.productsData! {
             let cardProductView = CardProductView.loadFromNibNamed("CardProductView") as? CardProductView
-            let priceArray = convertPriceToArrayOfInt(product.price)
+            let priceArray = ConverterHelper.convertPriceToArrayOfInt(product.price)
             let centsString = priceArray.centsString
             
             cardProductView?.productImageView.image = product.image
-            cardProductView?.productImageView.layer.cornerRadius = 18.0
-            cardProductView?.productImageView.layer.masksToBounds = false
-            cardProductView?.productImageView.clipsToBounds = true
             cardProductView?.productNameLabel.text = product.model.uppercaseString
             cardProductView?.productBrandLabel.text = product.brand.uppercaseString
             cardProductView?.firstTagLabel.text = "# \(product.caracteristiques[0])"
@@ -141,7 +140,7 @@ class GameplayMainViewController: GameViewController, KeyboardViewDelegate, Coun
         
         // Initialize current product data
         self.currentCard = nextCard
-        self.currentPriceArray = convertPriceToArrayOfInt(self.productsData?[cursorCard].price).priceArray
+        self.currentPriceArray = ConverterHelper.convertPriceToArrayOfInt(self.productsData?[cursorCard].price).priceArray
         self.userEstimation = Array(count: (self.currentPriceArray?.count)!, repeatedValue: -1)
         self.currentProductData = self.productsData?[cursorCard]
         self.keyboardView.reset()
@@ -149,24 +148,26 @@ class GameplayMainViewController: GameViewController, KeyboardViewDelegate, Coun
         completion?(finished: true)
     }
     
-    func startTheGame() {
+    func startTheRound() {
         moveToNextCard(self.cardsViews?.first, AndMovePreviousCard: nil, completion: nil)
         updateTimelineWithResult(.Current, isForUser: true)
     }
     
-    func gameFinished() {
-        let debriefVC = self.storyboard?.instantiateViewControllerWithIdentifier("") as! GameplayDebriefViewController
+    func roundFinished() {
+        let debriefVC = self.storyboard?.instantiateViewControllerWithIdentifier("idGameplayDebriefViewController") as! GameplayDebriefViewController
         debriefVC.productsList = self.productsData
+        debriefVC.userResultsArray = userResultsArray
         self.navigationController?.pushViewController(debriefVC, animated: true)
     }
     
     func nextProductWithResult(result: TimelineState) {
+        updateTimelineWithResult(result, isForUser: true)
+        
         if self.cursorCard < self.cardsViews!.count-1 {
             // Display the next card
             let nextCard = self.cardsViews![self.cursorCard + 1]
-            updateTimelineWithResult(result, isForUser: true)
             
-            self.initTimer(true)
+            self.initTimer(animated: true)
             self.moveToNextCard(nextCard, AndMovePreviousCard: self.currentCard, completion: { (_) in
                 self.cursorCounter = 0
                 self.keyboardView.enabledKeyboard(true)
@@ -180,14 +181,14 @@ class GameplayMainViewController: GameViewController, KeyboardViewDelegate, Coun
             // Game Finished !
             self.timeleft = 0.0
             stopTimer()
-            gameFinished()
+            roundFinished()
         }
     }
     
     
 //MARK: Timer Methods
     
-    func initTimer(animated: Bool) {
+    func initTimer(animated animated: Bool) {
         self.timeleft = kTimePerProduct
         if animated {
             UIView.animateWithDuration(1.0, animations: { 
@@ -199,15 +200,7 @@ class GameplayMainViewController: GameViewController, KeyboardViewDelegate, Coun
             self.circularProgressBarView.value = CGFloat(self.timeleft!)
         }
         
-        self.timer = NSTimer.new(every: 10.milliseconds, { (timer: NSTimer) in
-            if Int(self.timeleft) == 0  {
-                self.timesUp()
-                timer.invalidate()
-                
-            } else {
-                self.updateTimer()
-            }
-        })
+        timer = NSTimer.scheduledTimerWithTimeInterval(0.01, target: self, selector: #selector(GameplayMainViewController.updateTimer), userInfo: nil, repeats: true)
         
         self.circularProgressBarView.fontColor = UIColor.darkBlueDochaColor()
         self.circularProgressBarView.progressColor = UIColor.darkBlueDochaColor()
@@ -215,26 +208,28 @@ class GameplayMainViewController: GameViewController, KeyboardViewDelegate, Coun
     }
     
     func startTimer() {
-        self.timer?.start()
+        timer?.start()
     }
     
     func updateTimer() {
-        self.timeleft = self.timeleft! - 0.01
-        self.circularProgressBarView.value = CGFloat(self.timeleft!)
+        timeleft = timeleft! - 0.01
+        circularProgressBarView.value = CGFloat(timeleft!)
         
-        if Int(self.timeleft!) == 5 {
+        if Int(timeleft!) == 5 {
             animateTimer()
+            
+        } else if Int(timeleft!) == 0 {
+            timesUp()
         }
     }
     
     func stopTimer() {
-        self.timer?.invalidate()
-        self.timer = nil
+        timer?.invalidate()
+        timer = nil
     }
     
     func timesUp() {
-        self.stopTimer()
-        updateTimelineWithResult(.Wrong, isForUser: true)
+        stopTimer()
         nextProductWithResult(.Wrong)
     }
     
@@ -261,9 +256,17 @@ class GameplayMainViewController: GameViewController, KeyboardViewDelegate, Coun
                 self.userTimelineImageViewCollection[cursorCard].image = UIImage(named: timelineImageName)
             }
             
+            if result == .Perfect || result == .Wrong {
+                self.userResultsArray.append(result)
+            }
+            
         } else {
             if let timelineImageName = timelineImageName {
                 self.opponentTimelineImageViewCollection[cursorCard].image = UIImage(named: timelineImageName)
+            }
+            
+            if result == .Perfect || result == .Wrong {
+                self.opponentResultArray.append(result)
             }
         }
     }
@@ -299,7 +302,7 @@ class GameplayMainViewController: GameViewController, KeyboardViewDelegate, Coun
             if finished {
                 if self.userEstimation! == self.currentPriceArray! {
                     // Perfect price
-                    self.updateTimelineWithResult(.Perfect, isForUser: true)
+                    self.stopTimer()
                     self.nextProductWithResult(.Perfect)
                     
                 } else {
@@ -341,8 +344,8 @@ class GameplayMainViewController: GameViewController, KeyboardViewDelegate, Coun
     
     func calculateUserEstimationErrorPercent() -> Double {
         let kErrorPercent = 0.36
-        let userEstimation = Double(convertPriceArrayToInt(self.userEstimation!))
-        let realPrice = Double(convertPriceArrayToInt(self.currentPriceArray!))
+        let userEstimation = Double(ConverterHelper.convertPriceArrayToInt(self.userEstimation!))
+        let realPrice = Double(ConverterHelper.convertPriceArrayToInt(self.currentPriceArray!))
         
         if userEstimation == realPrice {
             // Perfect price !
@@ -372,33 +375,5 @@ class GameplayMainViewController: GameViewController, KeyboardViewDelegate, Coun
                 }
             }
         }
-    }
-    
-    
-//MARK: Helpers Methods
-    
-    func convertPriceToArrayOfInt(price: Double!) -> (priceArray: [Int], centsString: String) {
-        let string = String(price)
-        let eurosAndCentsArray = string.characters.split{$0 == "."}.map(String.init)
-        
-        let eurosString = String(eurosAndCentsArray[0])
-        let eurosArray = eurosString.characters.flatMap{Int(String($0))}
-        
-        var centsString = String(eurosAndCentsArray[1])
-        if centsString.characters.count == 1 {
-            centsString += "0"
-        }
-        
-        return (eurosArray, centsString)
-    }
-    
-    func convertPriceArrayToInt(psyPriceArray: [Int]) -> Int {
-        var psyPriceInt = 0
-        let reversePsyPriceArray = Array(psyPriceArray.reverse())
-        for index in 0...reversePsyPriceArray.count-1 {
-            psyPriceInt += reversePsyPriceArray[index] * Int(pow(Double(10), Double(index)))
-        }
-        
-        return psyPriceInt
     }
 }

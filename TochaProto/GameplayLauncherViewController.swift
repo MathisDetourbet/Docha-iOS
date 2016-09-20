@@ -29,7 +29,7 @@ class GameplayLauncherViewController: GameViewController {
     }
     
     var timer: NSTimer?
-    var timeleft: Double! = 3.0
+    var timeleft: Double! = 1.0
     
     @IBOutlet weak var userNameLabel: UILabel!
     @IBOutlet weak var userLevelLabel: UILabel!
@@ -96,6 +96,10 @@ class GameplayLauncherViewController: GameViewController {
         let gameplayMainVC = self.storyboard?.instantiateViewControllerWithIdentifier("idGameplayMainViewController") as! GameplayMainViewController
         gameplayMainVC.productsData = products
         self.navigationController?.pushViewController(gameplayMainVC, animated: true)
+//
+//        let debriefVC = self.storyboard?.instantiateViewControllerWithIdentifier("idGameplayDebriefViewController") as! GameplayDebriefViewController
+//        debriefVC.productsList = products
+//        self.navigationController?.pushViewController(debriefVC, animated: true)
     }
     
     func initTimer() {

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="TutorialView" customModule="Docha" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="background_tuto_1" translatesAutoresizingMaskIntoConstraints="NO" id="7Gy-wl-bYj">
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                </imageView>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Lol-Wg-WoP">
+                    <rect key="frame" x="10" y="129" width="300" height="310"/>
+                    <subviews>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="pop_up_tuto_1" translatesAutoresizingMaskIntoConstraints="NO" id="Cmm-Dc-ibX">
+                            <rect key="frame" x="0.0" y="0.0" width="300" height="310"/>
+                        </imageView>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hr1-ID-l6W">
+                            <rect key="frame" x="70" y="245" width="160" height="50"/>
+                            <state key="normal" image="btn_gotit"/>
+                            <connections>
+                                <action selector="nextButtonTouched:" destination="iN0-l3-epB" eventType="touchUpInside" id="FNb-dV-fOe"/>
+                            </connections>
+                        </button>
+                    </subviews>
+                    <constraints>
+                        <constraint firstAttribute="trailing" secondItem="Cmm-Dc-ibX" secondAttribute="trailing" id="B1g-aC-gqg"/>
+                        <constraint firstItem="Cmm-Dc-ibX" firstAttribute="top" secondItem="Lol-Wg-WoP" secondAttribute="top" id="BaR-x8-cn5"/>
+                        <constraint firstItem="hr1-ID-l6W" firstAttribute="leading" secondItem="Lol-Wg-WoP" secondAttribute="leading" constant="70" id="TRA-3h-Lu0"/>
+                        <constraint firstItem="Cmm-Dc-ibX" firstAttribute="leading" secondItem="Lol-Wg-WoP" secondAttribute="leading" id="Uiw-sX-UNN"/>
+                        <constraint firstAttribute="width" secondItem="Lol-Wg-WoP" secondAttribute="height" multiplier="30:31" id="Wqg-b3-TNc"/>
+                        <constraint firstAttribute="bottom" secondItem="Cmm-Dc-ibX" secondAttribute="bottom" id="hIT-hm-6d5"/>
+                        <constraint firstAttribute="trailing" secondItem="hr1-ID-l6W" secondAttribute="trailing" constant="70" id="lAt-Ed-PLn"/>
+                        <constraint firstAttribute="bottom" secondItem="hr1-ID-l6W" secondAttribute="bottom" constant="15" id="v7F-XU-JaD"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="Lol-Wg-WoP" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="10" id="050-fi-QpX"/>
+                <constraint firstItem="Lol-Wg-WoP" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="129" id="20r-Sb-wOw"/>
+                <constraint firstItem="7Gy-wl-bYj" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="7RP-ol-VMV"/>
+                <constraint firstAttribute="trailing" secondItem="7Gy-wl-bYj" secondAttribute="trailing" id="LZP-ZZ-mkQ"/>
+                <constraint firstAttribute="trailing" secondItem="Lol-Wg-WoP" secondAttribute="trailing" constant="10" id="b7v-7p-sQT"/>
+                <constraint firstAttribute="bottom" secondItem="7Gy-wl-bYj" secondAttribute="bottom" id="fNR-qN-asW"/>
+                <constraint firstItem="7Gy-wl-bYj" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="tsw-TC-4T1"/>
+            </constraints>
+            <nil key="simulatedStatusBarMetrics"/>
+            <nil key="simulatedTopBarMetrics"/>
+            <nil key="simulatedBottomBarMetrics"/>
+            <point key="canvasLocation" x="286" y="341"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="background_tuto_1" width="320" height="568"/>
+        <image name="btn_gotit" width="160" height="50"/>
+        <image name="pop_up_tuto_1" width="300" height="310"/>
+    </resources>
+</document>

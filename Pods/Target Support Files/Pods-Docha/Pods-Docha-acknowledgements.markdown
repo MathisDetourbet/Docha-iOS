@@ -120,15 +120,15 @@ Fabric: Copyright 2016 Twitter, Inc. All Rights Reserved. Use of this software i
 
 ## Fabric
 
-Fabric: Copyright 2015 Twitter, Inc. All Rights Reserved. Use of this software is subject to the terms and conditions of the Fabric Software and Services Agreement located at https://fabric.io/terms. OSS: http://get.fabric.io/terms/opensource.txt
+Fabric: Copyright 2016 Twitter, Inc. All Rights Reserved. Use of this software is subject to the terms and conditions of the Fabric Software and Services Agreement located at https://fabric.io/terms. OSS: http://get.fabric.io/terms/opensource.txt
 
 ## FirebaseAnalytics
 
-Copyright 2016 Google Inc.
+Copyright 2016 Google
 
 ## FirebaseInstanceID
 
-Copyright 2016 Google Inc.
+Copyright 2016 Google
 
 ## Google
 
@@ -217,7 +217,7 @@ THE SOFTWARE.
 
 The MIT License (MIT)
 
-Copyright (c) 2015 Nguyen Vinh
+Copyright (c) 2016 Nguyen Vinh
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -345,31 +345,6 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 
 
-## ReachabilitySwift
-
-/*
-Copyright (c) 2014, Ashley Mills
-All rights reserved.
-
-Redistribution and use in source, with or without modification, is permitted provided that the following condition is met:
-
-1. Redistributions of source code must retain the above copyright notice, this
-list of conditions and the following disclaimer.
-
-THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
-AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
-IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
-ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE
-LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
-CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
-SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
-INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
-CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
-ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
-POSSIBILITY OF SUCH DAMAGE.
-*/
-
-
 ## SACountingLabel
 
 Copyright (c) 2015 Sudeep Agarwal <sudeep135@gmail.com>
@@ -467,7 +442,7 @@ THE SOFTWARE.
 
 The MIT License (MIT)
 
-Copyright (c) 2015 Radosław Pietruszewski
+Copyright (c) 2015-2016 Radosław Pietruszewski
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal

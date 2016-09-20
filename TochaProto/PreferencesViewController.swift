@@ -144,7 +144,8 @@ class PreferencesViewController: GameViewController, UITableViewDelegate, UITabl
                 
             } else if indexPath.row == 2 {
                 // Tutoriel
-                
+                let tutorialVC = self.storyboard?.instantiateViewControllerWithIdentifier("idTutorialViewController") as! TutorialViewController
+                self.presentViewController(tutorialVC, animated: true, completion: nil)
                 
             } else if indexPath.row == 3 {
                 // Feedbacks

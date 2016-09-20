@@ -31,16 +31,20 @@ class CardProductView: UIView {
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        self.firstTagLabel.minimumScaleFactor = 8
-        self.firstTagLabel.adjustsFontSizeToFitWidth = true
+        firstTagLabel.minimumScaleFactor = 8
+        firstTagLabel.adjustsFontSizeToFitWidth = true
         
-        self.secondTagLabel.minimumScaleFactor = 8
-        self.secondTagLabel.adjustsFontSizeToFitWidth = true
+        secondTagLabel.minimumScaleFactor = 8
+        secondTagLabel.adjustsFontSizeToFitWidth = true
         
-        self.userPinIconView.hidden = true
-        self.opponentPinIconView.hidden = true
+        userPinIconView.hidden = true
+        opponentPinIconView.hidden = true
         
-        self.userPinIconView.setAvatarImage(UIImage(named: "avatar_man_profil")!)
+        userPinIconView.setAvatarImage(UIImage(named: "avatar_man_profil")!)
+        
+        productImageView.layer.cornerRadius = 18.0
+        productImageView.layer.masksToBounds = false
+        productImageView.clipsToBounds = true
     }
     
     override func layoutSubviews() {

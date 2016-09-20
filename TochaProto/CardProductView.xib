@@ -180,7 +180,7 @@
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="o9H-Tn-CJk" userLabel="productNameLabel">
                             <rect key="frame" x="14" y="6" width="131" height="19"/>
                             <fontDescription key="fontDescription" name="Montserrat-ExtraBold" family="Montserrat" pointSize="15"/>
-                            <color key="textColor" red="0.10980392160000001" green="0.18039215689999999" blue="0.23921568630000001" alpha="1" colorSpace="calibratedRGB"/>
+                            <color key="textColor" red="0.1450980392" green="0.23921568630000001" blue="0.30980392159999998" alpha="1" colorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hWn-mZ-zrM">
@@ -286,6 +286,6 @@
         <image name="counter_base" width="50" height="50"/>
         <image name="info_icon" width="14" height="14"/>
         <image name="jauge" width="300" height="28"/>
-        <image name="pin_icon" width="30" height="36"/>
+        <image name="pin_icon" width="33" height="41"/>
     </resources>
 </document>

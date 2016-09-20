@@ -14,10 +14,12 @@ enum ResultRoundSentence: String {
     case nul = "nul_sentence"
 }
 
-class GameplayDebriefViewController: GameViewController, UIPageViewControllerDataSource, UIPageViewControllerDelegate, GameplayDebriefPageContentDelegate {
+class GameplayDebriefViewController: GameViewController, UIPageViewControllerDataSource, UIPageViewControllerDelegate, GameplayDebriefPageContentDelegate, CounterContainerViewDelegate {
     
     var productsList: [Product]?
+    var userResultsArray: [TimelineState]?
     
+    var pagesContentsViewControllerArray: [GameplayDebriefPageContentViewController] = []
     var pageViewController: UIPageViewController!
     
     @IBOutlet weak var resultRoundSentenceImageView: UIImageView!
@@ -40,17 +42,28 @@ class GameplayDebriefViewController: GameViewController, UIPageViewControllerDat
         
         buildUI()
         
-        self.pageViewController = self.storyboard?.instantiateViewControllerWithIdentifier("idDebriefPageViewController") as! UIPageViewController
-        self.pageViewController.delegate = self
-        self.pageViewController.dataSource = self
+        pageViewController = self.storyboard?.instantiateViewControllerWithIdentifier("idDebriefPageViewController") as! UIPageViewController
+        pageViewController.delegate = self
+        pageViewController.dataSource = self
         
         let pageContentVC = self.viewControllerAtIndex(0)
+        pageContentVC!.counterContainerView.updateCountersViewsWithPrice(ConverterHelper.convertPriceToArrayOfInt(self.productsList!.first!.price).priceArray)
         pageViewController.setViewControllers([pageContentVC!], direction: .Forward, animated: true, completion: nil)
-        self.addChildViewController(pageViewController)
+        
+        pageViewController.view.translatesAutoresizingMaskIntoConstraints = false
+        self.containerPageViewController.addSubview(pageViewController!.view)
+        
+        self.containerPageViewController.addConstraint(NSLayoutConstraint(item: pageViewController.view, attribute: .Leading, relatedBy: .Equal, toItem: containerPageViewController, attribute: .Leading, multiplier: 1.0, constant: 0.0))
+        self.containerPageViewController.addConstraint(NSLayoutConstraint(item: pageViewController.view, attribute: .Trailing, relatedBy: .Equal, toItem: containerPageViewController, attribute: .Trailing, multiplier: 1.0, constant: 0.0))
+        self.containerPageViewController.addConstraint(NSLayoutConstraint(item: pageViewController.view, attribute: .Top, relatedBy: .Equal, toItem: containerPageViewController, attribute: .Top, multiplier: 1.0, constant: 0.0))
+        self.containerPageViewController.addConstraint(NSLayoutConstraint(item: pageViewController.view, attribute: .Bottom, relatedBy: .Equal, toItem: containerPageViewController, attribute: .Bottom, multiplier: 1.0, constant: 0.0))
+        
+        pageViewController.didMoveToParentViewController(self)
     }
     
     func buildUI() {
         let userSession = UserSessionManager.sharedInstance.currentSession()
+        
         if let userSession = userSession {
             if let avatar = userSession.avatar {
                 self.userAvatarImageView.image = UIImage(named: avatar)
@@ -60,6 +73,21 @@ class GameplayDebriefViewController: GameViewController, UIPageViewControllerDat
             }
             self.userNameLabel.text = userSession.pseudo
             self.userLevelLabel.text = "Niveau \(userSession.levelMaxUnlocked)"
+        }
+        
+        var timelineImageName: String?
+        var index = 0
+        for result in userResultsArray! {
+            
+            if result == .Perfect {
+                timelineImageName = "perfect_big_icon"
+                
+            } else if result == .Wrong {
+                timelineImageName = "red_big_icon"
+            }
+            
+            self.userTimelineImageViewCollection[index].image = UIImage(named: timelineImageName!)
+            index += 1
         }
     }
     
@@ -77,7 +105,7 @@ class GameplayDebriefViewController: GameViewController, UIPageViewControllerDat
     
     func pageViewController(pageViewController: UIPageViewController, viewControllerAfterViewController viewController: UIViewController) -> UIViewController? {
         
-        var index = (viewController as! StarterPageContentViewController).pageIndex!
+        var index = (viewController as! GameplayDebriefPageContentViewController).pageIndex!
         index += 1
         if(index == self.productsList!.count) {
             return nil
@@ -94,26 +122,38 @@ class GameplayDebriefViewController: GameViewController, UIPageViewControllerDat
             let currentIndex = viewController.pageIndex
             self.pageControl.currentPage = currentIndex!
             self.pageControl.updateCurrentPageDisplay()
+            
+            viewController.counterContainerView.updateCountersViewsWithPrice(ConverterHelper.convertPriceToArrayOfInt(self.productsList![currentIndex!].price).priceArray)
         }
     }
     
-    func viewControllerAtIndex(index : Int) -> UIViewController? {
+    func viewControllerAtIndex(index : Int) -> GameplayDebriefPageContentViewController? {
         if((self.productsList!.count == 0) || (index >= self.productsList!.count)) {
             return nil
         }
-        let pageContentViewController = self.storyboard?.instantiateViewControllerWithIdentifier("idGameplayDebriefPageContentViewController") as! GameplayDebriefPageContentViewController
         
-        let product = self.productsList![index]
-        pageContentViewController.productImageView.image = product.image
-        pageContentViewController.productNameLabel.text = product.model
-        pageContentViewController.productBrandLabel.text = product.brand
-        pageContentViewController.delegate = self
-        pageContentViewController.pageIndex = index
-        
-        // force instantiate pageContentViewController IBOutlets
-        _ = pageContentViewController.view
-        
-        return pageContentViewController
+        if self.pagesContentsViewControllerArray.indices.contains(index) {
+            return self.pagesContentsViewControllerArray[index]
+            
+        } else {
+            let pageContentViewController = self.storyboard?.instantiateViewControllerWithIdentifier("idGameplayDebriefPageContentViewController") as! GameplayDebriefPageContentViewController
+            
+            // force instantiate pageContentViewController IBOutlets
+            _ = pageContentViewController.view
+            
+            let product = self.productsList![index]
+            pageContentViewController.productImageView.image = product.image
+            pageContentViewController.productNameLabel.text = product.model
+            pageContentViewController.productBrandLabel.text = product.brand
+            pageContentViewController.delegate = self
+            pageContentViewController.pageIndex = index
+            pageContentViewController.counterContainerView.numberOfCounterDisplayed = ConverterHelper.convertPriceToArrayOfInt(product.price).priceArray.count
+            pageContentViewController.counterContainerView.delegate = self
+            
+            self.pagesContentsViewControllerArray.insert(pageContentViewController, atIndex: index)
+            
+            return pageContentViewController
+        }
     }
     
     
@@ -132,5 +172,13 @@ class GameplayDebriefViewController: GameViewController, UIPageViewControllerDat
     
     @IBAction func nextButtonTouched(sender: UIButton) {
         
+    }
+    
+    
+//MARK: CounterContainerView Delegate Methods
+    
+    func infosButtonTouched() {
+        let currentProductData = self.productsList![pageControl.currentPage]
+        PopupManager.sharedInstance.showInfosPopup("Informations prix", message: "Le prix de ce produit a été relevé le [DATE] sur le site internet [URL_RACINE].\n Images et copyright appartiennent à \((currentProductData.brand))", viewController: self, completion: nil, doneActionCompletion: nil)
     }
 }

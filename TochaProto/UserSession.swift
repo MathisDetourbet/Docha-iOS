@@ -86,7 +86,7 @@ class UserSession: User, NSCoding {
 //            return oldImage!
 //        }
 //        
-//        return nil
+        return nil
     }
     
     func saveProfileImage(image: UIImage) {

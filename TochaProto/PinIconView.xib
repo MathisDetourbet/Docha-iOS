@@ -7,25 +7,25 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view contentMode="scaleToFill" id="q5H-5s-oZz" customClass="PinIconView" customModule="Docha" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="30" height="36"/>
+            <rect key="frame" x="0.0" y="0.0" width="33" height="41"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="pin_icon" translatesAutoresizingMaskIntoConstraints="NO" id="oSN-ly-zd7">
-                    <rect key="frame" x="0.0" y="0.0" width="30" height="36"/>
+                    <rect key="frame" x="0.0" y="0.0" width="33" height="41"/>
                 </imageView>
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Tm0-r1-IG3">
-                    <rect key="frame" x="3" y="3" width="24" height="24"/>
+                    <rect key="frame" x="4" y="4" width="25" height="25"/>
                 </imageView>
             </subviews>
             <constraints>
-                <constraint firstItem="Tm0-r1-IG3" firstAttribute="top" secondItem="q5H-5s-oZz" secondAttribute="top" constant="3" id="2ao-DB-84J"/>
+                <constraint firstItem="Tm0-r1-IG3" firstAttribute="top" secondItem="q5H-5s-oZz" secondAttribute="top" constant="4" id="2ao-DB-84J"/>
                 <constraint firstItem="oSN-ly-zd7" firstAttribute="top" secondItem="q5H-5s-oZz" secondAttribute="top" id="4ea-TR-3UB"/>
-                <constraint firstItem="Tm0-r1-IG3" firstAttribute="leading" secondItem="q5H-5s-oZz" secondAttribute="leading" constant="3" id="BJo-1C-e87"/>
+                <constraint firstItem="Tm0-r1-IG3" firstAttribute="leading" secondItem="q5H-5s-oZz" secondAttribute="leading" constant="4" id="BJo-1C-e87"/>
                 <constraint firstItem="oSN-ly-zd7" firstAttribute="leading" secondItem="q5H-5s-oZz" secondAttribute="leading" id="NgK-LZ-pCu"/>
-                <constraint firstAttribute="bottom" secondItem="Tm0-r1-IG3" secondAttribute="bottom" constant="9" id="hRQ-oF-xEc"/>
+                <constraint firstAttribute="bottom" secondItem="Tm0-r1-IG3" secondAttribute="bottom" constant="12" id="hRQ-oF-xEc"/>
                 <constraint firstAttribute="trailing" secondItem="oSN-ly-zd7" secondAttribute="trailing" id="idE-p0-87O"/>
                 <constraint firstAttribute="bottom" secondItem="oSN-ly-zd7" secondAttribute="bottom" id="mRU-9x-RbR"/>
-                <constraint firstAttribute="trailing" secondItem="Tm0-r1-IG3" secondAttribute="trailing" constant="3" id="mhk-M1-QIf"/>
+                <constraint firstAttribute="trailing" secondItem="Tm0-r1-IG3" secondAttribute="trailing" constant="4" id="mhk-M1-QIf"/>
             </constraints>
             <nil key="simulatedStatusBarMetrics"/>
             <nil key="simulatedTopBarMetrics"/>
@@ -35,6 +35,6 @@
         </view>
     </objects>
     <resources>
-        <image name="pin_icon" width="30" height="36"/>
+        <image name="pin_icon" width="33" height="41"/>
     </resources>
 </document>
