@@ -12,49 +12,60 @@ class StarterPageContentViewController: RootViewController {
     
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var subtitleLabel: UILabel!
-    @IBOutlet var allGiftImageViewCollection: [UIImageView]?
-    //@IBOutlet weak var blurEffectView: UIVisualEffectView!
     @IBOutlet weak var backgroundImageView: UIImageView!
     @IBOutlet weak var constraintBulleHowMuch: NSLayoutConstraint!
     @IBOutlet weak var bubbleHowMuchImageView: UIImageView!
+    @IBOutlet weak var bubbleWomanPriceImageView: UIImageView!
+    @IBOutlet weak var bubbleManPriceImageView: UIImageView!
     
-    var pageIndex: Int? {
-        didSet {
-            self.buildUI()
-        }
-    }
+    var pageIndex: Int?
     
     override func viewDidLoad() {
         super.viewDidLoad()
     }
     
-    func buildUI() {
+    override func viewDidDisappear(animated: Bool) {
+        super.viewDidDisappear(animated)
         
-        self.titleLabel.animatedLikeBubbleWithDelay(0.2, duration: 0.5)
-        self.subtitleLabel.animatedLikeBubbleWithDelay(0.2, duration: 0.5)
-        
-        if let index = self.pageIndex {
-            switch index {
-            case 0:
+        titleLabel.hidden = true
+        subtitleLabel.hidden = true
+        if let index = pageIndex {
+            if index == 1 {
+                bubbleHowMuchImageView.hidden = true
                 
-                break;
-            case 1:
-                self.bubbleHowMuchImageView.animatedLikeBubbleWithDelay(0.5, duration: 0.5)
-                break;
-            default:
-                
-                break;
+            } else if index == 2 {
+                bubbleWomanPriceImageView.hidden = true
+                bubbleManPriceImageView.hidden = true
             }
         }
+    }
+    
+    func buildUI() {
+        titleLabel.hidden = false
+        subtitleLabel.hidden = false
+        titleLabel.animatedLikeBubbleWithDelay(0.0, duration: 0.5)
+        subtitleLabel.animatedLikeBubbleWithDelay(0.2, duration: 0.5)
         
-        //self.blurEffectView.alpha = 1.0
+        if let index = pageIndex {
+            
+            if index == 1 {
+                bubbleHowMuchImageView.hidden = false
+                bubbleHowMuchImageView.animatedLikeBubbleWithDelay(0.0, duration: 0.5)
+                
+            } else if index == 2 {
+                bubbleManPriceImageView.hidden = false
+                bubbleWomanPriceImageView.hidden = false
+                bubbleWomanPriceImageView.animatedLikeBubbleWithDelay(0.5, duration: 0.5)
+                bubbleManPriceImageView.animatedLikeBubbleWithDelay(0.7, duration: 0.5)
+            }
+        }
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         
-        if self.pageIndex == 1 {
-            self.constraintBulleHowMuch.constant = 0.36667 * self.backgroundImageView.frame.height
+        if pageIndex == 1 {
+            //self.constraintBulleHowMuch.constant = 0.4 * self.backgroundImageView.frame.height
         }
     }
 }

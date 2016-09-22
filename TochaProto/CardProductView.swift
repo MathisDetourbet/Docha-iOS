@@ -18,24 +18,14 @@ class CardProductView: UIView {
     
     @IBOutlet weak var productNameLabel: UILabel!
     @IBOutlet weak var productBrandLabel: UILabel!
-    @IBOutlet weak var firstTagLabel: UILabel!
-    @IBOutlet weak var secondTagLabel: UILabel!
     
     @IBOutlet weak var counterContainerView: CounterContainerView!
     
-    @IBOutlet weak var widthFirstTagConstraint: NSLayoutConstraint!
-    @IBOutlet weak var widthSecondTagConstraint: NSLayoutConstraint!
     @IBOutlet weak var centerXUserPinIconConstraint: NSLayoutConstraint!
     @IBOutlet weak var centerXOpponentPinIconConstraint: NSLayoutConstraint!
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        
-        firstTagLabel.minimumScaleFactor = 8
-        firstTagLabel.adjustsFontSizeToFitWidth = true
-        
-        secondTagLabel.minimumScaleFactor = 8
-        secondTagLabel.adjustsFontSizeToFitWidth = true
         
         userPinIconView.hidden = true
         opponentPinIconView.hidden = true

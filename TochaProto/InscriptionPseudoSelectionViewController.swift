@@ -47,7 +47,10 @@ class InscriptionPseudoSelectionViewController: RootViewController {
                 print("Saving in the database : success !")
                 
                 PopupManager.sharedInstance.dismissPopup(true, completion: {
-                    self.goToHome()
+                    let homeViewController = self.storyboard?.instantiateViewControllerWithIdentifier("idHomeNavController") as! UINavigationController
+                    NavSchemeManager.sharedInstance.changeRootViewController(homeViewController)
+                    let tutorialVC = self.storyboard?.instantiateViewControllerWithIdentifier("idTutorialViewController") as! TutorialViewController
+                    homeViewController.presentViewController(tutorialVC, animated: true, completion: nil)
                 })
                 
                 }, fail: { (error, listErrors) in

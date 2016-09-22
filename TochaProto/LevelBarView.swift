@@ -84,10 +84,11 @@ class LevelBarView: UIView {
     }
     
     func updateLevelBarWithWidth(width: CGFloat) {
+        self.layoutIfNeeded()
         UIView.animateWithDuration(2.0) {
             self.widthFrontBarImageViewConstraint.constant = (width / 100) * self.backgroundBarImageView.frame.width
         }
-        layoutIfNeeded()
+        self.layoutIfNeeded()
     }
     
     func tapLevelBar() {

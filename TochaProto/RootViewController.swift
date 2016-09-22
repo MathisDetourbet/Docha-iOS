@@ -32,7 +32,7 @@ class RootViewController: UIViewController {
     }
     
     func goToHome() {
-        let viewController = self.storyboard?.instantiateViewControllerWithIdentifier("idHomeNavController") as! UINavigationController
-        NavSchemeManager.sharedInstance.changeRootViewController(viewController)
+        let homeViewController = self.storyboard?.instantiateViewControllerWithIdentifier("idHomeNavController") as! UINavigationController
+        NavSchemeManager.sharedInstance.changeRootViewController(homeViewController)
     }
 }
