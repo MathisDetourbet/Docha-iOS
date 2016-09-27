@@ -3,7 +3,7 @@
 //  Docha
 //
 //  Created by Mathis D on 25/07/2016.
-//  Copyright © 2016 LaTV. All rights reserved.
+//  Copyright © 2016 Slymoover. All rights reserved.
 //
 
 import Foundation
@@ -16,21 +16,21 @@ class PreferencesFeedbackViewController: PBWebViewController {
         
     }
     
-    override func webViewDidFinishLoad(webView: UIWebView) {
+    override func webViewDidFinishLoad(_ webView: UIWebView) {
         super.webViewDidFinishLoad(webView)
         configNavigationBarWithTitle("Docha a besoin de toi", andFontSize: 15.0)
     }
     
-    func configNavigationBarWithTitle(title: String, andFontSize size: CGFloat) {
+    func configNavigationBarWithTitle(_ title: String, andFontSize size: CGFloat) {
         self.navigationItem.title = title
-        self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName:UIColor.whiteColor(), NSFontAttributeName: UIFont(name: "Montserrat-ExtraBold", size: size)!]
+        self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName:UIColor.white, NSFontAttributeName: UIFont(name: "Montserrat-ExtraBold", size: size)!]
     }
     
-    override func prefersStatusBarHidden() -> Bool {
+    override var prefersStatusBarHidden : Bool {
         return true
     }
     
-    @IBAction func backButtonItemTouched(sender: UIBarButtonItem) {
-        self.navigationController?.popViewControllerAnimated(true)
+    @IBAction func backButtonItemTouched(_ sender: UIBarButtonItem) {
+        _ = self.navigationController?.popViewController(animated: true)
     }
 }

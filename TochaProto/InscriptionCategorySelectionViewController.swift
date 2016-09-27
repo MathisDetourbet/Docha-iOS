@@ -3,11 +3,10 @@
 //  DochaProto
 //
 //  Created by Mathis D on 27/05/2016.
-//  Copyright © 2016 LaTV. All rights reserved.
+//  Copyright © 2016 Slymoover. All rights reserved.
 //
 
 import Foundation
-import SCLAlertView
 
 class InscriptionCategorySelectionViewController: RootViewController, UICollectionViewDelegate, UICollectionViewDataSource {
     
@@ -16,7 +15,7 @@ class InscriptionCategorySelectionViewController: RootViewController, UICollecti
     
     let categoriesImagesPathArray = ["lifestyle", "high-tech", "maison_deco", "bijoux_montres", "electromenager", "art", "objets_connectes", "gastronomie_vin", "beauty", "sport"]
     let categoriesNames = ["Lifestyle", "High-Tech", "Maison / déco", "Bijoux / Montres", "Électroménager", "Art", "Objets connectés", "Gastronomie", "Beauté", "Sport"]
-    var categoriesImages = [UIImage]?()
+    var categoriesImages: [UIImage]?
     var categoryPrefered: [String]?
     var comeFromConnexionVC: Bool = false
     
@@ -30,7 +29,7 @@ class InscriptionCategorySelectionViewController: RootViewController, UICollecti
         self.navigationController!.setNavigationBarHidden(false, animated: false)
         self.footerValidateView.alpha = 0.0
         
-        self.collectionView.backgroundColor = UIColor.clearColor()
+        self.collectionView.backgroundColor = UIColor.clear
         self.collectionView.backgroundView = nil
         self.categoryPrefered = []
         
@@ -39,7 +38,7 @@ class InscriptionCategorySelectionViewController: RootViewController, UICollecti
         loadData()
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
     }
     
@@ -55,21 +54,21 @@ class InscriptionCategorySelectionViewController: RootViewController, UICollecti
     
 //MARK: Collection View Data Source Methods
     
-    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return CATEGORY_NUMBER
     }
     
-    func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
     }
     
-    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifier, forIndexPath: indexPath) as! InscriptionCategoryCollectionViewCell
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! InscriptionCategoryCollectionViewCell
         
-        cell.categoryImageView.image = self.categoriesImages![indexPath.item]
-        cell.categoryName = self.categoriesImagesPathArray[indexPath.item]
+        cell.categoryImageView.image = self.categoriesImages![(indexPath as NSIndexPath).item]
+        cell.categoryName = self.categoriesImagesPathArray[(indexPath as NSIndexPath).item]
         cell.imageSelected = false
-        cell.categoryNameLabel.text = self.categoriesNames[indexPath.item]
+        cell.categoryNameLabel.text = self.categoriesNames[(indexPath as NSIndexPath).item]
         
         return cell
     }
@@ -77,8 +76,8 @@ class InscriptionCategorySelectionViewController: RootViewController, UICollecti
     
 //MARK: Collection View Delegate Methods
     
-    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-        let cellSelected = collectionView.cellForItemAtIndexPath(indexPath) as! InscriptionCategoryCollectionViewCell
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let cellSelected = collectionView.cellForItem(at: indexPath) as! InscriptionCategoryCollectionViewCell
         if cellSelected.imageSelected {
             cellSelected.imageSelected = false
             self.categoryPrefered?.removeObject(cellSelected.categoryName)
@@ -88,22 +87,22 @@ class InscriptionCategorySelectionViewController: RootViewController, UICollecti
             self.categoryPrefered?.append(cellSelected.categoryName)
         }
         
-        UIView.animateWithDuration(0.3) {
+        UIView.animate(withDuration: 0.3, animations: {
             self.footerValidateView.alpha = 1.0
-        }
+        }) 
     }
   
     
 //MARK: @IBAction
     
-    @IBAction func validButtonTouched(sender: UIButton) {
+    @IBAction func validButtonTouched(_ sender: UIButton) {
         let currentSessionManager = UserSessionManager.sharedInstance
         
         if self.comeFromConnexionVC {
             if let categoryFavorite = self.categoryPrefered {
                 
                 var params = currentSessionManager.currentSession()?.generateJSONFromUserSession()
-                params?["category_favorite"] = categoryFavorite
+                params?["category_favorite"] = categoryFavorite as AnyObject?
                 
                 if let param = params {
                     UserSessionManager.sharedInstance.updateUserProfil(param, success: {
@@ -117,7 +116,7 @@ class InscriptionCategorySelectionViewController: RootViewController, UICollecti
         
         if currentSessionManager.dicoUserDataInscription == nil {
             currentSessionManager.dicoUserDataInscription = [String:AnyObject]()
-            currentSessionManager.dicoUserDataInscription!["category_favorite"] = self.categoryPrefered
+            currentSessionManager.dicoUserDataInscription!["category_favorite"] = self.categoryPrefered as AnyObject?
         }
         
         if currentSessionManager.isLogged() {
@@ -125,16 +124,16 @@ class InscriptionCategorySelectionViewController: RootViewController, UICollecti
             self.goToHome()
             
         } else {
-            let viewController = self.storyboard?.instantiateViewControllerWithIdentifier("idInscriptionIdentifiantsViewController") as! InscriptionIdentifiantsViewController
+            let viewController = self.storyboard?.instantiateViewController(withIdentifier: "idInscriptionIdentifiantsViewController") as! InscriptionIdentifiantsViewController
             self.navigationController?.pushViewController(viewController, animated: true)
         }
     }
     
-    @IBAction func backButtonTouched(sender: UIBarButtonItem) {
-        self.navigationController?.popViewControllerAnimated(true)
+    @IBAction func backButtonTouched(_ sender: UIBarButtonItem) {
+        _ = self.navigationController?.popViewController(animated: true)
     }
     
-    @IBAction func infosButtonTouched(sender: UIBarButtonItem) {
+    @IBAction func infosButtonTouched(_ sender: UIBarButtonItem) {
         PopupManager.sharedInstance.showInfosPopup("Information", message: "Nous souhaitons vous proposer au maximum des produits qui vous correspondent.", completion: nil)
     }
 }

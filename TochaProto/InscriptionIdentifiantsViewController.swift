@@ -3,12 +3,11 @@
 //  DochaProto
 //
 //  Created by Mathis D on 27/05/2016.
-//  Copyright © 2016 LaTV. All rights reserved.
+//  Copyright © 2016 Slymoover. All rights reserved.
 //
 
 import Foundation
 import TextFieldEffects
-import SCLAlertView
 import GoogleSignIn
 import SwiftyJSON
 
@@ -28,7 +27,7 @@ extension String {
     func isValidEmail() -> Bool {
         let emailRegEx = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}"
         let emailTest = NSPredicate(format:"SELF MATCHES %@", emailRegEx)
-        return emailTest.evaluateWithObject(self)
+        return emailTest.evaluate(with: self)
     }
 }
 
@@ -46,13 +45,13 @@ class InscriptionIdentifiantsViewController: RootViewController, UITextFieldDele
     override func viewDidLoad() {
         super.viewDidLoad()
         self.hideKeyboardWhenTappedAround()
-        self.registerButton.enabled = true
+        self.registerButton.isEnabled = true
         self.navigationController!.setNavigationBarHidden(false, animated: false)
         self.navigationItem.setHidesBackButton(true, animated: false)
         self.configNavigationBarWithTitle("Inscription")
     }
     
-    func textFieldShouldReturn(textField: UITextField) -> Bool {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         self.view.endEditing(true)
         return false
     }
@@ -108,21 +107,21 @@ class InscriptionIdentifiantsViewController: RootViewController, UITextFieldDele
         return false
     }
     
-    @IBAction func registerWithFacebookTouched(sender: UIButton) {
+    @IBAction func registerWithFacebookTouched(_ sender: UIButton) {
         let fbLoginManager : FBSDKLoginManager = FBSDKLoginManager()
         
-        fbLoginManager.logInWithReadPermissions(["email", "public_profile"], fromViewController: self)
+        fbLoginManager.logIn(withReadPermissions: ["email", "public_profile", "user_friends"], from: self)
         { (result, error) -> Void in
             
             if error != nil {
                 print("Facebook login : process error : \(error)")
                 
                 return
-            } else if (result.isCancelled) {
+            } else if (result?.isCancelled)! {
                 print("Facebook login : cancelled")
                 return
             } else {
-                let fbloginresult : FBSDKLoginManagerLoginResult = result
+                let fbloginresult : FBSDKLoginManagerLoginResult = result!
                 
                 if(fbloginresult.grantedPermissions.contains("email"))
                 {
@@ -136,7 +135,7 @@ class InscriptionIdentifiantsViewController: RootViewController, UITextFieldDele
     
     func getFBUserData() {
         
-        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
         appDelegate.facebookSignIn({
             // Success
             PopupManager.sharedInstance.dismissPopup(true, completion: { 
@@ -153,11 +152,11 @@ class InscriptionIdentifiantsViewController: RootViewController, UITextFieldDele
     }
 
 
-    @IBAction func registerWithGooglePlusTouched(sender: UIButton) {
+    @IBAction func registerWithGooglePlusTouched(_ sender: UIButton) {
         GIDSignIn.sharedInstance().signIn()
     }
     
-    @IBAction func registerButtonTouched(sender: UIButton) {
+    @IBAction func registerButtonTouched(_ sender: UIButton) {
         if  isEmailValid() {
             
             if isPasswordValid() {
@@ -165,11 +164,11 @@ class InscriptionIdentifiantsViewController: RootViewController, UITextFieldDele
                 if currentSessionManager.dicoUserDataInscription == nil {
                     currentSessionManager.dicoUserDataInscription = [String:AnyObject]()
                 }
-                if let email = self.emailString, password = self.passwordString {
-                    currentSessionManager.dicoUserDataInscription!["email"] = email
-                    currentSessionManager.dicoUserDataInscription!["password"] = password
+                if let email = self.emailString, let password = self.passwordString {
+                    currentSessionManager.dicoUserDataInscription!["email"] = email as AnyObject?
+                    currentSessionManager.dicoUserDataInscription!["password"] = password as AnyObject?
                     
-                    let inscriptionInfosUserVC = self.storyboard?.instantiateViewControllerWithIdentifier("idInscriptionInfosUserViewController") as! InscriptionInfosUserViewController
+                    let inscriptionInfosUserVC = self.storyboard?.instantiateViewController(withIdentifier: "idInscriptionInfosUserViewController") as! InscriptionInfosUserViewController
                     self.navigationController?.pushViewController(inscriptionInfosUserVC, animated: true)
                 }
                 
@@ -181,13 +180,13 @@ class InscriptionIdentifiantsViewController: RootViewController, UITextFieldDele
         }
     }
     
-    @IBAction func EmailTextFieldEditingChanged(sender: HoshiTextField) {
-        isEmailValid()
-        isPasswordValid()
+    @IBAction func EmailTextFieldEditingChanged(_ sender: HoshiTextField) {
+        _ = isEmailValid()
+        _ = isPasswordValid()
     }
     
-    @IBAction func PasswordTextFieldEditingChanged(sender: HoshiTextField) {
-        isPasswordValid()
-        isEmailValid()
+    @IBAction func PasswordTextFieldEditingChanged(_ sender: HoshiTextField) {
+        _ = isPasswordValid()
+        _ = isEmailValid()
     }
 }

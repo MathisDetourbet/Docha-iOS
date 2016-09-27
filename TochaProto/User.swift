@@ -3,15 +3,15 @@
 //  DochaProto
 //
 //  Created by Mathis D on 17/03/2016.
-//  Copyright © 2016 LaTV. All rights reserved.
+//  Copyright © 2016 Slymoover. All rights reserved.
 //
 
 import Foundation
 
 enum ProfilImageType : Int {
-    case FacebookImage
-    case AvatarDochaImage
-    case PhotoImage
+    case facebookImage
+    case avatarDochaImage
+    case photoImage
 }
 
 class User: NSObject {
@@ -21,7 +21,7 @@ class User: NSObject {
     var firstName: String?
     var email: String?
     var gender: String?
-    var dateBirthday: NSDate?
+    var dateBirthday: Date?
     var categoriesFavorites: [String]?
     var avatar: String?
     var levelMaxUnlocked: Int = 1
@@ -32,7 +32,7 @@ class User: NSObject {
     
     override init() {}
     
-    init(userID: Int?, pseudo: String?, lastName: String?, firstName: String?, email: String?, gender: String?, dateBirthday: NSDate?, categoriesFavorites: [String]?, avatar: String?, levelMaxUnlocked: Int?, dochos: Int?, experience: Int?, perfectPriceCpt: Int?, badgesUnlockedIdentifiers: [String]?) {
+    init(userID: Int?, pseudo: String?, lastName: String?, firstName: String?, email: String?, gender: String?, dateBirthday: Date?, categoriesFavorites: [String]?, avatar: String?, levelMaxUnlocked: Int?, dochos: Int?, experience: Int?, perfectPriceCpt: Int?, badgesUnlockedIdentifiers: [String]?) {
         self.userID = userID
         self.pseudo = pseudo
         self.lastName = lastName
@@ -49,7 +49,7 @@ class User: NSObject {
         self.badgesUnlockedIdentifiers = badgesUnlockedIdentifiers
     }
     
-    func initPropertiesWithResponseObject(responseObject: AnyObject) {
+    func initPropertiesWithResponseObject(_ responseObject: AnyObject) {
         if let dicoUser = responseObject["user"] as? [String: AnyObject] {
             if let userID = dicoUser["id"]?.integerValue { self.userID = userID }
             if let pseudo = dicoUser["pseudo"]?.string { self.pseudo = pseudo }

@@ -3,12 +3,11 @@
 //  Docha
 //
 //  Created by Mathis D on 05/09/2016.
-//  Copyright © 2016 LaTV. All rights reserved.
+//  Copyright © 2016 Slymoover. All rights reserved.
 //
 
 import Foundation
 import Amplitude_iOS
-import SwiftyTimer
 
 class GameplayLauncherViewController: GameViewController {
     
@@ -23,13 +22,13 @@ class GameplayLauncherViewController: GameViewController {
                 self.counterImageView.stopAnimating()
                 self.counterImageView.animationImages = nil
                 self.counterImageView.image = UIImage(named: "gameplay_launching_3")
-                self.loaderTitleLabel.hidden = true
+                self.loaderTitleLabel.isHidden = true
             }
         }
     }
     
-    var timer: NSTimer?
-    var timeleft: Double! = 1.0
+    var timer: Timer?
+    var timeleft: Double! = 4.0
     
     @IBOutlet weak var userNameLabel: UILabel!
     @IBOutlet weak var userLevelLabel: UILabel!
@@ -48,23 +47,22 @@ class GameplayLauncherViewController: GameViewController {
         buildUI()
         startLoaderAnimation()
         initTimer()
-        startTimer()
         loadProducts()
     }
     
     func buildUI() {
-        self.navigationController?.navigationBarHidden = true
+        self.navigationController?.isNavigationBarHidden = true
         self.userImageView.applyCircleBorder()
         self.opponentImageView.applyCircleBorder()
     }
     
     func startLoaderAnimation() {
-        self.imagesArray = []
+        imagesArray = []
         
-        for imageName in self.categoryImagesNames {
-            self.imagesArray?.append(UIImage(named: imageName)!)
+        for imageName in categoryImagesNames {
+            imagesArray?.append(UIImage(named: imageName)!)
         }
-        self.imagesArray?.shuffle()
+        imagesArray?.shuffle()
         
         counterImageView!.animationImages = self.imagesArray
         counterImageView!.animationDuration = 2.0
@@ -72,7 +70,7 @@ class GameplayLauncherViewController: GameViewController {
     }
     
     func loadProducts() {
-        dispatch_async(dispatch_get_main_queue(), {
+        DispatchQueue.main.async(execute: {
             ProductManager.sharedInstance.getPackOfProducts({ (finished, packOfProducts) in
                 
                 if finished && packOfProducts != nil {
@@ -92,44 +90,30 @@ class GameplayLauncherViewController: GameViewController {
     
 //MARK: Timer Methods
     
-    func startTheGameWithProducts(products: [Product]!) {
-        let gameplayMainVC = self.storyboard?.instantiateViewControllerWithIdentifier("idGameplayMainViewController") as! GameplayMainViewController
+    func startTheGameWithProducts(_ products: [Product]!) {
+        let gameplayMainVC = self.storyboard?.instantiateViewController(withIdentifier: "idGameplayMainViewController") as! GameplayMainViewController
         gameplayMainVC.productsData = products
         self.navigationController?.pushViewController(gameplayMainVC, animated: true)
-//
-//        let debriefVC = self.storyboard?.instantiateViewControllerWithIdentifier("idGameplayDebriefViewController") as! GameplayDebriefViewController
-//        debriefVC.productsList = products
-//        self.navigationController?.pushViewController(debriefVC, animated: true)
     }
     
     func initTimer() {
-        timer = NSTimer.new(every: 1.0, { (timer: NSTimer) in
-            if self.timeleft == 0 {
-                timer.invalidate()
-                
-            } else {
-                self.updateTimer()
-            }
-        })
-    }
-    
-    func startTimer() {
-        self.timer?.start()
+        timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(GameplayMainViewController.updateTimer), userInfo: nil, repeats: true)
     }
     
     func stopTimer() {
-        self.timer?.invalidate()
+        timer?.invalidate()
+        timer = nil
     }
     
     func updateTimer() {
-        if self.productsReady {
-            self.timeleft = self.timeleft - 1.0
-            if self.timeleft <= 0 {
-                self.timer?.invalidate()
-                self.startTheGameWithProducts(self.productsArray)
+        if productsReady {
+            timeleft = timeleft - 1.0
+            if timeleft <= 0 {
+                stopTimer()
+                startTheGameWithProducts(self.productsArray)
                 
             } else {
-                self.counterImageView.image = UIImage(named: "gameplay_launching_\(Int(self.timeleft))")
+                counterImageView.image = UIImage(named: "gameplay_launching_\(Int(self.timeleft))")
             }
         }
     }

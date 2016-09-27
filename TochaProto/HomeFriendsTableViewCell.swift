@@ -3,7 +3,7 @@
 //  Docha
 //
 //  Created by Mathis D on 06/06/2016.
-//  Copyright © 2016 LaTV. All rights reserved.
+//  Copyright © 2016 Slymoover. All rights reserved.
 //
 
 import Foundation
@@ -25,7 +25,7 @@ class HomeFriendsTableViewCell: UITableViewCell, UICollectionViewDelegate, UICol
     let friendsNamesString = ["Alice J.", "Pierre A.", "Morgane J.", "Inviter"]
     let idHomeFriendsCollectionViewCell = "idHomeFriendCollectionViewCell"
     
-    var friendsCollection: [AnyObject]? = ["", "", "", ""]
+    var friendsCollection: [AnyObject]? = ["" as AnyObject, "" as AnyObject, "" as AnyObject, "" as AnyObject]
     var delegate: HomeFriendsCellDelegate?
     
     @IBOutlet weak var collectionView: UICollectionView!
@@ -41,18 +41,18 @@ class HomeFriendsTableViewCell: UITableViewCell, UICollectionViewDelegate, UICol
     
 //MARK: Collection View Data Source Methods
     
-    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return self.friendsCollection!.count
     }
     
-    func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
     }
     
-    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        let cell = self.collectionView.dequeueReusableCellWithReuseIdentifier(idHomeFriendsCollectionViewCell, forIndexPath: indexPath) as! HomeFriendCollectionViewCell
-        cell.friendAvatarImageView.image = UIImage(named: self.friendsAvatarsImages[indexPath.item])
-        cell.friendNameLabel.text = self.friendsNamesString[indexPath.item]
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = self.collectionView.dequeueReusableCell(withReuseIdentifier: idHomeFriendsCollectionViewCell, for: indexPath) as! HomeFriendCollectionViewCell
+        cell.friendAvatarImageView.image = UIImage(named: self.friendsAvatarsImages[(indexPath as NSIndexPath).item])
+        cell.friendNameLabel.text = self.friendsNamesString[(indexPath as NSIndexPath).item]
         
         return cell
     }
@@ -60,8 +60,8 @@ class HomeFriendsTableViewCell: UITableViewCell, UICollectionViewDelegate, UICol
     
 //MARK: Collection View Delegate Methods
     
-    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-        if indexPath.item == ((self.friendsCollection?.count)!-1) {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        if (indexPath as NSIndexPath).item == ((self.friendsCollection?.count)!-1) {
             self.delegate?.inviteFacebookFriendsCellTouched()
         }
     }
@@ -69,7 +69,7 @@ class HomeFriendsTableViewCell: UITableViewCell, UICollectionViewDelegate, UICol
     
 //MARK: @IBActions
     
-    @IBAction func showAllFriendsButtonTouched(sender: UIButton) {
+    @IBAction func showAllFriendsButtonTouched(_ sender: UIButton) {
         self.delegate?.displayAllFriendsButtonTouched()
     }
 }

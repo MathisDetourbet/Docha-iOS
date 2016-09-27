@@ -3,19 +3,18 @@
 //  Docha
 //
 //  Created by Mathis D on 06/06/2016.
-//  Copyright © 2016 LaTV. All rights reserved.
+//  Copyright © 2016 Slymoover. All rights reserved.
 //
 
 import Foundation
 import AlamofireImage
-import SCLAlertView
 import Amplitude_iOS
 import FBSDKShareKit
 import SwiftyJSON
 import SWTableViewCell
 import PullToRefresh
 
-class HomeViewController: GameViewController, UITableViewDelegate, UITableViewDataSource, HomeUserTurnCellDelegate, HomeFriendsCellDelegate, FBSDKAppInviteDialogDelegate, SWTableViewCellDelegate {
+class HomeViewController: GameViewController, UITableViewDelegate, UITableViewDataSource, HomeUserTurnCellDelegate, HomeFriendsCellDelegate, SWTableViewCellDelegate {
     
     let idsTableViewCell: [String] = ["idHomeUserTurnTableViewCell", "idHomeOpponentTurnTableViewCell", "idHomeGameFinishedTableViewCell", "idHomeFriendsTableViewCell"]
     let userGameManager: UserGameStateManager = UserGameStateManager.sharedInstance
@@ -40,17 +39,16 @@ class HomeViewController: GameViewController, UITableViewDelegate, UITableViewDa
         super.viewDidLoad()
         loadUserInfos()
         UserGameStateManager.sharedInstance.authenticateLocalPlayer()
-        self.navigationController?.navigationBarHidden = true
+        self.navigationController?.isNavigationBarHidden = true
     }
     
     deinit {
         tableView.removePullToRefresh(tableView.topPullToRefresh!)
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.navigationController?.navigationBarHidden = true
-        configGameNavigationBar()
+        self.navigationController?.isNavigationBarHidden = true
         
         if UserSessionManager.sharedInstance.needsToUpdateHome {
             loadUserInfos()
@@ -63,7 +61,7 @@ class HomeViewController: GameViewController, UITableViewDelegate, UITableViewDa
         Amplitude.instance().logEvent("TabNavHome")
     }
     
-    override func viewWillDisappear(animated: Bool) {
+    override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
     }
     
@@ -74,29 +72,29 @@ class HomeViewController: GameViewController, UITableViewDelegate, UITableViewDa
     func buildUI() {
         self.view.backgroundColor = UIColor.lightGrayDochaColor()
         
-        let headerView = UIView(frame: CGRectMake(0, 0, self.view.frame.width, 90.0))
+        let headerView = UIView(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: 90.0))
         
-        let newGameButton = UIButton(type: .Custom)
-        newGameButton.setImage(UIImage(named: "btn_newgame"), forState: .Normal)
-        newGameButton.addTarget(self, action: #selector(HomeViewController.newGameButtonTouched), forControlEvents: .TouchUpInside)
+        let newGameButton = UIButton(type: .custom)
+        newGameButton.setImage(UIImage(named: "btn_newgame"), for: UIControlState())
+        newGameButton.addTarget(self, action: #selector(HomeViewController.newGameButtonTouched), for: .touchUpInside)
         newGameButton.translatesAutoresizingMaskIntoConstraints = false
         headerView.addSubview(newGameButton)
         
-        headerView.addConstraint(NSLayoutConstraint(item: newGameButton, attribute: .CenterX, relatedBy: .Equal, toItem: headerView, attribute: .CenterX, multiplier: 1.0, constant: 0.0))
-        headerView.addConstraint(NSLayoutConstraint(item: newGameButton, attribute: .CenterY, relatedBy: .Equal, toItem: headerView, attribute: .CenterY, multiplier: 1.0, constant: 0.0))
+        headerView.addConstraint(NSLayoutConstraint(item: newGameButton, attribute: .centerX, relatedBy: .equal, toItem: headerView, attribute: .centerX, multiplier: 1.0, constant: 0.0))
+        headerView.addConstraint(NSLayoutConstraint(item: newGameButton, attribute: .centerY, relatedBy: .equal, toItem: headerView, attribute: .centerY, multiplier: 1.0, constant: 0.0))
         
-        self.tableView.tableHeaderView = headerView
+        tableView.tableHeaderView = headerView
         
-        self.tableView.backgroundColor = UIColor.lightGrayDochaColor()
+        tableView.backgroundColor = UIColor.lightGrayDochaColor()
         let refresher = PullToRefresh()
-        self.tableView.addPullToRefresh(refresher) {}
+        tableView.addPullToRefresh(refresher) {}
         
-        self.userLevelLabel.text = "Niveau \(self.userGameManager.getUserLevel())"
-        self.userLevelBar.initLevelBar()
-        self.userLevelBar.updateLevelBarWithWidth(CGFloat(UserGameStateManager.sharedInstance.getExperienceProgressionInPercent()))
+        userLevelLabel.text = "Niveau \(self.userGameManager.getUserLevel())"
+        userLevelBar.initLevelBar()
+        userLevelBar.updateLevelBarWithWidth(CGFloat(UserGameStateManager.sharedInstance.getExperienceProgressionInPercent()))
         
-        self.bubbleDochosImageView.hidden = true
-        self.bubblePerfectsImageView.hidden = true
+        bubbleDochosImageView.isHidden = true
+        bubblePerfectsImageView.isHidden = true
     }
     
     
@@ -105,19 +103,20 @@ class HomeViewController: GameViewController, UITableViewDelegate, UITableViewDa
     func loadUserInfos() {
         if let userSession = UserSessionManager.sharedInstance.currentSession() {
             
-            if userSession.isKindOfClass(UserSessionEmail) {
+            if userSession.isKind(of: UserSessionEmail.self) {
                 let userSessionEmail = userSession as! UserSessionEmail
                 
                 if userSession.pseudo == "" {
-                    if let firstName = userSessionEmail.firstName, lastName = userSessionEmail.lastName {
-                        self.userNameLabel.text = "\(firstName) \(Array(arrayLiteral: lastName)[0])."
+                    if let _ = userSessionEmail.firstName, let _ = userSessionEmail.lastName {
+                        //userNameLabel.text = "\(firstName) \(Array(arrayLiteral: lastName)[0])."
+                        userNameLabel.text = ""
                         
                     } else {
-                        self.userNameLabel.text = ""
+                        userNameLabel.text = ""
                     }
                     
                 } else {
-                    self.userNameLabel.text = userSession.pseudo
+                    userNameLabel.text = userSession.pseudo
                 }
                 
                 var profilImage: UIImage?
@@ -140,22 +139,22 @@ class HomeViewController: GameViewController, UITableViewDelegate, UITableViewDa
                     profilImage = UIImage(named: "avatar_man_large")
                 }
                 
-                self.avatarImageView.image = profilImage
+                avatarImageView.image = profilImage
                 
-            } else if userSession.isKindOfClass(UserSessionFacebook) {
+            } else if userSession.isKind(of: UserSessionFacebook.self) {
                 let userSessionFacebook = userSession as! UserSessionFacebook
                 
                 if userSession.pseudo != "" {
-                    self.userNameLabel.text = userSession.pseudo
+                    userNameLabel.text = userSession.pseudo
                     
-                } else if let firstName = userSessionFacebook.firstName, lastName = userSessionFacebook.lastName {
-                    self.userNameLabel.text = "\(firstName) \(lastName[0])."
+                } else if let firstName = userSessionFacebook.firstName, let lastName = userSessionFacebook.lastName {
+                    userNameLabel.text = "\(firstName) \(lastName[0])."
                 }
                 
                 var profilImage: UIImage?
                 
                 if let fbImageURL = userSessionFacebook.facebookImageURL {
-                    self.avatarImageView.downloadedFrom(link: fbImageURL, contentMode: .ScaleToFill, WithCompletion: { (success) in
+                    avatarImageView.downloadedFrom(link: fbImageURL, contentMode: .scaleToFill, WithCompletion: { (success) in
                         if success == false {
                             if let gender = userSession.gender {
                                 if gender == "M" || gender == "U" {
@@ -177,33 +176,33 @@ class HomeViewController: GameViewController, UITableViewDelegate, UITableViewDa
                 }
                 
             } else {
-                self.userNameLabel.text = ""
-                self.avatarImageView.image = UIImage(named: "avatar_man_large")
+                userNameLabel.text = ""
+                avatarImageView.image = UIImage(named: "avatar_man_large")
             }
         }
-        
-        self.avatarImageView.applyCircleBorder()
+        avatarImageView.image = UIImage(named: "avatar_man_large")
+        avatarImageView.applyCircleBorder()
     }
     
     
 //MARK: Table View Controller - Data Source Methods
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.numberOfRows[section]
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return numberOfRows[section]
     }
     
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return self.sectionsNames.count
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return sectionsNames.count
     }
     
-    func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return self.sectionsNames[section]
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return sectionsNames[section]
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        if indexPath.section == 0 {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        if (indexPath as NSIndexPath).section == 0 {
             // TON TOUR
-            let cell = self.tableView.dequeueReusableCellWithIdentifier(self.idsTableViewCell[indexPath.section], forIndexPath: indexPath) as! HomeUserTurnTableViewCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: self.idsTableViewCell[(indexPath as NSIndexPath).section], for: indexPath) as! HomeUserTurnTableViewCell
             cell.opponentNameLabel.text = "Martin A."
             cell.opponentLevelLabel.text = "Niveau 3"
             cell.opponentScoreLabel.text = "1"
@@ -215,9 +214,9 @@ class HomeViewController: GameViewController, UITableViewDelegate, UITableViewDa
             
             return cell
             
-        } else if indexPath.section == 1 {
+        } else if (indexPath as NSIndexPath).section == 1 {
             // SON TOUR
-            let cell = self.tableView.dequeueReusableCellWithIdentifier(self.idsTableViewCell[indexPath.section], forIndexPath: indexPath) as! HomeOpponentTurnTableViewCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: self.idsTableViewCell[(indexPath as NSIndexPath).section], for: indexPath) as! HomeOpponentTurnTableViewCell
             cell.opponentNameLabel.text = "Alice A."
             cell.opponentLevelLabel.text = "Niveau 1"
             cell.opponentScoreLabel.text = "1"
@@ -227,9 +226,9 @@ class HomeViewController: GameViewController, UITableViewDelegate, UITableViewDa
             
             return cell
             
-        } else if indexPath.section == 2 {
+        } else if (indexPath as NSIndexPath).section == 2 {
             // TERMINES
-            let cell = self.tableView.dequeueReusableCellWithIdentifier(self.idsTableViewCell[indexPath.section], forIndexPath: indexPath) as! HomeGameFinishedTableViewCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: self.idsTableViewCell[(indexPath as NSIndexPath).section], for: indexPath) as! HomeGameFinishedTableViewCell
             cell.opponentNameLabel.text = "Tristan B."
             cell.opponentLevelLabel.text = "Niveau 8"
             cell.opponentScoreLabel.text = "3"
@@ -242,7 +241,7 @@ class HomeViewController: GameViewController, UITableViewDelegate, UITableViewDa
             
         } else {
             // AMIS
-            let cell = self.tableView.dequeueReusableCellWithIdentifier(self.idsTableViewCell[indexPath.section], forIndexPath: indexPath) as! HomeFriendsTableViewCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: self.idsTableViewCell[(indexPath as NSIndexPath).section], for: indexPath) as! HomeFriendsTableViewCell
             cell.delegate = self
             
             return cell
@@ -252,19 +251,19 @@ class HomeViewController: GameViewController, UITableViewDelegate, UITableViewDa
     
 //MARK: Table View Controller - Delegate Methods
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         return
     }
     
-    func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 30.0
     }
     
-    func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let headerView = UIView(frame: CGRectMake(0, 0, self.tableView.frame.width, 30))
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let headerView = UIView(frame: CGRect(x: 0, y: 0, width: self.tableView.frame.width, height: 30))
         headerView.backgroundColor = UIColor.lightGrayDochaColor()
         
-        let sectionLabel = UILabel(frame: CGRectMake(10.0, 5.0, 100.0, 28.0))
+        let sectionLabel = UILabel(frame: CGRect(x: 10.0, y: 5.0, width: 100.0, height: 28.0))
         sectionLabel.textColor = UIColor.darkBlueDochaColor()
         sectionLabel.text = self.sectionsNames[section]
         sectionLabel.font = UIFont(name: "Montserrat-Semibold", size: 12)
@@ -276,7 +275,7 @@ class HomeViewController: GameViewController, UITableViewDelegate, UITableViewDa
     
 //MARK: SWTableViewCell - Delegate Methods
     
-    func swipeableTableViewCell(cell: SWTableViewCell!, didTriggerRightUtilityButtonWithIndex index: Int) {
+    func swipeableTableViewCell(_ cell: SWTableViewCell!, didTriggerRightUtilityButtonWith index: Int) {
         
     }
 
@@ -284,7 +283,7 @@ class HomeViewController: GameViewController, UITableViewDelegate, UITableViewDa
 //MARK: HomePlayCellDelegate Methods
     
     func newGameButtonTouched() {
-        let newGameFindOpponentVC = self.storyboard?.instantiateViewControllerWithIdentifier("idNewGameFindOpponentViewController") as! NewGameFindOpponentViewController
+        let newGameFindOpponentVC = self.storyboard?.instantiateViewController(withIdentifier: "idNewGameFindOpponentViewController") as! NewGameFindOpponentViewController
         self.navigationController?.pushViewController(newGameFindOpponentVC, animated: true)
     }
     
@@ -299,23 +298,23 @@ class HomeViewController: GameViewController, UITableViewDelegate, UITableViewDa
     
     func displayAllFriendsButtonTouched() {
         let params = ["fields" : "id, first_name, last_name, email, picture"]
-        let fbRequest = FBSDKGraphRequest(graphPath:"/me/friends", parameters: params);
-        fbRequest.startWithCompletionHandler { (connection : FBSDKGraphRequestConnection!, result : AnyObject!, error : NSError!) -> Void in
-            
-            if error == nil {
-                let jsonResponse = JSON(result)
-                let arrayFriends = jsonResponse["data"].array
-                print(arrayFriends!)
-            } else {
-                print("Error Getting Friends \(error)")
-            }
-        }
+        _ = FBSDKGraphRequest(graphPath:"/me/friends", parameters: params);
+//        fbRequest?.start { (connection : FBSDKGraphRequestConnection!, result : AnyObject!, error : NSError!) -> Void in
+//            
+//            if error == nil {
+//                let jsonResponse = JSON(result)
+//                let arrayFriends = jsonResponse["data"].array
+//                print(arrayFriends!)
+//            } else {
+//                print("Error Getting Friends \(error)")
+//            }
+//        }
     }
     
 //MARK: HomeBadgeDelegate Methods
     
     func showAllBadges() {
-        let badgesVC = self.storyboard?.instantiateViewControllerWithIdentifier("idBadgeViewController") as! BadgesViewController
+        let badgesVC = self.storyboard?.instantiateViewController(withIdentifier: "idBadgeViewController") as! BadgesViewController
         self.navigationController?.pushViewController(badgesVC, animated: true)
     }
     
@@ -326,18 +325,19 @@ class HomeViewController: GameViewController, UITableViewDelegate, UITableViewDa
 //        FBSDKAppInviteDialog.showFromViewController(self, withContent: content, delegate: self)
     }
     
-    func appInviteDialog(appInviteDialog: FBSDKAppInviteDialog!, didCompleteWithResults results: [NSObject : AnyObject]!) {
-        PopupManager.sharedInstance.showSuccessPopup("Succès", message: "Tes amis ont bien été invités.", completion: nil)
-    }
+//    func appInviteDialog(_ appInviteDialog: FBSDKAppInviteDialog!, didCompleteWithResults results: [AnyHashable: Any]!) {
+//        PopupManager.sharedInstance.showSuccessPopup("Succès", message: "Tes amis ont bien été invités.", completion: nil)
+//    }
+//    
+//    func appInviteDialog(_ appInviteDialog: FBSDKAppInviteDialog!, didFailWithError error: NSError!) {
+//        PopupManager.sharedInstance.showInfosPopup("Oups !", message: "Encore un peu de patience, cette foncitonnalité sera bientôt disponible !", completion: nil)
+//    }
     
-    func appInviteDialog(appInviteDialog: FBSDKAppInviteDialog!, didFailWithError error: NSError!) {
-        PopupManager.sharedInstance.showInfosPopup("Oups !", message: "Encore un peu de patience, cette foncitonnalité sera bientôt disponible !", completion: nil)
-    }
-    
+    /*
     func getFriendsList() {
         let fbLoginManager : FBSDKLoginManager = FBSDKLoginManager()
         
-        fbLoginManager.logInWithReadPermissions(["user_friends"], fromViewController: self)
+        fbLoginManager.logIn(withReadPermissions: ["user_friends"], from: self)
         { (result, error) -> Void in
             
             if error != nil {
@@ -352,11 +352,11 @@ class HomeViewController: GameViewController, UITableViewDelegate, UITableViewDa
                 let fbloginresult : FBSDKLoginManagerLoginResult = result
                 
                 if(fbloginresult.grantedPermissions.contains("user_friends")) {
-                    print("Facebook Access token : \(FBSDKAccessToken.currentAccessToken().tokenString)")
+                    print("Facebook Access token : \(FBSDKAccessToken.current().tokenString)")
                     
-                    if((FBSDKAccessToken.currentAccessToken()) != nil) {
+                    if((FBSDKAccessToken.current()) != nil) {
                         let fbRequest = FBSDKGraphRequest(graphPath:"/me/friends", parameters: nil);
-                        fbRequest.startWithCompletionHandler { (connection : FBSDKGraphRequestConnection!, result : AnyObject!, error : NSError!) -> Void in
+                        fbRequest.start { (connection : FBSDKGraphRequestConnection!, result : AnyObject!, error : NSError!) -> Void in
                             
                             if error == nil {
                                 print("Friends are : \(result)")
@@ -377,31 +377,32 @@ class HomeViewController: GameViewController, UITableViewDelegate, UITableViewDa
             }
         }
     }
+    */
     
     
 //MARK: Bubbles Events Methods
     
-    func toggleBubble(isBubbleDochos: Bool) {
+    func toggleBubble(_ isBubbleDochos: Bool) {
         
         if isBubbleDochos {
-            animateBubble(self.bubbleDochosImageView, openBubble: self.bubbleDochosImageView.hidden)
-            self.isBubbleOpen = !self.bubbleDochosImageView.hidden
-            if self.bubblePerfectsImageView.hidden == false {
-                animateBubble(self.bubblePerfectsImageView, openBubble: false)
+            animateBubble(bubbleDochosImageView, openBubble: bubbleDochosImageView.isHidden)
+            isBubbleOpen = !bubbleDochosImageView.isHidden
+            if bubblePerfectsImageView.isHidden == false {
+                animateBubble(bubblePerfectsImageView, openBubble: false)
             }
             
         } else {
-            animateBubble(self.bubblePerfectsImageView, openBubble: self.bubblePerfectsImageView.hidden)
-            self.isBubbleOpen = !self.bubblePerfectsImageView.hidden
-            self.bubbleDochosImageView.hidden = self.bubbleDochosImageView.hidden ? false : true
-            if self.bubbleDochosImageView.hidden == false {
-                animateBubble(self.bubbleDochosImageView, openBubble: false)
+            animateBubble(bubblePerfectsImageView, openBubble: bubblePerfectsImageView.isHidden)
+            isBubbleOpen = !bubblePerfectsImageView.isHidden
+            bubbleDochosImageView.isHidden = bubbleDochosImageView.isHidden ? false : true
+            if bubbleDochosImageView.isHidden == false {
+                animateBubble(bubbleDochosImageView, openBubble: false)
             }
         }
     }
     
-    func animateBubble(bubble: UIImageView, openBubble: Bool) {
-        bubble.hidden = !openBubble
+    func animateBubble(_ bubble: UIImageView, openBubble: Bool) {
+        bubble.isHidden = !openBubble
         var fromValue = 0.0
         var toValue = 0.0
         
@@ -421,46 +422,46 @@ class HomeViewController: GameViewController, UITableViewDelegate, UITableViewDa
         scaleAnimation.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
         scaleAnimation.autoreverses = false
         scaleAnimation.repeatCount = 0
-        bubble.layer.addAnimation(scaleAnimation, forKey: nil)
+        bubble.layer.add(scaleAnimation, forKey: nil)
     }
     
     
 //MARK: @IBActions Methods
     
-    @IBAction func preferencesButtonTouched(sender: UIButton) {
-        let preferencesVC = self.storyboard?.instantiateViewControllerWithIdentifier("idPreferencesNavController") as! UINavigationController
-        self.presentViewController(preferencesVC, animated: true, completion: nil)
+    @IBAction func preferencesButtonTouched(_ sender: UIButton) {
+        let preferencesVC = self.storyboard?.instantiateViewController(withIdentifier: "idPreferencesNavController") as! UINavigationController
+        self.present(preferencesVC, animated: true, completion: nil)
     }
     
-    @IBAction func rankingButtonTouched(sender: UIButton) {
-        let rankingVC = self.storyboard?.instantiateViewControllerWithIdentifier("idRankingNavController") as! UINavigationController
-        self.presentViewController(rankingVC, animated: true, completion: nil)
+    @IBAction func rankingButtonTouched(_ sender: UIButton) {
+        let rankingVC = self.storyboard?.instantiateViewController(withIdentifier: "idRankingNavController") as! UINavigationController
+        self.present(rankingVC, animated: true, completion: nil)
     }
     
-    @IBAction func sharingButtonTouched(sender: UIButton) {
+    @IBAction func sharingButtonTouched(_ sender: UIButton) {
         
     }
     
-    @IBAction func bubblePerfectsButtonTouched(sender: UIButton) {
+    @IBAction func bubblePerfectsButtonTouched(_ sender: UIButton) {
         toggleBubble(false)
     }
     
-    @IBAction func bubbleDochosButtonTouched(sender: UIButton) {
+    @IBAction func bubbleDochosButtonTouched(_ sender: UIButton) {
         toggleBubble(true)
     }
     
 //MARK: Push Segue Methods
     
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "idPushGameplaySegue" {
             self.hidesBottomBarWhenPushed = true
         }
     }
     
     func buildDeleteButtonCell() -> UIButton! {
-        let deleteButton = UIButton(type: .Custom)
+        let deleteButton = UIButton(type: .custom)
         deleteButton.backgroundColor = UIColor.redDochaColor()
-        deleteButton.setImage(UIImage(named: "bin_icon"), forState: .Normal)
+        deleteButton.setImage(UIImage(named: "bin_icon"), for: UIControlState())
         
         return deleteButton
     }

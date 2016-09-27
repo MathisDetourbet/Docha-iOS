@@ -3,14 +3,14 @@
 //  Docha
 //
 //  Created by Mathis D on 06/07/2016.
-//  Copyright © 2016 LaTV. All rights reserved.
+//  Copyright © 2016 Slymoover. All rights reserved.
 //
 
 import Foundation
 
 protocol PseudoCellDelegate {
-    func textFieldShouldReturn(textField: UITextField) -> Bool
-    func textFieldTouched(sender: UITextField)
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool
+    func textFieldTouched(_ sender: UITextField)
 }
 
 class PreferencesChangePseudoTableViewCell: UITableViewCell, UITextFieldDelegate {
@@ -27,11 +27,11 @@ class PreferencesChangePseudoTableViewCell: UITableViewCell, UITextFieldDelegate
         self.pseudoTextField.font = UIFont(name: "Montserrat-Regular", size: 15.0)
     }
     
-    func textFieldShouldReturn(textField: UITextField) -> Bool {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         return (self.delegate?.textFieldShouldReturn(textField))!
     }
     
-    @IBAction func textFieldTouched(sender: UITextField) {
+    @IBAction func textFieldTouched(_ sender: UITextField) {
         if isPseudoCell {
             if self.pseudoTextField.text == "" {
                 self.pseudoTextField.placeholder = "Vous n'avez pas de nom ?!"

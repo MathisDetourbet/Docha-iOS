@@ -3,7 +3,7 @@
 //  Docha
 //
 //  Created by Mathis D on 06/09/2016.
-//  Copyright © 2016 LaTV. All rights reserved.
+//  Copyright © 2016 Slymoover. All rights reserved.
 //
 
 import Foundation
@@ -27,8 +27,8 @@ class CardProductView: UIView {
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        userPinIconView.hidden = true
-        opponentPinIconView.hidden = true
+        userPinIconView.isHidden = true
+        opponentPinIconView.isHidden = true
         
         userPinIconView.setAvatarImage(UIImage(named: "avatar_man_profil")!)
         
@@ -41,7 +41,7 @@ class CardProductView: UIView {
         super.layoutSubviews()
     }
     
-    func updatePinIconPositionWithErrorPercent(errorPercent: Double, completion: ((finished: Bool) -> Void)?) {
+    func updatePinIconPositionWithErrorPercent(_ errorPercent: Double, completion: ((_ finished: Bool) -> Void)?) {
         var newPosX = 0.0 as CGFloat
         
         if errorPercent != 0.0 {
@@ -59,14 +59,14 @@ class CardProductView: UIView {
             }
         }
         
-        self.userPinIconView.hidden = false
+        self.userPinIconView.isHidden = false
         
-        UIView.animateWithDuration(1.0, animations: {
+        UIView.animate(withDuration: 1.0, animations: {
             self.centerXUserPinIconConstraint.constant = newPosX
             self.layoutIfNeeded()
             
             }, completion: { (finished) in
-                completion?(finished: finished)
+                completion?(finished)
             })
     }
 }

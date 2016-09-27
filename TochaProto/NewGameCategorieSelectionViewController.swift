@@ -3,7 +3,7 @@
 //  Docha
 //
 //  Created by Mathis D on 01/09/2016.
-//  Copyright © 2016 LaTV. All rights reserved.
+//  Copyright © 2016 Slymoover. All rights reserved.
 //
 
 import Foundation
@@ -33,20 +33,20 @@ class NewGameCategorieSelectionViewController: GameViewController, UICollectionV
     
 //MARK: UICollectionView - Data Source Methods
     
-    func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
     }
     
-    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return 4
     }
     
-    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        let cell = self.collectionView.dequeueReusableCellWithReuseIdentifier("idNewGameCategorySelectionCollectionCell", forIndexPath: indexPath) as! InscriptionCategoryCollectionViewCell
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = self.collectionView.dequeueReusableCell(withReuseIdentifier: "idNewGameCategorySelectionCollectionCell", for: indexPath) as! InscriptionCategoryCollectionViewCell
         
-        cell.categoryName = self.categoriesDisplayed![indexPath.item]
+        cell.categoryName = self.categoriesDisplayed![(indexPath as NSIndexPath).item]
         cell.imageSelected = false
-        cell.categoryImageView.image = UIImage(named: self.categoriesNamesImageView[self.categoriesDisplayed![indexPath.item]]!)
+        cell.categoryImageView.image = UIImage(named: self.categoriesNamesImageView[self.categoriesDisplayed![(indexPath as NSIndexPath).item]]!)
         
         return cell
     }
@@ -54,10 +54,10 @@ class NewGameCategorieSelectionViewController: GameViewController, UICollectionV
 
 //MARK: UICollectionView - Delegate Methods
     
-    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-        let cell = self.collectionView.cellForItemAtIndexPath(indexPath) as! InscriptionCategoryCollectionViewCell
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let cell = self.collectionView.cellForItem(at: indexPath) as! InscriptionCategoryCollectionViewCell
         let categorySelected = cell.categoryName
-        let launcherVC = self.storyboard?.instantiateViewControllerWithIdentifier("idGameplayLauncherViewController") as! GameplayLauncherViewController
+        let launcherVC = self.storyboard?.instantiateViewController(withIdentifier: "idGameplayLauncherViewController") as! GameplayLauncherViewController
         launcherVC.categoryNameSelected = categorySelected
         self.navigationController?.pushViewController(launcherVC, animated: true)
     }
@@ -65,21 +65,21 @@ class NewGameCategorieSelectionViewController: GameViewController, UICollectionV
     
 //MARK: @IBActions Methods
     
-    @IBAction func changeCategorieButtonTouched(sender: UIButton) {
+    @IBAction func changeCategorieButtonTouched(_ sender: UIButton) {
         generateCategories()
     }
     
-    @IBAction func backButtonTouched(sender: UIBarButtonItem) {
-        self.navigationController?.popViewControllerAnimated(true)
+    @IBAction func backButtonTouched(_ sender: UIBarButtonItem) {
+        _ = self.navigationController?.popViewController(animated: true)
     }
     
     
 //MARK: Helper Methods
     
-    func generateCategories(number: Int? = 4) {
+    func generateCategories(_ number: Int? = 4) {
         var categoriesGenerated: [String] = []
         let categoriesAvailables = ["Lifestyle", "High-Tech", "Maison / déco", "Bijoux / Montres", "Électroménager", "Art", "Objets connectés", "Gastronomie", "Beauté", "Sport"]
-        let categoriesShuffled = categoriesAvailables.shuffle()
+        let categoriesShuffled = categoriesAvailables.shuffled()
         
         for i in 0...3 {
             categoriesGenerated.append(categoriesShuffled[i])

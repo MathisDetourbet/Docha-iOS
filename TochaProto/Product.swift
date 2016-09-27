@@ -9,9 +9,9 @@
 import Foundation
 
 enum Gender {
-    case Male
-    case Female
-    case Universal
+    case male
+    case female
+    case universal
 }
 
 class Product: NSObject {

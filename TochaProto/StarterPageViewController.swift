@@ -3,7 +3,7 @@
 //  DochaProto
 //
 //  Created by Mathis D on 22/05/2016.
-//  Copyright © 2016 LaTV. All rights reserved.
+//  Copyright © 2016 Slymoover. All rights reserved.
 //
 
 import Foundation
@@ -15,7 +15,7 @@ class StarterPageViewController: RootViewController, UIPageViewControllerDataSou
     
     var pageViewController: UIPageViewController!
     var stopDisplayAnimation: Bool = false
-    var timer: NSTimer?
+    var timer: Timer?
     
     @IBOutlet weak var registerButton: UIButton!
     @IBOutlet weak var connexionButton: UIButton!
@@ -35,38 +35,38 @@ class StarterPageViewController: RootViewController, UIPageViewControllerDataSou
     }
     
     func buildUI() {
-        pageViewController = self.storyboard?.instantiateViewControllerWithIdentifier("idStarterPageViewController") as! UIPageViewController
+        pageViewController = self.storyboard?.instantiateViewController(withIdentifier: "idStarterPageViewController") as! UIPageViewController
         pageViewController.dataSource = self
         pageViewController.delegate = self
         
         let pageContentViewController = self.viewControllerAtIndex(0) as? StarterPageContentViewController
-        pageViewController.setViewControllers([pageContentViewController!], direction: .Forward, animated: true, completion: nil)
-        pageViewController.view.frame = CGRectMake(0, 0, self.view.frame.width, (self.view.frame.size.height - (registerButton.frame.size.height+10)))
+        pageViewController.setViewControllers([pageContentViewController!], direction: .forward, animated: true, completion: nil)
+        pageViewController.view.frame = CGRect(x: 0, y: 0, width: self.view.frame.width, height: (self.view.frame.size.height - (registerButton.frame.size.height+10)))
         self.addChildViewController(pageViewController)
         self.view.addSubview(pageViewController.view)
-        self.pageViewController.didMoveToParentViewController(self)
+        self.pageViewController.didMove(toParentViewController: self)
         
-        self.view.bringSubviewToFront(self.pageControl)
-        self.view.bringSubviewToFront(self.iPhoneImageView)
+        self.view.bringSubview(toFront: self.pageControl)
+        self.view.bringSubview(toFront: self.iPhoneImageView)
         
         self.connexionButton.animatedLikeBubbleWithDelay(0.5, duration: 0.5)
         self.registerButton.animatedLikeBubbleWithDelay(0.5, duration: 0.5)
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.navigationController?.setNavigationBarHidden(true, animated: false)
         self.navigationController?.navigationBar.barTintColor = UIColor(red: 48.0, green: 73.0, blue: 100.0, alpha: 1.0)
     }
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         let currentPageContentVC = pageViewController.viewControllers![0] as! StarterPageContentViewController
         currentPageContentVC.buildUI()
         startTimer()
     }
     
-    override func viewDidDisappear(animated: Bool) {
+    override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         stopTimer()
     }
@@ -87,7 +87,7 @@ class StarterPageViewController: RootViewController, UIPageViewControllerDataSou
         if timer != nil {
             return
         }
-        timer = NSTimer.scheduledTimerWithTimeInterval(3.0, target: self, selector: #selector(StarterPageViewController.updateTimer), userInfo: nil, repeats: true)
+        timer = Timer.scheduledTimer(timeInterval: 3.0, target: self, selector: #selector(StarterPageViewController.updateTimer), userInfo: nil, repeats: true)
     }
     
     func stopTimer() {
@@ -104,7 +104,7 @@ class StarterPageViewController: RootViewController, UIPageViewControllerDataSou
         if pageControl.currentPage == (kPageViewCount-1) {
             pageControl.currentPage = 0
             let firstPageContentViewController = self.viewControllerAtIndex(pageControl.currentPage) as? StarterPageContentViewController
-            pageViewController.setViewControllers([firstPageContentViewController!], direction: .Reverse, animated: true,
+            pageViewController.setViewControllers([firstPageContentViewController!], direction: .reverse, animated: true,
             completion: {(_) in
                 firstPageContentViewController?.buildUI()
                 self.pageControl.updateCurrentPageDisplay()
@@ -113,7 +113,7 @@ class StarterPageViewController: RootViewController, UIPageViewControllerDataSou
         } else {
             pageControl.currentPage += 1
             let nextPageContentViewController = self.viewControllerAtIndex(pageControl.currentPage) as? StarterPageContentViewController
-            pageViewController.setViewControllers([nextPageContentViewController!], direction: .Forward, animated: true, completion: { (_) in
+            pageViewController.setViewControllers([nextPageContentViewController!], direction: .forward, animated: true, completion: { (_) in
                 nextPageContentViewController?.buildUI()
                 self.pageControl.updateCurrentPageDisplay()
             })
@@ -123,7 +123,7 @@ class StarterPageViewController: RootViewController, UIPageViewControllerDataSou
     
 //MARK: Page View Controller Data Source
     
-    func pageViewController(pageViewController: UIPageViewController, viewControllerBeforeViewController viewController: UIViewController) -> UIViewController? {
+    func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController? {
         
         resetTimer()
         
@@ -136,7 +136,7 @@ class StarterPageViewController: RootViewController, UIPageViewControllerDataSou
         return self.viewControllerAtIndex(index)
     }
     
-    func pageViewController(pageViewController: UIPageViewController, viewControllerAfterViewController viewController: UIViewController) -> UIViewController? {
+    func pageViewController(_ pageViewController: UIPageViewController, viewControllerAfter viewController: UIViewController) -> UIViewController? {
         
         resetTimer()
         
@@ -151,7 +151,7 @@ class StarterPageViewController: RootViewController, UIPageViewControllerDataSou
     
 //MARK: Page View Controller Delegate
     
-    func pageViewController(pageViewController: UIPageViewController, didFinishAnimating finished: Bool, previousViewControllers: [UIViewController], transitionCompleted completed: Bool) {
+    func pageViewController(_ pageViewController: UIPageViewController, didFinishAnimating finished: Bool, previousViewControllers: [UIViewController], transitionCompleted completed: Bool) {
         
         let viewController = self.pageViewController.viewControllers![0] as! StarterPageContentViewController
         viewController.buildUI()
@@ -163,11 +163,11 @@ class StarterPageViewController: RootViewController, UIPageViewControllerDataSou
         }
     }
     
-    func viewControllerAtIndex(index : Int) -> UIViewController? {
+    func viewControllerAtIndex(_ index : Int) -> UIViewController? {
         if((kPageViewCount == 0) || (index >= kPageViewCount)) {
             return nil
         }
-        let pageContentViewController = self.storyboard?.instantiateViewControllerWithIdentifier("idStarterPage\(index+1)ContentViewController") as! StarterPageContentViewController
+        let pageContentViewController = self.storyboard?.instantiateViewController(withIdentifier: "idStarterPage\(index+1)ContentViewController") as! StarterPageContentViewController
         
         // force instantiate pageContentViewController IBOutlets
         _ = pageContentViewController.view

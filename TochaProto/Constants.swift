@@ -3,7 +3,7 @@
 //  DochaProto
 //
 //  Created by Mathis D on 01/05/2016.
-//  Copyright © 2016 LaTV. All rights reserved.
+//  Copyright © 2016 Slymoover. All rights reserved.
 //
 
 import Foundation
@@ -24,11 +24,10 @@ struct UserDataKey {
     static let kLevelMaxUnlocked = "levelUser"
     static let kPerfectPriceCpt = "perfects"
     static let kFacebookID = "fb_id"
-    static let kFacebookToken = "fb_token"
+    static let kFacebookToken = "access_token"
+    static let kCodeApi = "code"
     static let kFacebookImageURL = "fb_image_url"
     static let kImageFBURL = "fb_image_url"
-    static let kGooglePlusID = "gplus_id"
-    static let kGooglePlusToken = "oauth_token"
     static let kAuthToken = "auth_token"
     static let kSessionID = "session_id"
     static let kBadgesUnlockedIdentifiers = "badges_unlocked_identifiers"
@@ -87,28 +86,26 @@ struct Constants {
     
     struct UrlServer {
         
-        static let UrlBase = testing ? "http://localhost:3000" : "https://afternoon-beyond-49404.herokuapp.com"
+        static let UrlBase = testing ? "http://127.0.0.1:8005" : "https://afternoon-beyond-49404.herokuapp.com"
         
         struct UrlProfil {
-            static let UrlProfilUpdate = "/users"
-            static let UrlGetFriendsDochaInstalled = "/users/friends/dochainstalled"
+            static let UrlProfilUpdate = ""
+            static let UrlGetFriendsDochaInstalled = ""
         }
         
         struct UrlDataRecords {
-            static let UrlPriceRecords = "/price_records"
+            static let UrlPriceRecords = ""
         }
         
         struct UrlRegister {
-            static let UrlFacebookRegister = "/users/auth/facebook"
-            static let UrlGooglePlusRegister = "/users"
-            static let UrlEmailRegister = "/users.json"
+            static let UrlFacebookRegister = "/rest-auth/facebook/"
+            static let UrlEmailRegister = "/rest-auth/registration/"
         }
         
         struct UrlConnexion {
-            static let UrlFacebookConnexion = "/users/auth/facebook"
-            static let UrlGooglePlusConnexion = "/users/sign_in"
-            static let UrlEmailConnexion = "/users/sign_in"
-            static let UrlLogOut = "/users/sign_out"
+            static let UrlFacebookConnexion = "/rest-auth/facebook/"
+            static let UrlEmailConnexion = "/rest-auth/registration/"
+            static let UrlLogOut = ""
         }
     }
 }

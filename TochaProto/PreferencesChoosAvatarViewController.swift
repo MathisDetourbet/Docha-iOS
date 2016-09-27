@@ -3,13 +3,13 @@
 //  Docha
 //
 //  Created by Mathis D on 12/07/2016.
-//  Copyright © 2016 LaTV. All rights reserved.
+//  Copyright © 2016 Slymoover. All rights reserved.
 //
 
 import Foundation
 
 protocol ChooseAvatarDochaDelegate {
-    func didChosenAvatarDochaWithImage(imageName: String)
+    func didChosenAvatarDochaWithImage(_ imageName: String)
 }
 
 class PreferencesChoosAvatarViewController: RootViewController {
@@ -18,7 +18,7 @@ class PreferencesChoosAvatarViewController: RootViewController {
     var womanAvatarsArray = ["avatar_woman_indian", "avatar_woman_blond", "avatar_woman_latina", "avatar_woman_punk", "avatar_woman", "avatar_woman_glasses"]
     
     var delegate: ChooseAvatarDochaDelegate?
-    var avatarImageArray = [String]?()
+    var avatarImageArray: [String]?
     var avatarImageSelected: String?
     var userGender: String?
     
@@ -43,7 +43,7 @@ class PreferencesChoosAvatarViewController: RootViewController {
         
         if let avatarString = UserSessionManager.sharedInstance.currentSession()?.avatar {
             userAvatarImageView.image = UIImage(named: "\(avatarString)_profil")
-            if avatarString.rangeOfString("woman") != nil {
+            if avatarString.range(of: "woman") != nil {
                 avatarImageArray = womanAvatarsArray
                 
             } else {
@@ -54,23 +54,23 @@ class PreferencesChoosAvatarViewController: RootViewController {
             userAvatarImageView.image = UIImage(named: "avatar_man_profil")
         }
         
-        for (index, avatar) in avatarsButtonsCollection.enumerate() {
-            avatar.setImage(UIImage(named: avatarImageArray![index]), forState: .Normal)
+        for (index, avatar) in avatarsButtonsCollection.enumerated() {
+            avatar.setImage(UIImage(named: avatarImageArray![index]), for: UIControlState())
             avatar.animatedLikeBubbleWithDelay(Double(index/100)+0.2, duration: 0.5)
         }
     }
     
-    @IBAction func avatarButtonTouched(sender: UIButton) {
+    @IBAction func avatarButtonTouched(_ sender: UIButton) {
         let index = sender.tag
-        self.userAvatarImageView.image = UIImage(named: "\(self.avatarImageArray![index])_profil")
-        self.userAvatarImageView.animatedLikeBubbleWithDelay(0.0, duration: 0.5)
-        self.avatarImageSelected = self.avatarImageArray![index]
+        userAvatarImageView.image = UIImage(named: "\(avatarImageArray![index])_profil")
+        userAvatarImageView.animatedLikeBubbleWithDelay(0.0, duration: 0.5)
+        avatarImageSelected = avatarImageArray![index]
     }
     
-    @IBAction func validButtonTouched(sender: UIButton) {
+    @IBAction func validButtonTouched(_ sender: UIButton) {
         if let avatarString = self.avatarImageSelected {
-            self.delegate?.didChosenAvatarDochaWithImage(avatarString)
+            delegate?.didChosenAvatarDochaWithImage(avatarString)
         }
-        self.dismissViewControllerAnimated(true, completion: nil)
+        dismiss(animated: true, completion: nil)
     }
 }

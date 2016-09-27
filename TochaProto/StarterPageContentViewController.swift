@@ -3,7 +3,7 @@
 //  DochaProto
 //
 //  Created by Mathis D on 22/05/2016.
-//  Copyright © 2016 LaTV. All rights reserved.
+//  Copyright © 2016 Slymoover. All rights reserved.
 //
 
 import Foundation
@@ -24,37 +24,37 @@ class StarterPageContentViewController: RootViewController {
         super.viewDidLoad()
     }
     
-    override func viewDidDisappear(animated: Bool) {
+    override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         
-        titleLabel.hidden = true
-        subtitleLabel.hidden = true
+        titleLabel.isHidden = true
+        subtitleLabel.isHidden = true
         if let index = pageIndex {
             if index == 1 {
-                bubbleHowMuchImageView.hidden = true
+                bubbleHowMuchImageView.isHidden = true
                 
             } else if index == 2 {
-                bubbleWomanPriceImageView.hidden = true
-                bubbleManPriceImageView.hidden = true
+                bubbleWomanPriceImageView.isHidden = true
+                bubbleManPriceImageView.isHidden = true
             }
         }
     }
     
     func buildUI() {
-        titleLabel.hidden = false
-        subtitleLabel.hidden = false
+        titleLabel.isHidden = false
+        subtitleLabel.isHidden = false
         titleLabel.animatedLikeBubbleWithDelay(0.0, duration: 0.5)
         subtitleLabel.animatedLikeBubbleWithDelay(0.2, duration: 0.5)
         
         if let index = pageIndex {
             
             if index == 1 {
-                bubbleHowMuchImageView.hidden = false
+                bubbleHowMuchImageView.isHidden = false
                 bubbleHowMuchImageView.animatedLikeBubbleWithDelay(0.0, duration: 0.5)
                 
             } else if index == 2 {
-                bubbleManPriceImageView.hidden = false
-                bubbleWomanPriceImageView.hidden = false
+                bubbleManPriceImageView.isHidden = false
+                bubbleWomanPriceImageView.isHidden = false
                 bubbleWomanPriceImageView.animatedLikeBubbleWithDelay(0.5, duration: 0.5)
                 bubbleManPriceImageView.animatedLikeBubbleWithDelay(0.7, duration: 0.5)
             }

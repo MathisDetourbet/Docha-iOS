@@ -3,7 +3,7 @@
 //  Docha
 //
 //  Created by Mathis D on 06/06/2016.
-//  Copyright © 2016 LaTV. All rights reserved.
+//  Copyright © 2016 Slymoover. All rights reserved.
 //
 
 import Foundation
@@ -33,23 +33,23 @@ class HomeBadgesTableViewCell: UITableViewCell, UICollectionViewDelegate, UIColl
         super.layoutSubviews()
     }
     
-    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return badgesTitles.count
     }
     
-    func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
     }
     
-    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        let cell = self.collectionView.dequeueReusableCellWithReuseIdentifier("idHomeBadgeCollectionViewCell", forIndexPath: indexPath) as! HomeBadgeCollectionViewCell
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = self.collectionView.dequeueReusableCell(withReuseIdentifier: "idHomeBadgeCollectionViewCell", for: indexPath) as! HomeBadgeCollectionViewCell
         
         let userSession = UserSessionManager.sharedInstance.currentSession()!
         let badgesUnlockedIdentifiers = userSession.badgesUnlockedIdentifiers
         let allBadgeIdentifiers = Constants.GameCenterLeaderBoardIdentifiers.kBadgesIdentifiers
-        cell.badgeTitleLabel.text = badgesTitles[indexPath.item]
+        cell.badgeTitleLabel.text = badgesTitles[(indexPath as NSIndexPath).item]
         if let badgesUnlockedIdentifiers = badgesUnlockedIdentifiers {
-            if badgesUnlockedIdentifiers.contains(allBadgeIdentifiers[indexPath.row]) == true {
+            if badgesUnlockedIdentifiers.contains(allBadgeIdentifiers[(indexPath as NSIndexPath).row]) == true {
                 cell.badgeImageView.image = UIImage(named: "badge_2")
             } else {
                 cell.badgeImageView.image = UIImage(named: "badge_icon_blocked")
@@ -59,11 +59,11 @@ class HomeBadgesTableViewCell: UITableViewCell, UICollectionViewDelegate, UIColl
         return cell
     }
     
-    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         self.delegate?.showAllBadges()
     }
     
-    @IBAction func showAllBadges(sender: UIButton) {
+    @IBAction func showAllBadges(_ sender: UIButton) {
         self.delegate?.showAllBadges()
     }
 }

@@ -3,7 +3,7 @@
 //  Docha
 //
 //  Created by Mathis D on 19/09/2016.
-//  Copyright © 2016 LaTV. All rights reserved.
+//  Copyright © 2016 Slymoover. All rights reserved.
 //
 
 import Foundation
@@ -49,7 +49,7 @@ class RankingViewController: GameViewController, UITableViewDataSource, UITableV
     
 //MARK: UITableView - Data Source
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if let currentList = self.currentList {
             return currentList.count
             
@@ -58,24 +58,24 @@ class RankingViewController: GameViewController, UITableViewDataSource, UITableV
         }
     }
     
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("idRankingTableViewCell", forIndexPath: indexPath) as! RankingTableViewCell
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "idRankingTableViewCell", for: indexPath) as! RankingTableViewCell
         
-        if indexPath.row == 0 {
+        if (indexPath as NSIndexPath).row == 0 {
             cell.rankImageView.image = UIImage(named: "gold.png")
             
-        } else if indexPath.row == 1 {
+        } else if (indexPath as NSIndexPath).row == 1 {
             cell.rankImageView.image = UIImage(named: "silver.png")
             
-        } else if indexPath.row == 2 {
+        } else if (indexPath as NSIndexPath).row == 2 {
             cell.rankImageView.image = UIImage(named: "bronze.png")
             
         } else {
-            cell.rankImageView.hidden = true
+            cell.rankImageView.isHidden = true
         }
         
         return cell
@@ -84,27 +84,27 @@ class RankingViewController: GameViewController, UITableViewDataSource, UITableV
     
 //MARK: UITableView - Delegate
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
     }
     
-    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 61.0
     }
     
     
 //MARK: @IBActions
     
-    @IBAction func didChangeValueSegmentControl(sender: UISegmentedControl) {
+    @IBAction func didChangeValueSegmentControl(_ sender: UISegmentedControl) {
         currentList = (segmentControl.selectedSegmentIndex == 0) ? friendsList : generalList
         tableView.reloadData()
     }
     
-    @IBAction func doneButtonTouched(sender: UIBarButtonItem) {
-        self.dismissViewControllerAnimated(true, completion: nil)
+    @IBAction func doneButtonTouched(_ sender: UIBarButtonItem) {
+        self.dismiss(animated: true, completion: nil)
     }
     
-    @IBAction func shareButtonTouched(sender: UIBarButtonItem) {
+    @IBAction func shareButtonTouched(_ sender: UIBarButtonItem) {
         
     }
 }

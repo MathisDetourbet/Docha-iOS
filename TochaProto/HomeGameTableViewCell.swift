@@ -3,7 +3,7 @@
 //  Docha
 //
 //  Created by Mathis D on 01/09/2016.
-//  Copyright © 2016 LaTV. All rights reserved.
+//  Copyright © 2016 Slymoover. All rights reserved.
 //
 
 import Foundation
@@ -27,7 +27,7 @@ class HomeUserTurnTableViewCell: HomeGameTableViewCell {
     
     var delegateUserTurn: HomeUserTurnCellDelegate?
     
-    @IBAction func playButtonTouched(sender: UIButton) {
+    @IBAction func playButtonTouched(_ sender: UIButton) {
         self.delegateUserTurn?.playButtonTouched()
     }
 }

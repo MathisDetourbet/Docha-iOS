@@ -3,7 +3,7 @@
 //  DochaFastlaneUITests
 //
 //  Created by Mathis D on 28/07/2016.
-//  Copyright © 2016 LaTV. All rights reserved.
+//  Copyright © 2016 Slymoover. All rights reserved.
 //
 
 import XCTest

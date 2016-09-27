@@ -3,23 +3,23 @@
 //  Docha
 //
 //  Created by Mathis D on 26/07/2016.
-//  Copyright © 2016 LaTV. All rights reserved.
+//  Copyright © 2016 Slymoover. All rights reserved.
 //
 
 import Foundation
 
 public enum PopupType: Int {
-    case Loading
-    case Infos
-    case Error
-    case Success
-    case Reward
+    case loading
+    case infos
+    case error
+    case success
+    case reward
 }
 
 public enum PopupRewardType {
-    case Badge
-    case Dochos
-    case LevelUP
+    case badge
+    case dochos
+    case levelUP
 }
 
 class PopupViewController: UIViewController {
@@ -38,23 +38,23 @@ class PopupViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.backgroundColor = UIColor.clearColor()
+        self.view.backgroundColor = UIColor.clear
         self.popupView = PopupView.loadFromNibNamed("PopupView") as? PopupView
         
         if let _ = self.popupView {
             self.popupView?.translatesAutoresizingMaskIntoConstraints = false
             self.view.addSubview(self.popupView!)
-            self.view.addConstraint(NSLayoutConstraint(item: popupView!, attribute: .Top, relatedBy: .Equal, toItem: self.view, attribute: .Top, multiplier: 1.0, constant: 0.0))
-            self.view.addConstraint(NSLayoutConstraint(item: popupView!, attribute: .Bottom, relatedBy: .Equal, toItem: self.view, attribute: .Bottom, multiplier: 1.0, constant: 0.0))
-            self.view.addConstraint(NSLayoutConstraint(item: popupView!, attribute: .Leading, relatedBy: .Equal, toItem: self.view, attribute: .Leading, multiplier: 1.0, constant: 0.0))
-            self.view.addConstraint(NSLayoutConstraint(item: popupView!, attribute: .Trailing, relatedBy: .Equal, toItem: self.view, attribute: .Trailing, multiplier: 1.0, constant: 0.0))
+            self.view.addConstraint(NSLayoutConstraint(item: popupView!, attribute: .top, relatedBy: .equal, toItem: self.view, attribute: .top, multiplier: 1.0, constant: 0.0))
+            self.view.addConstraint(NSLayoutConstraint(item: popupView!, attribute: .bottom, relatedBy: .equal, toItem: self.view, attribute: .bottom, multiplier: 1.0, constant: 0.0))
+            self.view.addConstraint(NSLayoutConstraint(item: popupView!, attribute: .leading, relatedBy: .equal, toItem: self.view, attribute: .leading, multiplier: 1.0, constant: 0.0))
+            self.view.addConstraint(NSLayoutConstraint(item: popupView!, attribute: .trailing, relatedBy: .equal, toItem: self.view, attribute: .trailing, multiplier: 1.0, constant: 0.0))
             
             self.popupView!.titleLabel.text = self.titlePopup
             self.popupView!.messageLabel.text = self.messagePopup
         }
     }
     
-    override func prefersStatusBarHidden() -> Bool {
+    override var prefersStatusBarHidden : Bool {
         return true
     }
 }
@@ -67,9 +67,9 @@ class DonePopupViewController: PopupViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.doneButton = UIButton(type: .Custom)
-        self.doneButton?.setImage(UIImage(named: "btn_jaicompris"), forState: .Normal)
-        self.doneButton?.addTarget(self, action: #selector(DonePopupViewController.doneButtonTouched), forControlEvents: .TouchUpInside)
+        self.doneButton = UIButton(type: .custom)
+        self.doneButton?.setImage(UIImage(named: "btn_jaicompris"), for: UIControlState())
+        self.doneButton?.addTarget(self, action: #selector(DonePopupViewController.doneButtonTouched), for: .touchUpInside)
         self.doneButton?.translatesAutoresizingMaskIntoConstraints = false
         
         self.popupView!.containerStackView.addArrangedSubview(self.doneButton!)
@@ -128,8 +128,8 @@ class LoadingPopViewController: PopupViewController {
         loaderImageView!.animationDuration = 1.5
         loaderImageView!.translatesAutoresizingMaskIntoConstraints = false
         self.popupView!.circleImageView.addSubview(loaderImageView!)
-        self.popupView!.circleImageView.addConstraint(NSLayoutConstraint(item: loaderImageView!, attribute: .CenterX, relatedBy: .Equal, toItem: self.popupView!.circleImageView, attribute: .CenterX, multiplier: 1.0, constant: 0.0))
-        self.popupView!.circleImageView.addConstraint(NSLayoutConstraint(item: loaderImageView!, attribute: .CenterY, relatedBy: .Equal, toItem: self.popupView!.circleImageView, attribute: .CenterY, multiplier: 1.0, constant: 0.0))
+        self.popupView!.circleImageView.addConstraint(NSLayoutConstraint(item: loaderImageView!, attribute: .centerX, relatedBy: .equal, toItem: self.popupView!.circleImageView, attribute: .centerX, multiplier: 1.0, constant: 0.0))
+        self.popupView!.circleImageView.addConstraint(NSLayoutConstraint(item: loaderImageView!, attribute: .centerY, relatedBy: .equal, toItem: self.popupView!.circleImageView, attribute: .centerY, multiplier: 1.0, constant: 0.0))
         loaderImageView!.startAnimating()
     }
 }
@@ -142,21 +142,21 @@ class RewardPopupViewController: DonePopupViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.shareButton = UIButton(type: .Custom)
-        self.shareButton?.setImage(UIImage(named: "btn_facebook"), forState: .Normal)
-        self.shareButton?.addTarget(self, action: #selector(RewardPopupViewController.shareButtonTouched), forControlEvents: .TouchUpInside)
+        self.shareButton = UIButton(type: .custom)
+        self.shareButton?.setImage(UIImage(named: "btn_facebook"), for: UIControlState())
+        self.shareButton?.addTarget(self, action: #selector(RewardPopupViewController.shareButtonTouched), for: .touchUpInside)
         self.shareButton?.translatesAutoresizingMaskIntoConstraints = false
         
-        self.popupView!.containerStackView.insertArrangedSubview(self.shareButton!, atIndex: self.popupView!.containerStackView.arrangedSubviews.count)
+        self.popupView!.containerStackView.insertArrangedSubview(self.shareButton!, at: self.popupView!.containerStackView.arrangedSubviews.count)
         
         if let rewardType = self.popupRewardType {
-            if rewardType == .Badge {
+            if rewardType == .badge {
                 
                 
-            } else if rewardType == .Dochos {
+            } else if rewardType == .dochos {
                 
                 
-            } else if rewardType == .LevelUP {
+            } else if rewardType == .levelUP {
                 self.popupView!.circleImageView.image = UIImage(named: "img_levelup")
             }
         }

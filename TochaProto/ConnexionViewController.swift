@@ -3,7 +3,7 @@
 //  DochaProto
 //
 //  Created by Mathis D on 22/05/2016.
-//  Copyright © 2016 LaTV. All rights reserved.
+//  Copyright © 2016 Slymoover. All rights reserved.
 //
 
 import Foundation
@@ -26,10 +26,10 @@ class ConnexionViewController: RootViewController, GIDSignInUIDelegate {
         super.viewDidLoad()
         self.configNavigationBarWithTitle("Connexion")
         hideKeyboardWhenTappedAround()
-        self.connexionEmailButton.enabled = false
+        self.connexionEmailButton.isEnabled = false
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.navigationController!.setNavigationBarHidden(false, animated: false)
         GIDSignIn.sharedInstance().uiDelegate = self
@@ -84,30 +84,30 @@ class ConnexionViewController: RootViewController, GIDSignInUIDelegate {
         return false
     }
     
-    @IBAction func EmailTextFieldEditingChanged(sender: HoshiTextField) {
-        self.connexionEmailButton.enabled = (isEmailValid() && isPasswordValid()) ? true : false
+    @IBAction func EmailTextFieldEditingChanged(_ sender: HoshiTextField) {
+        self.connexionEmailButton.isEnabled = (isEmailValid() && isPasswordValid()) ? true : false
     }
     
-    @IBAction func PasswordTextFieldEditingChanged(sender: HoshiTextField) {
-        self.connexionEmailButton.enabled = (isPasswordValid() && isEmailValid()) ? true : false
+    @IBAction func PasswordTextFieldEditingChanged(_ sender: HoshiTextField) {
+        self.connexionEmailButton.isEnabled = (isPasswordValid() && isEmailValid()) ? true : false
     }
     
-    @IBAction func facebookButtonTouched(sender: UIButton) {
+    @IBAction func facebookButtonTouched(_ sender: UIButton) {
         let fbLoginManager : FBSDKLoginManager = FBSDKLoginManager()
         
-        fbLoginManager.logInWithReadPermissions(["email", "public_profile"],
-                                                fromViewController: self)
+        fbLoginManager.logIn(withReadPermissions: ["email", "public_profile", "user_friends"],
+                                                from: self)
         { (result, error) -> Void in
             
             if error != nil {
                 print("Facebook login : process error : \(error)")
                 
                 return
-            } else if (result.isCancelled) {
+            } else if (result?.isCancelled)! {
                 print("Facebook login : cancelled")
                 return
             } else {
-                let fbloginresult : FBSDKLoginManagerLoginResult = result
+                let fbloginresult : FBSDKLoginManagerLoginResult = result!
                 
                 if(fbloginresult.grantedPermissions.contains("email"))
                 {
@@ -120,7 +120,7 @@ class ConnexionViewController: RootViewController, GIDSignInUIDelegate {
     }
     
     func getFBUserData() {
-        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
         appDelegate.facebookSignIn({
             
             PopupManager.sharedInstance.dismissPopup(true, completion: {
@@ -128,7 +128,7 @@ class ConnexionViewController: RootViewController, GIDSignInUIDelegate {
                     self.goToHome()
                     
                 } else {
-                    let categoryViewController = self.storyboard?.instantiateViewControllerWithIdentifier("idInscriptionCategorySelectionViewController") as! InscriptionCategorySelectionViewController
+                    let categoryViewController = self.storyboard?.instantiateViewController(withIdentifier: "idInscriptionCategorySelectionViewController") as! InscriptionCategorySelectionViewController
                     categoryViewController.comeFromConnexionVC = true
                     self.navigationController?.pushViewController(categoryViewController, animated: true)
                 }
@@ -142,7 +142,7 @@ class ConnexionViewController: RootViewController, GIDSignInUIDelegate {
         }
     }
     
-    @IBAction func emailConnexionTouched(sender: UIButton) {
+    @IBAction func emailConnexionTouched(_ sender: UIButton) {
         PopupManager.sharedInstance.showLoadingPopup("Connexion en cours...", message: nil, completion: {
             if self.emailString != nil && self.passwordString != nil {
                 let email = self.emailString!
@@ -165,15 +165,15 @@ class ConnexionViewController: RootViewController, GIDSignInUIDelegate {
         })
     }
     
-    @IBAction func googlePlusButtonTouched(sender: UIButton) {
+    @IBAction func googlePlusButtonTouched(_ sender: UIButton) {
         GIDSignIn.sharedInstance().signIn()
     }
     
-    @IBAction func backButtonTapped(sender: UIBarButtonItem) {
+    @IBAction func backButtonTapped(_ sender: UIBarButtonItem) {
         goBack()
     }
     
-    func textFieldShouldReturn(textField: UITextField) -> Bool {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         self.view.endEditing(true)
         return false
     }

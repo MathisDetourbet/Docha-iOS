@@ -3,7 +3,7 @@
 //  DochaProto
 //
 //  Created by Mathis D on 20/05/2016.
-//  Copyright © 2016 LaTV. All rights reserved.
+//  Copyright © 2016 Slymoover. All rights reserved.
 //
 
 import GoogleSignIn
@@ -25,11 +25,11 @@ class UserSessionManager {
 	
     func currentSession() -> UserSession? {
         let currentSession: UserSession?
-        let userDefaults = NSUserDefaults.standardUserDefaults()
-        let connexionEncodedObject = userDefaults.objectForKey(Constants.UserDefaultsKey.kUserSessionObject) as? NSData
+        let userDefaults = UserDefaults.standard
+        let connexionEncodedObject = userDefaults.object(forKey: Constants.UserDefaultsKey.kUserSessionObject) as? Data
         
         if (connexionEncodedObject != nil) {
-            currentSession = NSKeyedUnarchiver.unarchiveObjectWithData(connexionEncodedObject!) as? UserSession
+            currentSession = NSKeyedUnarchiver.unarchiveObject(with: connexionEncodedObject!) as? UserSession
         } else {
             return nil
         }
@@ -46,7 +46,7 @@ class UserSessionManager {
 // MARK: Inscription Methods
     
     // Email inscription
-    func inscriptionEmail(dicoParams: [String:AnyObject], success: () -> Void, fail failure: (error: NSError?, listError: [AnyObject]?) -> Void) {
+    func inscriptionEmail(_ dicoParams: [String:AnyObject], success: @escaping () -> Void, fail failure: @escaping (_ error: NSError?, _ listError: [AnyObject]?) -> Void) {
         self.inscriptionRequest = InscriptionRequest()
         
         inscriptionRequest?.inscriptionEmailWithDicoParameters(dicoParams,
@@ -58,15 +58,15 @@ class UserSessionManager {
                     success()
                 } else {
                     let error = NSError(domain: kCFErrorFilePathKey as String, code: 900, userInfo: ["message" : "Error when exctracting user in the user defaults"])
-                    failure(error: error, listError: nil)
+                    failure(error, nil)
                 }
                 
             }, fail: { (error, listErrors) in
-                failure(error: error, listError: listErrors)
+                failure(error, listErrors)
         })
     }
     
-    func inscriptionByFacebook(dicoParams: [String:AnyObject], success: (session: UserSessionFacebook) -> Void, fail failure: (error: NSError?, listError: [AnyObject]?) -> Void) {
+    func inscriptionByFacebook(_ dicoParams: [String:AnyObject], success: @escaping (_ session: UserSessionFacebook) -> Void, fail failure: @escaping (_ error: NSError?, _ listError: [AnyObject]?) -> Void) {
         self.inscriptionRequest = InscriptionRequest()
         
         inscriptionRequest?.inscriptionFacebookWithDicoParameters(dicoParams,
@@ -78,78 +78,59 @@ class UserSessionManager {
                 session.saveSession()
                 
                 if UserSessionManager.sharedInstance.isLogged() {
-                    success(session: session)
+                    success(session)
                 } else {
                     let error = NSError(domain: kCFErrorFilePathKey as String, code: 900, userInfo: ["message" : "Error when exctracting user in the user defaults"])
-                    failure(error: error, listError: nil)
+                    failure(error, nil)
                 }
             
             }, fail: { (error, listErrors) in
-                failure(error: error, listError: listErrors)
-        })
-    }
-    
-    func inscriptionByGooglePlus(dicoParams: [String:AnyObject], success: (session: UserSessionGooglePlus) -> Void, fail failure: (error: NSError?, listError: [AnyObject]?) -> Void) {
-        self.inscriptionRequest = InscriptionRequest()
-        
-        inscriptionRequest?.inscriptionGooglePlusWithDicoParameters(dicoParams,
-            success: { (session) in
-                
-                session.googlePlusID = dicoParams[UserDataKey.kGooglePlusID] as? String
-                session.googlePlusAccessToken = dicoParams[UserDataKey.kGooglePlusToken] as? String
-                
-                session.saveSession()
-                
-                if UserSessionManager.sharedInstance.isLogged() {
-                    success(session: session)
-                } else {
-                    let error = NSError(domain: kCFErrorFilePathKey as String, code: 900, userInfo: ["message" : "Error when exctracting user in the user defaults"])
-                    failure(error: error, listError: nil)
-                }
-            
-            }, fail: { (error, listErrors) in
-                failure(error: error, listError: listErrors)
+                failure(error, listErrors)
         })
     }
     
 
 // MARK: Connexion Methods
     
-    func signIn(success: () -> Void, fail failure: (error: NSError?, listErrors: [AnyObject]?) -> Void) {
+    func signIn(_ success: @escaping () -> Void, fail failure: @escaping (_ error: NSError?, _ listErrors: [AnyObject]?) -> Void) {
         let userSession = self.currentSession()!
         self.connexionRequest = ConnexionRequest()
         
-        if userSession.isKindOfClass(UserSessionEmail) {
+        if userSession.isKind(of: UserSessionEmail.self) {
             let userSessionEmail = userSession as! UserSessionEmail
             let dicoParams = userSessionEmail.generateJSONFromUserSession()
             let email = dicoParams![UserDataKey.kEmail] as? String
             let password = dicoParams![UserDataKey.kPassword] as? String
-            if let email = email, password = password {
+            if let email = email, let password = password {
                 connectByEmail(email, andPassword: password, success: { 
                     success()
                     
                     }, fail: { (error, listError) in
-                    failure(error: error, listErrors: listError)
+                    failure(error, listError)
                 })
             } else {
                 print("Email or password are nil")
-                failure(error: nil, listErrors: nil)
+                failure(nil, nil)
             }
-        } else if userSession.isKindOfClass(UserSessionFacebook) {
-            let userSessionEmail = userSession as! UserSessionFacebook
-            let dicoParams = userSessionEmail.generateJSONFromUserSession()
-            self.connexionRequest?.connexionWithFacebook(dicoParams,
-                success: { (session) in
-                    session.saveSession()
-                    success()
-                    
-                }, fail: { (error, listErrors) in
-                    failure(error: error, listErrors: listErrors)
-            })
+        } else if userSession.isKind(of: UserSessionFacebook.self) {
+            let userSessionFacebook = userSession as! UserSessionFacebook
+            if let accessToken = userSessionFacebook.facebookAccessToken {
+                self.connexionRequest?.connexionWithFacebook(
+                    token: accessToken,
+                    success: { (session) in
+                        session.saveSession()
+                        success()
+                                                                
+                    }, fail: { (error, listErrors) in
+                        failure(error, listErrors)
+                })
+            } else {
+                failure(nil, nil)
+            }
         }
     }
     
-    func connectByEmail(email: String, andPassword password: String, success: () -> Void, fail failure: (error: NSError?, listError: [AnyObject]?) -> Void) {
+    func connectByEmail(_ email: String, andPassword password: String, success: @escaping () -> Void, fail failure: @escaping (_ error: NSError?, _ listError: [AnyObject]?) -> Void) {
         self.connexionRequest = ConnexionRequest()
             
         connexionRequest?.connexionWithEmail(email, password: password,
@@ -161,18 +142,19 @@ class UserSessionManager {
                     success()
                 } else {
                     let error = NSError(domain: kCFErrorFilePathKey as String, code: 900, userInfo: ["message" : "Error when exctracting user in the user defaults"])
-                    failure(error: error, listError: nil)
+                    failure(error, nil)
                 }
                 
             }, fail: { (error, listError) in
-                failure(error: error, listError: listError)
+                failure(error, listError)
         })
     }
     
-    func connectByFacebook(dicoUserData: [String:AnyObject], success: () -> Void, fail failure: (error: NSError?, listError: [AnyObject]?) -> Void) {
-        self.connexionRequest = ConnexionRequest()
+    func connectByFacebook(token accessToken: String!, success: @escaping () -> Void, fail failure: @escaping (_ error: NSError?, _ listError: [AnyObject]?) -> Void) {
         
-        connexionRequest?.connexionWithFacebook(dicoUserData,
+        connexionRequest = ConnexionRequest()
+        
+        connexionRequest?.connexionWithFacebook(token: accessToken,
             success: { (session) in
                 
                 // If user have already choose his favorite category (Inscription -> facebook inscription)
@@ -186,44 +168,22 @@ class UserSessionManager {
                     success()
                 } else {
                     let error = NSError(domain: kCFErrorFilePathKey as String, code: 900, userInfo: ["message" : "Error when exctracting user in the user defaults"])
-                    failure(error: error, listError: nil)
+                    failure(error, nil)
                 }
                 
             }, fail: { (error, listError) in
-                failure(error: error, listError: listError)
+                failure(error, listError)
         })
     }
     
-    func connectByGooglePlus(dicoUserData: [String:AnyObject], success: () -> Void, fail failure: (error: NSError?, listError: [AnyObject]?) -> Void) {
-        self.connexionRequest = ConnexionRequest()
-        
-        connexionRequest?.connexionWithGooglePlus(dicoUserData,
-            success: { (session) in
-                
-                session.googlePlusAccessToken = dicoUserData["gplus_token"] as? String
-                session.googlePlusID = dicoUserData["gplus_id"] as? String
-                session.saveSession()
-                
-                if UserSessionManager.sharedInstance.isLogged() {
-                    success()
-                } else {
-                    let error = NSError(domain: kCFErrorFilePathKey as String, code: 900, userInfo: ["message" : "Error when exctracting user in the user defaults"])
-                    failure(error: error, listError: nil)
-                }
-            
-            }, fail: { (error, listErrors) in
-                failure(error: error, listError: listErrors)
-        })
-    }
-    
-    func updateUserProfil(dicoParameters: [String:AnyObject], success: () -> Void, fail failure: (error: NSError?, listError: [AnyObject]?) -> Void) {
+    func updateUserProfil(_ dicoParameters: [String:AnyObject], success: @escaping () -> Void, fail failure: @escaping (_ error: NSError?, _ listError: [AnyObject]?) -> Void) {
         self.profilRequest = ProfilRequest()
         
         self.profilRequest?.updateProfil(dicoParameters, success: {
             success()
             
             }, fail: { (error, listErrors) in
-                failure(error: error, listError: listErrors)
+                failure(error, listErrors)
         })
     }
     
@@ -238,12 +198,9 @@ class UserSessionManager {
                     print("Logout error : \(error)")
             })
             
-            if currentSession.isKindOfClass(UserSessionFacebook) {
+            if currentSession.isKind(of: UserSessionFacebook.self) {
                 let loginManager = FBSDKLoginManager()
                 loginManager.logOut()
-                
-            } else if currentSession.isKindOfClass(UserSessionGooglePlus) {
-                GIDSignIn.sharedInstance().disconnect()
             }
             
             currentSession.deleteSession()

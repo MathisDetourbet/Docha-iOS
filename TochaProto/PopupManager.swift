@@ -3,7 +3,7 @@
 //  Docha
 //
 //  Created by Mathis D on 26/07/2016.
-//  Copyright © 2016 LaTV. All rights reserved.
+//  Copyright © 2016 Slymoover. All rights reserved.
 //
 
 class PopupManager {
@@ -22,17 +22,17 @@ class PopupManager {
     var popupWaitingArray: [[String: AnyObject?]]?
     var isDisplayingPopup: Bool = false
     
-    func showSuccessPopup(title: String? = "Succès", message: String?, viewController: UIViewController? = nil, completion: (() -> Void)? = nil, doneActionCompletion: (() -> Void)? = nil) {
+    func showSuccessPopup(_ title: String? = "Succès", message: String?, viewController: UIViewController? = nil, completion: (() -> Void)? = nil, doneActionCompletion: (() -> Void)? = nil) {
         if self.isDisplayingPopup == true {
             if self.popupWaitingArray == nil {
                 self.popupWaitingArray = []
             }
-            self.popupWaitingArray?.append(["popupType": PopupType.Success.rawValue, "title": title, "message": message])
+            self.popupWaitingArray?.append(["popupType": PopupType.success.rawValue as Optional<AnyObject>, "title": title as Optional<AnyObject>, "message": message as Optional<AnyObject>])
             return
         }
         self.isDisplayingPopup = true
         let currentPopupViewController = SuccessPopupViewController()
-        currentPopupViewController.modalPresentationStyle = .OverCurrentContext
+        currentPopupViewController.modalPresentationStyle = .overCurrentContext
         currentPopupViewController.titlePopup = title
         currentPopupViewController.messagePopup = message
         currentPopupViewController.doneActionCompletion = doneActionCompletion
@@ -41,29 +41,29 @@ class PopupManager {
         if let rootController = UIApplication.rootViewControllerForPopup() {
             if let vc = viewController {
                 addBackgroundViewForCurrentViewController(vc)
-                vc.presentViewController(self.popupViewController!, animated: true, completion: {
+                vc.present(self.popupViewController!, animated: true, completion: {
                     completion?()
                 })
             } else {
                 addBackgroundViewForCurrentViewController(rootController)
-                rootController.presentViewController(self.popupViewController!, animated: true, completion: {
+                rootController.present(self.popupViewController!, animated: true, completion: {
                     completion?()
                 })
             }
         }
     }
     
-    func showErrorPopup(title: String? = "Oups !", message: String?, viewController: UIViewController? = nil, completion: (() -> Void)? = nil, doneActionCompletion: (() -> Void)? = nil) {
+    func showErrorPopup(_ title: String? = "Oups !", message: String?, viewController: UIViewController? = nil, completion: (() -> Void)? = nil, doneActionCompletion: (() -> Void)? = nil) {
         if self.isDisplayingPopup == true {
             if self.popupWaitingArray == nil {
                 self.popupWaitingArray = []
             }
-            self.popupWaitingArray?.append(["popupType": PopupType.Error.rawValue, "title": title, "message": message])
+            self.popupWaitingArray?.append(["popupType": PopupType.error.rawValue as Optional<AnyObject>, "title": title as Optional<AnyObject>, "message": message as Optional<AnyObject>])
             return
         }
         self.isDisplayingPopup = true
         let currentPopupViewController = ErrorPopupViewController()
-        currentPopupViewController.modalPresentationStyle = .OverCurrentContext
+        currentPopupViewController.modalPresentationStyle = .overCurrentContext
         currentPopupViewController.titlePopup = title
         currentPopupViewController.messagePopup = message
         currentPopupViewController.doneActionCompletion = doneActionCompletion
@@ -72,30 +72,30 @@ class PopupManager {
         if let rootController = UIApplication.rootViewControllerForPopup() {
             if let vc = viewController {
                 addBackgroundViewForCurrentViewController(vc)
-                vc.presentViewController(self.popupViewController!, animated: true, completion: {
+                vc.present(self.popupViewController!, animated: true, completion: {
                     completion?()
                 })
             } else {
                 addBackgroundViewForCurrentViewController(rootController)
-                rootController.presentViewController(self.popupViewController!, animated: true, completion: {
+                rootController.present(self.popupViewController!, animated: true, completion: {
                     completion?()
                 })
             }
         }
     }
     
-    func showInfosPopup(title: String? = "Information", message: String?, viewController: UIViewController? = nil, completion: (() -> Void)?, doneActionCompletion: (() -> Void)? = nil) {
+    func showInfosPopup(_ title: String? = "Information", message: String?, viewController: UIViewController? = nil, completion: (() -> Void)?, doneActionCompletion: (() -> Void)? = nil) {
         if self.isDisplayingPopup == true {
             if self.popupWaitingArray == nil {
                 self.popupWaitingArray = []
             }
             
-            self.popupWaitingArray?.append(["popupType": PopupType.Infos.rawValue, "title": title, "message": message])
+            self.popupWaitingArray?.append(["popupType": PopupType.infos.rawValue as Optional<AnyObject>, "title": title as Optional<AnyObject>, "message": message as Optional<AnyObject>])
             return
         }
         self.isDisplayingPopup = true
         let currentPopupViewController = InfosPopupViewController()
-        currentPopupViewController.modalPresentationStyle = .OverCurrentContext
+        currentPopupViewController.modalPresentationStyle = .overCurrentContext
         currentPopupViewController.titlePopup = title
         currentPopupViewController.messagePopup = message
         currentPopupViewController.doneActionCompletion = doneActionCompletion
@@ -104,29 +104,29 @@ class PopupManager {
         if let rootController = UIApplication.rootViewControllerForPopup() {
             if let vc = viewController {
                 addBackgroundViewForCurrentViewController(vc)
-                vc.presentViewController(self.popupViewController!, animated: true, completion: {
+                vc.present(self.popupViewController!, animated: true, completion: {
                     completion?()
                 })
             } else {
                 addBackgroundViewForCurrentViewController(rootController)
-                rootController.presentViewController(self.popupViewController!, animated: true, completion: {
+                rootController.present(self.popupViewController!, animated: true, completion: {
                     completion?()
                 })
             }
         }
     }
     
-    func showLoadingPopup(title: String? = "Chargement en cours...", message: String?, viewController: UIViewController? = nil, completion: (() -> Void)?) {
+    func showLoadingPopup(_ title: String? = "Chargement en cours...", message: String?, viewController: UIViewController? = nil, completion: (() -> Void)?) {
         if self.isDisplayingPopup == true {
             if self.popupWaitingArray == nil {
                 self.popupWaitingArray = []
             }
-            self.popupWaitingArray?.append(["popupType": PopupType.Loading.rawValue, "title": title, "message": message])
+            self.popupWaitingArray?.append(["popupType": PopupType.loading.rawValue as Optional<AnyObject>, "title": title as Optional<AnyObject>, "message": message as Optional<AnyObject>])
             return
         }
         self.isDisplayingPopup = true
         let currentPopupViewController = LoadingPopViewController()
-        currentPopupViewController.modalPresentationStyle = .OverCurrentContext
+        currentPopupViewController.modalPresentationStyle = .overCurrentContext
         currentPopupViewController.titlePopup = title
         currentPopupViewController.messagePopup = message
         self.popupViewController = currentPopupViewController
@@ -134,30 +134,30 @@ class PopupManager {
         if let rootController = UIApplication.rootViewControllerForPopup() {
             if let vc = viewController {
                 addBackgroundViewForCurrentViewController(vc)
-                vc.presentViewController(self.popupViewController!, animated: true, completion: {
+                vc.present(self.popupViewController!, animated: true, completion: {
                     completion?()
                 })
             } else {
                 addBackgroundViewForCurrentViewController(rootController)
-                rootController.presentViewController(self.popupViewController!, animated: true, completion: {
+                rootController.present(self.popupViewController!, animated: true, completion: {
                     completion?()
                 })
             }
         }
     }
     
-    func showRewardPopup(title: String? = "Bravo !", message: String?, completion: (() -> Void)?, doneActionCompletion: (() -> Void)? = nil) {
+    func showRewardPopup(_ title: String? = "Bravo !", message: String?, completion: (() -> Void)?, doneActionCompletion: (() -> Void)? = nil) {
         if self.isDisplayingPopup == true {
             if self.popupWaitingArray == nil {
                 self.popupWaitingArray = []
             }
-            let popupType = PopupType.Reward.rawValue as Int
-            self.popupWaitingArray?.append(["popupType": popupType, "title": title, "message": message])
+            let popupType = PopupType.reward.rawValue as Int
+            self.popupWaitingArray?.append(["popupType": popupType as Optional<AnyObject>, "title": title as Optional<AnyObject>, "message": message as Optional<AnyObject>])
             return
         }
         self.isDisplayingPopup = true
         let currentPopupViewController = RewardPopupViewController()
-        currentPopupViewController.modalPresentationStyle = .OverCurrentContext
+        currentPopupViewController.modalPresentationStyle = .overCurrentContext
         currentPopupViewController.titlePopup = title
         currentPopupViewController.messagePopup = message
         currentPopupViewController.doneActionCompletion = doneActionCompletion
@@ -165,7 +165,7 @@ class PopupManager {
         
         if let rootController = UIApplication.rootViewControllerForPopup() {
             addBackgroundViewForCurrentViewController(rootController)
-            rootController.presentViewController(self.popupViewController!, animated: true, completion: {
+            rootController.present(self.popupViewController!, animated: true, completion: {
                 completion?()
             })
         }
@@ -175,21 +175,21 @@ class PopupManager {
         if self.popupWaitingArray?.isEmpty == true {
             return
         }
-        let nextPopupType = PopupType(rawValue:((self.popupWaitingArray?.last!["popupType"])!?.integerValue)!)! as PopupType
+        let nextPopupType = PopupType(rawValue:((self.popupWaitingArray?.last!["popupType"])!?.intValue)!)! as PopupType
         let title = self.popupWaitingArray?.last!["title"] as? String
         let message = self.popupWaitingArray?.last!["message"] as? String
         
         switch nextPopupType {
-        case .Loading:
+        case .loading:
             self.showLoadingPopup(title, message: message, completion: nil)
             break
-        case .Error:
+        case .error:
             self.showErrorPopup(title, message: message, completion: nil)
             break
-        case .Infos:
+        case .infos:
             self.showInfosPopup(title, message: message, completion: nil)
             break
-        case .Reward:
+        case .reward:
             self.showRewardPopup(title, message: message, completion: nil)
             break
         default:
@@ -201,42 +201,42 @@ class PopupManager {
         self.popupWaitingArray?.removeLast()
     }
     
-    func addBackgroundViewForCurrentViewController(viewController: UIViewController) {
+    func addBackgroundViewForCurrentViewController(_ viewController: UIViewController) {
         self.backgroundView = UIView(frame: viewController.view.frame)
-        self.backgroundView!.backgroundColor = UIColor.blackColor()
+        self.backgroundView!.backgroundColor = UIColor.black
         self.backgroundView!.alpha = 0.0
         self.backgroundView?.translatesAutoresizingMaskIntoConstraints = false
         viewController.view.addSubview(self.backgroundView!)
-        viewController.view.addConstraint(NSLayoutConstraint(item: self.backgroundView!, attribute: .Top, relatedBy: .Equal, toItem: viewController.view, attribute: .Top, multiplier: 1.0, constant: 0.0))
-        viewController.view.addConstraint(NSLayoutConstraint(item: self.backgroundView!, attribute: .Bottom, relatedBy: .Equal, toItem: viewController.view, attribute: .Bottom, multiplier: 1.0, constant: 0.0))
-        viewController.view.addConstraint(NSLayoutConstraint(item: self.backgroundView!, attribute: .Leading, relatedBy: .Equal, toItem: viewController.view, attribute: .Leading, multiplier: 1.0, constant: 0.0))
-        viewController.view.addConstraint(NSLayoutConstraint(item: self.backgroundView!, attribute: .Trailing, relatedBy: .Equal, toItem: viewController.view, attribute: .Trailing, multiplier: 1.0, constant: 0.0))
+        viewController.view.addConstraint(NSLayoutConstraint(item: self.backgroundView!, attribute: .top, relatedBy: .equal, toItem: viewController.view, attribute: .top, multiplier: 1.0, constant: 0.0))
+        viewController.view.addConstraint(NSLayoutConstraint(item: self.backgroundView!, attribute: .bottom, relatedBy: .equal, toItem: viewController.view, attribute: .bottom, multiplier: 1.0, constant: 0.0))
+        viewController.view.addConstraint(NSLayoutConstraint(item: self.backgroundView!, attribute: .leading, relatedBy: .equal, toItem: viewController.view, attribute: .leading, multiplier: 1.0, constant: 0.0))
+        viewController.view.addConstraint(NSLayoutConstraint(item: self.backgroundView!, attribute: .trailing, relatedBy: .equal, toItem: viewController.view, attribute: .trailing, multiplier: 1.0, constant: 0.0))
         
-        UIView.animateWithDuration(0.3) {
+        UIView.animate(withDuration: 0.3, animations: {
             self.backgroundView!.alpha = 0.5
-        }
+        }) 
     }
     
     func dismissBackgroundView() {
         var backgroundViewCopy = self.backgroundView
-        UIView.animateWithDuration(0.3, animations: {
+        UIView.animate(withDuration: 0.3, animations: {
             backgroundViewCopy!.alpha = 0.0
-        }) { (_) in
+        }, completion: { (_) in
             backgroundViewCopy!.removeFromSuperview()
             backgroundViewCopy = nil
-        }
+        }) 
     }
     
-    func dismissPopup(animated: Bool, completion: (() -> Void)?) {
+    func dismissPopup(_ animated: Bool, completion: (() -> Void)?) {
         self.dismissBackgroundView()
-        self.popupViewController?.dismissViewControllerAnimated(true, completion: completion)
+        self.popupViewController?.dismiss(animated: true, completion: completion)
         
         self.isDisplayingPopup = false
         if self.popupWaitingArray != nil || self.popupWaitingArray?.isEmpty == false {
             PopupManager.sharedInstance.launchNextWaitingPopup()
             
         } else {
-            dispatch_async(dispatch_get_main_queue()) {
+            DispatchQueue.main.async {
                 self.backgroundView?.removeFromSuperview()
             }
         }

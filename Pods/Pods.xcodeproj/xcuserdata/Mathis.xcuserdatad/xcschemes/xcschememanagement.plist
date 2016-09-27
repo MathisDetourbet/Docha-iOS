@@ -44,11 +44,6 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
-		<key>NVActivityIndicatorView.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
 		<key>PBWebViewController.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -94,22 +89,12 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
-		<key>SCLAlertView.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
 		<key>SWTableViewCell.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
 		</dict>
 		<key>SwiftyJSON.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
-		<key>SwiftyTimer.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
@@ -133,6 +118,11 @@
 			<true/>
 		</dict>
 		<key>0ACFACC96CD1B9C8E8E2AE8DCDB626EC</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>0B49F61F32ABAEC9F6F81C0CA3A5DCF9</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -162,6 +152,16 @@
 			<key>primary</key>
 			<true/>
 		</dict>
+		<key>1C3436CEA5C3D39764C5F54374794ECB</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>1FF4B86A2F94E89988B3027BF4E2747E</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>21C461B0CAD90DE64B07A5D212C5F829</key>
 		<dict>
 			<key>primary</key>
@@ -177,7 +177,17 @@
 			<key>primary</key>
 			<true/>
 		</dict>
+		<key>333E47F1004946B94926B19979768D18</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>3C2093DE706B89A420C151A7EE1343F0</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>3EEBD59EE1E311136C19180DC01D0094</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -188,6 +198,11 @@
 			<true/>
 		</dict>
 		<key>4878C70B21CA37D7CB8A476BF986741B</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>4E5DDBD85ECB34B3927A42E86D713612</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -203,6 +218,11 @@
 			<true/>
 		</dict>
 		<key>74E8FED3456957954D56DF5C924C04FB</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>75287965B9C80025149454245A412CCA</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -227,7 +247,22 @@
 			<key>primary</key>
 			<true/>
 		</dict>
+		<key>AE3F269760B9C3929A54D8A305CF2E7A</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>CC9DA5903045CFA917ED6A2D57F96432</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>D2D17D2E6A8AD8B5A2D1F30A3032805E</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>F70898295028DDFF4ECC98328F80A796</key>
 		<dict>
 			<key>primary</key>
 			<true/>
