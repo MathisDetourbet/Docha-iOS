@@ -23,37 +23,37 @@ class BadgesViewController: RootViewController, UITableViewDelegate, UITableView
         self.configNavigationBarWithTitle("Badges")
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.navigationController?.navigationBarHidden = false
+        self.navigationController?.isNavigationBarHidden = false
     }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return badgesTitles.count
     }
     
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = self.tableView.dequeueReusableCellWithIdentifier(idBadgeTableViewCell, forIndexPath: indexPath) as! BadgeTableViewCell
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = self.tableView.dequeueReusableCell(withIdentifier: idBadgeTableViewCell, for: indexPath) as! BadgeTableViewCell
         
         let userSession = UserSessionManager.sharedInstance.currentSession()!
         let badgesUnlockedIdentifiers = userSession.badgesUnlockedIdentifiers
         let perfectUserCpt = userSession.perfectPriceCpt
-        cell.titleLabel.text = badgesTitles[indexPath.row]
-        cell.descriptionLabel.text = badgesDescriptions[indexPath.row]
+        cell.titleLabel.text = badgesTitles[(indexPath as NSIndexPath).row]
+        cell.descriptionLabel.text = badgesDescriptions[(indexPath as NSIndexPath).row]
         let badgesIdentifiers = Constants.GameCenterLeaderBoardIdentifiers.kBadgesIdentifiers
         if let badgesUnlockedIdentifiers = badgesUnlockedIdentifiers {
-            if badgesUnlockedIdentifiers.contains(badgesIdentifiers[indexPath.row]) == true {
+            if badgesUnlockedIdentifiers.contains(badgesIdentifiers[(indexPath as NSIndexPath).row]) == true {
                 cell.badgeImageView.image = UIImage(named: "badge_2")
                 cell.progressionLabel.text = "100 %"
                 
             } else {
                 cell.badgeImageView.image = UIImage(named: "badge_icon_blocked")
-                if indexPath.row < perfectsBadgesNumber.count {
-                    var progressionPercent = Int((Double(perfectUserCpt)/Double(perfectsBadgesNumber[indexPath.row])) * 100)
+                if (indexPath as NSIndexPath).row < perfectsBadgesNumber.count {
+                    var progressionPercent = Int((Double(perfectUserCpt)/Double(perfectsBadgesNumber[(indexPath as NSIndexPath).row])) * 100)
                     if progressionPercent > 100 {
                         progressionPercent = 100
                     }
@@ -65,8 +65,8 @@ class BadgesViewController: RootViewController, UITableViewDelegate, UITableView
             }
         } else {
             cell.badgeImageView.image = UIImage(named: "badge_icon_blocked")
-            if indexPath.row < perfectsBadgesNumber.count {
-                var progressionPercent = Int((Double(perfectUserCpt)/Double(perfectsBadgesNumber[indexPath.row])) * 100)
+            if (indexPath as NSIndexPath).row < perfectsBadgesNumber.count {
+                var progressionPercent = Int((Double(perfectUserCpt)/Double(perfectsBadgesNumber[(indexPath as NSIndexPath).row])) * 100)
                 if progressionPercent > 100 {
                     progressionPercent = 100
                 }
@@ -76,19 +76,19 @@ class BadgesViewController: RootViewController, UITableViewDelegate, UITableView
                 cell.progressionLabel.text = "0 %"
             }
         }
-        cell.rewardDochosLabel.text = "\(badgesRewards[indexPath.row])"
+        cell.rewardDochosLabel.text = "\(badgesRewards[(indexPath as NSIndexPath).row])"
         
         return cell
     }
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         return
     }
     
     
 //MARK: @IBActions
     
-    @IBAction func backButtonTouched(sender: UIBarButtonItem) {
-        self.navigationController?.popViewControllerAnimated(true)
+    @IBAction func backButtonTouched(_ sender: UIBarButtonItem) {
+        self.navigationController?.popViewController(animated: true)
     }
 }

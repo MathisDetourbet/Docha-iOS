@@ -12,7 +12,7 @@ import SwiftyJSON
 
 class PriceRecordsRequest: DochaRequest {
     
-    func createPriceRecordWithUserID(userID: Int, productID: Int, psyPrice: Int, isInIntervalle: Bool, responseTime: Double, hadTimeToGiveAnswer: Bool, success: (() -> Void), fail failure: (error: NSError?, listErrors: [AnyObject]?) -> Void) {
+    func createPriceRecordWithUserID(_ userID: Int, productID: Int, psyPrice: Int, isInIntervalle: Bool, responseTime: Double, hadTimeToGiveAnswer: Bool, success: @escaping (() -> Void), fail failure: @escaping (_ error: NSError?, _ listErrors: [AnyObject]?) -> Void) {
         
         let userSession = UserSessionManager.sharedInstance.currentSession()!
         
@@ -23,15 +23,15 @@ class PriceRecordsRequest: DochaRequest {
                           Constants.DataRecordsKey.kDataRecordResponseTime          : responseTime,
                           Constants.DataRecordsKey.kDataRecordHadTimeToGiveAnswer   : hadTimeToGiveAnswer,
                           Constants.UserDefaultsKey.kUserInfosEmail                 : userSession.email!,
-                          Constants.UserDefaultsKey.kUserInfosAuthToken             : userSession.authToken!]
+                          Constants.UserDefaultsKey.kUserInfosAuthToken             : userSession.authToken!] as [String : Any]
         
         let url = Constants.UrlServer.UrlBase + Constants.UrlServer.UrlDataRecords.UrlPriceRecords + ".json"
         print("URL POST Psy price record : \(url)")
         
-        let configuration = NSURLSessionConfiguration.defaultSessionConfiguration()
+        let configuration = URLSessionConfiguration.default
         configuration.timeoutIntervalForResource = REQUEST_TIME_OUT
         
-        Alamofire.request(.POST, url, parameters: parameters as? [String: AnyObject], encoding: .JSON)
+        Alamofire.request(.POST, url, parameters: parameters as? [String: AnyObject], encoding: .json)
             .validate()
             .responseJSON { (response) in
                 

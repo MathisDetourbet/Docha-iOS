@@ -16,7 +16,7 @@ class PreferencesAboutViewController: RootViewController {
         self.configNavigationBarWithTitle("À propos", andFontSize: 15.0)
     }
     
-    @IBAction func backButtonTouched(sender: UIBarButtonItem) {
-        self.navigationController?.popViewControllerAnimated(true)
+    @IBAction func backButtonTouched(_ sender: UIBarButtonItem) {
+        self.navigationController?.popViewController(animated: true)
     }
 }

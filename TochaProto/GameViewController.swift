@@ -11,7 +11,7 @@ import Amplitude_iOS
 import SACountingLabel
 
 extension UIView {
-    func rotate360Degrees(duration: CFTimeInterval = 1.0, completionDelegate: AnyObject? = nil) {
+    func rotate360Degrees(_ duration: CFTimeInterval = 1.0, completionDelegate: AnyObject? = nil) {
         let rotateAnimation = CABasicAnimation(keyPath: "transform.rotation.y")
         rotateAnimation.fromValue = 0.0
         rotateAnimation.toValue = CGFloat(M_PI * 2.0)
@@ -29,8 +29,8 @@ extension UIView {
         if let delegate: AnyObject = completionDelegate {
             rotateAnimation.delegate = delegate
         }
-        self.layer.addAnimation(rotateAnimation, forKey: nil)
-        self.layer.addAnimation(pulseAnimation, forKey: nil)
+        self.layer.add(rotateAnimation, forKey: nil)
+        self.layer.add(pulseAnimation, forKey: nil)
     }
 }
 
@@ -106,11 +106,11 @@ class GameViewController: RootViewController {
     }
     
     func configTitleViewDocha() {
-        let titleLabel = UILabel(frame: CGRectMake(96.0, 6.0, 128.0, 33.0))
+        let titleLabel = UILabel(frame: CGRect(x: 96.0, y: 6.0, width: 128.0, height: 33.0))
         titleLabel.text = "Docha"
-        titleLabel.textColor = UIColor.whiteColor()
+        titleLabel.textColor = UIColor.white
         titleLabel.font = UIFont(name: "CaviarDreams-Bold", size: 20.0)
-        titleLabel.textAlignment = .Center
+        titleLabel.textAlignment = .center
         self.navigationItem.titleView = titleLabel
     }
     

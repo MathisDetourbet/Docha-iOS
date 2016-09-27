@@ -16,7 +16,7 @@ class TutorialView: UIView {
     
     var delegate: TutorialViewDelegate?
     
-    @IBAction func nextButtonTouched(sender: UIButton) {
+    @IBAction func nextButtonTouched(_ sender: UIButton) {
         self.delegate?.nextButtonTouched()
     }
 }

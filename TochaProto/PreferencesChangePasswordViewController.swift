@@ -26,8 +26,8 @@ class PreferencesChangePasswordViewController: RootViewController, UITableViewDe
         
         configNavigationBarWithTitle("Modifier le mot de passe", andFontSize: 15.0)
         
-        self.validBarButtonItem.setTitleTextAttributes([NSFontAttributeName: UIFont(name: "Montserrat-SemiBold", size: 11.0)!], forState: .Normal)
-        self.cancelBarButtonItem.setTitleTextAttributes([NSFontAttributeName: UIFont(name: "Montserrat-SemiBold", size: 11.0)!], forState: .Normal)
+        self.validBarButtonItem.setTitleTextAttributes([NSFontAttributeName: UIFont(name: "Montserrat-SemiBold", size: 11.0)!], for: UIControlState())
+        self.cancelBarButtonItem.setTitleTextAttributes([NSFontAttributeName: UIFont(name: "Montserrat-SemiBold", size: 11.0)!], for: UIControlState())
         
         self.heightTableViewConstraint.constant = CGFloat(self.textFielsdPlaceholders.count) * tableView.rowHeight + tableView.sectionHeaderHeight * 2 + tableView.sectionFooterHeight * 2
     }
@@ -35,7 +35,7 @@ class PreferencesChangePasswordViewController: RootViewController, UITableViewDe
 
 //MARK: UITableViewC Data Source Methods
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section == 0 {
             return 1
         } else {
@@ -43,54 +43,54 @@ class PreferencesChangePasswordViewController: RootViewController, UITableViewDe
         }
     }
     
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         return 2
     }
     
-    func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         return ""//"Section \(section)"
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = self.tableView.dequeueReusableCellWithIdentifier("idPreferencesChangePasswordCell") as? PreferencesChangePasswordTableViewCell
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = self.tableView.dequeueReusableCell(withIdentifier: "idPreferencesChangePasswordCell") as? PreferencesChangePasswordTableViewCell
 //        if indexPath.section == 0 {
 //            cell?.contentView.layer.borderColor = UIColor(red:0.78, green:0.78, blue:0.80, alpha:1.0).CGColor
 //            cell?.contentView.layer.borderWidth = 1.0
 //        }
-        let placeholderString = self.textFielsdPlaceholders[indexPath.row + indexPath.section]
+        let placeholderString = self.textFielsdPlaceholders[(indexPath as NSIndexPath).row + (indexPath as NSIndexPath).section]
         cell!.placeholderString = placeholderString
         cell!.textField.attributedPlaceholder = NSAttributedString(string: placeholderString, attributes: [NSFontAttributeName: UIFont(name: "Montserrat-Regular", size: 15.0)!])
         cell?.textField.font = UIFont(name: "Montserrat-Regular", size: 15.0)
         return cell!
     }
     
-    func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 30.0
     }
     
-    func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let headerView = UIView(frame: CGRectMake(0.0, 0.0, self.tableView.frame.width, 30.0))
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let headerView = UIView(frame: CGRect(x: 0.0, y: 0.0, width: self.tableView.frame.width, height: 30.0))
         headerView.backgroundColor = UIColor.lightGrayDochaColor()
         headerView.layer.borderWidth = 1.0
-        headerView.layer.borderColor = UIColor(red:0.78, green:0.78, blue:0.80, alpha:1.0).CGColor
+        headerView.layer.borderColor = UIColor(red:0.78, green:0.78, blue:0.80, alpha:1.0).cgColor
         return headerView
     }
     
     
 //MARK: UITableView Delegate Methods
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
     }
     
     
 //MARK: @IBActions
 
-    @IBAction func cancelButtonTouched(sender: UIBarButtonItem) {
-        self.navigationController?.popViewControllerAnimated(true)
+    @IBAction func cancelButtonTouched(_ sender: UIBarButtonItem) {
+        self.navigationController?.popViewController(animated: true)
     }
     
-    @IBAction func validButtonTouched(sender: UIBarButtonItem) {
-        self.navigationController?.popViewControllerAnimated(true)
+    @IBAction func validButtonTouched(_ sender: UIBarButtonItem) {
+        self.navigationController?.popViewController(animated: true)
     }
 }

@@ -19,26 +19,26 @@ class StorePromotionsViewController: RootViewController, FBSDKSharingDelegate {
         Amplitude.instance().logEvent("StoreViewPromotions")
     }
     
-    func sharer(sharer: FBSDKSharing!, didCompleteWithResults results: [NSObject : AnyObject]!) {
+    func sharer(_ sharer: FBSDKSharing!, didCompleteWithResults results: [AnyHashable: Any]!) {
         
     }
     
-    func sharer(sharer: FBSDKSharing!, didFailWithError error: NSError!) {
+    func sharer(_ sharer: FBSDKSharing!, didFailWithError error: NSError!) {
         
     }
     
-    func sharerDidCancel(sharer: FBSDKSharing!) {
+    func sharerDidCancel(_ sharer: FBSDKSharing!) {
         
     }
     
-    @IBAction func inviteFriendsButtonTouched(sender: UIButton) {
+    @IBAction func inviteFriendsButtonTouched(_ sender: UIButton) {
         // Facebook Sharing
         let content = FBSDKShareLinkContent()
-        content.contentURL = NSURL(string: "http://www.docha.fr")
+        content.contentURL = URL(string: "http://www.docha.fr")
         let shareDialog = FBSDKShareDialog()
         shareDialog.fromViewController = self
         shareDialog.shareContent = content
-        shareDialog.mode = .ShareSheet
+        shareDialog.mode = .shareSheet
         shareDialog.show()
     }
 }

@@ -4,61 +4,81 @@
 //
 
 import UIKit
+fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l < r
+  case (nil, _?):
+    return true
+  default:
+    return false
+  }
+}
+
+fileprivate func > <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l > r
+  default:
+    return rhs < lhs
+  }
+}
+
 
 enum LxTabBarControllerInteractionStopReason {
 
-    case Finished, Cancelled, Failed
+    case finished, cancelled, failed
 }
 
 let LxTabBarControllerDidSelectViewControllerNotification = "LxTabBarControllerDidSelectViewControllerNotification"
 
 private enum LxTabBarControllerSwitchType {
 
-    case Unknown, Last, Next
+    case unknown, last, next
 }
 
 let TRANSITION_DURATION = 0.2
-private var _switchType = LxTabBarControllerSwitchType.Unknown
+private var _switchType = LxTabBarControllerSwitchType.unknown
 
 class Transition: NSObject, UIViewControllerAnimatedTransitioning {
     
-    func transitionDuration(transitionContext: UIViewControllerContextTransitioning?) -> NSTimeInterval {
+    func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {
         return TRANSITION_DURATION
     }
     
-    func animateTransition(transitionContext: UIViewControllerContextTransitioning) {
+    func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
         
-        let fromViewController = transitionContext.viewControllerForKey(UITransitionContextFromViewControllerKey)!
-        let toViewController = transitionContext.viewControllerForKey(UITransitionContextToViewControllerKey)!
+        let fromViewController = transitionContext.viewController(forKey: UITransitionContextViewControllerKey.from)!
+        let toViewController = transitionContext.viewController(forKey: UITransitionContextViewControllerKey.to)!
         
-        transitionContext.containerView()!.insertSubview(toViewController.view, aboveSubview: fromViewController.view)
+        transitionContext.containerView.insertSubview(toViewController.view, aboveSubview: fromViewController.view)
         
         switch _switchType {
             
-        case .Last:
+        case .last:
             toViewController.view.frame.origin.x = -toViewController.view.frame.size.width
-        case .Next:
+        case .next:
             toViewController.view.frame.origin.x = toViewController.view.frame.size.width
-        case .Unknown:
+        case .unknown:
             break
         }
         
-        UIView.animateWithDuration(TRANSITION_DURATION, animations: { () -> Void in
+        UIView.animate(withDuration: TRANSITION_DURATION, animations: { () -> Void in
             
             switch _switchType {
                 
-            case .Last:
+            case .last:
                 fromViewController.view.frame.origin.x = fromViewController.view.frame.size.width
-            case .Next:
+            case .next:
                 fromViewController.view.frame.origin.x = -fromViewController.view.frame.size.width
-            case .Unknown:
+            case .unknown:
                 break
             }
-            toViewController.view.frame = transitionContext.containerView()!.bounds
+            toViewController.view.frame = transitionContext.containerView.bounds
             
-        }) { (finished) -> Void in
-            transitionContext.completeTransition(!transitionContext.transitionWasCancelled())
-        }
+        }, completion: { (finished) -> Void in
+            transitionContext.completeTransition(!transitionContext.transitionWasCancelled)
+        }) 
     }
 }
 
@@ -67,10 +87,10 @@ class LxTabBarController: UITabBarController,UITabBarControllerDelegate,UIGestur
     var panToSwitchGestureRecognizerEnabled: Bool {
     
         get {
-            return _panToSwitchGestureRecognizer.enabled
+            return _panToSwitchGestureRecognizer.isEnabled
         }
         set {
-            _panToSwitchGestureRecognizer.enabled = newValue
+            _panToSwitchGestureRecognizer.isEnabled = newValue
         }
     }
     
@@ -92,7 +112,7 @@ class LxTabBarController: UITabBarController,UITabBarControllerDelegate,UIGestur
         setup()
     }
     
-    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
+    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
 //        setup()
     }
@@ -108,28 +128,28 @@ class LxTabBarController: UITabBarController,UITabBarControllerDelegate,UIGestur
         view.addGestureRecognizer(_panToSwitchGestureRecognizer)
     }
     
-    func tabBarController(tabBarController: UITabBarController, interactionControllerForAnimationController animationController: UIViewControllerAnimatedTransitioning) -> UIViewControllerInteractiveTransitioning? {
+    func tabBarController(_ tabBarController: UITabBarController, interactionControllerFor animationController: UIViewControllerAnimatedTransitioning) -> UIViewControllerInteractiveTransitioning? {
      
         return animationController is Transition ? _interactiveTransition : nil
     }
     
-    func tabBarController(tabBarController: UITabBarController, animationControllerForTransitionFromViewController fromVC: UIViewController, toViewController toVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+    func tabBarController(_ tabBarController: UITabBarController, animationControllerForTransitionFrom fromVC: UIViewController, to toVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         
         return Transition()
     }
     
-    func panGestureRecognizerTriggerd(pan: UIPanGestureRecognizer) {
+    func panGestureRecognizerTriggerd(_ pan: UIPanGestureRecognizer) {
     
-        var progress = pan.translationInView(pan.view!).x / pan.view!.bounds.size.width
+        var progress = pan.translation(in: pan.view!).x / pan.view!.bounds.size.width
         
         if progress > 0 {
-            _switchType = .Last
+            _switchType = .last
         }
         else if progress < 0 {
-            _switchType = .Next
+            _switchType = .next
         }
         else {
-            _switchType = .Unknown
+            _switchType = .unknown
         }
         
         progress = abs(progress)
@@ -138,37 +158,37 @@ class LxTabBarController: UITabBarController,UITabBarControllerDelegate,UIGestur
         
         switch pan.state {
             
-        case .Began:
+        case .began:
             isTranslating = true
             _interactiveTransition = UIPercentDrivenInteractiveTransition()
             switch _switchType {
                 
-            case .Last:
+            case .last:
                 selectedIndex = max(0, selectedIndex - 1)
                 selectedViewController = viewControllers![selectedIndex]
                 panGestureRecognizerBeginBlock()
-            case .Next:
+            case .next:
                 selectedIndex = min(viewControllers!.count, selectedIndex + 1)
                 selectedViewController = viewControllers![selectedIndex]
                 panGestureRecognizerBeginBlock()
-            case .Unknown:
+            case .unknown:
                 break
             }
-        case .Changed:
-            _interactiveTransition?.updateInteractiveTransition(CGFloat(progress))
-        case .Failed:
+        case .changed:
+            _interactiveTransition?.update(CGFloat(progress))
+        case .failed:
             isTranslating = false
-            panGestureRecognizerStopBlock(.Failed)
+            panGestureRecognizerStopBlock(.failed)
         default:
             
             if abs(progress) > 0.5 {
                 
-                _interactiveTransition?.finishInteractiveTransition()
-                panGestureRecognizerStopBlock(.Finished)
+                _interactiveTransition?.finish()
+                panGestureRecognizerStopBlock(.finished)
             }
             else {
-                _interactiveTransition?.cancelInteractiveTransition()
-                panGestureRecognizerStopBlock(.Cancelled)
+                _interactiveTransition?.cancel()
+                panGestureRecognizerStopBlock(.cancelled)
             }
             
             _interactiveTransition = nil
@@ -176,7 +196,7 @@ class LxTabBarController: UITabBarController,UITabBarControllerDelegate,UIGestur
         }
     }
     
-    func gestureRecognizerShouldBegin(gestureRecognizer: UIGestureRecognizer) -> Bool {
+    func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
         
         if gestureRecognizer == _panToSwitchGestureRecognizer {
             
@@ -187,7 +207,7 @@ class LxTabBarController: UITabBarController,UITabBarControllerDelegate,UIGestur
         }
     }
     
-    func gestureRecognizer(gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWithGestureRecognizer otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
         
         if gestureRecognizer == _panToSwitchGestureRecognizer || otherGestureRecognizer == _panToSwitchGestureRecognizer {
         
@@ -198,24 +218,24 @@ class LxTabBarController: UITabBarController,UITabBarControllerDelegate,UIGestur
         }
     }
     
-    func tabBarController(tabBarController: UITabBarController, shouldSelectViewController viewController: UIViewController) -> Bool {
+    func tabBarController(_ tabBarController: UITabBarController, shouldSelect viewController: UIViewController) -> Bool {
         
-        let viewControllerIndex = (tabBarController.viewControllers as [UIViewController]!).indexOf(viewController)
+        let viewControllerIndex = (tabBarController.viewControllers as [UIViewController]!).index(of: viewController)
         
         if viewControllerIndex > selectedIndex {
-            _switchType = .Next
+            _switchType = .next
         }
         else if viewControllerIndex < selectedIndex {
-            _switchType = .Last
+            _switchType = .last
         }
         else {
-            _switchType = .Unknown
+            _switchType = .unknown
         }
         return true
     }
     
-    func tabBarController(tabBarController: UITabBarController, didSelectViewController viewController: UIViewController) {
+    func tabBarController(_ tabBarController: UITabBarController, didSelect viewController: UIViewController) {
         
-        NSNotificationCenter.defaultCenter().postNotificationName(LxTabBarControllerDidSelectViewControllerNotification, object: nil)
+        NotificationCenter.default.post(name: Notification.Name(rawValue: LxTabBarControllerDidSelectViewControllerNotification), object: nil)
     }
 }

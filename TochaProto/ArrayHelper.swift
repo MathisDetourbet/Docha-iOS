@@ -8,16 +8,16 @@
 
 import Foundation
 
-extension CollectionType {
+extension Collection {
     /// Return a copy of `self` with its elements shuffled
-    func shuffle() -> [Generator.Element] {
+    func shuffle() -> [Iterator.Element] {
         var list = Array(self)
         list.shuffleInPlace()
         return list
     }
 }
 
-extension MutableCollectionType where Index == Int {
+extension MutableCollection where Index == Int {
     /// Shuffle the elements of `self` in-place.
     mutating func shuffleInPlace() {
         // empty and single-element collections don't shuffle
@@ -34,9 +34,9 @@ extension MutableCollectionType where Index == Int {
 extension Array where Element: Equatable {
     
     // Remove first collection element that is equal to the given `object`:
-    mutating func removeObject(object: Element) {
-        if let index = indexOf(object) {
-            removeAtIndex(index)
+    mutating func removeObject(_ object: Element) {
+        if let index = index(of: object) {
+            remove(at: index)
         }
     }
 }

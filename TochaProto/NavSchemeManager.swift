@@ -16,26 +16,26 @@ class NavSchemeManager {
     }
     
     func initRootController() {
-        let window: UIWindow = ((UIApplication.sharedApplication().delegate?.window)!)!
+        let window: UIWindow = ((UIApplication.shared.delegate?.window)!)!
         
         if UserSessionManager.sharedInstance.isLogged() {
-            window.rootViewController = window.rootViewController?.storyboard?.instantiateViewControllerWithIdentifier("idHomeNavController") as! UINavigationController
+            window.rootViewController = window.rootViewController?.storyboard?.instantiateViewController(withIdentifier: "idHomeNavController") as! UINavigationController
             
         } else {
-            window.rootViewController = window.rootViewController?.storyboard?.instantiateViewControllerWithIdentifier("idStarterNavController")
+            window.rootViewController = window.rootViewController?.storyboard?.instantiateViewController(withIdentifier: "idStarterNavController")
         }
     }
     
-    func changeRootViewController(viewController: UIViewController) {
-        let snapShot = (((UIApplication.sharedApplication().delegate) as! AppDelegate)).window!.snapshotViewAfterScreenUpdates(true)
-        viewController.view.addSubview(snapShot)
-        (((UIApplication.sharedApplication().delegate) as! AppDelegate)).window!.rootViewController = viewController
-        UIView.animateWithDuration(0.3,
+    func changeRootViewController(_ viewController: UIViewController) {
+        let snapShot = (((UIApplication.shared.delegate) as! AppDelegate)).window!.snapshotView(afterScreenUpdates: true)
+        viewController.view.addSubview(snapShot!)
+        (((UIApplication.shared.delegate) as! AppDelegate)).window!.rootViewController = viewController
+        UIView.animate(withDuration: 0.3,
                                    animations: { 
-                                    snapShot.layer.opacity = 0.0
-                                    snapShot.layer.transform = CATransform3DMakeScale(1.5, 1.5, 1.5)
-            }) { (finished) in
-                snapShot.removeFromSuperview()
-        }
+                                    snapShot?.layer.opacity = 0.0
+                                    snapShot?.layer.transform = CATransform3DMakeScale(1.5, 1.5, 1.5)
+            }, completion: { (finished) in
+                snapShot?.removeFromSuperview()
+        }) 
     }
 }

@@ -14,25 +14,25 @@ class RootViewController: UIViewController {
         super.viewDidLoad()
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
     }
     
-    func configNavigationBarWithTitle(title: String!, andFontSize size: CGFloat? = 17.0) {
+    func configNavigationBarWithTitle(_ title: String!, andFontSize size: CGFloat? = 17.0) {
         self.navigationItem.title = title
-        self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName:UIColor.whiteColor(), NSFontAttributeName: UIFont(name: "Montserrat-ExtraBold", size: size!)!]
+        self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName:UIColor.white, NSFontAttributeName: UIFont(name: "Montserrat-ExtraBold", size: size!)!]
     }
     
-    override func prefersStatusBarHidden() -> Bool {
+    override var prefersStatusBarHidden : Bool {
         return true
     }
     
     func goBack() {
-        self.navigationController?.popViewControllerAnimated(true)
+        self.navigationController?.popViewController(animated: true)
     }
     
     func goToHome() {
-        let homeViewController = self.storyboard?.instantiateViewControllerWithIdentifier("idHomeNavController") as! UINavigationController
+        let homeViewController = self.storyboard?.instantiateViewController(withIdentifier: "idHomeNavController") as! UINavigationController
         NavSchemeManager.sharedInstance.changeRootViewController(homeViewController)
     }
 }

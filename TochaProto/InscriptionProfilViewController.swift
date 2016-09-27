@@ -11,12 +11,12 @@ import SCLAlertView
 
 extension UIViewController {
     
-    func popToViewControllerClass(viewControllerClass: AnyClass) {
+    func popToViewControllerClass(_ viewControllerClass: AnyClass) {
         if self.navigationController != nil {
             let allViewController = (self.navigationController?.viewControllers)! as [UIViewController]
             
             for aViewController in allViewController {
-                if aViewController.isKindOfClass(viewControllerClass) {
+                if aViewController.isKind(of: viewControllerClass) {
                     self.navigationController?.popToViewController(aViewController, animated: true)
                 }
             }
@@ -53,20 +53,20 @@ class InscriptionProfilViewController: RootViewController {
             userAvatarImageView.image = UIImage(named: "avatar_woman_profil")
         }
         
-        for (index, avatar) in avatarsButtonsCollection.enumerate() {
-            avatar.setImage(UIImage(named: avatarImageArray![index]), forState: .Normal)
+        for (index, avatar) in avatarsButtonsCollection.enumerated() {
+            avatar.setImage(UIImage(named: avatarImageArray![index]), for: UIControlState())
             avatar.animatedLikeBubbleWithDelay(Double(index/100)+0.2, duration: 0.5)
         }
     }
     
-    @IBAction func avatarButtonTouched(sender: UIButton) {
+    @IBAction func avatarButtonTouched(_ sender: UIButton) {
         let index = sender.tag
         self.userAvatarImageView.image = UIImage(named: "\(self.avatarImageArray![index])_profil")
         self.userAvatarImageView.animatedLikeBubbleWithDelay(0.0, duration: 0.5)
         self.avatarImageSelected = self.avatarImageArray![index]
     }
     
-    @IBAction func validProfilButtonTouched(sender: UIButton) {
+    @IBAction func validProfilButtonTouched(_ sender: UIButton) {
         PopupManager.sharedInstance.showLoadingPopup("Connexion...", message: "Création d'un nouveau Docher en cours.", completion: {
             let userSessionManager = UserSessionManager.sharedInstance
             

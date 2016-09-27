@@ -10,10 +10,10 @@ import Foundation
 import GameKit
 
 enum EstimationResult {
-    case Perfect
-    case Amazing
-    case Great
-    case Oups
+    case perfect
+    case amazing
+    case great
+    case oups
 }
 
 struct Reward {
@@ -115,7 +115,7 @@ class UserGameStateManager {
     }
     
     // Return the reward for the user : (X_Dochos, Y_XP)
-    func getRewardForPsyPrice(let psyPrice: Double, andRealPrice realPrice: Double) -> (dochos: Int, experience: Int, perfect: Bool) {
+    func getRewardForPsyPrice(_ psyPrice: Double, andRealPrice realPrice: Double) -> (dochos: Int, experience: Int, perfect: Bool) {
         let maxDochos: Double = round(realPrice * MULTIPLE_DOCHOS)
         
         if psyPrice == realPrice {  // Perfect price !
@@ -140,7 +140,7 @@ class UserGameStateManager {
         }
     }
     
-    func isPsyPriceInIntervalle(let psyPrice: Double, andRealPrice realPrice: Double) -> Bool {
+    func isPsyPriceInIntervalle(_ psyPrice: Double, andRealPrice realPrice: Double) -> Bool {
         if psyPrice == realPrice {
             return true
             
@@ -211,7 +211,7 @@ class UserGameStateManager {
         let localPlayer = GKLocalPlayer.localPlayer()
         localPlayer.authenticateHandler = {(viewController, error) -> Void in
             if ((viewController) != nil) {
-                UIApplication.topViewController()!.presentViewController(viewController!, animated: true, completion: nil)
+                UIApplication.topViewController()!.present(viewController!, animated: true, completion: nil)
                 
             } else {
                 UserGameStateManager.sharedInstance.loadAchievementsFromGameCenter()
@@ -226,7 +226,7 @@ class UserGameStateManager {
             badgesUnlockedIdentifiers = []
         }
         
-        GKAchievement.loadAchievementsWithCompletionHandler { (allAchievementsArray, error) in
+        GKAchievement.loadAchievements { (allAchievementsArray, error) in
             if error != nil {
                 print("Game Center error : Couldn't load user achievements whith error : \(error)")
                 
@@ -247,7 +247,7 @@ class UserGameStateManager {
         }
     }
     
-    func updateAchievements(newTotalPerfect: Int) -> [GKAchievement]? {
+    func updateAchievements(_ newTotalPerfect: Int) -> [GKAchievement]? {
         dochosAchievement = 0
         if let userSession = self.userSession {
             var badgesUnlockedArray = userSession.badgesUnlockedIdentifiers
@@ -303,12 +303,12 @@ class UserGameStateManager {
         return nil
     }
     
-    func reportAchievement(identifier: String, percentComplete: Double) {
-        if GKLocalPlayer.localPlayer().authenticated {
+    func reportAchievement(_ identifier: String, percentComplete: Double) {
+        if GKLocalPlayer.localPlayer().isAuthenticated {
             let achievement = GKAchievement(identifier: identifier)
             achievement.percentComplete = percentComplete
             let achievementArray: [GKAchievement] = [achievement]
-            GKAchievement.reportAchievements(achievementArray, withCompletionHandler: { (error) in
+            GKAchievement.report(achievementArray, withCompletionHandler: { (error) in
                 if error != nil {
                     print("Game Center report achievement error: \(error)")
                     
@@ -320,9 +320,9 @@ class UserGameStateManager {
         }
     }
     
-    func reportAchievements(achievementsArray: [GKAchievement]) {
-        if GKLocalPlayer.localPlayer().authenticated {
-            GKAchievement.reportAchievements(achievementsArray, withCompletionHandler: { (error) in
+    func reportAchievements(_ achievementsArray: [GKAchievement]) {
+        if GKLocalPlayer.localPlayer().isAuthenticated {
+            GKAchievement.report(achievementsArray, withCompletionHandler: { (error) in
                 if error != nil {
                     print("Game Center report achievements error: \(error)")
                     

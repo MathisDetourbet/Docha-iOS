@@ -12,19 +12,19 @@ import SwiftyJSON
 
 class InscriptionRequest: DochaRequest {
     
-    func inscriptionEmailWithDicoParameters(dicoParameters: [String:AnyObject], success: (session: UserSessionEmail) -> Void, fail failure: (error: NSError?, listErrors: [AnyObject]?) -> Void) {
+    func inscriptionEmailWithDicoParameters(_ dicoParameters: [String:AnyObject], success: @escaping (_ session: UserSessionEmail) -> Void, fail failure: @escaping (_ error: NSError?, _ listErrors: [AnyObject]?) -> Void) {
         
         let url = "\(Constants.UrlServer.UrlBase)\(Constants.UrlServer.UrlRegister.UrlEmailRegister)"
         print("URL Request inscription : \(url)")
         
         var dicoInscriptionApi = [String:AnyObject]()
-        dicoInscriptionApi["user"] = dicoParameters
+        dicoInscriptionApi["user"] = dicoParameters as AnyObject?
         
-        let configuration = NSURLSessionConfiguration.defaultSessionConfiguration()
+        let configuration = URLSessionConfiguration.default
         configuration.timeoutIntervalForResource = REQUEST_TIME_OUT
         
         self.alamofireManager = Alamofire.Manager(configuration: configuration)
-        self.alamofireManager!.request(.POST, url, parameters: dicoInscriptionApi, encoding: .JSON)
+        self.alamofireManager!.request(.POST, url, parameters: dicoInscriptionApi, encoding: .json)
             .validate()
             .responseJSON { response in
                 let statusCode = response.response?.statusCode // Gets HTTP status code, useful for debugging
@@ -62,9 +62,9 @@ class InscriptionRequest: DochaRequest {
                                     session.authToken = jsonResponse["data"][UserDataKey.kAuthToken].string
                                     
                                     if let dateString = jsonResponse["data"]["user"][UserDataKey.kDateBirthday].string {
-                                        let dateFormatter = NSDateFormatter()
+                                        let dateFormatter = DateFormatter()
                                         dateFormatter.dateFormat = "yyyy-MM-dd"
-                                        session.dateBirthday = dateFormatter.dateFromString(dateString)
+                                        session.dateBirthday = dateFormatter.date(from: dateString)
                                     }
                                     
                                     session.firstName = jsonResponse["data"]["user"][UserDataKey.kFirstName].string
@@ -88,7 +88,7 @@ class InscriptionRequest: DochaRequest {
                                         let params = session.generateJSONFromUserSession()!
                                         let email = params[UserDataKey.kEmail] as? String
                                         let password = params[UserDataKey.kPassword] as? String
-                                        if let email = email, password = password {
+                                        if let email = email, let password = password {
                                             UserSessionManager.sharedInstance.connectByEmail(email, andPassword: password,
                                                 success: {
                                                     success(session: session)
@@ -131,19 +131,19 @@ class InscriptionRequest: DochaRequest {
         }
     }
     
-    func inscriptionFacebookWithDicoParameters(dicoParameters: [String:AnyObject], success: (session: UserSessionFacebook) -> Void, fail failure: (error: NSError?, listErrors: [AnyObject]?) -> Void) {
+    func inscriptionFacebookWithDicoParameters(_ dicoParameters: [String:AnyObject], success: @escaping (_ session: UserSessionFacebook) -> Void, fail failure: @escaping (_ error: NSError?, _ listErrors: [AnyObject]?) -> Void) {
         
         let url = "\(Constants.UrlServer.UrlBase)\(Constants.UrlServer.UrlRegister.UrlFacebookRegister)"
         print("URL Request inscription : \(url)")
         
         var dicoInscriptionApi = [String:AnyObject]()
-        dicoInscriptionApi["user"] = dicoParameters
+        dicoInscriptionApi["user"] = dicoParameters as AnyObject?
         
-        let configuration = NSURLSessionConfiguration.defaultSessionConfiguration()
+        let configuration = URLSessionConfiguration.default
         configuration.timeoutIntervalForResource = REQUEST_TIME_OUT
         
         self.alamofireManager = Alamofire.Manager(configuration: configuration)
-        self.alamofireManager!.request(.POST, url, parameters: dicoInscriptionApi, encoding: .JSON)
+        self.alamofireManager!.request(.POST, url, parameters: dicoInscriptionApi, encoding: .json)
             .validate()
             .responseJSON { response in
                 let statusCode = response.response?.statusCode // Gets HTTP status code, useful for debugging
@@ -179,9 +179,9 @@ class InscriptionRequest: DochaRequest {
                                     session.authToken = jsonResponse["data"][UserDataKey.kAuthToken].string
                                     
                                     if let dateString = jsonResponse["data"]["user"][UserDataKey.kDateBirthday].string {
-                                        let dateFormatter = NSDateFormatter()
+                                        let dateFormatter = DateFormatter()
                                         dateFormatter.dateFormat = "yyyy-MM-dd"
-                                        session.dateBirthday = dateFormatter.dateFromString(dateString)
+                                        session.dateBirthday = dateFormatter.date(from: dateString)
                                     }
                                     
                                     session.firstName = jsonResponse["data"]["user"][UserDataKey.kFirstName].string
@@ -242,19 +242,19 @@ class InscriptionRequest: DochaRequest {
         }
     }
     
-    func inscriptionGooglePlusWithDicoParameters(dicoParameters: [String:AnyObject], success: (session: UserSessionGooglePlus) -> Void, fail failure: (error: NSError?, listErrors: [AnyObject]?) -> Void) {
+    func inscriptionGooglePlusWithDicoParameters(_ dicoParameters: [String:AnyObject], success: @escaping (_ session: UserSessionGooglePlus) -> Void, fail failure: @escaping (_ error: NSError?, _ listErrors: [AnyObject]?) -> Void) {
         
         let url = "\(Constants.UrlServer.UrlBase)\(Constants.UrlServer.UrlRegister.UrlGooglePlusRegister)"
         print("URL Request inscription : \(url)")
         
         var dicoInscriptionApi = [String:AnyObject]()
-        dicoInscriptionApi["user"] = dicoParameters
+        dicoInscriptionApi["user"] = dicoParameters as AnyObject?
         
-        let configuration = NSURLSessionConfiguration.defaultSessionConfiguration()
+        let configuration = URLSessionConfiguration.default
         configuration.timeoutIntervalForResource = REQUEST_TIME_OUT
         
         self.alamofireManager = Alamofire.Manager(configuration: configuration)
-        self.alamofireManager!.request(.POST, url, parameters: dicoInscriptionApi, encoding: .JSON)
+        self.alamofireManager!.request(.POST, url, parameters: dicoInscriptionApi, encoding: .json)
             .validate()
             .responseJSON { response in
                 let statusCode = response.response?.statusCode // Gets HTTP status code, useful for debugging
@@ -290,9 +290,9 @@ class InscriptionRequest: DochaRequest {
                                     session.authToken = jsonResponse["data"][UserDataKey.kAuthToken].string
                                     
                                     if let dateString = jsonResponse["data"]["user"][UserDataKey.kDateBirthday].string {
-                                        let dateFormatter = NSDateFormatter()
+                                        let dateFormatter = DateFormatter()
                                         dateFormatter.dateFormat = "yyyy-MM-dd"
-                                        session.dateBirthday = dateFormatter.dateFromString(dateString)
+                                        session.dateBirthday = dateFormatter.date(from: dateString)
                                     }
                                     
                                     session.firstName = jsonResponse["data"]["user"][UserDataKey.kFirstName].string

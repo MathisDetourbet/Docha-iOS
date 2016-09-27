@@ -7,48 +7,59 @@
 //
 
 import SwiftyJSON
+fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l < r
+  case (nil, _?):
+    return true
+  default:
+    return false
+  }
+}
+
 
 extension UIImageView {
-    func downloadedFrom(link link:String, contentMode mode: UIViewContentMode, WithCompletion completion: ((success: Bool) -> Void)) {
+    func downloadedFrom(link:String, contentMode mode: UIViewContentMode, WithCompletion completion: @escaping ((_ success: Bool) -> Void)) {
         guard
-            let url = NSURL(string: link)
+            let url = URL(string: link)
             else {return}
         contentMode = mode
-        NSURLSession.sharedSession().dataTaskWithURL(url, completionHandler: { (data, response, error) -> Void in
+        URLSession.shared.dataTask(with: url, completionHandler: { (data, response, error) -> Void in
             guard
-                let httpURLResponse = response as? NSHTTPURLResponse where httpURLResponse.statusCode == 200,
-                let mimeType = response?.MIMEType where mimeType.hasPrefix("image"),
-                let data = data where error == nil,
+                let httpURLResponse = response as? HTTPURLResponse , httpURLResponse.statusCode == 200,
+                let mimeType = response?.mimeType , mimeType.hasPrefix("image"),
+                let data = data , error == nil,
                 let image = UIImage(data: data)
                 else {
-                    completion(success: false)
+                    completion(false)
                     return
                 }
-            dispatch_async(dispatch_get_main_queue()) { () -> Void in
+            DispatchQueue.main.async { () -> Void in
                 self.image = image
-                completion(success: true)
+                completion(true)
             }
         }).resume()
     }
     
-    func downloadedImageWithHightPriority(link link:String, contentMode mode: UIViewContentMode, WithCompletion completion: ((success: Bool) -> Void)) {
+    func downloadedImageWithHightPriority(link:String, contentMode mode: UIViewContentMode, WithCompletion completion: @escaping ((_ success: Bool) -> Void)) {
         guard
-            let url = NSURL(string: link)
+            let url = URL(string: link)
             else {return}
         contentMode = mode
-        NSURLSession.sharedSession().dataTaskWithURL(url, completionHandler: { (data, response, error) -> Void in
+        URLSession.shared.dataTask(with: url, completionHandler: { (data, response, error) -> Void in
             guard
-                let httpURLResponse = response as? NSHTTPURLResponse where httpURLResponse.statusCode == 200,
-                let mimeType = response?.MIMEType where mimeType.hasPrefix("image"),
-                let data = data where error == nil,
+                let httpURLResponse = response as? HTTPURLResponse , httpURLResponse.statusCode == 200,
+                let mimeType = response?.mimeType , mimeType.hasPrefix("image"),
+                let data = data , error == nil,
                 let image = UIImage(data: data)
                 else {
-                    completion(success: false)
+                    completion(false)
                     return
             }
-            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), {
+            DispatchQueue.global(priority: DispatchQueue.GlobalQueuePriority.high).async(execute: {
                 self.image = image
-                completion(success: true)
+                completion(true)
             })
         }).resume()
     }
@@ -73,8 +84,8 @@ class ProductManager {
     func loadProductsWithCurrentCategory() {
         let jsonName = "products_beta_v0.2"
         guard
-            let jsonPath = NSBundle.mainBundle().pathForResource(jsonName, ofType: "json"),
-            let jsonData = NSData.init(contentsOfFile: jsonPath),
+            let jsonPath = Bundle.main.path(forResource: jsonName, ofType: "json"),
+            let jsonData = try? Data.init(contentsOf: URL(fileURLWithPath: jsonPath)),
             let json = JSON(data: jsonData) as JSON?,
             let jsonArray = json["products"].array
             else { return }
@@ -95,13 +106,13 @@ class ProductManager {
             let gender: Gender
             switch genderString {
             case "M":
-                gender = Gender.Male
+                gender = Gender.male
                 break
             case "F":
-                gender = Gender.Female
+                gender = Gender.female
                 break
             default:
-                gender = Gender.Universal
+                gender = Gender.universal
                 break
             }
             let caracteristiques: [String] = categoriesString.characters.split{$0 == "#"}.map(String.init)
@@ -113,7 +124,7 @@ class ProductManager {
         print("\(jsonName).json loaded with \(products!.count) products")
     }
     
-    func loadPackOfProducts(numberOfProducts: Int?) -> [Product]? {
+    func loadPackOfProducts(_ numberOfProducts: Int?) -> [Product]? {
         if self.products == nil {
             print("products of productManager is nil... Need to call loadPacksOfProductsWithCurrentCategory() before : this method has just being called. Try again")
             loadProductsWithCurrentCategory()
@@ -121,18 +132,18 @@ class ProductManager {
         }
         
         var packOfProducts: [Product]? = []
-        var userGender: Gender = Gender.Universal
+        var userGender: Gender = Gender.universal
         
         if let gender = UserSessionManager.sharedInstance.currentSession()?.gender {
             switch gender {
             case "M":
-                userGender = Gender.Male
+                userGender = Gender.male
                 break
             case "F":
-                userGender = Gender.Female
+                userGender = Gender.female
                 break
             default:
-                userGender = Gender.Universal
+                userGender = Gender.universal
                 break
             }
         }
@@ -155,7 +166,7 @@ class ProductManager {
                 let product = productsShuffled[index]
                 
                 if (!(productsIDPlayed.contains(product.id)) &&
-                    ((product.gender == userGender) || (product.gender == .Universal)) &&
+                    ((product.gender == userGender) || (product.gender == .universal)) &&
                     (self.currentPackOfProducts?.contains(product) == false)) {
                     
                     packOfProducts?.append(product)
@@ -180,7 +191,7 @@ class ProductManager {
                     let product = productsShuffled[index]
                     
                     if (!(productsIDPlayed.contains(product.id)) &&
-                        ((product.gender == userGender) || (product.gender == .Universal)) &&
+                        ((product.gender == userGender) || (product.gender == .universal)) &&
                         (self.currentPackOfProducts?.contains(product) == false)) {
                         
                         packOfProducts?.append(product)
@@ -204,7 +215,7 @@ class ProductManager {
                 let product = productsShuffled[index]
                 
                 if (!(productsIDPlayed.contains(product.id)) &&
-                    ((product.gender == userGender) || (product.gender == .Universal)) &&
+                    ((product.gender == userGender) || (product.gender == .universal)) &&
                     (self.currentPackOfProducts?.contains(product) == false)) {
                     
                     packOfProducts?.append(product)
@@ -223,19 +234,19 @@ class ProductManager {
         }
     }
     
-    func getProductsCountForGender(gender: Gender) -> Int {
+    func getProductsCountForGender(_ gender: Gender) -> Int {
         if self.products == nil {
             return 0
         }
         
-        if gender == .Universal {
+        if gender == .universal {
             return (self.products?.count)!
         }
         
         var cptProducts = 0
         
         for product in self.products! {
-            if (product.gender == gender) || (product.gender == .Universal) {
+            if (product.gender == gender) || (product.gender == .universal) {
                 cptProducts += 1
             }
         }
@@ -261,7 +272,7 @@ class ProductManager {
         userSession?.saveSession()
     }
     
-    func getPackOfProducts(completion: (finished: Bool, packOfProducts: [Product]?) -> Void) {
+    func getPackOfProducts(_ completion: @escaping (_ finished: Bool, _ packOfProducts: [Product]?) -> Void) {
         var numberProductMissing: Int?
         self.currentPackOfProducts = []
         self.currentPackOfProductsNoImage = []
@@ -273,7 +284,7 @@ class ProductManager {
                 
                 isDonwloadFinished = false
                 
-                dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {
+                DispatchQueue.global(priority: DispatchQueue.GlobalQueuePriority.default).async(execute: {
                     var packOfProducts = self.loadPackOfProducts(numberProductMissing)
                     
                     if (packOfProducts != nil) && (packOfProducts?.isEmpty == false) {
@@ -290,7 +301,7 @@ class ProductManager {
                                     self.currentPackOfProducts = finalPackOfProducts
                                     numberProductMissing = 0
                                     isDonwloadFinished = true
-                                    completion(finished: true, packOfProducts: self.currentPackOfProducts)
+                                    completion(true, self.currentPackOfProducts)
                                 }
                                 
                             } else {
@@ -298,9 +309,9 @@ class ProductManager {
                                 var errorProductID = userSession?.productsIDPlayed ?? []
                                 
                                 for errorProduct in errorProductsArray {
-                                    let indexProductInPack = packOfProducts?.indexOf(errorProduct)
+                                    let indexProductInPack = packOfProducts?.index(of: errorProduct)
                                     if let indexProductInPack = indexProductInPack {
-                                        packOfProducts?.removeAtIndex(indexProductInPack)
+                                        packOfProducts?.remove(at: indexProductInPack)
                                     }
                                     
                                     errorProductID.append(errorProduct.id)
@@ -323,15 +334,15 @@ class ProductManager {
                         }
                         
                     } else {
-                        completion(finished: false, packOfProducts: nil)
+                        completion(false, nil)
                     }
                 })
             }
-            NSThread.sleepForTimeInterval(1.0)
+            Thread.sleep(forTimeInterval: 1.0)
         }
     }
     
-    func downloadProductsImages(packOfProducts: [Product]!, WithCompletion completion: (successImages: [String:UIImage], errorProductsArray: [Product]) -> Void) {
+    func downloadProductsImages(_ packOfProducts: [Product]!, WithCompletion completion: @escaping (_ successImages: [String:UIImage], _ errorProductsArray: [Product]) -> Void) {
         self.productsImages = [String : UIImage]()
         var successImages: [String: UIImage] = [String : UIImage]()
         var errorProductsArray: [Product] = []
@@ -340,20 +351,20 @@ class ProductManager {
             let imageURL = product.imageURL
             let imageView = UIImageView()
             
-            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), {
-                imageView.downloadedImageWithHightPriority(link: imageURL, contentMode: .ScaleAspectFit, WithCompletion: {(success) in
+            DispatchQueue.global(priority: DispatchQueue.GlobalQueuePriority.high).async(execute: {
+                imageView.downloadedImageWithHightPriority(link: imageURL, contentMode: .scaleAspectFit, WithCompletion: {(success) in
                     if success {
                         successImages["\(product.id)"] = imageView.image!
                         
                         if (successImages.count + errorProductsArray.count) == packOfProducts.count {
-                            completion(successImages: successImages, errorProductsArray: errorProductsArray)
+                            completion(successImages, errorProductsArray)
                         }
                         
                     } else {
                         errorProductsArray.append(product)
                         
                         if (successImages.count + errorProductsArray.count) == packOfProducts.count {
-                            completion(successImages: successImages, errorProductsArray: errorProductsArray)
+                            completion(successImages, errorProductsArray)
                         }
                     }
                 })

@@ -10,7 +10,7 @@ import Foundation
 
 class GameplayMatchRoundYourTurnMaskCell: UITableViewCell {
     
-    @IBAction func yourTurnButtonTouched(sender: UIButton) {
+    @IBAction func yourTurnButtonTouched(_ sender: UIButton) {
         
     }
     

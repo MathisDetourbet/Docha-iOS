@@ -9,9 +9,9 @@
 import Foundation
 
 enum ProfilImageType : Int {
-    case FacebookImage
-    case AvatarDochaImage
-    case PhotoImage
+    case facebookImage
+    case avatarDochaImage
+    case photoImage
 }
 
 class User: NSObject {
@@ -21,7 +21,7 @@ class User: NSObject {
     var firstName: String?
     var email: String?
     var gender: String?
-    var dateBirthday: NSDate?
+    var dateBirthday: Date?
     var categoriesFavorites: [String]?
     var avatar: String?
     var levelMaxUnlocked: Int = 1
@@ -32,7 +32,7 @@ class User: NSObject {
     
     override init() {}
     
-    init(userID: Int?, pseudo: String?, lastName: String?, firstName: String?, email: String?, gender: String?, dateBirthday: NSDate?, categoriesFavorites: [String]?, avatar: String?, levelMaxUnlocked: Int?, dochos: Int?, experience: Int?, perfectPriceCpt: Int?, badgesUnlockedIdentifiers: [String]?) {
+    init(userID: Int?, pseudo: String?, lastName: String?, firstName: String?, email: String?, gender: String?, dateBirthday: Date?, categoriesFavorites: [String]?, avatar: String?, levelMaxUnlocked: Int?, dochos: Int?, experience: Int?, perfectPriceCpt: Int?, badgesUnlockedIdentifiers: [String]?) {
         self.userID = userID
         self.pseudo = pseudo
         self.lastName = lastName
@@ -49,9 +49,9 @@ class User: NSObject {
         self.badgesUnlockedIdentifiers = badgesUnlockedIdentifiers
     }
     
-    func initPropertiesWithResponseObject(responseObject: AnyObject) {
+    func initPropertiesWithResponseObject(_ responseObject: AnyObject) {
         if let dicoUser = responseObject["user"] as? [String: AnyObject] {
-            if let userID = dicoUser["id"]?.integerValue { self.userID = userID }
+            if let userID = dicoUser["id"]?.intValue { self.userID = userID }
             if let pseudo = dicoUser["pseudo"]?.string { self.pseudo = pseudo }
             if let lastName = dicoUser["last_name"]?.string { self.lastName = lastName }
             if let firstName = dicoUser["first_name"]?.string { self.firstName = firstName }
@@ -60,10 +60,10 @@ class User: NSObject {
             if let dateBirthday = dicoUser["date_birthday"]?.date { self.dateBirthday = dateBirthday }
             if let categoriesFavorites = dicoUser["category_favorite"]?.array { self.categoriesFavorites = categoriesFavorites as? [String] }
             if let avatar = dicoUser["avatar"]?.string { self.avatar = avatar }
-            if let levelMaxUnlocked = dicoUser["level_max_unlocked"]?.integerValue { self.levelMaxUnlocked = levelMaxUnlocked }
-            if let dochos = dicoUser["dochos"]?.integerValue { self.dochos = dochos }
-            if let experience = dicoUser["experience"]?.integerValue { self.experience = experience }
-            if let perfectPriceCpt = dicoUser["perfect_price_cpt"]?.integerValue { self.perfectPriceCpt = perfectPriceCpt }
+            if let levelMaxUnlocked = dicoUser["level_max_unlocked"]?.intValue { self.levelMaxUnlocked = levelMaxUnlocked }
+            if let dochos = dicoUser["dochos"]?.intValue { self.dochos = dochos }
+            if let experience = dicoUser["experience"]?.intValue { self.experience = experience }
+            if let perfectPriceCpt = dicoUser["perfect_price_cpt"]?.intValue { self.perfectPriceCpt = perfectPriceCpt }
             if let badgesUnlockedIdentifiers = dicoUser["badges_unlocked"]?.array as? [String] { self.badgesUnlockedIdentifiers = badgesUnlockedIdentifiers }
         }
     }

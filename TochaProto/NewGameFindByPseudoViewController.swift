@@ -33,7 +33,7 @@ class NewGameFindByPseudoViewController: GameViewController, UITableViewDataSour
     
 //MARK: UITable View Data Source
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if let players = self.playersList {
             return players.count
             
@@ -42,12 +42,12 @@ class NewGameFindByPseudoViewController: GameViewController, UITableViewDataSour
         }
     }
     
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("idNewGameFindFriendsCell", forIndexPath: indexPath) as! NewGameFindFriendsTableViewCell
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "idNewGameFindFriendsCell", for: indexPath) as! NewGameFindFriendsTableViewCell
         cell.delegate = self
         return cell
     }
@@ -55,18 +55,18 @@ class NewGameFindByPseudoViewController: GameViewController, UITableViewDataSour
     
 //MARK: UITableView Delegate
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        tableView.deselectRowAtIndexPath(indexPath, animated: true)
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
     }
     
-    func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 25.0
     }
     
-    func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let headerView = UIView(frame: CGRectMake(0.0, 0.0, tableView.frame.width, 28))
-        headerView.backgroundColor = UIColor.clearColor()
-        let sectionLabel = UILabel(frame: CGRectMake(15.0, 5.0, 100.0, 28.0))
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let headerView = UIView(frame: CGRect(x: 0.0, y: 0.0, width: tableView.frame.width, height: 28))
+        headerView.backgroundColor = UIColor.clear
+        let sectionLabel = UILabel(frame: CGRect(x: 15.0, y: 5.0, width: 100.0, height: 28.0))
         sectionLabel.textColor = UIColor.darkBlueDochaColor()
         if let numberOfFriends = playersList?.count {
             sectionLabel.text = "\(numberOfFriends) RÉSULTATS"
@@ -89,11 +89,11 @@ class NewGameFindByPseudoViewController: GameViewController, UITableViewDataSour
     
 //MARK: @IBActions Methods
     
-    @IBAction func findButtonTouched(sender: UIButton) {
+    @IBAction func findButtonTouched(_ sender: UIButton) {
         
     }
     
-    @IBAction func goBackButtonTouched(sender: UIBarButtonItem) {
-        self.navigationController?.popViewControllerAnimated(true)
+    @IBAction func goBackButtonTouched(_ sender: UIBarButtonItem) {
+        self.navigationController?.popViewController(animated: true)
     }
 }

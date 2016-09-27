@@ -9,26 +9,26 @@
 import Foundation
 
 extension UIView {
-    class func loadFromNibNamed(nibNamed: String, bundle : NSBundle? = nil) -> UIView? {
+    class func loadFromNibNamed(_ nibNamed: String, bundle : Bundle? = nil) -> UIView? {
         return UINib(
             nibName: nibNamed,
             bundle: bundle
-            ).instantiateWithOwner(nil, options: nil)[0] as? UIView
+            ).instantiate(withOwner: nil, options: nil)[0] as? UIView
     }
     
     
 //MARK: Animation Methods
     
-    func animatedLikeBubbleWithDelay(delay: NSTimeInterval, duration: NSTimeInterval) {
-        self.transform = CGAffineTransformMakeScale(0.0, 0.0)
-        UIView.animateWithDuration(duration,
+    func animatedLikeBubbleWithDelay(_ delay: TimeInterval, duration: TimeInterval) {
+        self.transform = CGAffineTransform(scaleX: 0.0, y: 0.0)
+        UIView.animate(withDuration: duration,
                                    delay: delay,
                                    usingSpringWithDamping: 0.6,
                                    initialSpringVelocity: 3.0,
-                                   options: .AllowUserInteraction,
+                                   options: .allowUserInteraction,
                                    animations:
             {
-                self.transform = CGAffineTransformIdentity
+                self.transform = CGAffineTransform.identity
             }, completion: nil)
     }
 }

@@ -12,21 +12,21 @@ import SwiftyJSON
 
 class ProfilRequest: DochaRequest {
     
-    func getUserProfilWithID(userID: String!, success: (user: User) -> Void, fail failure: (error: NSError?, listErrors: [AnyObject]?) -> Void) {
+    func getUserProfilWithID(_ userID: String!, success: (_ user: User) -> Void, fail failure: (_ error: NSError?, _ listErrors: [AnyObject]?) -> Void) {
         
     }
     
-    func updateProfil(userDico: [String:AnyObject]!, success: (() -> Void), fail failure: (error: NSError?, listErrors: [AnyObject]?) -> Void) {
+    func updateProfil(_ userDico: [String:AnyObject]!, success: @escaping (() -> Void), fail failure: @escaping (_ error: NSError?, _ listErrors: [AnyObject]?) -> Void) {
         
         let parameters = userDico
-        let url = "\(Constants.UrlServer.UrlBase)\(Constants.UrlServer.UrlProfil.UrlProfilUpdate)/\(parameters["id"]!).json"
+        let url = "\(Constants.UrlServer.UrlBase)\(Constants.UrlServer.UrlProfil.UrlProfilUpdate)/\(parameters?["id"]!).json"
         print("URL PUT Update Profil : \(url)")
         
-        let configuration = NSURLSessionConfiguration.defaultSessionConfiguration()
+        let configuration = URLSessionConfiguration.default
         configuration.timeoutIntervalForResource = REQUEST_TIME_OUT
         
         self.alamofireManager = Alamofire.Manager(configuration: configuration)
-        self.alamofireManager!.request(.PUT, url, parameters: parameters, encoding: .JSON)
+        self.alamofireManager!.request(.PUT, url, parameters: parameters, encoding: .json)
             .validate()
             .responseJSON { (response) in
                 let statusCode = response.response?.statusCode // Gets HTTP status code, useful for debugging
@@ -51,9 +51,9 @@ class ProfilRequest: DochaRequest {
                                     session.authToken = jsonResponse["data"]["user"][UserDataKey.kAuthToken].string
                                     
                                     if let dateString = jsonResponse["data"]["user"][UserDataKey.kDateBirthday].string {
-                                        let dateFormatter = NSDateFormatter()
+                                        let dateFormatter = DateFormatter()
                                         dateFormatter.dateFormat = "yyyy-MM-dd"
-                                        session.dateBirthday = dateFormatter.dateFromString(dateString)
+                                        session.dateBirthday = dateFormatter.date(from: dateString)
                                     }
                                     
                                     session.pseudo = jsonResponse["data"]["user"][UserDataKey.kPseudo].string
@@ -103,11 +103,11 @@ class ProfilRequest: DochaRequest {
                     if statusCode == 401 {
                         if let userSession = UserSessionManager.sharedInstance.currentSession() {
                         
-                            if userSession.isKindOfClass(UserSessionEmail) {
+                            if userSession.isKind(of: UserSessionEmail.self) {
                                 let params = userSession.generateJSONFromUserSession()!
                                 let email = params[UserDataKey.kEmail] as? String
                                 let password = params[UserDataKey.kPassword] as? String
-                                if let email = email, password = password {
+                                if let email = email, let password = password {
                                     UserSessionManager.sharedInstance.connectByEmail(email, andPassword: password,
                                         success: {
                                             success()
@@ -121,7 +121,7 @@ class ProfilRequest: DochaRequest {
                                     print("Email or password are nil")
                                 }
                                 
-                            } else if userSession.isKindOfClass(UserSessionFacebook) {
+                            } else if userSession.isKind(of: UserSessionFacebook.self) {
                                 
                                 let dicoParams = userSession.generateJSONFromUserSession()!
                                 let request = ConnexionRequest()
@@ -138,7 +138,7 @@ class ProfilRequest: DochaRequest {
                                         failure(error: nil, listErrors: nil)
                                 })
                                 
-                            } else if userSession.isKindOfClass(UserSessionGooglePlus) {
+                            } else if userSession.isKind(of: UserSessionGooglePlus.self) {
                                 
                                 let dicoParams = userSession.generateJSONFromUserSession()!
                                 let request = ConnexionRequest()
@@ -164,17 +164,17 @@ class ProfilRequest: DochaRequest {
         }
     }
     
-    func getUserFriendsDochaInstalled(facebookToken: String, success: (friendsList: [User]?) -> Void, fail failure: (error: NSError?, listErrors: [AnyObject]?) -> Void) {
+    func getUserFriendsDochaInstalled(_ facebookToken: String, success: (_ friendsList: [User]?) -> Void, fail failure: (_ error: NSError?, _ listErrors: [AnyObject]?) -> Void) {
         
         let parameters = [UserDataKey.kFacebookToken : facebookToken]
         let url = "\(Constants.UrlServer.UrlBase)\(Constants.UrlServer.UrlProfil.UrlGetFriendsDochaInstalled).json"
         print("URL GET FRIENDSLIST DOCHA INSTALLED : \(url)")
         
-        let configuration = NSURLSessionConfiguration.defaultSessionConfiguration()
+        let configuration = URLSessionConfiguration.default
         configuration.timeoutIntervalForResource = REQUEST_TIME_OUT
         
         self.alamofireManager = Alamofire.Manager(configuration: configuration)
-        self.alamofireManager!.request(.POST, url, parameters: parameters, encoding: .JSON)
+        self.alamofireManager!.request(.POST, url, parameters: parameters, encoding: .json)
             .validate()
             .responseJSON { (response) in
                 if let statusCode = response.response?.statusCode {

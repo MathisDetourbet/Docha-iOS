@@ -12,7 +12,7 @@ class PinIconView: UIView {
     
     @IBOutlet weak var avatarImageView: UIImageView!
     
-    func setAvatarImage(image: UIImage) {
+    func setAvatarImage(_ image: UIImage) {
         self.avatarImageView.image = image
     }
 }

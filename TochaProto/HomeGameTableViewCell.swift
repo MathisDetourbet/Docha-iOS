@@ -27,7 +27,7 @@ class HomeUserTurnTableViewCell: HomeGameTableViewCell {
     
     var delegateUserTurn: HomeUserTurnCellDelegate?
     
-    @IBAction func playButtonTouched(sender: UIButton) {
+    @IBAction func playButtonTouched(_ sender: UIButton) {
         self.delegateUserTurn?.playButtonTouched()
     }
 }

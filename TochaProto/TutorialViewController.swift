@@ -23,7 +23,7 @@ class TutorialViewController: RootViewController, TutorialViewDelegate {
     
     func nextButtonTouched() {
         if currentIndex > kNumberOfViews {
-            self.dismissViewControllerAnimated(true, completion: nil)
+            self.dismiss(animated: true, completion: nil)
             
         } else {
             currentTutorialView?.removeFromSuperview()
@@ -35,16 +35,16 @@ class TutorialViewController: RootViewController, TutorialViewDelegate {
                 currentTutorialView.translatesAutoresizingMaskIntoConstraints = false
                 self.view.addSubview(currentTutorialView)
                 
-                self.view.addConstraint(NSLayoutConstraint(item: currentTutorialView, attribute: .Top, relatedBy: .Equal, toItem: self.view, attribute: .Top, multiplier: 1.0, constant: 0.0))
-                self.view.addConstraint(NSLayoutConstraint(item: currentTutorialView, attribute: .Bottom, relatedBy: .Equal, toItem: self.view, attribute: .Bottom, multiplier: 1.0, constant: 0.0))
-                self.view.addConstraint(NSLayoutConstraint(item: currentTutorialView, attribute: .Leading, relatedBy: .Equal, toItem: self.view, attribute: .Leading, multiplier: 1.0, constant: 0.0))
-                self.view.addConstraint(NSLayoutConstraint(item: currentTutorialView, attribute: .Trailing, relatedBy: .Equal, toItem: self.view, attribute: .Trailing, multiplier: 1.0, constant: 0.0))
+                self.view.addConstraint(NSLayoutConstraint(item: currentTutorialView, attribute: .top, relatedBy: .equal, toItem: self.view, attribute: .top, multiplier: 1.0, constant: 0.0))
+                self.view.addConstraint(NSLayoutConstraint(item: currentTutorialView, attribute: .bottom, relatedBy: .equal, toItem: self.view, attribute: .bottom, multiplier: 1.0, constant: 0.0))
+                self.view.addConstraint(NSLayoutConstraint(item: currentTutorialView, attribute: .leading, relatedBy: .equal, toItem: self.view, attribute: .leading, multiplier: 1.0, constant: 0.0))
+                self.view.addConstraint(NSLayoutConstraint(item: currentTutorialView, attribute: .trailing, relatedBy: .equal, toItem: self.view, attribute: .trailing, multiplier: 1.0, constant: 0.0))
                 
                 self.currentTutorialView = currentTutorialView
                 
             } else {
                 print("NEXT METHOD : ERROR loading nib tutorial !")
-                self.dismissViewControllerAnimated(true, completion: nil)
+                self.dismiss(animated: true, completion: nil)
             }
             
             currentIndex += 1

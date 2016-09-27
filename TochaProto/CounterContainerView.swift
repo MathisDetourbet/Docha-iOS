@@ -17,7 +17,7 @@ class CounterContainerView: UIView {
     var numberOfCounterDisplayed: Int = 3 {
         didSet {
             if numberOfCounterDisplayed == 2 {
-                counterViewArray.first?.hidden = true
+                counterViewArray.first?.isHidden = true
                 counterViewArray.removeFirst()
             }
         }
@@ -41,13 +41,13 @@ class CounterContainerView: UIView {
     func initCountersViews() {
         
         for counterView in counterViewArray {
-            counterView.counterImage = JDFlipImageView(frame: CGRectMake(0, 0, counterView.frame.width, counterView.frame.height))
+            counterView.counterImage = JDFlipImageView(frame: CGRect(x: 0, y: 0, width: counterView.frame.width, height: counterView.frame.height))
             counterView.counterImage.image = UIImage(named: "counter_base")
-            counterView.counterImage.contentMode = .ScaleAspectFit
+            counterView.counterImage.contentMode = .scaleAspectFit
         }
     }
     
-    func updateCountersViewsWithPrice(priceArray: [Int]) {
+    func updateCountersViewsWithPrice(_ priceArray: [Int]) {
         var index = 0
         for price in priceArray {
             counterViewArray[index].startCounterAnimationWithNumber(number: price, completion: nil)
@@ -64,12 +64,12 @@ class CounterContainerView: UIView {
         }
     }
     
-    func runAfterDelay(delay: NSTimeInterval, block: dispatch_block_t) {
-        let time = dispatch_time(DISPATCH_TIME_NOW, Int64(delay * Double(NSEC_PER_SEC)))
-        dispatch_after(time, dispatch_get_main_queue(), block)
+    func runAfterDelay(_ delay: TimeInterval, block: @escaping ()->()) {
+        let time = DispatchTime.now() + Double(Int64(delay * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)
+        DispatchQueue.main.asyncAfter(deadline: time, execute: block)
     }
     
-    @IBAction func infosButtonTouched(sender: UIButton) {
+    @IBAction func infosButtonTouched(_ sender: UIButton) {
         self.delegate?.infosButtonTouched()
     }
 }

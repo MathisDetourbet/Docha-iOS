@@ -9,7 +9,7 @@
 import Foundation
 
 protocol DebriefCellDelegate {
-    func discoverProductActionWithURL(url: String)
+    func discoverProductActionWithURL(_ url: String)
 }
 
 class DebriefTableViewCell: UITableViewCell {
@@ -24,7 +24,7 @@ class DebriefTableViewCell: UITableViewCell {
     @IBOutlet weak var heartLabel: UILabel!
     @IBOutlet weak var userEstimationLabel: UILabel!
     
-    @IBAction func discoverProductButtonTouched(sender: UIButton) {
+    @IBAction func discoverProductButtonTouched(_ sender: UIButton) {
         delegate?.discoverProductActionWithURL(self.productLink!)
     }
 }

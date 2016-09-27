@@ -34,7 +34,7 @@ class PreferencesCategoriesViewController: RootViewController, UICollectionViewD
         self.navigationController!.setNavigationBarHidden(false, animated: false)
         self.footerValidateView.alpha = 0.0
         
-        self.collectionView.backgroundColor = UIColor.clearColor()
+        self.collectionView.backgroundColor = UIColor.clear
         self.collectionView.backgroundView = nil
         
         self.configNavigationBarWithTitle("Choisissez votre catégorie préférée", andFontSize: 13.0)
@@ -42,7 +42,7 @@ class PreferencesCategoriesViewController: RootViewController, UICollectionViewD
         loadData()
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
     }
     
@@ -61,7 +61,7 @@ class PreferencesCategoriesViewController: RootViewController, UICollectionViewD
         }
     }
     
-    func saveCategorieFavoriteWithUserSession(userSession: UserSession, completion: ( (success: Bool) -> Void)) {
+    func saveCategorieFavoriteWithUserSession(_ userSession: UserSession, completion: @escaping ( (_ success: Bool) -> Void)) {
         let params = userSession.generateJSONFromUserSession()
         
         if let param = params {
@@ -86,20 +86,20 @@ class PreferencesCategoriesViewController: RootViewController, UICollectionViewD
     
 //MARK: Collection View Data Source Methods
     
-    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return CATEGORY_NUMBER
     }
     
-    func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
     }
     
-    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifier, forIndexPath: indexPath) as! InscriptionCategoryCollectionViewCell
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! InscriptionCategoryCollectionViewCell
         
-        cell.categoryImageView.image = self.categoriesImages![indexPath.item]
-        cell.categoryName = self.categoriesImagesPathArray[indexPath.item]
-        cell.categoryNameLabel.text = self.categoriesNames[indexPath.item]
+        cell.categoryImageView.image = self.categoriesImages![(indexPath as NSIndexPath).item]
+        cell.categoryName = self.categoriesImagesPathArray[(indexPath as NSIndexPath).item]
+        cell.categoryNameLabel.text = self.categoriesNames[(indexPath as NSIndexPath).item]
         
         if let categoriesPrefered = self.categoriesPrefered {
             if categoriesPrefered.contains(cell.categoryName!) == true {
@@ -116,8 +116,8 @@ class PreferencesCategoriesViewController: RootViewController, UICollectionViewD
     
 //MARK: Collection View Delegate Methods
     
-    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-        let cellSelected = collectionView.cellForItemAtIndexPath(indexPath) as! InscriptionCategoryCollectionViewCell
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let cellSelected = collectionView.cellForItem(at: indexPath) as! InscriptionCategoryCollectionViewCell
         if cellSelected.imageSelected {
             cellSelected.imageSelected = false
             self.categoriesPrefered?.removeObject(cellSelected.categoryName)
@@ -131,14 +131,14 @@ class PreferencesCategoriesViewController: RootViewController, UICollectionViewD
     
 //MARK: @IBActions
     
-    @IBAction func backButtonTouched(sender: UIBarButtonItem) {
+    @IBAction func backButtonTouched(_ sender: UIBarButtonItem) {
         let currentSession = UserSessionManager.sharedInstance.currentSession()
         
         if self.categoriesPrefered == nil || (self.categoriesPrefered?.isEmpty)! {
-            self.navigationController?.popViewControllerAnimated(true)
+            self.navigationController?.popViewController(animated: true)
             
         } else if self.categoriesPrefered! == (currentSession?.categoriesFavorites)! {
-            self.navigationController?.popViewControllerAnimated(true)
+            self.navigationController?.popViewController(animated: true)
             
         } else {
             PopupManager.sharedInstance.showLoadingPopup("Chargement...", message: "Mise à jour de ton profil Docha...", viewController: self, completion: nil)
@@ -148,7 +148,7 @@ class PreferencesCategoriesViewController: RootViewController, UICollectionViewD
             if let currentSession = currentSession {
                 saveCategorieFavoriteWithUserSession(currentSession, completion: { (success) in
                     if success {
-                        self.navigationController?.popViewControllerAnimated(true)
+                        self.navigationController?.popViewController(animated: true)
                     } else {
                         self.categoriesPrefered = categoriesFavoritesTemp
                         self.collectionView.reloadData()
@@ -158,7 +158,7 @@ class PreferencesCategoriesViewController: RootViewController, UICollectionViewD
         }
     }
     
-    @IBAction func infosButtonTouched(sender: UIBarButtonItem) {
+    @IBAction func infosButtonTouched(_ sender: UIBarButtonItem) {
         PopupManager.sharedInstance.showInfosPopup("Info", message: "Nous souhaitons te proposer au maximum des produits qui te correspondent.", viewController: self, completion: nil)
     }
 }

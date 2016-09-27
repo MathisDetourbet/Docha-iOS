@@ -11,5 +11,5 @@ import Alamofire
 
 class DochaRequest {
     var alamofireManager: Alamofire.Manager?
-    let REQUEST_TIME_OUT: NSTimeInterval = 20.0
+    let REQUEST_TIME_OUT: TimeInterval = 20.0
 }

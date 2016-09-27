@@ -22,15 +22,15 @@ class GameplayMatchViewController: GameViewController, UITableViewDelegate, UITa
     
 //MARK: UITableView - Data Source
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 1
     }
     
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         return 4
     }
     
-    func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         if section == 0 {
             return nil
             
@@ -39,8 +39,8 @@ class GameplayMatchViewController: GameViewController, UITableViewDelegate, UITa
         }
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = self.tableView.dequeueReusableCellWithIdentifier("idGameplayMatchScoreCell", forIndexPath: indexPath) as! GameplayMatchScoreTableViewCell
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = self.tableView.dequeueReusableCell(withIdentifier: "idGameplayMatchScoreCell", for: indexPath) as! GameplayMatchScoreTableViewCell
         
         return cell
     }
@@ -48,22 +48,22 @@ class GameplayMatchViewController: GameViewController, UITableViewDelegate, UITa
     
 //MARK: UITableView - Delegate
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
     }
     
-    func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 25.0
     }
     
-    func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         if section == 0 {
             return nil
             
         } else {
-            let headerView = UIView(frame: CGRectMake(0.0, 0.0, tableView.frame.width, 28))
-            headerView.backgroundColor = UIColor.clearColor()
-            let sectionLabel = UILabel(frame: CGRectMake(5.0, 5.0, 100.0, 28.0))
+            let headerView = UIView(frame: CGRect(x: 0.0, y: 0.0, width: tableView.frame.width, height: 28))
+            headerView.backgroundColor = UIColor.clear
+            let sectionLabel = UILabel(frame: CGRect(x: 5.0, y: 5.0, width: 100.0, height: 28.0))
             sectionLabel.textColor = UIColor.darkBlueDochaColor()
             sectionLabel.text = "ROUND \(section)"
             sectionLabel.font = UIFont(name: "Montserrat-Semibold", size: 12)
@@ -75,11 +75,11 @@ class GameplayMatchViewController: GameViewController, UITableViewDelegate, UITa
     
 //MARK: @IBActions
     
-    @IBAction func playButtonTouched(sender: UIButton) {
+    @IBAction func playButtonTouched(_ sender: UIButton) {
         
     }
     
-    @IBAction func withdrawButtonTouched(sender: UIButton) {
+    @IBAction func withdrawButtonTouched(_ sender: UIButton) {
         
     }
 }

@@ -9,11 +9,11 @@
 import Foundation
 
 enum StepState {
-    case Perfect
-    case Success
-    case Fail
-    case Current
-    case None
+    case perfect
+    case success
+    case fail
+    case current
+    case none
 }
 
 class TimelineView: UIView {
@@ -24,15 +24,15 @@ class TimelineView: UIView {
     
     func initTimeline() {
         stepStateArray = []
-        stepStateArray?.append(.Current)
+        stepStateArray?.append(.current)
         
         for _ in 1...stepsImagesViews.count-1 {
-            stepStateArray?.append(.None)
+            stepStateArray?.append(.none)
         }
-        cursor = stepStateArray?.indexOf(.Current)
+        cursor = stepStateArray?.index(of: .current)
     }
     
-    func initTimelineWithCounterViewAfterType(counterViewAfterType: [CounterViewAfterType]!) {
+    func initTimelineWithCounterViewAfterType(_ counterViewAfterType: [CounterViewAfterType]!) {
         self.initTimeline()
         var cursor = 0
         for type in counterViewAfterType {
@@ -41,30 +41,30 @@ class TimelineView: UIView {
         }
     }
     
-    func nextStepWithCounterViewAfterTypeArray(counterViewArray: [CounterViewAfterType]!) {
+    func nextStepWithCounterViewAfterTypeArray(_ counterViewArray: [CounterViewAfterType]!) {
         let state = getStateWithCounterViewAfterType(counterViewArray)
         if cursor == stepsImagesViews.count {
             return
         }
         stepStateArray![cursor] = state
-        stepStateArray![cursor+1] = .Current
+        stepStateArray![cursor+1] = .current
         updateImageItem(stepsImagesViews![cursor], withState: state)
         
-        cursor = stepStateArray?.indexOf(.Current)
-        updateImageItem(stepsImagesViews![cursor], withState: .Current)
+        cursor = stepStateArray?.index(of: .current)
+        updateImageItem(stepsImagesViews![cursor], withState: .current)
     }
     
-    func getStateWithCounterViewAfterType(counterViewAfterTypeArray: [CounterViewAfterType]!) -> StepState {
+    func getStateWithCounterViewAfterType(_ counterViewAfterTypeArray: [CounterViewAfterType]!) -> StepState {
         var perfectCpt = 0
         var greenCpt = 0
         var redCpt = 0
         
         for type in counterViewAfterTypeArray {
             switch type {
-            case .Perfect:
+            case .perfect:
                 perfectCpt += 1
                 break
-            case .Green:
+            case .green:
                 greenCpt += 1
                 break
             default:
@@ -73,26 +73,26 @@ class TimelineView: UIView {
             }
         }
         if perfectCpt == counterViewAfterTypeArray.count {
-            return StepState.Perfect
+            return StepState.perfect
         } else if redCpt == counterViewAfterTypeArray.count {
-            return StepState.Fail
+            return StepState.fail
         } else {
-            return StepState.Success
+            return StepState.success
         }
     }
     
-    func updateImageItem(item: UIImageView, withState state: StepState) {
+    func updateImageItem(_ item: UIImageView, withState state: StepState) {
         switch state {
-        case .Perfect:
+        case .perfect:
             item.image = UIImage(named: "timeline_icon_perfect")
             break
-        case .Success:
+        case .success:
             item.image = UIImage(named: "timeline_icon_right")
             break
-        case .Fail:
+        case .fail:
             item.image = UIImage(named: "timeline_icon_wrong")
             break
-        case .Current:
+        case .current:
             item.image = UIImage(named: "timeline_icon_selected")
             break
         default:
@@ -101,20 +101,20 @@ class TimelineView: UIView {
         }
     }
     
-    func resizeItem(item: UIImageView, withSize size: CGFloat, OfIndex index: Int) {
+    func resizeItem(_ item: UIImageView, withSize size: CGFloat, OfIndex index: Int) {
         item.removeConstraints(item.constraints)
         addSizeConstraintToItem(item, andSize: size)
-        self.addConstraint(NSLayoutConstraint(item: item, attribute: .CenterY, relatedBy: .Equal, toItem: self, attribute: .CenterY, multiplier: 1.0, constant: 0.0))
+        self.addConstraint(NSLayoutConstraint(item: item, attribute: .centerY, relatedBy: .equal, toItem: self, attribute: .centerY, multiplier: 1.0, constant: 0.0))
         
         if index == 0 {
-            self.addConstraint(NSLayoutConstraint(item: item, attribute: .Leading, relatedBy: .Equal, toItem: self, attribute: .Leading, multiplier: 1.0, constant: 3.0))
+            self.addConstraint(NSLayoutConstraint(item: item, attribute: .leading, relatedBy: .equal, toItem: self, attribute: .leading, multiplier: 1.0, constant: 3.0))
         } else {
-            self.addConstraint(NSLayoutConstraint(item: item, attribute: .Leading, relatedBy: .Equal, toItem: stepsImagesViews[index-1], attribute: .Trailing, multiplier: 1.0, constant: 3.0))
+            self.addConstraint(NSLayoutConstraint(item: item, attribute: .leading, relatedBy: .equal, toItem: stepsImagesViews[index-1], attribute: .trailing, multiplier: 1.0, constant: 3.0))
         }
     }
     
-    func addSizeConstraintToItem(item: UIImageView, andSize size: CGFloat) {
-        self.addConstraint(NSLayoutConstraint(item: item, attribute: .Height, relatedBy: .Equal, toItem: nil, attribute: .NotAnAttribute, multiplier: 1.0, constant: size))
-        self.addConstraint(NSLayoutConstraint(item: item, attribute: .Width, relatedBy: .Equal, toItem: nil, attribute: .NotAnAttribute, multiplier: 1.0, constant: size))
+    func addSizeConstraintToItem(_ item: UIImageView, andSize size: CGFloat) {
+        self.addConstraint(NSLayoutConstraint(item: item, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: size))
+        self.addConstraint(NSLayoutConstraint(item: item, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: size))
     }
 }

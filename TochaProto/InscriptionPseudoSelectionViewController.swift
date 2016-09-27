@@ -8,6 +8,26 @@
 
 import Foundation
 import TextFieldEffects
+fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l < r
+  case (nil, _?):
+    return true
+  default:
+    return false
+  }
+}
+
+fileprivate func > <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l > r
+  default:
+    return rhs < lhs
+  }
+}
+
 
 class InscriptionPseudoSelectionViewController: RootViewController {
     
@@ -17,26 +37,26 @@ class InscriptionPseudoSelectionViewController: RootViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.submitButton.enabled = false
+        self.submitButton.isEnabled = false
     }
     
 
 //MARK: @IBActions Methods
     
-    @IBAction func pseudoTextFieldEditing(sender: HoshiTextField) {
+    @IBAction func pseudoTextFieldEditing(_ sender: HoshiTextField) {
         if sender.text?.characters.count > 2 && sender.text?.characters.count < 128 {
-            sender.borderActiveColor = UIColor.blueColor()
+            sender.borderActiveColor = UIColor.blue
             sender.borderInactiveColor = UIColor.blueDochaColor()
-            self.submitButton.enabled = true
+            self.submitButton.isEnabled = true
             
         } else {
             sender.borderActiveColor = UIColor.redDochaColor()
             sender.borderInactiveColor = UIColor.redDochaColor()
-            self.submitButton.enabled = false
+            self.submitButton.isEnabled = false
         }
     }
     
-    @IBAction func submitButtonTouched(sender: UIButton) {
+    @IBAction func submitButtonTouched(_ sender: UIButton) {
         PopupManager.sharedInstance.showLoadingPopup("Connexion...", message: "Création d'un nouveau Docher en cours.", completion: {
             
             let userSessionManager = UserSessionManager.sharedInstance
@@ -47,10 +67,10 @@ class InscriptionPseudoSelectionViewController: RootViewController {
                 print("Saving in the database : success !")
                 
                 PopupManager.sharedInstance.dismissPopup(true, completion: {
-                    let homeViewController = self.storyboard?.instantiateViewControllerWithIdentifier("idHomeNavController") as! UINavigationController
+                    let homeViewController = self.storyboard?.instantiateViewController(withIdentifier: "idHomeNavController") as! UINavigationController
                     NavSchemeManager.sharedInstance.changeRootViewController(homeViewController)
-                    let tutorialVC = self.storyboard?.instantiateViewControllerWithIdentifier("idTutorialViewController") as! TutorialViewController
-                    homeViewController.presentViewController(tutorialVC, animated: true, completion: nil)
+                    let tutorialVC = self.storyboard?.instantiateViewController(withIdentifier: "idTutorialViewController") as! TutorialViewController
+                    homeViewController.present(tutorialVC, animated: true, completion: nil)
                 })
                 
                 }, fail: { (error, listErrors) in
@@ -67,7 +87,7 @@ class InscriptionPseudoSelectionViewController: RootViewController {
         })
     }
     
-    @IBAction func backButtonTouched(sender: UIBarButtonItem) {
-        self.navigationController?.popViewControllerAnimated(true)
+    @IBAction func backButtonTouched(_ sender: UIBarButtonItem) {
+        self.navigationController?.popViewController(animated: true)
     }
 }

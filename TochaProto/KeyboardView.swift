@@ -12,7 +12,7 @@ import MBCircularProgressBar
 protocol KeyboardViewDelegate {
     func validatePricing()
     func eraseAllCounters()
-    func clickOnPadWithNumber(number: Int)
+    func clickOnPadWithNumber(_ number: Int)
 }
 
 class KeyboardView: UIView {
@@ -30,35 +30,35 @@ class KeyboardView: UIView {
         enableEreaseButton(false)
     }
     
-    func enabledKeyboard(enabled: Bool) {
+    func enabledKeyboard(_ enabled: Bool) {
         for padButton in padButtons {
-            padButton.enabled = enabled
+            padButton.isEnabled = enabled
         }
-        eraseButton.enabled = enabled
-        validButton.enabled = enabled
+        eraseButton.isEnabled = enabled
+        validButton.isEnabled = enabled
     }
     
-    func enableEreaseButton(enabled: Bool) {
-        self.eraseButton.enabled = enabled
+    func enableEreaseButton(_ enabled: Bool) {
+        self.eraseButton.isEnabled = enabled
     }
     
-    func enableValidButton(enabled: Bool) {
-        self.validButton.enabled = enabled
+    func enableValidButton(_ enabled: Bool) {
+        self.validButton.isEnabled = enabled
     }
     
-    @IBAction func validatePricing(sender: UIButton) {
+    @IBAction func validatePricing(_ sender: UIButton) {
         self.delegate?.validatePricing()
     }
     
-    @IBAction func eraseAllCounters(sender: UIButton) {
+    @IBAction func eraseAllCounters(_ sender: UIButton) {
         self.delegate?.eraseAllCounters()
-        self.validButton.enabled = false
-        self.eraseButton.enabled = false
+        self.validButton.isEnabled = false
+        self.eraseButton.isEnabled = false
     }
     
-    @IBAction func clickOnPad(sender: UIButton) {
+    @IBAction func clickOnPad(_ sender: UIButton) {
         let padNumber = sender.tag
         self.delegate?.clickOnPadWithNumber(padNumber)
-        self.eraseButton.enabled = true
+        self.eraseButton.isEnabled = true
     }
 }

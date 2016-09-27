@@ -12,25 +12,25 @@ import SwiftyJSON
 
 class ConnexionRequest: DochaRequest {
     
-    func connexionWithEmail(email: String, password: String, success: (session: UserSessionEmail) -> Void, fail failure: (error: NSError?, listErrors: [AnyObject]?) -> Void) {
+    func connexionWithEmail(_ email: String, password: String, success: @escaping (_ session: UserSessionEmail) -> Void, fail failure: @escaping (_ error: NSError?, _ listErrors: [AnyObject]?) -> Void) {
         
         let parameters = [UserDataKey.kEmail: email, UserDataKey.kPassword: password]
         var dicoApi = [String:AnyObject]()
-        dicoApi["user"] = parameters
+        dicoApi["user"] = parameters as AnyObject?
         
         let url = "\(Constants.UrlServer.UrlBase)\(Constants.UrlServer.UrlConnexion.UrlEmailConnexion)"
         print("URL connexion with email : \(url)")
         
-        let configuration = NSURLSessionConfiguration.defaultSessionConfiguration()
+        let configuration = URLSessionConfiguration.default
         configuration.timeoutIntervalForResource = REQUEST_TIME_OUT
         
         self.alamofireManager = Alamofire.Manager(configuration: configuration)
-        self.alamofireManager!.request(.POST, url, parameters: parameters, encoding: .JSON)
+        self.alamofireManager!.request(.POST, url, parameters: parameters, encoding: .json)
             .validate()
             .responseJSON { (response) in
                 
                 switch response.result {
-                case .Success:
+                case .success:
                     print("Validation successful")
                     let statusCode = response.response?.statusCode // Gets HTTP status code, useful for debugging
                     if let status = statusCode {
@@ -55,9 +55,9 @@ class ConnexionRequest: DochaRequest {
                                         session.authToken = jsonResponse["data"][UserDataKey.kAuthToken].string
                                         
                                         if let dateString = jsonResponse["data"]["user"][UserDataKey.kDateBirthday].string {
-                                            let dateFormatter = NSDateFormatter()
+                                            let dateFormatter = DateFormatter()
                                             dateFormatter.dateFormat = "yyyy-MM-dd"
-                                            session.dateBirthday = dateFormatter.dateFromString(dateString)
+                                            session.dateBirthday = dateFormatter.date(from: dateString)
                                         }
                                         
                                         session.pseudo = jsonResponse["data"]["user"][UserDataKey.kPseudo].string
@@ -111,31 +111,31 @@ class ConnexionRequest: DochaRequest {
                         failure(error: nil, listErrors: nil)
                     }
                     
-                case .Failure(let error):
+                case .failure(let error):
                     print(error)
                     failure(error: error, listErrors: nil)
                 }
         }
     }
     
-    func connexionWithFacebook(dicoParameters: [String:AnyObject]!, success: (session: UserSessionFacebook) -> Void, fail failure: (error: NSError?, listErrors: [AnyObject]?) -> Void) {
+    func connexionWithFacebook(_ dicoParameters: [String:AnyObject]!, success: @escaping (_ session: UserSessionFacebook) -> Void, fail failure: @escaping (_ error: NSError?, _ listErrors: [AnyObject]?) -> Void) {
         
         var dicoApi = [String:AnyObject]()
-        dicoApi["user"] = dicoParameters
+        dicoApi["user"] = dicoParameters as AnyObject?
         
         let url = "\(Constants.UrlServer.UrlBase)\(Constants.UrlServer.UrlConnexion.UrlFacebookConnexion)"
         print("URL connexion with Facebook : \(url)")
         
-        let configuration = NSURLSessionConfiguration.defaultSessionConfiguration()
+        let configuration = URLSessionConfiguration.default
         configuration.timeoutIntervalForResource = REQUEST_TIME_OUT
         
         self.alamofireManager = Alamofire.Manager(configuration: configuration)
-        self.alamofireManager!.request(.POST, url, parameters: dicoApi, encoding: .JSON, headers: nil)
+        self.alamofireManager!.request(.POST, url, parameters: dicoApi, encoding: .json, headers: nil)
             .validate()
             .responseJSON { (response) in
                 
                 switch response.result {
-                case .Success:
+                case .success:
                     print("Validation successful")
                     if let statusCode = (response.response?.statusCode) {
                         print("Status code : \(statusCode)")
@@ -158,9 +158,9 @@ class ConnexionRequest: DochaRequest {
                                             session.authToken = jsonResponse["data"]["user"][UserDataKey.kAuthToken].string
                                             
                                             if let dateString = jsonResponse["data"]["user"][UserDataKey.kDateBirthday].string {
-                                                let dateFormatter = NSDateFormatter()
+                                                let dateFormatter = DateFormatter()
                                                 dateFormatter.dateFormat = "yyyy-MM-dd"
-                                                session.dateBirthday = dateFormatter.dateFromString(dateString)
+                                                session.dateBirthday = dateFormatter.date(from: dateString)
                                             }
                                             
                                             session.pseudo = jsonResponse["data"]["user"][UserDataKey.kPseudo].string
@@ -206,31 +206,31 @@ class ConnexionRequest: DochaRequest {
                         }
                     }
 
-                case .Failure(let error):
+                case .failure(let error):
                     print(error)
                     failure(error: error, listErrors: nil)
                 }
         }
     }
     
-    func connexionWithGooglePlus(dicoParameters: [String:AnyObject], success: (session: UserSessionGooglePlus) -> Void, fail failure: (error: NSError?, listErrors: [AnyObject]?) -> Void) {
+    func connexionWithGooglePlus(_ dicoParameters: [String:AnyObject], success: @escaping (_ session: UserSessionGooglePlus) -> Void, fail failure: @escaping (_ error: NSError?, _ listErrors: [AnyObject]?) -> Void) {
         
         var dicoApi = [String:AnyObject]()
-        dicoApi["user"] = dicoParameters
+        dicoApi["user"] = dicoParameters as AnyObject?
         
         let url = "\(Constants.UrlServer.UrlBase)\(Constants.UrlServer.UrlConnexion.UrlGooglePlusConnexion)"
         print("URL connexion with GooglePlus : \(url)")
         
-        let configuration = NSURLSessionConfiguration.defaultSessionConfiguration()
+        let configuration = URLSessionConfiguration.default
         configuration.timeoutIntervalForResource = 15
         
         self.alamofireManager = Alamofire.Manager(configuration: configuration)
-        self.alamofireManager!.request(.POST, url, parameters: dicoApi, encoding: .JSON, headers: nil)
+        self.alamofireManager!.request(.POST, url, parameters: dicoApi, encoding: .json, headers: nil)
             .validate()
             .responseJSON { (response) in
                 
                 switch response.result {
-                case .Success:
+                case .success:
                     let statusCode = response.response?.statusCode // Gets HTTP status code, useful for debugging
                     if let status = statusCode {
                         print("Status code : \(status)")
@@ -254,9 +254,9 @@ class ConnexionRequest: DochaRequest {
                                         session.authToken = jsonResponse["data"][UserDataKey.kAuthToken].string
                                         
                                         if let dateString = jsonResponse["data"]["user"][UserDataKey.kDateBirthday].string {
-                                            let dateFormatter = NSDateFormatter()
+                                            let dateFormatter = DateFormatter()
                                             dateFormatter.dateFormat = "yyyy-MM-dd"
-                                            session.dateBirthday = dateFormatter.dateFromString(dateString)
+                                            session.dateBirthday = dateFormatter.date(from: dateString)
                                         }
                                         
                                         session.pseudo = jsonResponse["data"]["user"][UserDataKey.kPseudo].string
@@ -295,31 +295,31 @@ class ConnexionRequest: DochaRequest {
                         }
                     }
                     
-                case .Failure(let error):
+                case .failure(let error):
                     print(error)
                     failure(error: error, listErrors: nil)
                 }
         }
     }
     
-    func disconnectUserSession(dicoParameters: [String: AnyObject], success: ((Void) -> Void), fail failure: (error: NSError?, listErrors: [AnyObject]?) -> Void) {
+    func disconnectUserSession(_ dicoParameters: [String: AnyObject], success: @escaping ((Void) -> Void), fail failure: @escaping (_ error: NSError?, _ listErrors: [AnyObject]?) -> Void) {
         
         let url = "\(Constants.UrlServer.UrlBase)\(Constants.UrlServer.UrlConnexion.UrlLogOut)"
         print("URL Logout : \(url)")
         
-        let dicoApi: [String: AnyObject] = ["user": dicoParameters]
+        let dicoApi: [String: AnyObject] = ["user": dicoParameters as AnyObject]
         
-        let configuration = NSURLSessionConfiguration.defaultSessionConfiguration()
+        let configuration = URLSessionConfiguration.default
         configuration.timeoutIntervalForResource = 15
         
         self.alamofireManager = Alamofire.Manager(configuration: configuration)
-        self.alamofireManager!.request(.DELETE, url, parameters: dicoApi, encoding: .JSON, headers: nil)
+        self.alamofireManager!.request(.DELETE, url, parameters: dicoApi, encoding: .json, headers: nil)
             .validate()
             .responseJSON { (response) in
                 switch (response.result) {
-                case .Success:
+                case .success:
                     success()
-                case .Failure(let error):
+                case .failure(let error):
                     print(error)
                     failure(error: error, listErrors: nil)
                 }

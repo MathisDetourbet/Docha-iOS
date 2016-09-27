@@ -41,10 +41,10 @@ class NewGameFindOpponentViewController: GameViewController, UITableViewDataSour
         buildUI()
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        self.navigationController?.navigationBarHidden = false
+        self.navigationController?.isNavigationBarHidden = false
     }
     
     func buildUI() {
@@ -59,16 +59,16 @@ class NewGameFindOpponentViewController: GameViewController, UITableViewDataSour
     
 //MARK: UICollectionView - Data Source Methods
     
-    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return 5
     }
     
-    func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
     }
     
-    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        let cell = self.collectionView.dequeueReusableCellWithReuseIdentifier("idNewGameFriendsCollectionViewCell", forIndexPath: indexPath) as! NewGameFriendsCollectionViewCell
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = self.collectionView.dequeueReusableCell(withReuseIdentifier: "idNewGameFriendsCollectionViewCell", for: indexPath) as! NewGameFriendsCollectionViewCell
         
         return cell
     }
@@ -76,27 +76,27 @@ class NewGameFindOpponentViewController: GameViewController, UITableViewDataSour
     
 //MARK: UICollectionView - Delegate Methods
     
-    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         return
     }
     
 
 //MARK: UITableView - Data Source Methods
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return titlesArray.count
     }
     
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("idNewGameFindOpponentTableViewCell", forIndexPath: indexPath) as! NewGameFindOpponentTableViewCell
-        cell.titleLabel.text = titlesArray[indexPath.row]
-        cell.subTitleLabel.text = subTitlesArray[indexPath.row]
-        cell.cellImageView.image = UIImage(named: imagesViewsArray[indexPath.row])
-        cell.accessoryType = .DisclosureIndicator
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "idNewGameFindOpponentTableViewCell", for: indexPath) as! NewGameFindOpponentTableViewCell
+        cell.titleLabel.text = titlesArray[(indexPath as NSIndexPath).row]
+        cell.subTitleLabel.text = subTitlesArray[(indexPath as NSIndexPath).row]
+        cell.cellImageView.image = UIImage(named: imagesViewsArray[(indexPath as NSIndexPath).row])
+        cell.accessoryType = .disclosureIndicator
         
         return cell
     }
@@ -104,28 +104,28 @@ class NewGameFindOpponentViewController: GameViewController, UITableViewDataSour
     
 //MARK: UITableView - Delegate Methods
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        if indexPath.row == 0 {
-            let newGameFacebookFriendsVC = self.storyboard?.instantiateViewControllerWithIdentifier("idNewGameFindFriendsViewController") as! NewGameFindFriendsViewController
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if (indexPath as NSIndexPath).row == 0 {
+            let newGameFacebookFriendsVC = self.storyboard?.instantiateViewController(withIdentifier: "idNewGameFindFriendsViewController") as! NewGameFindFriendsViewController
             self.navigationController?.pushViewController(newGameFacebookFriendsVC, animated: true)
             
-        } else if indexPath.row == 1 {
-            let newGameCategorieSelectionVC = self.storyboard?.instantiateViewControllerWithIdentifier("idNewGameCategorieSelectionViewController") as! NewGameCategorieSelectionViewController
+        } else if (indexPath as NSIndexPath).row == 1 {
+            let newGameCategorieSelectionVC = self.storyboard?.instantiateViewController(withIdentifier: "idNewGameCategorieSelectionViewController") as! NewGameCategorieSelectionViewController
             self.navigationController?.pushViewController(newGameCategorieSelectionVC, animated: true)
             
-        } else if indexPath.row == 2 {
-            let newGameFindByPseudoVC = self.storyboard?.instantiateViewControllerWithIdentifier("idNewGameFindByPseudoViewController") as! NewGameFindByPseudoViewController
+        } else if (indexPath as NSIndexPath).row == 2 {
+            let newGameFindByPseudoVC = self.storyboard?.instantiateViewController(withIdentifier: "idNewGameFindByPseudoViewController") as! NewGameFindByPseudoViewController
             self.navigationController?.pushViewController(newGameFindByPseudoVC, animated: true)
         }
-        tableView.deselectRowAtIndexPath(indexPath, animated: true)
+        tableView.deselectRow(at: indexPath, animated: true)
     }
     
-    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return tableViewRowHeight
     }
     
     
-    @IBAction func backTouched(sender: UIBarButtonItem) {
-        self.navigationController?.popViewControllerAnimated(true)
+    @IBAction func backTouched(_ sender: UIBarButtonItem) {
+        self.navigationController?.popViewController(animated: true)
     }
 }

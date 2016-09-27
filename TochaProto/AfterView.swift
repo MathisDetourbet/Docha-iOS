@@ -14,15 +14,15 @@ class AfterView: UIView {
     var estimationResult: EstimationResult? {
         didSet {
             switch estimationResult! {
-            case .Perfect:
+            case .perfect:
                 self.wordImageView.image = UIImage(named: "perfect_word")
                 self.sentenceLabel.text = "Vous avez deviné le prix exact"
                 break
-            case .Amazing:
+            case .amazing:
                 self.wordImageView.image = UIImage(named: "amazing_word")
                 self.sentenceLabel.text = "Super estimation"
                 break
-            case .Great:
+            case .great:
                 self.wordImageView.image = UIImage(named: "great_word")
                 self.sentenceLabel.text = "Bien joué"
                 break
@@ -38,11 +38,11 @@ class AfterView: UIView {
     @IBOutlet weak var wordImageView: UIImageView!
     @IBOutlet weak var sentenceLabel: UILabel!
     
-    func displayEstimationResults(results: [CounterViewAfterType]) {
+    func displayEstimationResults(_ results: [CounterViewAfterType]) {
         var greenPerfectCounter: Int = 0
         
         for resultType in results {
-            if (resultType == CounterViewAfterType.Perfect || resultType == CounterViewAfterType.Green) {
+            if (resultType == CounterViewAfterType.perfect || resultType == CounterViewAfterType.green) {
                 greenPerfectCounter += 1
             }
         }
@@ -50,29 +50,29 @@ class AfterView: UIView {
         if results.count == 2 {
             switch greenPerfectCounter {
             case 0:
-                estimationResult = EstimationResult.Oups
+                estimationResult = EstimationResult.oups
                 break
             case 1:
-                estimationResult = EstimationResult.Great
+                estimationResult = EstimationResult.great
                 break
             default:
-                estimationResult = EstimationResult.Perfect
+                estimationResult = EstimationResult.perfect
                 break
             }
             
         } else if results.count == 3 {
             switch greenPerfectCounter {
             case 0:
-                estimationResult = EstimationResult.Oups
+                estimationResult = EstimationResult.oups
                 break
             case 1:
-                estimationResult = EstimationResult.Great
+                estimationResult = EstimationResult.great
                 break
             case 2:
-                estimationResult = EstimationResult.Amazing
+                estimationResult = EstimationResult.amazing
                 break
             default:
-                estimationResult = EstimationResult.Perfect
+                estimationResult = EstimationResult.perfect
                 break
             }
         }

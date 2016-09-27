@@ -45,23 +45,23 @@ class GameplayDebriefViewController: GameViewController, UIPageViewControllerDat
         
         buildUI()
         
-        pageViewController = self.storyboard?.instantiateViewControllerWithIdentifier("idDebriefPageViewController") as! UIPageViewController
+        pageViewController = self.storyboard?.instantiateViewController(withIdentifier: "idDebriefPageViewController") as! UIPageViewController
         pageViewController.delegate = self
         pageViewController.dataSource = self
         
         let pageContentVC = self.viewControllerAtIndex(0)
         pageContentVC!.counterContainerView.updateCountersViewsWithPrice(ConverterHelper.convertPriceToArrayOfInt(self.productsList!.first!.price).priceArray)
-        pageViewController.setViewControllers([pageContentVC!], direction: .Forward, animated: true, completion: nil)
+        pageViewController.setViewControllers([pageContentVC!], direction: .forward, animated: true, completion: nil)
         
         pageViewController.view.translatesAutoresizingMaskIntoConstraints = false
         containerPageViewController.addSubview(pageViewController!.view)
         
-        containerPageViewController.addConstraint(NSLayoutConstraint(item: pageViewController.view, attribute: .Leading, relatedBy: .Equal, toItem: containerPageViewController, attribute: .Leading, multiplier: 1.0, constant: 0.0))
-        containerPageViewController.addConstraint(NSLayoutConstraint(item: pageViewController.view, attribute: .Trailing, relatedBy: .Equal, toItem: containerPageViewController, attribute: .Trailing, multiplier: 1.0, constant: 0.0))
-        containerPageViewController.addConstraint(NSLayoutConstraint(item: pageViewController.view, attribute: .Top, relatedBy: .Equal, toItem: containerPageViewController, attribute: .Top, multiplier: 1.0, constant: 0.0))
-        containerPageViewController.addConstraint(NSLayoutConstraint(item: pageViewController.view, attribute: .Bottom, relatedBy: .Equal, toItem: containerPageViewController, attribute: .Bottom, multiplier: 1.0, constant: 0.0))
+        containerPageViewController.addConstraint(NSLayoutConstraint(item: pageViewController.view, attribute: .leading, relatedBy: .equal, toItem: containerPageViewController, attribute: .leading, multiplier: 1.0, constant: 0.0))
+        containerPageViewController.addConstraint(NSLayoutConstraint(item: pageViewController.view, attribute: .trailing, relatedBy: .equal, toItem: containerPageViewController, attribute: .trailing, multiplier: 1.0, constant: 0.0))
+        containerPageViewController.addConstraint(NSLayoutConstraint(item: pageViewController.view, attribute: .top, relatedBy: .equal, toItem: containerPageViewController, attribute: .top, multiplier: 1.0, constant: 0.0))
+        containerPageViewController.addConstraint(NSLayoutConstraint(item: pageViewController.view, attribute: .bottom, relatedBy: .equal, toItem: containerPageViewController, attribute: .bottom, multiplier: 1.0, constant: 0.0))
         
-        pageViewController.didMoveToParentViewController(self)
+        pageViewController.didMove(toParentViewController: self)
     }
     
     func buildUI() {
@@ -82,10 +82,10 @@ class GameplayDebriefViewController: GameViewController, UIPageViewControllerDat
         var index = 0
         for result in userResultsArray! {
             
-            if result == .Perfect {
+            if result == .perfect {
                 timelineImageName = "perfect_big_icon"
                 
-            } else if result == .Wrong {
+            } else if result == .wrong {
                 timelineImageName = "red_big_icon"
             }
             
@@ -97,7 +97,7 @@ class GameplayDebriefViewController: GameViewController, UIPageViewControllerDat
 
 //MARK: Page View Controller Data Source
     
-    func pageViewController(pageViewController: UIPageViewController, viewControllerBeforeViewController viewController: UIViewController) -> UIViewController? {
+    func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController? {
         var index = (viewController as! GameplayDebriefPageContentViewController).pageIndex!
         if(index == 0) {
             return nil
@@ -106,7 +106,7 @@ class GameplayDebriefViewController: GameViewController, UIPageViewControllerDat
         return viewControllerAtIndex(index)
     }
     
-    func pageViewController(pageViewController: UIPageViewController, viewControllerAfterViewController viewController: UIViewController) -> UIViewController? {
+    func pageViewController(_ pageViewController: UIPageViewController, viewControllerAfter viewController: UIViewController) -> UIViewController? {
         
         var index = (viewController as! GameplayDebriefPageContentViewController).pageIndex!
         index += 1
@@ -119,7 +119,7 @@ class GameplayDebriefViewController: GameViewController, UIPageViewControllerDat
     
 //MARK: Page View Controller Delegate
     
-    func pageViewController(pageViewController: UIPageViewController, didFinishAnimating finished: Bool, previousViewControllers: [UIViewController], transitionCompleted completed: Bool) {
+    func pageViewController(_ pageViewController: UIPageViewController, didFinishAnimating finished: Bool, previousViewControllers: [UIViewController], transitionCompleted completed: Bool) {
         if finished {
             let viewController = pageViewController.viewControllers![0] as! GameplayDebriefPageContentViewController
             let currentIndex = viewController.pageIndex
@@ -130,7 +130,7 @@ class GameplayDebriefViewController: GameViewController, UIPageViewControllerDat
         }
     }
     
-    func viewControllerAtIndex(index : Int) -> GameplayDebriefPageContentViewController? {
+    func viewControllerAtIndex(_ index : Int) -> GameplayDebriefPageContentViewController? {
         if((productsList!.count == 0) || (index >= productsList!.count)) {
             return nil
         }
@@ -139,7 +139,7 @@ class GameplayDebriefViewController: GameViewController, UIPageViewControllerDat
             return pagesContentsViewControllerArray[index]
             
         } else {
-            let pageContentViewController = self.storyboard?.instantiateViewControllerWithIdentifier("idGameplayDebriefPageContentViewController") as! GameplayDebriefPageContentViewController
+            let pageContentViewController = self.storyboard?.instantiateViewController(withIdentifier: "idGameplayDebriefPageContentViewController") as! GameplayDebriefPageContentViewController
             
             // force instantiate pageContentViewController IBOutlets
             _ = pageContentViewController.view
@@ -153,7 +153,7 @@ class GameplayDebriefViewController: GameViewController, UIPageViewControllerDat
             pageContentViewController.counterContainerView.numberOfCounterDisplayed = ConverterHelper.convertPriceToArrayOfInt(product.price).priceArray.count
             pageContentViewController.counterContainerView.delegate = self
             
-            self.pagesContentsViewControllerArray.insert(pageContentViewController, atIndex: index)
+            self.pagesContentsViewControllerArray.insert(pageContentViewController, at: index)
             
             return pageContentViewController
         }
@@ -162,10 +162,10 @@ class GameplayDebriefViewController: GameViewController, UIPageViewControllerDat
     
 //MARK: Gameplay Debrief Page Content Delegate
     
-    func moreDetailsButtonTouched(productIndex: Int) {
+    func moreDetailsButtonTouched(_ productIndex: Int) {
         webViewController = PBWebViewController()
-        let url = NSURL(string: productsList![productIndex].pageURL)
-        webViewController!.URL = url
+        let url = URL(string: productsList![productIndex].pageURL)
+        webViewController!.url = url
         
         let activity = UIActivity()
         webViewController?.applicationActivities = [activity]
@@ -179,7 +179,7 @@ class GameplayDebriefViewController: GameViewController, UIPageViewControllerDat
     
 //MARK: @IBActions Methods
     
-    @IBAction func nextButtonTouched(sender: UIButton) {
+    @IBAction func nextButtonTouched(_ sender: UIButton) {
         
     }
     

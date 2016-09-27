@@ -10,10 +10,10 @@ import Foundation
 import MBCircularProgressBar
 
 enum TimelineState {
-    case Perfect
-    case Wrong
-    case Current
-    case Unplayed
+    case perfect
+    case wrong
+    case current
+    case unplayed
 }
 
 enum MessageType {
@@ -39,7 +39,7 @@ class GameplayMainViewController: GameViewController, KeyboardViewDelegate, Coun
     var cursorCounter: Int = 0
     
     let kTimePerProduct: Double = 30.0
-    var timer: NSTimer?
+    var timer: Timer?
     var timeleft: Double!
     
 
@@ -77,11 +77,11 @@ class GameplayMainViewController: GameViewController, KeyboardViewDelegate, Coun
     
     func startTheRound() {
         moveToNextCard(cardsViews?.first, AndMovePreviousCard: nil, completion: nil)
-        updateTimelineWithResult(.Current, isForUser: true)
+        updateTimelineWithResult(.current, isForUser: true)
     }
     
     func roundFinished() {
-        let debriefVC = self.storyboard?.instantiateViewControllerWithIdentifier("idGameplayDebriefViewController") as! GameplayDebriefViewController
+        let debriefVC = self.storyboard?.instantiateViewController(withIdentifier: "idGameplayDebriefViewController") as! GameplayDebriefViewController
         debriefVC.productsList = productsData
         debriefVC.userResultsArray = userResultsArray
         self.navigationController?.pushViewController(debriefVC, animated: true)
@@ -99,8 +99,8 @@ class GameplayMainViewController: GameViewController, KeyboardViewDelegate, Coun
             let centsString = priceArray.centsString
             
             cardProductView?.productImageView.image = product.image
-            cardProductView?.productNameLabel.text = product.model.uppercaseString
-            cardProductView?.productBrandLabel.text = product.brand.uppercaseString
+            cardProductView?.productNameLabel.text = product.model.uppercased()
+            cardProductView?.productBrandLabel.text = product.brand.uppercased()
             cardProductView?.counterContainerView.centsLabel.text = centsString
             cardProductView?.counterContainerView.numberOfCounterDisplayed = priceArray.priceArray.count
             cardProductView?.counterContainerView.delegate = self
@@ -110,38 +110,38 @@ class GameplayMainViewController: GameViewController, KeyboardViewDelegate, Coun
         }
         
         cardsViews = cardsArray
-        currentCard?.productImageView.layer.borderColor = UIColor.redColor().CGColor
+        currentCard?.productImageView.layer.borderColor = UIColor.red.cgColor
         currentCard?.productImageView.layer.borderWidth = 2.0
     }
     
-    func moveToNextCard(nextCard: CardProductView!, AndMovePreviousCard previousCard: CardProductView?, completion: ((finished: Bool) -> Void)?) {
+    func moveToNextCard(_ nextCard: CardProductView!, AndMovePreviousCard previousCard: CardProductView?, completion: ((_ finished: Bool) -> Void)?) {
         if previousCard == nil {
             nextCard?.translatesAutoresizingMaskIntoConstraints = false
             cardContainerView.addSubview(nextCard)
             
-            cardCenterXConstraint = NSLayoutConstraint(item: nextCard, attribute: .CenterX, relatedBy: .LessThanOrEqual, toItem: cardContainerView, attribute: .CenterX, multiplier: 1.0, constant: 0.0)
+            cardCenterXConstraint = NSLayoutConstraint(item: nextCard, attribute: .centerX, relatedBy: .lessThanOrEqual, toItem: cardContainerView, attribute: .centerX, multiplier: 1.0, constant: 0.0)
             cardContainerView.addConstraint(cardCenterXConstraint!)
-            cardContainerView.addConstraint(NSLayoutConstraint(item: nextCard, attribute: .CenterY, relatedBy: .Equal, toItem: cardContainerView, attribute: .CenterY, multiplier: 1.0, constant: 0.0))
-            cardContainerView.addConstraint(NSLayoutConstraint(item: nextCard, attribute: .Height, relatedBy: .Equal, toItem: cardContainerView, attribute: .Height, multiplier: 1.0, constant: 0.0))
-            cardContainerView.addConstraint(NSLayoutConstraint(item: nextCard, attribute: .Width, relatedBy: .Equal, toItem: cardContainerView, attribute: .Width, multiplier: 1.0, constant: 0.0))
+            cardContainerView.addConstraint(NSLayoutConstraint(item: nextCard, attribute: .centerY, relatedBy: .equal, toItem: cardContainerView, attribute: .centerY, multiplier: 1.0, constant: 0.0))
+            cardContainerView.addConstraint(NSLayoutConstraint(item: nextCard, attribute: .height, relatedBy: .equal, toItem: cardContainerView, attribute: .height, multiplier: 1.0, constant: 0.0))
+            cardContainerView.addConstraint(NSLayoutConstraint(item: nextCard, attribute: .width, relatedBy: .equal, toItem: cardContainerView, attribute: .width, multiplier: 1.0, constant: 0.0))
             
         } else {
             nextCard.translatesAutoresizingMaskIntoConstraints = false
             let currentFrame = currentCard?.frame
-            nextCard.frame = CGRectMake(self.view.frame.size.width, currentFrame!.origin.y, currentFrame!.width, currentFrame!.height)
+            nextCard.frame = CGRect(x: self.view.frame.size.width, y: currentFrame!.origin.y, width: currentFrame!.width, height: currentFrame!.height)
             cardContainerView.addSubview(nextCard)
             
-            let centerXNextCard = NSLayoutConstraint(item: nextCard, attribute: .CenterX, relatedBy: .Equal, toItem: cardContainerView, attribute: .CenterX, multiplier: 1.0, constant: self.view.frame.width)
+            let centerXNextCard = NSLayoutConstraint(item: nextCard, attribute: .centerX, relatedBy: .equal, toItem: cardContainerView, attribute: .centerX, multiplier: 1.0, constant: self.view.frame.width)
             cardContainerView.addConstraint(centerXNextCard)
-            cardContainerView.addConstraint(NSLayoutConstraint(item: nextCard, attribute: .CenterY, relatedBy: .Equal, toItem: cardContainerView, attribute: .CenterY, multiplier: 1.0, constant: 0.0))
-            cardContainerView.addConstraint(NSLayoutConstraint(item: nextCard, attribute: .Height, relatedBy: .Equal, toItem: cardContainerView, attribute: .Height, multiplier: 1.0, constant: 0.0))
-            cardContainerView.addConstraint(NSLayoutConstraint(item: nextCard, attribute: .Width, relatedBy: .Equal, toItem: cardContainerView, attribute: .Width, multiplier: 1.0, constant: 0.0))
+            cardContainerView.addConstraint(NSLayoutConstraint(item: nextCard, attribute: .centerY, relatedBy: .equal, toItem: cardContainerView, attribute: .centerY, multiplier: 1.0, constant: 0.0))
+            cardContainerView.addConstraint(NSLayoutConstraint(item: nextCard, attribute: .height, relatedBy: .equal, toItem: cardContainerView, attribute: .height, multiplier: 1.0, constant: 0.0))
+            cardContainerView.addConstraint(NSLayoutConstraint(item: nextCard, attribute: .width, relatedBy: .equal, toItem: cardContainerView, attribute: .width, multiplier: 1.0, constant: 0.0))
             
-            UIView.animateWithDuration(1.0,
+            UIView.animate(withDuration: 1.0,
                 delay: 0.0,
                 usingSpringWithDamping: 0.8,
                 initialSpringVelocity: 10.0,
-                options: .AllowUserInteraction,
+                options: .allowUserInteraction,
                 animations: {
                     self.cardCenterXConstraint?.constant = -CGFloat(self.view.frame.width)
                     centerXNextCard.constant = 0.0
@@ -157,14 +157,14 @@ class GameplayMainViewController: GameViewController, KeyboardViewDelegate, Coun
         // Initialize current product data
         currentCard = nextCard
         currentPriceArray = ConverterHelper.convertPriceToArrayOfInt(self.productsData?[cursorCard].price).priceArray
-        userEstimation = Array(count: (currentPriceArray?.count)!, repeatedValue: -1)
+        userEstimation = Array(repeating: -1, count: (currentPriceArray?.count)!)
         currentProductData = productsData?[cursorCard]
         keyboardView.reset()
         
-        completion?(finished: true)
+        completion?(true)
     }
     
-    func nextProductWithResult(result: TimelineState) {
+    func nextProductWithResult(_ result: TimelineState) {
         updateTimelineWithResult(result, isForUser: true)
         
         if cursorCard < cardsViews!.count-1 {
@@ -179,7 +179,7 @@ class GameplayMainViewController: GameViewController, KeyboardViewDelegate, Coun
                     self.keyboardView.reset()
                     self.currentCard?.counterContainerView.resetCountersViews()
                     self.startTimer()
-                    self.updateTimelineWithResult(.Current, isForUser: true)
+                    self.updateTimelineWithResult(.current, isForUser: true)
             })
             
         } else {
@@ -193,10 +193,10 @@ class GameplayMainViewController: GameViewController, KeyboardViewDelegate, Coun
     
 //MARK: Timer Methods
     
-    func initTimer(animated animated: Bool) {
+    func initTimer(animated: Bool) {
         timeleft = kTimePerProduct
         if animated {
-            UIView.animateWithDuration(1.0, animations: { 
+            UIView.animate(withDuration: 1.0, animations: { 
                 self.circularProgressBarView.value = CGFloat(self.timeleft!)
                 self.view.layoutIfNeeded()
             })
@@ -205,7 +205,7 @@ class GameplayMainViewController: GameViewController, KeyboardViewDelegate, Coun
             self.circularProgressBarView.value = CGFloat(self.timeleft!)
         }
         
-        timer = NSTimer.scheduledTimerWithTimeInterval(0.01, target: self, selector: #selector(GameplayMainViewController.updateTimer), userInfo: nil, repeats: true)
+        timer = Timer.scheduledTimer(timeInterval: 0.01, target: self, selector: #selector(GameplayMainViewController.updateTimer), userInfo: nil, repeats: true)
         
         circularProgressBarView.fontColor = UIColor.darkBlueDochaColor()
         circularProgressBarView.progressColor = UIColor.darkBlueDochaColor()
@@ -235,7 +235,7 @@ class GameplayMainViewController: GameViewController, KeyboardViewDelegate, Coun
     
     func timesUp() {
         stopTimer()
-        nextProductWithResult(.Wrong)
+        nextProductWithResult(.wrong)
     }
     
     func animateTimer() {
@@ -247,21 +247,21 @@ class GameplayMainViewController: GameViewController, KeyboardViewDelegate, Coun
 
 //MARK: Timeline Methods
     
-    func updateTimelineWithResult(result: TimelineState, isForUser: Bool) {
+    func updateTimelineWithResult(_ result: TimelineState, isForUser: Bool) {
         var timelineImageName: String?
         
         switch result {
-            case .Perfect:  timelineImageName = "timeline_perfect_found"; break
-            case .Current:  timelineImageName = "timeline_encours"; break
-            case .Wrong:    timelineImageName = "timeline_red_zone"; break
-            case .Unplayed: timelineImageName = "timeline_unlock"; break
+            case .perfect:  timelineImageName = "timeline_perfect_found"; break
+            case .current:  timelineImageName = "timeline_encours"; break
+            case .wrong:    timelineImageName = "timeline_red_zone"; break
+            case .unplayed: timelineImageName = "timeline_unlock"; break
         }
         if isForUser {
             if let timelineImageName = timelineImageName {
                 userTimelineImageViewCollection[cursorCard].image = UIImage(named: timelineImageName)
             }
             
-            if result == .Perfect || result == .Wrong {
+            if result == .perfect || result == .wrong {
                 userResultsArray.append(result)
             }
             
@@ -270,7 +270,7 @@ class GameplayMainViewController: GameViewController, KeyboardViewDelegate, Coun
                 opponentTimelineImageViewCollection[cursorCard].image = UIImage(named: timelineImageName)
             }
             
-            if result == .Perfect || result == .Wrong {
+            if result == .perfect || result == .wrong {
                 opponentResultArray.append(result)
             }
         }
@@ -286,7 +286,7 @@ class GameplayMainViewController: GameViewController, KeyboardViewDelegate, Coun
     
 //MARK: Keyboard Delegate
     
-    func clickOnPadWithNumber(number: Int) {
+    func clickOnPadWithNumber(_ number: Int) {
         if cursorCounter == currentPriceArray?.count {
             return
         }
@@ -307,7 +307,7 @@ class GameplayMainViewController: GameViewController, KeyboardViewDelegate, Coun
             if finished {
                 if self.userEstimation! == self.currentPriceArray! { // Perfect price
                     self.stopTimer()
-                    self.nextProductWithResult(.Perfect)
+                    self.nextProductWithResult(.perfect)
                     
                 } else {
                     self.cursorCounter = 0
@@ -327,7 +327,7 @@ class GameplayMainViewController: GameViewController, KeyboardViewDelegate, Coun
 
 //MARK: Displaying Message
     
-    func displayMessage(messageType: MessageType, completion: ((finished: Bool) -> Void)?) {
+    func displayMessage(_ messageType: MessageType, completion: ((_ finished: Bool) -> Void)?) {
         var messageName: String?
         switch messageType {
             case .perfect:  messageName = "perfect"; break
@@ -340,10 +340,10 @@ class GameplayMainViewController: GameViewController, KeyboardViewDelegate, Coun
             messageImageView!.translatesAutoresizingMaskIntoConstraints = false
             currentCard?.addSubview(messageImageView!)
             
-            currentCard?.addConstraint(NSLayoutConstraint(item: messageImageView!, attribute: .CenterX, relatedBy: .Equal, toItem: currentCard, attribute: .CenterX, multiplier: 1.0, constant: 0.0))
-            currentCard?.addConstraint(NSLayoutConstraint(item: messageImageView!, attribute: .CenterY, relatedBy: .Equal, toItem: currentCard, attribute: .CenterY, multiplier: 1.0, constant: 0.0))
+            currentCard?.addConstraint(NSLayoutConstraint(item: messageImageView!, attribute: .centerX, relatedBy: .equal, toItem: currentCard, attribute: .centerX, multiplier: 1.0, constant: 0.0))
+            currentCard?.addConstraint(NSLayoutConstraint(item: messageImageView!, attribute: .centerY, relatedBy: .equal, toItem: currentCard, attribute: .centerY, multiplier: 1.0, constant: 0.0))
             
-            UIView.animateWithDuration(1.0,
+            UIView.animate(withDuration: 1.0,
                 animations: {
                     messageImageView!.alpha = 0.0
                 },
@@ -351,7 +351,7 @@ class GameplayMainViewController: GameViewController, KeyboardViewDelegate, Coun
                     messageImageView!.removeFromSuperview()
                     messageImageView = nil
                     
-                    completion?(finished: finished)
+                    completion?(finished)
             })
         }
     }
@@ -359,7 +359,7 @@ class GameplayMainViewController: GameViewController, KeyboardViewDelegate, Coun
 
 //MARK: Gauge Methods
     
-    func animateUserPinIcon(completion: ((finished: Bool) -> Void)?) {
+    func animateUserPinIcon(_ completion: ((_ finished: Bool) -> Void)?) {
         let errorPercent = calculateUserEstimationErrorPercent()
         currentCard?.updatePinIconPositionWithErrorPercent(errorPercent,
             completion: { (finished) in

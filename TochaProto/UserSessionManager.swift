@@ -25,11 +25,11 @@ class UserSessionManager {
 	
     func currentSession() -> UserSession? {
         let currentSession: UserSession?
-        let userDefaults = NSUserDefaults.standardUserDefaults()
-        let connexionEncodedObject = userDefaults.objectForKey(Constants.UserDefaultsKey.kUserSessionObject) as? NSData
+        let userDefaults = UserDefaults.standard
+        let connexionEncodedObject = userDefaults.object(forKey: Constants.UserDefaultsKey.kUserSessionObject) as? Data
         
         if (connexionEncodedObject != nil) {
-            currentSession = NSKeyedUnarchiver.unarchiveObjectWithData(connexionEncodedObject!) as? UserSession
+            currentSession = NSKeyedUnarchiver.unarchiveObject(with: connexionEncodedObject!) as? UserSession
         } else {
             return nil
         }
@@ -46,7 +46,7 @@ class UserSessionManager {
 // MARK: Inscription Methods
     
     // Email inscription
-    func inscriptionEmail(dicoParams: [String:AnyObject], success: () -> Void, fail failure: (error: NSError?, listError: [AnyObject]?) -> Void) {
+    func inscriptionEmail(_ dicoParams: [String:AnyObject], success: @escaping () -> Void, fail failure: @escaping (_ error: NSError?, _ listError: [AnyObject]?) -> Void) {
         self.inscriptionRequest = InscriptionRequest()
         
         inscriptionRequest?.inscriptionEmailWithDicoParameters(dicoParams,
@@ -66,7 +66,7 @@ class UserSessionManager {
         })
     }
     
-    func inscriptionByFacebook(dicoParams: [String:AnyObject], success: (session: UserSessionFacebook) -> Void, fail failure: (error: NSError?, listError: [AnyObject]?) -> Void) {
+    func inscriptionByFacebook(_ dicoParams: [String:AnyObject], success: @escaping (_ session: UserSessionFacebook) -> Void, fail failure: @escaping (_ error: NSError?, _ listError: [AnyObject]?) -> Void) {
         self.inscriptionRequest = InscriptionRequest()
         
         inscriptionRequest?.inscriptionFacebookWithDicoParameters(dicoParams,
@@ -89,7 +89,7 @@ class UserSessionManager {
         })
     }
     
-    func inscriptionByGooglePlus(dicoParams: [String:AnyObject], success: (session: UserSessionGooglePlus) -> Void, fail failure: (error: NSError?, listError: [AnyObject]?) -> Void) {
+    func inscriptionByGooglePlus(_ dicoParams: [String:AnyObject], success: @escaping (_ session: UserSessionGooglePlus) -> Void, fail failure: @escaping (_ error: NSError?, _ listError: [AnyObject]?) -> Void) {
         self.inscriptionRequest = InscriptionRequest()
         
         inscriptionRequest?.inscriptionGooglePlusWithDicoParameters(dicoParams,
@@ -115,27 +115,27 @@ class UserSessionManager {
 
 // MARK: Connexion Methods
     
-    func signIn(success: () -> Void, fail failure: (error: NSError?, listErrors: [AnyObject]?) -> Void) {
+    func signIn(_ success: @escaping () -> Void, fail failure: @escaping (_ error: NSError?, _ listErrors: [AnyObject]?) -> Void) {
         let userSession = self.currentSession()!
         self.connexionRequest = ConnexionRequest()
         
-        if userSession.isKindOfClass(UserSessionEmail) {
+        if userSession.isKind(of: UserSessionEmail.self) {
             let userSessionEmail = userSession as! UserSessionEmail
             let dicoParams = userSessionEmail.generateJSONFromUserSession()
             let email = dicoParams![UserDataKey.kEmail] as? String
             let password = dicoParams![UserDataKey.kPassword] as? String
-            if let email = email, password = password {
+            if let email = email, let password = password {
                 connectByEmail(email, andPassword: password, success: { 
                     success()
                     
                     }, fail: { (error, listError) in
-                    failure(error: error, listErrors: listError)
+                    failure(error, listError)
                 })
             } else {
                 print("Email or password are nil")
-                failure(error: nil, listErrors: nil)
+                failure(nil, nil)
             }
-        } else if userSession.isKindOfClass(UserSessionFacebook) {
+        } else if userSession.isKind(of: UserSessionFacebook.self) {
             let userSessionEmail = userSession as! UserSessionFacebook
             let dicoParams = userSessionEmail.generateJSONFromUserSession()
             self.connexionRequest?.connexionWithFacebook(dicoParams,
@@ -149,7 +149,7 @@ class UserSessionManager {
         }
     }
     
-    func connectByEmail(email: String, andPassword password: String, success: () -> Void, fail failure: (error: NSError?, listError: [AnyObject]?) -> Void) {
+    func connectByEmail(_ email: String, andPassword password: String, success: @escaping () -> Void, fail failure: @escaping (_ error: NSError?, _ listError: [AnyObject]?) -> Void) {
         self.connexionRequest = ConnexionRequest()
             
         connexionRequest?.connexionWithEmail(email, password: password,
@@ -169,7 +169,7 @@ class UserSessionManager {
         })
     }
     
-    func connectByFacebook(dicoUserData: [String:AnyObject], success: () -> Void, fail failure: (error: NSError?, listError: [AnyObject]?) -> Void) {
+    func connectByFacebook(_ dicoUserData: [String:AnyObject], success: @escaping () -> Void, fail failure: @escaping (_ error: NSError?, _ listError: [AnyObject]?) -> Void) {
         self.connexionRequest = ConnexionRequest()
         
         connexionRequest?.connexionWithFacebook(dicoUserData,
@@ -194,7 +194,7 @@ class UserSessionManager {
         })
     }
     
-    func connectByGooglePlus(dicoUserData: [String:AnyObject], success: () -> Void, fail failure: (error: NSError?, listError: [AnyObject]?) -> Void) {
+    func connectByGooglePlus(_ dicoUserData: [String:AnyObject], success: @escaping () -> Void, fail failure: @escaping (_ error: NSError?, _ listError: [AnyObject]?) -> Void) {
         self.connexionRequest = ConnexionRequest()
         
         connexionRequest?.connexionWithGooglePlus(dicoUserData,
@@ -216,7 +216,7 @@ class UserSessionManager {
         })
     }
     
-    func updateUserProfil(dicoParameters: [String:AnyObject], success: () -> Void, fail failure: (error: NSError?, listError: [AnyObject]?) -> Void) {
+    func updateUserProfil(_ dicoParameters: [String:AnyObject], success: @escaping () -> Void, fail failure: @escaping (_ error: NSError?, _ listError: [AnyObject]?) -> Void) {
         self.profilRequest = ProfilRequest()
         
         self.profilRequest?.updateProfil(dicoParameters, success: {
@@ -238,11 +238,11 @@ class UserSessionManager {
                     print("Logout error : \(error)")
             })
             
-            if currentSession.isKindOfClass(UserSessionFacebook) {
+            if currentSession.isKind(of: UserSessionFacebook.self) {
                 let loginManager = FBSDKLoginManager()
                 loginManager.logOut()
                 
-            } else if currentSession.isKindOfClass(UserSessionGooglePlus) {
+            } else if currentSession.isKind(of: UserSessionGooglePlus.self) {
                 GIDSignIn.sharedInstance().disconnect()
             }
             

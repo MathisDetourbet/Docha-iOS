@@ -9,7 +9,7 @@
 import Foundation
 
 protocol GameplayDebriefPageContentDelegate {
-    func moreDetailsButtonTouched(productIndex: Int)
+    func moreDetailsButtonTouched(_ productIndex: Int)
     func shareButtonTouched()
 }
 
@@ -31,11 +31,11 @@ class GameplayDebriefPageContentViewController: UIViewController {
         productImageView.clipsToBounds = true
     }
     
-    @IBAction func shareButtonTouched(sender: UIButton) {
+    @IBAction func shareButtonTouched(_ sender: UIButton) {
         self.delegate?.shareButtonTouched()
     }
     
-    @IBAction func moreDetailsButtonTouched(sender: UIButton) {
+    @IBAction func moreDetailsButtonTouched(_ sender: UIButton) {
         self.delegate?.moreDetailsButtonTouched(pageIndex!)
     }
 }

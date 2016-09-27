@@ -18,24 +18,24 @@ class UserSession: User, NSCoding {
     }
     
     required init(coder aDecoder: NSCoder) {
-        let userID = aDecoder.decodeObjectForKey(Constants.UserDefaultsKey.kUserInfosUserID) as? Int
-        let pseudo = aDecoder.decodeObjectForKey(Constants.UserDefaultsKey.kUserInfosPseudo) as? String
-        let lastName = aDecoder.decodeObjectForKey(Constants.UserDefaultsKey.kUserInfosLastName) as? String
-        let firstName = aDecoder.decodeObjectForKey(Constants.UserDefaultsKey.kUserInfosFirstName) as? String
-        let email = aDecoder.decodeObjectForKey(Constants.UserDefaultsKey.kUserInfosEmail) as? String
-        let gender = aDecoder.decodeObjectForKey(Constants.UserDefaultsKey.kUserInfosGender) as? String
-        let dateBirthday = aDecoder.decodeObjectForKey(Constants.UserDefaultsKey.kUserInfosDateBirthday) as? NSDate
-        let categoriesFavorites = aDecoder.decodeObjectForKey(Constants.UserDefaultsKey.kUserInfosCategoryFavorite) as? [String]
-        let avatar = aDecoder.decodeObjectForKey(Constants.UserDefaultsKey.kUserInfosAvatar) as? String
-        let levelMaxUnlocked = aDecoder.decodeIntegerForKey(Constants.UserDefaultsKey.kUserInfosLevelMaxUnlocked) as Int
-        let dochos = aDecoder.decodeIntegerForKey(Constants.UserDefaultsKey.kUserInfosDochos) as Int
-        let experience = aDecoder.decodeIntegerForKey(Constants.UserDefaultsKey.kUserInfosExperience) as Int
-        let perfectPriceCpt = aDecoder.decodeIntegerForKey(Constants.UserDefaultsKey.kUserInfosPerfectPriceCpt) as Int
-        let authToken = aDecoder.decodeObjectForKey(Constants.UserDefaultsKey.kUserInfosAuthToken) as? String
-        let sessionID = aDecoder.decodeIntegerForKey(Constants.UserDefaultsKey.kUserInfosSessionID) as Int
-        let productsIDPlayed = aDecoder.decodeObjectForKey(Constants.UserDefaultsKey.kProductsIDPlayed) as? [Int]
+        let userID = aDecoder.decodeObject(forKey: Constants.UserDefaultsKey.kUserInfosUserID) as? Int
+        let pseudo = aDecoder.decodeObject(forKey: Constants.UserDefaultsKey.kUserInfosPseudo) as? String
+        let lastName = aDecoder.decodeObject(forKey: Constants.UserDefaultsKey.kUserInfosLastName) as? String
+        let firstName = aDecoder.decodeObject(forKey: Constants.UserDefaultsKey.kUserInfosFirstName) as? String
+        let email = aDecoder.decodeObject(forKey: Constants.UserDefaultsKey.kUserInfosEmail) as? String
+        let gender = aDecoder.decodeObject(forKey: Constants.UserDefaultsKey.kUserInfosGender) as? String
+        let dateBirthday = aDecoder.decodeObject(forKey: Constants.UserDefaultsKey.kUserInfosDateBirthday) as? Date
+        let categoriesFavorites = aDecoder.decodeObject(forKey: Constants.UserDefaultsKey.kUserInfosCategoryFavorite) as? [String]
+        let avatar = aDecoder.decodeObject(forKey: Constants.UserDefaultsKey.kUserInfosAvatar) as? String
+        let levelMaxUnlocked = aDecoder.decodeInteger(forKey: Constants.UserDefaultsKey.kUserInfosLevelMaxUnlocked) as Int
+        let dochos = aDecoder.decodeInteger(forKey: Constants.UserDefaultsKey.kUserInfosDochos) as Int
+        let experience = aDecoder.decodeInteger(forKey: Constants.UserDefaultsKey.kUserInfosExperience) as Int
+        let perfectPriceCpt = aDecoder.decodeInteger(forKey: Constants.UserDefaultsKey.kUserInfosPerfectPriceCpt) as Int
+        let authToken = aDecoder.decodeObject(forKey: Constants.UserDefaultsKey.kUserInfosAuthToken) as? String
+        let sessionID = aDecoder.decodeInteger(forKey: Constants.UserDefaultsKey.kUserInfosSessionID) as Int
+        let productsIDPlayed = aDecoder.decodeObject(forKey: Constants.UserDefaultsKey.kProductsIDPlayed) as? [Int]
         //let profilImagePrefered = ProfilImageType(rawValue: (aDecoder.decodeIntegerForKey(Constants.UserDefaultsKey.kProfilImagePrefered)))
-        let badgesUnlockedIdentifiers = aDecoder.decodeObjectForKey(Constants.UserDefaultsKey.kUserInfosBadgesUnlockedIdentifiers) as? [String]
+        let badgesUnlockedIdentifiers = aDecoder.decodeObject(forKey: Constants.UserDefaultsKey.kUserInfosBadgesUnlockedIdentifiers) as? [String]
         
         super.init(userID: userID, pseudo: pseudo, lastName: lastName, firstName: firstName, email: email, gender: gender, dateBirthday: dateBirthday, categoriesFavorites: categoriesFavorites, avatar: avatar, levelMaxUnlocked: levelMaxUnlocked, dochos: dochos, experience: experience, perfectPriceCpt: perfectPriceCpt, badgesUnlockedIdentifiers: badgesUnlockedIdentifiers)
         
@@ -44,36 +44,36 @@ class UserSession: User, NSCoding {
         self.productsIDPlayed = productsIDPlayed
     }
     
-    func encodeWithCoder(aCoder: NSCoder) {
-        aCoder.encodeObject(userID, forKey: Constants.UserDefaultsKey.kUserInfosUserID)
-        aCoder.encodeObject(pseudo, forKey: Constants.UserDefaultsKey.kUserInfosPseudo)
-        aCoder.encodeObject(lastName, forKey: Constants.UserDefaultsKey.kUserInfosLastName)
-        aCoder.encodeObject(firstName, forKey: Constants.UserDefaultsKey.kUserInfosFirstName)
-        aCoder.encodeObject(email, forKey: Constants.UserDefaultsKey.kUserInfosEmail)
-        aCoder.encodeObject(gender, forKey: Constants.UserDefaultsKey.kUserInfosGender)
-        aCoder.encodeObject(dateBirthday, forKey: Constants.UserDefaultsKey.kUserInfosDateBirthday)
-        aCoder.encodeObject(categoriesFavorites, forKey: Constants.UserDefaultsKey.kUserInfosCategoryFavorite)
-        aCoder.encodeInteger(levelMaxUnlocked, forKey: Constants.UserDefaultsKey.kUserInfosLevelMaxUnlocked)
-        aCoder.encodeInteger(dochos, forKey: Constants.UserDefaultsKey.kUserInfosDochos)
-        aCoder.encodeInteger(experience, forKey: Constants.UserDefaultsKey.kUserInfosExperience)
-        aCoder.encodeInteger(perfectPriceCpt, forKey: Constants.UserDefaultsKey.kUserInfosPerfectPriceCpt)
-        aCoder.encodeObject(avatar, forKey: Constants.UserDefaultsKey.kUserInfosAvatar)
-        aCoder.encodeObject(authToken, forKey: Constants.UserDefaultsKey.kUserInfosAuthToken)
-        aCoder.encodeObject(productsIDPlayed, forKey: Constants.UserDefaultsKey.kProductsIDPlayed)
+    func encode(with aCoder: NSCoder) {
+        aCoder.encode(userID, forKey: Constants.UserDefaultsKey.kUserInfosUserID)
+        aCoder.encode(pseudo, forKey: Constants.UserDefaultsKey.kUserInfosPseudo)
+        aCoder.encode(lastName, forKey: Constants.UserDefaultsKey.kUserInfosLastName)
+        aCoder.encode(firstName, forKey: Constants.UserDefaultsKey.kUserInfosFirstName)
+        aCoder.encode(email, forKey: Constants.UserDefaultsKey.kUserInfosEmail)
+        aCoder.encode(gender, forKey: Constants.UserDefaultsKey.kUserInfosGender)
+        aCoder.encode(dateBirthday, forKey: Constants.UserDefaultsKey.kUserInfosDateBirthday)
+        aCoder.encode(categoriesFavorites, forKey: Constants.UserDefaultsKey.kUserInfosCategoryFavorite)
+        aCoder.encode(levelMaxUnlocked, forKey: Constants.UserDefaultsKey.kUserInfosLevelMaxUnlocked)
+        aCoder.encode(dochos, forKey: Constants.UserDefaultsKey.kUserInfosDochos)
+        aCoder.encode(experience, forKey: Constants.UserDefaultsKey.kUserInfosExperience)
+        aCoder.encode(perfectPriceCpt, forKey: Constants.UserDefaultsKey.kUserInfosPerfectPriceCpt)
+        aCoder.encode(avatar, forKey: Constants.UserDefaultsKey.kUserInfosAvatar)
+        aCoder.encode(authToken, forKey: Constants.UserDefaultsKey.kUserInfosAuthToken)
+        aCoder.encode(productsIDPlayed, forKey: Constants.UserDefaultsKey.kProductsIDPlayed)
         //aCoder.encodeInteger(profilImagePrefered.rawValue, forKey: Constants.UserDefaultsKey.kProfilImagePrefered)
-        aCoder.encodeObject(badgesUnlockedIdentifiers, forKey: Constants.UserDefaultsKey.kUserInfosBadgesUnlockedIdentifiers)
+        aCoder.encode(badgesUnlockedIdentifiers, forKey: Constants.UserDefaultsKey.kUserInfosBadgesUnlockedIdentifiers)
     }
     
     func saveSession() {
-        let userDefaults = NSUserDefaults.standardUserDefaults()
-        let encodedData = NSKeyedArchiver.archivedDataWithRootObject(self)
-        userDefaults.setObject(encodedData, forKey: Constants.UserDefaultsKey.kUserSessionObject)
+        let userDefaults = UserDefaults.standard
+        let encodedData = NSKeyedArchiver.archivedData(withRootObject: self)
+        userDefaults.set(encodedData, forKey: Constants.UserDefaultsKey.kUserSessionObject)
         userDefaults.synchronize()
     }
     
     func deleteSession() {
-        NSUserDefaults.standardUserDefaults().removeObjectForKey(Constants.UserDefaultsKey.kUserSessionObject)
-        NSUserDefaults.standardUserDefaults().synchronize()
+        UserDefaults.standard.removeObject(forKey: Constants.UserDefaultsKey.kUserSessionObject)
+        UserDefaults.standard.synchronize()
     }
     
     func getUserProfileImage() -> UIImage? {
@@ -89,18 +89,18 @@ class UserSession: User, NSCoding {
         return nil
     }
     
-    func saveProfileImage(image: UIImage) {
+    func saveProfileImage(_ image: UIImage) {
         let imageData = UIImageJPEGRepresentation(image, 1)
-        let relativePath = "image_\(NSDate.timeIntervalSinceReferenceDate()).jpg"
+        let relativePath = "image_\(Date.timeIntervalSinceReferenceDate).jpg"
         let path = self.documentsPathForFileName(relativePath)
-        imageData?.writeToFile(path, atomically: true)
-        NSUserDefaults.standardUserDefaults().setObject(relativePath, forKey: Constants.UserDefaultsKey.kUserInfosProfileImageFilePath)
-        NSUserDefaults.standardUserDefaults().synchronize()
+        try? imageData?.write(to: URL(fileURLWithPath: path), options: [.atomic])
+        UserDefaults.standard.set(relativePath, forKey: Constants.UserDefaultsKey.kUserInfosProfileImageFilePath)
+        UserDefaults.standard.synchronize()
     }
     
     func deleteProfilImage() {
-        NSUserDefaults.standardUserDefaults().removeObjectForKey(Constants.UserDefaultsKey.kUserInfosProfileImageFilePath)
-        NSUserDefaults.standardUserDefaults().synchronize()
+        UserDefaults.standard.removeObject(forKey: Constants.UserDefaultsKey.kUserInfosProfileImageFilePath)
+        UserDefaults.standard.synchronize()
     }
     
 //    func updateProfilImagePrefered(profilImageType: ProfilImageType) {
@@ -108,44 +108,44 @@ class UserSession: User, NSCoding {
 //        self.saveSession()
 //    }
     
-    func documentsPathForFileName(name: String) -> String {
-        let path = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as String
-        let url = NSURL(fileURLWithPath: path)
-        let filePath = url.URLByAppendingPathComponent(name).path!
+    func documentsPathForFileName(_ name: String) -> String {
+        let path = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0] as String
+        let url = URL(fileURLWithPath: path)
+        let filePath = url.appendingPathComponent(name).path
         return filePath
     }
     
-    override func initPropertiesWithResponseObject(responseObject: AnyObject) {
+    override func initPropertiesWithResponseObject(_ responseObject: AnyObject) {
         super.initPropertiesWithResponseObject(responseObject)
         if let dicoUser = responseObject["user"] as? [String: AnyObject] {
             if let authToken = dicoUser["auth_token"]?.string { self.authToken = authToken }
-            if let sessionID = dicoUser["session_id"]?.integerValue { self.sessionID = sessionID }
+            if let sessionID = dicoUser["session_id"]?.intValue { self.sessionID = sessionID }
         }
     }
     
     func generateJSONFromUserSession() -> [String:AnyObject]? {
         var dataUser = [String:AnyObject]()
         
-        if let userID = self.userID { dataUser[UserDataKey.kUserID] = userID }
-        if let pseudo = self.pseudo { dataUser[UserDataKey.kPseudo] = pseudo }
-        if let lastName = self.lastName { dataUser[UserDataKey.kLastName] = lastName }
-        if let firstName = self.firstName { dataUser[UserDataKey.kFirstName] = firstName }
-        if let email = self.email { dataUser[UserDataKey.kEmail] = email }
+        if let userID = self.userID { dataUser[UserDataKey.kUserID] = userID as AnyObject? }
+        if let pseudo = self.pseudo { dataUser[UserDataKey.kPseudo] = pseudo as AnyObject? }
+        if let lastName = self.lastName { dataUser[UserDataKey.kLastName] = lastName as AnyObject? }
+        if let firstName = self.firstName { dataUser[UserDataKey.kFirstName] = firstName as AnyObject? }
+        if let email = self.email { dataUser[UserDataKey.kEmail] = email as AnyObject? }
         
-        if let gender = self.gender { dataUser[UserDataKey.kGender] = gender }
+        if let gender = self.gender { dataUser[UserDataKey.kGender] = gender as AnyObject? }
         if let dateBirthday = self.dateBirthday {
-            let dateFormatter = NSDateFormatter()
+            let dateFormatter = DateFormatter()
             dateFormatter.dateFormat = "dd MMMM yyyy"
-            dataUser[UserDataKey.kDateBirthday] = dateFormatter.stringFromDate(dateBirthday)
+            dataUser[UserDataKey.kDateBirthday] = dateFormatter.string(from: dateBirthday as Date) as AnyObject?
         }
-        if let categoriesFavorites = self.categoriesFavorites { dataUser[UserDataKey.kCategoryFavorite] = categoriesFavorites }
-        if let avatar = self.avatar { dataUser[UserDataKey.kAvatar] = avatar }
-        if let authToken = self.authToken { dataUser[UserDataKey.kAuthToken] = authToken }
-        if let sessionID = self.sessionID { dataUser[UserDataKey.kSessionID] = sessionID }
-        dataUser[UserDataKey.kDochos] = dochos
-        dataUser[UserDataKey.kExperience] = experience
-        dataUser[UserDataKey.kLevelMaxUnlocked] = levelMaxUnlocked
-        dataUser[UserDataKey.kPerfectPriceCpt] = perfectPriceCpt
+        if let categoriesFavorites = self.categoriesFavorites { dataUser[UserDataKey.kCategoryFavorite] = categoriesFavorites as AnyObject? }
+        if let avatar = self.avatar { dataUser[UserDataKey.kAvatar] = avatar as AnyObject? }
+        if let authToken = self.authToken { dataUser[UserDataKey.kAuthToken] = authToken as AnyObject? }
+        if let sessionID = self.sessionID { dataUser[UserDataKey.kSessionID] = sessionID as AnyObject? }
+        dataUser[UserDataKey.kDochos] = dochos as AnyObject?
+        dataUser[UserDataKey.kExperience] = experience as AnyObject?
+        dataUser[UserDataKey.kLevelMaxUnlocked] = levelMaxUnlocked as AnyObject?
+        dataUser[UserDataKey.kPerfectPriceCpt] = perfectPriceCpt as AnyObject?
         
         return dataUser
     }

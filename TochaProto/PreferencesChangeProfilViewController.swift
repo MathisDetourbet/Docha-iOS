@@ -12,9 +12,9 @@ import SCLAlertView
 class PreferencesChangeProfilViewController: RootViewController, UITableViewDelegate, UITableViewDataSource, PseudoCellDelegate, UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, RSKImageCropViewControllerDelegate, ChooseAvatarDochaDelegate {
     
     var userSession: UserSession?
-    var pseudoIndexPath: NSIndexPath?
-    var birthdayIndexPathCell: NSIndexPath?
-    var avatarIndexPath: NSIndexPath?
+    var pseudoIndexPath: IndexPath?
+    var birthdayIndexPathCell: IndexPath?
+    var avatarIndexPath: IndexPath?
     let imagePicker = UIImagePickerController()
     var imageViewPicked: UIImageView?
     var genderNotConverted: String?
@@ -32,8 +32,8 @@ class PreferencesChangeProfilViewController: RootViewController, UITableViewDele
         
         configNavigationBarWithTitle("Modifier le profil", andFontSize: 15.0)
 
-        self.validBarButtonItem.setTitleTextAttributes([NSFontAttributeName: UIFont(name: "Montserrat-SemiBold", size: 11.0)!], forState: .Normal)
-        self.cancelBarButtonItem.setTitleTextAttributes([NSFontAttributeName: UIFont(name: "Montserrat-SemiBold", size: 11.0)!], forState: .Normal)
+        self.validBarButtonItem.setTitleTextAttributes([NSFontAttributeName: UIFont(name: "Montserrat-SemiBold", size: 11.0)!], for: UIControlState())
+        self.cancelBarButtonItem.setTitleTextAttributes([NSFontAttributeName: UIFont(name: "Montserrat-SemiBold", size: 11.0)!], for: UIControlState())
 
         self.heightTableViewConstraint.constant = 4 * tableView.rowHeight + tableView.sectionHeaderHeight + tableView.sectionFooterHeight
         
@@ -43,17 +43,17 @@ class PreferencesChangeProfilViewController: RootViewController, UITableViewDele
     
 //MARK: UITableViewDataSource Methods
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 3
     }
     
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        if indexPath.row == 0 {
-            let cell = tableView.dequeueReusableCellWithIdentifier("idPreferencesChangePseudoCell") as! PreferencesChangePseudoTableViewCell
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        if (indexPath as NSIndexPath).row == 0 {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "idPreferencesChangePseudoCell") as! PreferencesChangePseudoTableViewCell
             let userName = userSession?.pseudo
             if userName != nil && userName != "" {
                 cell.pseudoTextField.text = userName
@@ -73,21 +73,21 @@ class PreferencesChangeProfilViewController: RootViewController, UITableViewDele
             return cell
             
         } else {
-            let cell = tableView.dequeueReusableCellWithIdentifier("idPreferencesChangeProfilCell") as! PreferencesChangeProfilTableViewCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: "idPreferencesChangeProfilCell") as! PreferencesChangeProfilTableViewCell
 //            if indexPath.row == 1 {
 //                cell.titleLabel.text = "Avatar / Photo de profil"
 //                cell.imageViewCell.image = UIImage(named: "smile_icon")
 //                cell.accessoryType = .DisclosureIndicator
 //                self.avatarIndexPath = indexPath
             
-            if indexPath.row == 1 {
-                let newCell = tableView.dequeueReusableCellWithIdentifier("idPreferencesChangePseudoCell") as! PreferencesChangePseudoTableViewCell
+            if (indexPath as NSIndexPath).row == 1 {
+                let newCell = tableView.dequeueReusableCell(withIdentifier: "idPreferencesChangePseudoCell") as! PreferencesChangePseudoTableViewCell
                 newCell.pseudoTextField.attributedPlaceholder = NSAttributedString(string: "Anniversaire", attributes: [NSFontAttributeName: UIFont(name: "Montserrat-Regular", size: 15.0)!])
                 
                 if let dateOfBirthday = userSession!.dateBirthday {
-                    let dateFormatter = NSDateFormatter()
+                    let dateFormatter = DateFormatter()
                     dateFormatter.dateFormat = "dd MMMM yyyy"
-                    newCell.pseudoTextField.text = dateFormatter.stringFromDate(dateOfBirthday)
+                    newCell.pseudoTextField.text = dateFormatter.string(from: dateOfBirthday as Date)
                     newCell.pseudoTextField.placeholder = nil
                 } else {
                     newCell.pseudoTextField.placeholder = "Anniversaire"
@@ -100,7 +100,7 @@ class PreferencesChangeProfilViewController: RootViewController, UITableViewDele
                 
                 return newCell
                 
-            } else if indexPath.row == 2 {
+            } else if (indexPath as NSIndexPath).row == 2 {
                 let gender = userSession!.gender
                 
                 if let genderString = gender {
@@ -125,7 +125,7 @@ class PreferencesChangeProfilViewController: RootViewController, UITableViewDele
 
 //MARK: UITableViewDelegate Methods
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 //        if indexPath.row == 1 {
 //            let alertController = UIAlertController(title: "Choisir une action", message: nil, preferredStyle: .ActionSheet)
 //            alertController.view.tintColor = UIColor.redDochaColor()
@@ -182,109 +182,109 @@ class PreferencesChangeProfilViewController: RootViewController, UITableViewDele
 //            self.presentViewController(alertController, animated: true, completion: nil)
 //            alertController.view.tintColor = UIColor.redDochaColor()
             
-        if  indexPath.row == 1 {
-            let cell = tableView.cellForRowAtIndexPath(indexPath) as! PreferencesChangePseudoTableViewCell
+        if  (indexPath as NSIndexPath).row == 1 {
+            let cell = tableView.cellForRow(at: indexPath) as! PreferencesChangePseudoTableViewCell
             textFieldTouched(cell.pseudoTextField)
-            self.tableView.deselectRowAtIndexPath(indexPath, animated: true)
+            self.tableView.deselectRow(at: indexPath, animated: true)
             
-        } else if indexPath.row == 2 {
-            let alertController = UIAlertController(title: "Sexe", message: nil, preferredStyle: .ActionSheet)
+        } else if (indexPath as NSIndexPath).row == 2 {
+            let alertController = UIAlertController(title: "Sexe", message: nil, preferredStyle: .actionSheet)
             alertController.view.tintColor = UIColor.redDochaColor()
             let genderArray = ["Homme", "Femme", "Autre"]
             
             for gender in genderArray {
-                let action = UIAlertAction(title: gender, style: .Default, handler: { (_) in
-                    let cell = self.tableView.cellForRowAtIndexPath(indexPath) as! PreferencesChangeProfilTableViewCell
+                let action = UIAlertAction(title: gender, style: .default, handler: { (_) in
+                    let cell = self.tableView.cellForRow(at: indexPath) as! PreferencesChangeProfilTableViewCell
                     cell.titleLabel.text = gender
-                    self.tableView.deselectRowAtIndexPath(indexPath, animated: true)
+                    self.tableView.deselectRow(at: indexPath, animated: true)
                     self.genderNotConverted = gender
                 })
                 alertController.addAction(action)
             }
-            let cancelAction = UIAlertAction(title: "Annuler", style: .Cancel, handler: { (_) in
-                self.tableView.deselectRowAtIndexPath(indexPath, animated: true)
+            let cancelAction = UIAlertAction(title: "Annuler", style: .cancel, handler: { (_) in
+                self.tableView.deselectRow(at: indexPath, animated: true)
             })
             alertController.addAction(cancelAction)
             
-            self.presentViewController(alertController, animated: true, completion: nil)
+            self.present(alertController, animated: true, completion: nil)
             alertController.view.tintColor = UIColor.redDochaColor()
         }
-        self.tableView.deselectRowAtIndexPath(indexPath, animated: true)
+        self.tableView.deselectRow(at: indexPath, animated: true)
     }
     
 
 //MARK: UIImagePickerControllerDelegate Methods
     
-    func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         if let pickedImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
             self.imageViewPicked = UIImageView(image: pickedImage)
-            imageViewPicked!.contentMode = .ScaleToFill
+            imageViewPicked!.contentMode = .scaleToFill
         }
-        dismissViewControllerAnimated(true, completion: nil)
+        dismiss(animated: true, completion: nil)
         let imageCropVC = RSKImageCropViewController(image: imageViewPicked!.image!)
         imageCropVC.delegate = self
         imageCropVC.moveAndScaleLabel.text = "Recadrer"
-        imageCropVC.cancelButton.setTitle("Annuler", forState: .Normal)
-        imageCropVC.chooseButton.setTitle("Choisir", forState: .Normal)
+        imageCropVC.cancelButton.setTitle("Annuler", for: UIControlState())
+        imageCropVC.chooseButton.setTitle("Choisir", for: UIControlState())
         
         self.hidesBottomBarWhenPushed = true
         self.navigationController?.pushViewController(imageCropVC, animated: true)
     }
     
-    func imagePickerControllerDidCancel(picker: UIImagePickerController) {
-        self.tableView.deselectRowAtIndexPath(self.avatarIndexPath!, animated: true)
-        dismissViewControllerAnimated(true, completion: nil)
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        self.tableView.deselectRow(at: self.avatarIndexPath!, animated: true)
+        dismiss(animated: true, completion: nil)
     }
     
 
 //MARK: RSKImageCropViewControllerDelegate Methods
     
-    func imageCropViewControllerDidCancelCrop(controller: RSKImageCropViewController) {
-        self.tableView.deselectRowAtIndexPath(self.avatarIndexPath!, animated: true)
-        self.navigationController?.popViewControllerAnimated(true)
+    func imageCropViewControllerDidCancelCrop(_ controller: RSKImageCropViewController) {
+        self.tableView.deselectRow(at: self.avatarIndexPath!, animated: true)
+        self.navigationController?.popViewController(animated: true)
     }
     
-    func imageCropViewController(controller: RSKImageCropViewController, didCropImage croppedImage: UIImage, usingCropRect cropRect: CGRect, rotationAngle: CGFloat) {
+    func imageCropViewController(_ controller: RSKImageCropViewController, didCropImage croppedImage: UIImage, usingCropRect cropRect: CGRect, rotationAngle: CGFloat) {
         self.imageViewPicked = UIImageView(image: croppedImage)
-        self.imageViewPicked?.contentMode = .ScaleToFill
-        self.tableView.deselectRowAtIndexPath(self.avatarIndexPath!, animated: true)
-        self.navigationController?.popViewControllerAnimated(true)
+        self.imageViewPicked?.contentMode = .scaleToFill
+        self.tableView.deselectRow(at: self.avatarIndexPath!, animated: true)
+        self.navigationController?.popViewController(animated: true)
     }
     
     
-    func textFieldTouched(sender: UITextField) {
+    func textFieldTouched(_ sender: UITextField) {
         let datePickerView: UIDatePicker = UIDatePicker()
-        datePickerView.datePickerMode = UIDatePickerMode.Date
+        datePickerView.datePickerMode = UIDatePickerMode.date
         
-        let gregorian: NSCalendar = NSCalendar(calendarIdentifier: NSCalendarIdentifierGregorian)!
-        let currentDate: NSDate = NSDate()
-        let components: NSDateComponents = NSDateComponents()
+        let gregorian: Calendar = Calendar(identifier: Calendar.Identifier.gregorian)
+        let currentDate: Date = Date()
+        var components: DateComponents = DateComponents()
         
         components.year = -120
-        let minDate: NSDate = gregorian.dateByAddingComponents(components, toDate: currentDate, options: NSCalendarOptions(rawValue: 0))!
+        let minDate: Date = (gregorian as NSCalendar).date(byAdding: components, to: currentDate, options: NSCalendar.Options(rawValue: 0))!
         
         components.year = -150
-        let maxDate: NSDate = gregorian.dateByAddingComponents(components, toDate: currentDate, options: NSCalendarOptions(rawValue: 0))!
+        let maxDate: Date = (gregorian as NSCalendar).date(byAdding: components, to: currentDate, options: NSCalendar.Options(rawValue: 0))!
         
         datePickerView.minimumDate = minDate
         datePickerView.maximumDate = maxDate
         sender.inputView = datePickerView
         
-        datePickerView.addTarget(self, action: #selector(PreferencesChangeProfilViewController.handleDatePicker(_:textField:)), forControlEvents: UIControlEvents.ValueChanged)
+        datePickerView.addTarget(self, action: #selector(PreferencesChangeProfilViewController.handleDatePicker(_:textField:)), for: UIControlEvents.valueChanged)
     }
     
-    func handleDatePicker(sender: UIDatePicker, textField: UITextField) {
-        let dateFormatter = NSDateFormatter()
+    func handleDatePicker(_ sender: UIDatePicker, textField: UITextField) {
+        let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "dd MMMM yyyy"
-        textField.text = dateFormatter.stringFromDate(sender.date)
+        textField.text = dateFormatter.string(from: sender.date)
         
-        self.birthdayString = dateFormatter.stringFromDate(sender.date)
+        self.birthdayString = dateFormatter.string(from: sender.date)
         
-        let cell = tableView.cellForRowAtIndexPath(self.birthdayIndexPathCell!) as! PreferencesChangePseudoTableViewCell
-        cell.pseudoTextField.text = dateFormatter.stringFromDate(sender.date)
+        let cell = tableView.cellForRow(at: self.birthdayIndexPathCell!) as! PreferencesChangePseudoTableViewCell
+        cell.pseudoTextField.text = dateFormatter.string(from: sender.date)
     }
     
-    func saveUserProfilDataWithCompletion(completion: (success: Bool) -> Void) {
+    func saveUserProfilDataWithCompletion(_ completion: @escaping (_ success: Bool) -> Void) {
         var needToUpdateProfil = false
         
         // Save Profile Image
@@ -313,23 +313,23 @@ class PreferencesChangeProfilViewController: RootViewController, UITableViewDele
                     finalGender = "U"
                 }
                 needToUpdateProfil = true
-                dicoParameters[UserDataKey.kGender] = finalGender
+                dicoParameters[UserDataKey.kGender] = finalGender as AnyObject?
             }
             
-            let pseudoCell = self.tableView.cellForRowAtIndexPath(self.pseudoIndexPath!) as! PreferencesChangePseudoTableViewCell
+            let pseudoCell = self.tableView.cellForRow(at: self.pseudoIndexPath!) as! PreferencesChangePseudoTableViewCell
             let pseudoString = pseudoCell.pseudoTextField.text
             let currentPseudo = UserSessionManager.sharedInstance.currentSession()?.pseudo
             if let pseudo = pseudoString {
                 if pseudo != currentPseudo {
                     needToUpdateProfil = true
-                    dicoParameters[UserDataKey.kPseudo] = pseudo
+                    dicoParameters[UserDataKey.kPseudo] = pseudo as AnyObject?
                 }
             }
             
             if let birthday = self.birthdayString {
                 if birthday != "" {
                     needToUpdateProfil = true
-                    dicoParameters[UserDataKey.kDateBirthday] = birthday
+                    dicoParameters[UserDataKey.kDateBirthday] = birthday as AnyObject?
                 }
             }
             
@@ -346,31 +346,31 @@ class PreferencesChangeProfilViewController: RootViewController, UITableViewDele
     }
     
     func noCameraAlert() {
-        let alertVC = UIAlertController(title: "Oups !", message: "Désolé, aucune camera détectée... :-(", preferredStyle: .Alert)
-        let agreeAction = UIAlertAction(title: "D'accord", style: .Default, handler: nil)
+        let alertVC = UIAlertController(title: "Oups !", message: "Désolé, aucune camera détectée... :-(", preferredStyle: .alert)
+        let agreeAction = UIAlertAction(title: "D'accord", style: .default, handler: nil)
         alertVC.addAction(agreeAction)
-        self.presentViewController(alertVC, animated: true, completion: nil)
+        self.present(alertVC, animated: true, completion: nil)
     }
     
-    func textFieldShouldReturn(textField: UITextField) -> Bool {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         self.view.endEditing(true)
         return false
     }
     
-    func didChosenAvatarDochaWithImage(imageName: String) {
+    func didChosenAvatarDochaWithImage(_ imageName: String) {
         self.avatarImageName = imageName
     }
     
 
 //MARK: @IBActions
     
-    @IBAction func validBarButtonItemTouched(sender: UIBarButtonItem) {
+    @IBAction func validBarButtonItemTouched(_ sender: UIBarButtonItem) {
         PopupManager.sharedInstance.showLoadingPopup("Mise à jour de ton profil...", message: nil, viewController: self, completion: {
             self.saveUserProfilDataWithCompletion { (success) in
                 PopupManager.sharedInstance.dismissPopup(true, completion: {
                     if success {
                         UserSessionManager.sharedInstance.needsToUpdateHome = true
-                        self.navigationController?.popViewControllerAnimated(true)
+                        self.navigationController?.popViewController(animated: true)
                         
                     } else {
                         PopupManager.sharedInstance.showErrorPopup("Oups !", message: "La connexion internet semble interrompue. Essaie à nouveau ultérieurement.", completion: nil)
@@ -380,7 +380,7 @@ class PreferencesChangeProfilViewController: RootViewController, UITableViewDele
         })
     }
     
-    @IBAction func cancelBarButtonItemTouched(sender: UIBarButtonItem) {
-        self.navigationController?.popViewControllerAnimated(true)
+    @IBAction func cancelBarButtonItemTouched(_ sender: UIBarButtonItem) {
+        self.navigationController?.popViewController(animated: true)
     }
 }

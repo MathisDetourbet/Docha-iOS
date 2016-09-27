@@ -23,12 +23,12 @@ class GameplayLauncherViewController: GameViewController {
                 self.counterImageView.stopAnimating()
                 self.counterImageView.animationImages = nil
                 self.counterImageView.image = UIImage(named: "gameplay_launching_3")
-                self.loaderTitleLabel.hidden = true
+                self.loaderTitleLabel.isHidden = true
             }
         }
     }
     
-    var timer: NSTimer?
+    var timer: Timer?
     var timeleft: Double! = 1.0
     
     @IBOutlet weak var userNameLabel: UILabel!
@@ -53,7 +53,7 @@ class GameplayLauncherViewController: GameViewController {
     }
     
     func buildUI() {
-        self.navigationController?.navigationBarHidden = true
+        self.navigationController?.isNavigationBarHidden = true
         self.userImageView.applyCircleBorder()
         self.opponentImageView.applyCircleBorder()
     }
@@ -72,7 +72,7 @@ class GameplayLauncherViewController: GameViewController {
     }
     
     func loadProducts() {
-        dispatch_async(dispatch_get_main_queue(), {
+        DispatchQueue.main.async(execute: {
             ProductManager.sharedInstance.getPackOfProducts({ (finished, packOfProducts) in
                 
                 if finished && packOfProducts != nil {
@@ -92,8 +92,8 @@ class GameplayLauncherViewController: GameViewController {
     
 //MARK: Timer Methods
     
-    func startTheGameWithProducts(products: [Product]!) {
-        let gameplayMainVC = self.storyboard?.instantiateViewControllerWithIdentifier("idGameplayMainViewController") as! GameplayMainViewController
+    func startTheGameWithProducts(_ products: [Product]!) {
+        let gameplayMainVC = self.storyboard?.instantiateViewController(withIdentifier: "idGameplayMainViewController") as! GameplayMainViewController
         gameplayMainVC.productsData = products
         self.navigationController?.pushViewController(gameplayMainVC, animated: true)
 //
@@ -103,7 +103,7 @@ class GameplayLauncherViewController: GameViewController {
     }
     
     func initTimer() {
-        timer = NSTimer.new(every: 1.0, { (timer: NSTimer) in
+        timer = Timer.new(every: 1.0, { (timer: Timer) in
             if self.timeleft == 0 {
                 timer.invalidate()
                 

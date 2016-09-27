@@ -16,19 +16,19 @@ class UserSessionEmail: UserSession {
     }
 
     required init(coder aDecoder: NSCoder) {
-        let password = aDecoder.decodeObjectForKey(Constants.UserDefaultsKey.kUserInfosPassword) as? String
+        let password = aDecoder.decodeObject(forKey: Constants.UserDefaultsKey.kUserInfosPassword) as? String
         
         super.init(coder: aDecoder)
         
         self.password = password
     }
     
-    override func encodeWithCoder(aCoder: NSCoder) {
-        super.encodeWithCoder(aCoder)
-        aCoder.encodeObject(self.password, forKey: Constants.UserDefaultsKey.kUserInfosPassword)
+    override func encode(with aCoder: NSCoder) {
+        super.encode(with: aCoder)
+        aCoder.encode(self.password, forKey: Constants.UserDefaultsKey.kUserInfosPassword)
     }
     
-    override func initPropertiesWithResponseObject(responseObject: AnyObject) {
+    override func initPropertiesWithResponseObject(_ responseObject: AnyObject) {
         super.initPropertiesWithResponseObject(responseObject)
         if let dicoUser = responseObject["user"] as? [String: AnyObject] {
             if let password = dicoUser[UserDataKey.kPassword]?.string { self.password = password }
@@ -37,7 +37,7 @@ class UserSessionEmail: UserSession {
     
     override func generateJSONFromUserSession() -> [String : AnyObject]? {
         var dataUser = super.generateJSONFromUserSession()
-        if let password = self.password { dataUser![UserDataKey.kPassword] = password }
+        if let password = self.password { dataUser![UserDataKey.kPassword] = password as AnyObject? }
         
         return dataUser
     }
