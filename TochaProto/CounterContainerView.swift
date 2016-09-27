@@ -58,7 +58,7 @@ class CounterContainerView: UIView {
     func resetCountersViews() {
         
         for counterView in counterViewArray {
-            counterView.counterImage.setImageAnimated(UIImage(named: "counter_base"), duration: 0.5, completion: { (_) in
+            counterView.counterImage.setImageAnimated(UIImage(named: "counter_base"), duration: 0.1, completion: { (_) in
                 counterView.currentNumber = -1
             })
         }

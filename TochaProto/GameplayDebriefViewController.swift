@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import PBWebViewController
 
 enum ResultRoundSentence: String {
     case winner = "winner_sentence"
@@ -21,6 +22,8 @@ class GameplayDebriefViewController: GameViewController, UIPageViewControllerDat
     
     var pagesContentsViewControllerArray: [GameplayDebriefPageContentViewController] = []
     var pageViewController: UIPageViewController!
+    
+    var webViewController: PBWebViewController?
     
     @IBOutlet weak var resultRoundSentenceImageView: UIImageView!
     
@@ -51,12 +54,12 @@ class GameplayDebriefViewController: GameViewController, UIPageViewControllerDat
         pageViewController.setViewControllers([pageContentVC!], direction: .Forward, animated: true, completion: nil)
         
         pageViewController.view.translatesAutoresizingMaskIntoConstraints = false
-        self.containerPageViewController.addSubview(pageViewController!.view)
+        containerPageViewController.addSubview(pageViewController!.view)
         
-        self.containerPageViewController.addConstraint(NSLayoutConstraint(item: pageViewController.view, attribute: .Leading, relatedBy: .Equal, toItem: containerPageViewController, attribute: .Leading, multiplier: 1.0, constant: 0.0))
-        self.containerPageViewController.addConstraint(NSLayoutConstraint(item: pageViewController.view, attribute: .Trailing, relatedBy: .Equal, toItem: containerPageViewController, attribute: .Trailing, multiplier: 1.0, constant: 0.0))
-        self.containerPageViewController.addConstraint(NSLayoutConstraint(item: pageViewController.view, attribute: .Top, relatedBy: .Equal, toItem: containerPageViewController, attribute: .Top, multiplier: 1.0, constant: 0.0))
-        self.containerPageViewController.addConstraint(NSLayoutConstraint(item: pageViewController.view, attribute: .Bottom, relatedBy: .Equal, toItem: containerPageViewController, attribute: .Bottom, multiplier: 1.0, constant: 0.0))
+        containerPageViewController.addConstraint(NSLayoutConstraint(item: pageViewController.view, attribute: .Leading, relatedBy: .Equal, toItem: containerPageViewController, attribute: .Leading, multiplier: 1.0, constant: 0.0))
+        containerPageViewController.addConstraint(NSLayoutConstraint(item: pageViewController.view, attribute: .Trailing, relatedBy: .Equal, toItem: containerPageViewController, attribute: .Trailing, multiplier: 1.0, constant: 0.0))
+        containerPageViewController.addConstraint(NSLayoutConstraint(item: pageViewController.view, attribute: .Top, relatedBy: .Equal, toItem: containerPageViewController, attribute: .Top, multiplier: 1.0, constant: 0.0))
+        containerPageViewController.addConstraint(NSLayoutConstraint(item: pageViewController.view, attribute: .Bottom, relatedBy: .Equal, toItem: containerPageViewController, attribute: .Bottom, multiplier: 1.0, constant: 0.0))
         
         pageViewController.didMoveToParentViewController(self)
     }
@@ -66,13 +69,13 @@ class GameplayDebriefViewController: GameViewController, UIPageViewControllerDat
         
         if let userSession = userSession {
             if let avatar = userSession.avatar {
-                self.userAvatarImageView.image = UIImage(named: avatar)
+                userAvatarImageView.image = UIImage(named: avatar)
                 
             } else {
                 
             }
-            self.userNameLabel.text = userSession.pseudo
-            self.userLevelLabel.text = "Niveau \(userSession.levelMaxUnlocked)"
+            userNameLabel.text = userSession.pseudo
+            userLevelLabel.text = "Niveau \(userSession.levelMaxUnlocked)"
         }
         
         var timelineImageName: String?
@@ -86,7 +89,7 @@ class GameplayDebriefViewController: GameViewController, UIPageViewControllerDat
                 timelineImageName = "red_big_icon"
             }
             
-            self.userTimelineImageViewCollection[index].image = UIImage(named: timelineImageName!)
+            userTimelineImageViewCollection[index].image = UIImage(named: timelineImageName!)
             index += 1
         }
     }
@@ -100,17 +103,17 @@ class GameplayDebriefViewController: GameViewController, UIPageViewControllerDat
             return nil
         }
         index -= 1
-        return self.viewControllerAtIndex(index)
+        return viewControllerAtIndex(index)
     }
     
     func pageViewController(pageViewController: UIPageViewController, viewControllerAfterViewController viewController: UIViewController) -> UIViewController? {
         
         var index = (viewController as! GameplayDebriefPageContentViewController).pageIndex!
         index += 1
-        if(index == self.productsList!.count) {
+        if(index == productsList!.count) {
             return nil
         }
-        return self.viewControllerAtIndex(index)
+        return viewControllerAtIndex(index)
     }
     
     
@@ -118,22 +121,22 @@ class GameplayDebriefViewController: GameViewController, UIPageViewControllerDat
     
     func pageViewController(pageViewController: UIPageViewController, didFinishAnimating finished: Bool, previousViewControllers: [UIViewController], transitionCompleted completed: Bool) {
         if finished {
-            let viewController = self.pageViewController.viewControllers![0] as! GameplayDebriefPageContentViewController
+            let viewController = pageViewController.viewControllers![0] as! GameplayDebriefPageContentViewController
             let currentIndex = viewController.pageIndex
-            self.pageControl.currentPage = currentIndex!
-            self.pageControl.updateCurrentPageDisplay()
+            pageControl.currentPage = currentIndex!
+            pageControl.updateCurrentPageDisplay()
             
             viewController.counterContainerView.updateCountersViewsWithPrice(ConverterHelper.convertPriceToArrayOfInt(self.productsList![currentIndex!].price).priceArray)
         }
     }
     
     func viewControllerAtIndex(index : Int) -> GameplayDebriefPageContentViewController? {
-        if((self.productsList!.count == 0) || (index >= self.productsList!.count)) {
+        if((productsList!.count == 0) || (index >= productsList!.count)) {
             return nil
         }
         
         if self.pagesContentsViewControllerArray.indices.contains(index) {
-            return self.pagesContentsViewControllerArray[index]
+            return pagesContentsViewControllerArray[index]
             
         } else {
             let pageContentViewController = self.storyboard?.instantiateViewControllerWithIdentifier("idGameplayDebriefPageContentViewController") as! GameplayDebriefPageContentViewController
@@ -159,8 +162,14 @@ class GameplayDebriefViewController: GameViewController, UIPageViewControllerDat
     
 //MARK: Gameplay Debrief Page Content Delegate
     
-    func moreDetailsButtonTouched() {
+    func moreDetailsButtonTouched(productIndex: Int) {
+        webViewController = PBWebViewController()
+        let url = NSURL(string: productsList![productIndex].pageURL)
+        webViewController!.URL = url
         
+        let activity = UIActivity()
+        webViewController?.applicationActivities = [activity]
+        self.navigationController?.pushViewController(webViewController!, animated: true)
     }
     
     func shareButtonTouched() {

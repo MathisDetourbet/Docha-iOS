@@ -1,33 +1,41 @@
 //
-//  NewGameFindFriendsViewController.swift
+//  NewGameFindByPseudoViewController.swift
 //  Docha
 //
-//  Created by Mathis D on 19/09/2016.
+//  Created by Mathis D on 23/09/2016.
 //  Copyright © 2016 LaTV. All rights reserved.
 //
 
 import Foundation
 
-class NewGameFindFriendsViewController: GameViewController, UITableViewDataSource, UITableViewDelegate, NewGameFindFriendsTableViewCellDelegate {
+class NewGameFindByPseudoViewController: GameViewController, UITableViewDataSource, UITableViewDelegate, NewGameFindFriendsTableViewCellDelegate, UITextFieldDelegate {
     
-    var friendsList: [AnyObject]? = []
+    var playersList: [AnyObject]?
     
     @IBOutlet weak var tableView: UITableView!
-    
+    @IBOutlet weak var heightTableViewConstraint: NSLayoutConstraint!
     
 //MARK: Life View Cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        configNavigationBarWithTitle("Rechercher un joueur")
+        
+        if let playersList = self.playersList {
+            heightTableViewConstraint.constant = CGFloat(playersList.count) * tableView.rowHeight
+            
+        } else {
+            heightTableViewConstraint.constant = 0.0
+        }
     }
     
     
-//MARK: UITableView - Data Source
+//MARK: UITable View Data Source
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if let friendsCount = friendsList?.count {
-            return friendsCount
+        if let players = self.playersList {
+            return players.count
             
         } else {
             return 0
@@ -39,14 +47,13 @@ class NewGameFindFriendsViewController: GameViewController, UITableViewDataSourc
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = self.tableView.dequeueReusableCellWithIdentifier("idNewGameFindFriendsCell", forIndexPath: indexPath) as! NewGameFindFriendsTableViewCell
+        let cell = tableView.dequeueReusableCellWithIdentifier("idNewGameFindFriendsCell", forIndexPath: indexPath) as! NewGameFindFriendsTableViewCell
         cell.delegate = self
-        
         return cell
     }
     
     
-//MARK: UITableView - Delegate
+//MARK: UITableView Delegate
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
@@ -61,10 +68,10 @@ class NewGameFindFriendsViewController: GameViewController, UITableViewDataSourc
         headerView.backgroundColor = UIColor.clearColor()
         let sectionLabel = UILabel(frame: CGRectMake(15.0, 5.0, 100.0, 28.0))
         sectionLabel.textColor = UIColor.darkBlueDochaColor()
-        if let numberOfFriends = friendsList?.count {
-            sectionLabel.text = "\(numberOfFriends) AMIS"
+        if let numberOfFriends = playersList?.count {
+            sectionLabel.text = "\(numberOfFriends) RÉSULTATS"
         } else {
-            sectionLabel.text = "0 AMI"
+            sectionLabel.text = "0 RÉSULTATS"
         }
         sectionLabel.font = UIFont(name: "Montserrat-Semibold", size: 12)
         headerView.addSubview(sectionLabel)
@@ -73,17 +80,20 @@ class NewGameFindFriendsViewController: GameViewController, UITableViewDataSourc
     }
     
     
-//MARK: @IBActions
-    
-    @IBAction func inviteFriendsButtonTouched(sender: UIButton) {
-        
-    }
-    
-    @IBAction func backButtonTouched(sender: UIBarButtonItem) {
-        self.navigationController?.popViewControllerAnimated(true)
-    }
+//MARK: NewGameFindFriendsTableViewCell Delegate
     
     func challengeFriendButtonTouched() {
         
+    }
+    
+    
+//MARK: @IBActions Methods
+    
+    @IBAction func findButtonTouched(sender: UIButton) {
+        
+    }
+    
+    @IBAction func goBackButtonTouched(sender: UIBarButtonItem) {
+        self.navigationController?.popViewControllerAnimated(true)
     }
 }

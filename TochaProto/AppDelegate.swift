@@ -34,13 +34,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
         initManagers()
         
         // Sign in user
-        if  UserSessionManager.sharedInstance.isLogged() {
-            UserSessionManager.sharedInstance.signIn({
-                    print("Sign in successful")
-                }) { (error, listErrors) in
-                    PopupManager.sharedInstance.showErrorPopup("Oups !", message: "La connexion internet semble interrompue...", completion: nil)
-            }
-        }
+//        if  UserSessionManager.sharedInstance.isLogged() {
+//            UserSessionManager.sharedInstance.signIn({
+//                    print("Sign in successful")
+//                }) { (error, listErrors) in
+//                    PopupManager.sharedInstance.showErrorPopup("Oups !", message: "La connexion internet semble interrompue...", completion: nil)
+//            }
+//        }
         
         NavSchemeManager.sharedInstance.initRootController()
         

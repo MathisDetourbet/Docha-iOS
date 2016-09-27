@@ -9,7 +9,7 @@
 import Foundation
 
 protocol GameplayDebriefPageContentDelegate {
-    func moreDetailsButtonTouched()
+    func moreDetailsButtonTouched(productIndex: Int)
     func shareButtonTouched()
 }
 
@@ -36,6 +36,6 @@ class GameplayDebriefPageContentViewController: UIViewController {
     }
     
     @IBAction func moreDetailsButtonTouched(sender: UIButton) {
-        self.delegate?.moreDetailsButtonTouched()
+        self.delegate?.moreDetailsButtonTouched(pageIndex!)
     }
 }

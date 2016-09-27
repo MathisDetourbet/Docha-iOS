@@ -38,7 +38,8 @@ class UserSessionManager {
     }
     
     func isLogged() -> Bool {
-        return NSUserDefaults.standardUserDefaults().objectForKey(Constants.UserDefaultsKey.kUserSessionObject) != nil
+        //return NSUserDefaults.standardUserDefaults().objectForKey(Constants.UserDefaultsKey.kUserSessionObject) != nil
+        return true
     }
     
     

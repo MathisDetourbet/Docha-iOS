@@ -92,10 +92,10 @@ class NewGameFindOpponentViewController: GameViewController, UITableViewDataSour
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = self.tableView.dequeueReusableCellWithIdentifier("idNewGameFindOpponentTableViewCell", forIndexPath: indexPath) as! NewGameFindOpponentTableViewCell
-        cell.titleLabel.text = self.titlesArray[indexPath.row]
-        cell.subTitleLabel.text = self.subTitlesArray[indexPath.row]
-        cell.cellImageView.image = UIImage(named: self.imagesViewsArray[indexPath.row])
+        let cell = tableView.dequeueReusableCellWithIdentifier("idNewGameFindOpponentTableViewCell", forIndexPath: indexPath) as! NewGameFindOpponentTableViewCell
+        cell.titleLabel.text = titlesArray[indexPath.row]
+        cell.subTitleLabel.text = subTitlesArray[indexPath.row]
+        cell.cellImageView.image = UIImage(named: imagesViewsArray[indexPath.row])
         cell.accessoryType = .DisclosureIndicator
         
         return cell
@@ -114,13 +114,14 @@ class NewGameFindOpponentViewController: GameViewController, UITableViewDataSour
             self.navigationController?.pushViewController(newGameCategorieSelectionVC, animated: true)
             
         } else if indexPath.row == 2 {
-            
-            
+            let newGameFindByPseudoVC = self.storyboard?.instantiateViewControllerWithIdentifier("idNewGameFindByPseudoViewController") as! NewGameFindByPseudoViewController
+            self.navigationController?.pushViewController(newGameFindByPseudoVC, animated: true)
         }
+        tableView.deselectRowAtIndexPath(indexPath, animated: true)
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        return self.tableViewRowHeight
+        return tableViewRowHeight
     }
     
     

@@ -433,7 +433,7 @@ class HomeViewController: GameViewController, UITableViewDelegate, UITableViewDa
     }
     
     @IBAction func rankingButtonTouched(sender: UIButton) {
-        let rankingVC = self.storyboard?.instantiateViewControllerWithIdentifier("idRankingViewController") as! RankingViewController
+        let rankingVC = self.storyboard?.instantiateViewControllerWithIdentifier("idRankingNavController") as! UINavigationController
         self.presentViewController(rankingVC, animated: true, completion: nil)
     }
     

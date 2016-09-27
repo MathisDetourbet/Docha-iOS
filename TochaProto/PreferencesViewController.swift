@@ -75,15 +75,15 @@ class PreferencesViewController: GameViewController, UITableViewDelegate, UITabl
 //MARK: Table View Data Source Methods
     
     func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return self.sections[section]
+        return sections[section]
     }
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return self.sections.count
+        return sections.count
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.cellContent[section].count
+        return cellContent[section].count
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {

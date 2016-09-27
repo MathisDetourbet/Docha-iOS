@@ -38,7 +38,7 @@ class UserGameStateManager {
     let XP_PLAYED = 10
     let XP_PERFECT = 40
     
-    lazy var userSession: UserSession = UserSessionManager.sharedInstance.currentSession()!
+    lazy var userSession: UserSession? = UserSessionManager.sharedInstance.currentSession()!
     var estimationResultsArray: [EstimationResult]?
     var psyAndRealPriceArray: [(psyPrice: Int, realPrice: Int)]?
     var gameRewards: [Reward]?
@@ -64,36 +64,52 @@ class UserGameStateManager {
     }
     
     func getUserLevel() -> Int {
-        self.userSession = UserSessionManager.sharedInstance.currentSession()!
-        return self.userSession.levelMaxUnlocked
+        userSession = UserSessionManager.sharedInstance.currentSession()
+        if let userSession = self.userSession {
+            return userSession.levelMaxUnlocked
+        }
+        
+        return 1
     }
     
     func getUserExperience() -> Int {
-        self.userSession = UserSessionManager.sharedInstance.currentSession()!
-        return self.userSession.experience
+        userSession = UserSessionManager.sharedInstance.currentSession()
+        if let userSession = self.userSession {
+            return userSession.experience
+        }
+        
+        return 0
     }
     
     func getCurrentDochos() -> Int {
-        self.userSession = UserSessionManager.sharedInstance.currentSession()!
-        return self.userSession.dochos
+        userSession = UserSessionManager.sharedInstance.currentSession()
+        if let userSession = self.userSession {
+            return userSession.dochos
+        }
+        
+        return 0
     }
     
     func getGameRewards() -> [Reward]? {
-        return self.gameRewards
+        return gameRewards
     }
     
     func getPerfectPriceNumber() -> Int {
-        self.userSession = UserSessionManager.sharedInstance.currentSession()!
-        return self.userSession.perfectPriceCpt
+        userSession = UserSessionManager.sharedInstance.currentSession()!
+        if let userSession = self.userSession {
+            return userSession.perfectPriceCpt
+        }
+        
+        return 0
     }
     
     func calculRewards() {
-        self.gameRewards = [Reward]()
+        gameRewards = [Reward]()
         
-        if self.psyAndRealPriceArray != nil {
-            for price in self.psyAndRealPriceArray! {
+        if psyAndRealPriceArray != nil {
+            for price in psyAndRealPriceArray! {
                 let reward = getRewardForPsyPrice(Double(price.psyPrice), andRealPrice: Double(price.realPrice))
-                self.gameRewards?.append(Reward(dochos: reward.dochos, experience: reward.experience, perfect: reward.perfect))
+                gameRewards?.append(Reward(dochos: reward.dochos, experience: reward.experience, perfect: reward.perfect))
             }
         }
     }
@@ -102,8 +118,7 @@ class UserGameStateManager {
     func getRewardForPsyPrice(let psyPrice: Double, andRealPrice realPrice: Double) -> (dochos: Int, experience: Int, perfect: Bool) {
         let maxDochos: Double = round(realPrice * MULTIPLE_DOCHOS)
         
-        if psyPrice == realPrice {
-            // Perfect price !
+        if psyPrice == realPrice {  // Perfect price !
             return (DOCHOS_PERFECT + Int(maxDochos), XP_PERFECT + XP_PLAYED, true)
         }
         else {
@@ -119,8 +134,7 @@ class UserGameStateManager {
                 
                 return (dochosWon, XP_PLAYED + xpBonus, false)
             }
-            else {
-                // user will get no points
+            else { // user will get no points
                 return (0, XP_PLAYED, false)
             }
         }
@@ -140,52 +154,54 @@ class UserGameStateManager {
     }
     
     func saveRewards() {
-        self.hasLevelUp = false
-        self.hasUnlockedBadge = false
-        self.userSession = UserSessionManager.sharedInstance.currentSession()!
-        var newTotalDochos = userSession.dochos
-        var currentExperience = userSession.experience
-        var newCurrentExperience = currentExperience
-        var newGameExperience = 0
-        var newTotalPerfect = userSession.perfectPriceCpt
-        let currentLevel = getUserLevel()
-        var newCurrentLevel = currentLevel
-        
-        if self.gameRewards == nil {
-            return
-        }
-        
-        for reward in self.gameRewards! {
-            newTotalDochos += reward.dochos!
-            newGameExperience += reward.experience!
-            if reward.perfect! {
-                newTotalPerfect += 1
-            }
-        }
-        
-        currentExperience += newGameExperience
-        let nextLevelExperience = currentLevel * 100
-        
-        if currentExperience >= nextLevelExperience {
-            newCurrentLevel += 1
-            newCurrentExperience = currentExperience - nextLevelExperience
-            self.hasLevelUp = true
+        if let userSession = userSession {
+            hasLevelUp = false
+            hasUnlockedBadge = false
+            //userSession = UserSessionManager.sharedInstance.currentSession()
+            var newTotalDochos = userSession.dochos
+            var currentExperience = userSession.experience
+            var newCurrentExperience = currentExperience
+            var newGameExperience = 0
+            var newTotalPerfect = userSession.perfectPriceCpt
+            let currentLevel = getUserLevel()
+            var newCurrentLevel = currentLevel
             
-        } else {
-            newCurrentExperience = currentExperience
+            if gameRewards == nil {
+                return
+            }
+            
+            for reward in gameRewards! {
+                newTotalDochos += reward.dochos!
+                newGameExperience += reward.experience!
+                if reward.perfect! {
+                    newTotalPerfect += 1
+                }
+            }
+            
+            currentExperience += newGameExperience
+            let nextLevelExperience = currentLevel * 100
+            
+            if currentExperience >= nextLevelExperience {
+                newCurrentLevel += 1
+                newCurrentExperience = currentExperience - nextLevelExperience
+                hasLevelUp = true
+                
+            } else {
+                newCurrentExperience = currentExperience
+            }
+            
+            // Game Center Achievements
+            let achievementsArray = updateAchievements(newTotalPerfect)
+            if let achievementsArray = achievementsArray {
+                reportAchievements(achievementsArray)
+            }
+            
+            userSession.dochos = newTotalDochos + self.dochosAchievement
+            userSession.experience = newCurrentExperience
+            userSession.perfectPriceCpt = newTotalPerfect
+            userSession.levelMaxUnlocked = newCurrentLevel
+            userSession.saveSession()
         }
-        
-        // Game Center Achievements
-        let achievementsArray = updateAchievements(newTotalPerfect)
-        if let achievementsArray = achievementsArray {
-            self.reportAchievements(achievementsArray)
-        }
-        
-        self.userSession.dochos = newTotalDochos + self.dochosAchievement
-        self.userSession.experience = newCurrentExperience
-        self.userSession.perfectPriceCpt = newTotalPerfect
-        self.userSession.levelMaxUnlocked = newCurrentLevel
-        self.userSession.saveSession()
     }
     
     
@@ -232,44 +248,25 @@ class UserGameStateManager {
     }
     
     func updateAchievements(newTotalPerfect: Int) -> [GKAchievement]? {
-        self.dochosAchievement = 0
-        var badgesUnlockedArray = self.userSession.badgesUnlockedIdentifiers
-        if badgesUnlockedArray == nil {
-            badgesUnlockedArray = []
-        }
-        
-        var achievementsArray: [GKAchievement] = []
-        let allBadgesIdentifiers = Constants.GameCenterLeaderBoardIdentifiers.kBadgesIdentifiers
-        let perfectNumberBadgeDico = [allBadgesIdentifiers[0] : 5, allBadgesIdentifiers[1] : 25, allBadgesIdentifiers[2] : 100, allBadgesIdentifiers[3] : 500]
-        let dochosRewardsPerfects = [allBadgesIdentifiers[0] : 25, allBadgesIdentifiers[1] : 100, allBadgesIdentifiers[2] : 500, allBadgesIdentifiers[3] : 3000]
-        
-        for (identifier, perfects) in perfectNumberBadgeDico {
-            if newTotalPerfect >= perfects && ((badgesUnlockedArray?.contains(identifier))! == false) {
-                badgesUnlockedArray?.append(identifier)
-                self.hasUnlockedBadge = true
-                self.dochosAchievement += dochosRewardsPerfects[identifier]!
-                let achievement = GKAchievement(identifier: identifier)
-                if newTotalPerfect >= perfects {
-                    achievement.percentComplete = 100.0
-                } else {
-                    achievement.percentComplete = (Double(newTotalPerfect) / Double(perfects)) * 100
-                }
-                achievementsArray.append(achievement)
+        dochosAchievement = 0
+        if let userSession = self.userSession {
+            var badgesUnlockedArray = userSession.badgesUnlockedIdentifiers
+            if badgesUnlockedArray == nil {
+                badgesUnlockedArray = []
             }
-        }
-        
-        let newPerfects = newTotalPerfect - userSession.perfectPriceCpt
-        let perfectFollowingNumberBadgeDico = [allBadgesIdentifiers[4] : 3, allBadgesIdentifiers[5] : 4, allBadgesIdentifiers[6] : 5]
-        let dochosRewardsPerfectsFollowing = [allBadgesIdentifiers[4] : 500, allBadgesIdentifiers[5] : 1000, allBadgesIdentifiers[6] : 5000]
-        
-        if newPerfects >= 3 {
-            for (identifier, perfects) in perfectFollowingNumberBadgeDico {
-                if newPerfects >= perfects && ((badgesUnlockedArray?.contains(identifier))! == false) {
+            
+            var achievementsArray: [GKAchievement] = []
+            let allBadgesIdentifiers = Constants.GameCenterLeaderBoardIdentifiers.kBadgesIdentifiers
+            let perfectNumberBadgeDico = [allBadgesIdentifiers[0] : 5, allBadgesIdentifiers[1] : 25, allBadgesIdentifiers[2] : 100, allBadgesIdentifiers[3] : 500]
+            let dochosRewardsPerfects = [allBadgesIdentifiers[0] : 25, allBadgesIdentifiers[1] : 100, allBadgesIdentifiers[2] : 500, allBadgesIdentifiers[3] : 3000]
+            
+            for (identifier, perfects) in perfectNumberBadgeDico {
+                if newTotalPerfect >= perfects && ((badgesUnlockedArray?.contains(identifier))! == false) {
                     badgesUnlockedArray?.append(identifier)
-                    self.hasUnlockedBadge = true
-                    self.dochosAchievement += dochosRewardsPerfectsFollowing[identifier]!
+                    hasUnlockedBadge = true
+                    dochosAchievement += dochosRewardsPerfects[identifier]!
                     let achievement = GKAchievement(identifier: identifier)
-                    if newPerfects >= perfects {
+                    if newTotalPerfect >= perfects {
                         achievement.percentComplete = 100.0
                     } else {
                         achievement.percentComplete = (Double(newTotalPerfect) / Double(perfects)) * 100
@@ -277,10 +274,33 @@ class UserGameStateManager {
                     achievementsArray.append(achievement)
                 }
             }
+            
+            let newPerfects = newTotalPerfect - userSession.perfectPriceCpt
+            let perfectFollowingNumberBadgeDico = [allBadgesIdentifiers[4] : 3, allBadgesIdentifiers[5] : 4, allBadgesIdentifiers[6] : 5]
+            let dochosRewardsPerfectsFollowing = [allBadgesIdentifiers[4] : 500, allBadgesIdentifiers[5] : 1000, allBadgesIdentifiers[6] : 5000]
+            
+            if newPerfects >= 3 {
+                for (identifier, perfects) in perfectFollowingNumberBadgeDico {
+                    if newPerfects >= perfects && ((badgesUnlockedArray?.contains(identifier))! == false) {
+                        badgesUnlockedArray?.append(identifier)
+                        hasUnlockedBadge = true
+                        dochosAchievement += dochosRewardsPerfectsFollowing[identifier]!
+                        let achievement = GKAchievement(identifier: identifier)
+                        if newPerfects >= perfects {
+                            achievement.percentComplete = 100.0
+                        } else {
+                            achievement.percentComplete = (Double(newTotalPerfect) / Double(perfects)) * 100
+                        }
+                        achievementsArray.append(achievement)
+                    }
+                }
+            }
+            userSession.badgesUnlockedIdentifiers = badgesUnlockedArray
+            
+            return achievementsArray
         }
-        self.userSession.badgesUnlockedIdentifiers = badgesUnlockedArray
         
-        return achievementsArray
+        return nil
     }
     
     func reportAchievement(identifier: String, percentComplete: Double) {
