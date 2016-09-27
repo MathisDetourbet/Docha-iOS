@@ -19,7 +19,7 @@ import Amplitude_iOS
 public var testing = true
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
 
@@ -104,18 +104,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
                 
                 if (error == nil) {
                     print("Facebook authentication result : \(result)")
-                    var dicoUserData = [String:AnyObject]()
                     
                     // User access token
-                    dicoUserData[UserDataKey.kFacebookToken] = FBSDKAccessToken.current().tokenString as AnyObject?
+                    let accessToken = FBSDKAccessToken.current().tokenString as String
                     
                     UserSessionManager.sharedInstance.connectByFacebook(
-                        dicoUserData,
+                        token: accessToken,
                         success: {
                             success()
                         }, fail: { (error, listError) in
                             print("error saving Facebook user data in database : \(error)")
-                            failure(error: error, listError: listError)
+                            failure(error, listError)
                     })
                 } else {
                     print("Facebook get user data : error : \(error)")
@@ -124,85 +123,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
             })
         }
     }
-    
 
-// MARK: GooglePlus Sign In
-    
-    func sign(_ signIn: GIDSignIn!, didSignInFor user: GIDGoogleUser!, withError error: NSError!) {
-        if (error == nil) {
-            var dicoUserData = [String:AnyObject]()
-            
-            // Perform any operations on signed in user here.
-            dicoUserData["id"] = user.userID as AnyObject?                  // For client-side use only!
-            dicoUserData["token"] = user.authentication.idToken as AnyObject? // Safe to send to the server
-            dicoUserData["first_name"] = user.profile.givenName as AnyObject?
-            dicoUserData["last_name"] = user.profile.familyName as AnyObject?
-            dicoUserData["email"] = user.profile.email as AnyObject?
-            if user.profile.hasImage {
-                dicoUserData["image_url"] = user.profile.imageURL(withDimension: 50).URLString
-            }
-            
-            if UserSessionManager.sharedInstance.isLogged() {
-            
-                UserSessionManager.sharedInstance.connectByGooglePlus(dicoUserData,
-                    success: {
-                        let viewController = self.window?.rootViewController
-                    
-                        if UserSessionManager.sharedInstance.dicoUserDataInscription == nil {
-                            let categoryViewController = viewController?.storyboard?.instantiateViewController(withIdentifier: "idInscriptionCategorySelectionViewController") as!InscriptionCategorySelectionViewController
-                            categoryViewController.comeFromConnexionVC = true
-                            viewController?.navigationController?.pushViewController(categoryViewController, animated: true)
-                        } else {
-                            let categoryViewController = viewController?.storyboard?.instantiateViewController(withIdentifier: "idMenuNavController") as! UINavigationController
-                            NavSchemeManager.sharedInstance.changeRootViewController(categoryViewController)
-                        }
-                    }, fail: { (error, listError) in
-                        print("error saving GooglePlus user data in database : \(error)")
-                        print("list error : \(listError)")
-                })
-                
-            } else {
-                UserSessionManager.sharedInstance.inscriptionByGooglePlus(dicoUserData,
-                    success: { (session) in
-                        
-                        dicoUserData = session.generateJSONFromUserSession()!
-                        
-                        UserSessionManager.sharedInstance.connectByGooglePlus(dicoUserData,
-                            success: {
-                                let viewController = self.window?.rootViewController
-                                
-                                if UserSessionManager.sharedInstance.dicoUserDataInscription == nil {
-                                    let categoryViewController = viewController?.storyboard?.instantiateViewController(withIdentifier: "idInscriptionCategorySelectionViewController") as!InscriptionCategorySelectionViewController
-                                    categoryViewController.comeFromConnexionVC = true
-                                    viewController?.navigationController?.pushViewController(categoryViewController, animated: true)
-                                } else {
-                                    let homeViewController = viewController?.storyboard?.instantiateViewController(withIdentifier: "idHomeNavController") as! HomeViewController
-                                    NavSchemeManager.sharedInstance.changeRootViewController(homeViewController)
-                                }
-                            }, fail: { (error, listError) in
-                                print("error saving GooglePlus user data in database : \(error)")
-                                print("list error : \(listError)")
-                        })
-                        
-                    }, fail: { (error, listError) in
-                        print("Error inscription GooglePlus : \(error)")
-                })
-            }
-        } else {
-            print("GooglePlus get user data : error : \(error)")
-            print("\(error.localizedDescription)")
-        }
-    }
-    
     func initManagers() {
-        UserSessionManager.sharedInstance
-        UserGameStateManager.sharedInstance
+        _ = UserSessionManager.sharedInstance
+        _ = UserGameStateManager.sharedInstance
         
         // Load all products
-        ProductManager.sharedInstance
+        _ = ProductManager.sharedInstance
         ProductManager.sharedInstance.loadProductsWithCurrentCategory()
         
-        NavSchemeManager.sharedInstance
+        _ = NavSchemeManager.sharedInstance
     }
 }
 

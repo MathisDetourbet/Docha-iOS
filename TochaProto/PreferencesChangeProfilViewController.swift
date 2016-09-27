@@ -3,11 +3,10 @@
 //  Docha
 //
 //  Created by Mathis D on 06/07/2016.
-//  Copyright © 2016 LaTV. All rights reserved.
+//  Copyright © 2016 Slymoover. All rights reserved.
 //
 
 import Foundation
-import SCLAlertView
 
 class PreferencesChangeProfilViewController: RootViewController, UITableViewDelegate, UITableViewDataSource, PseudoCellDelegate, UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, RSKImageCropViewControllerDelegate, ChooseAvatarDochaDelegate {
     
@@ -217,7 +216,7 @@ class PreferencesChangeProfilViewController: RootViewController, UITableViewDele
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         if let pickedImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
-            self.imageViewPicked = UIImageView(image: pickedImage)
+            imageViewPicked = UIImageView(image: pickedImage)
             imageViewPicked!.contentMode = .scaleToFill
         }
         dismiss(animated: true, completion: nil)
@@ -227,12 +226,12 @@ class PreferencesChangeProfilViewController: RootViewController, UITableViewDele
         imageCropVC.cancelButton.setTitle("Annuler", for: UIControlState())
         imageCropVC.chooseButton.setTitle("Choisir", for: UIControlState())
         
-        self.hidesBottomBarWhenPushed = true
+        hidesBottomBarWhenPushed = true
         self.navigationController?.pushViewController(imageCropVC, animated: true)
     }
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
-        self.tableView.deselectRow(at: self.avatarIndexPath!, animated: true)
+        tableView.deselectRow(at: self.avatarIndexPath!, animated: true)
         dismiss(animated: true, completion: nil)
     }
     
@@ -240,15 +239,15 @@ class PreferencesChangeProfilViewController: RootViewController, UITableViewDele
 //MARK: RSKImageCropViewControllerDelegate Methods
     
     func imageCropViewControllerDidCancelCrop(_ controller: RSKImageCropViewController) {
-        self.tableView.deselectRow(at: self.avatarIndexPath!, animated: true)
-        self.navigationController?.popViewController(animated: true)
+        tableView.deselectRow(at: self.avatarIndexPath!, animated: true)
+        _ = self.navigationController?.popViewController(animated: true)
     }
     
     func imageCropViewController(_ controller: RSKImageCropViewController, didCropImage croppedImage: UIImage, usingCropRect cropRect: CGRect, rotationAngle: CGFloat) {
-        self.imageViewPicked = UIImageView(image: croppedImage)
-        self.imageViewPicked?.contentMode = .scaleToFill
-        self.tableView.deselectRow(at: self.avatarIndexPath!, animated: true)
-        self.navigationController?.popViewController(animated: true)
+        imageViewPicked = UIImageView(image: croppedImage)
+        imageViewPicked?.contentMode = .scaleToFill
+        tableView.deselectRow(at: self.avatarIndexPath!, animated: true)
+        _ = self.navigationController?.popViewController(animated: true)
     }
     
     
@@ -278,7 +277,7 @@ class PreferencesChangeProfilViewController: RootViewController, UITableViewDele
         dateFormatter.dateFormat = "dd MMMM yyyy"
         textField.text = dateFormatter.string(from: sender.date)
         
-        self.birthdayString = dateFormatter.string(from: sender.date)
+        birthdayString = dateFormatter.string(from: sender.date)
         
         let cell = tableView.cellForRow(at: self.birthdayIndexPathCell!) as! PreferencesChangePseudoTableViewCell
         cell.pseudoTextField.text = dateFormatter.string(from: sender.date)
@@ -336,10 +335,10 @@ class PreferencesChangeProfilViewController: RootViewController, UITableViewDele
             if needToUpdateProfil {
                 UserSessionManager.sharedInstance.updateUserProfil(dicoParameters, success: {
                         print("Success update user profil")
-                        completion(success: true)
+                        completion(true)
                     }, fail: { (error, listError) in
                         print("Fail updating user profil")
-                        completion(success: false)
+                        completion(false)
                 })
             }
         }
@@ -370,7 +369,7 @@ class PreferencesChangeProfilViewController: RootViewController, UITableViewDele
                 PopupManager.sharedInstance.dismissPopup(true, completion: {
                     if success {
                         UserSessionManager.sharedInstance.needsToUpdateHome = true
-                        self.navigationController?.popViewController(animated: true)
+                        _ = self.navigationController?.popViewController(animated: true)
                         
                     } else {
                         PopupManager.sharedInstance.showErrorPopup("Oups !", message: "La connexion internet semble interrompue. Essaie à nouveau ultérieurement.", completion: nil)
@@ -381,6 +380,6 @@ class PreferencesChangeProfilViewController: RootViewController, UITableViewDele
     }
     
     @IBAction func cancelBarButtonItemTouched(_ sender: UIBarButtonItem) {
-        self.navigationController?.popViewController(animated: true)
+        _ = self.navigationController?.popViewController(animated: true)
     }
 }

@@ -3,7 +3,7 @@
 //  Docha
 //
 //  Created by Mathis D on 25/07/2016.
-//  Copyright © 2016 LaTV. All rights reserved.
+//  Copyright © 2016 Slymoover. All rights reserved.
 //
 
 import Foundation
@@ -31,6 +31,6 @@ class PreferencesFeedbackViewController: PBWebViewController {
     }
     
     @IBAction func backButtonItemTouched(_ sender: UIBarButtonItem) {
-        self.navigationController?.popViewController(animated: true)
+        _ = self.navigationController?.popViewController(animated: true)
     }
 }

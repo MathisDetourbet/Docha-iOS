@@ -3,7 +3,7 @@
 //  Docha
 //
 //  Created by Mathis D on 06/06/2016.
-//  Copyright © 2016 LaTV. All rights reserved.
+//  Copyright © 2016 Slymoover. All rights reserved.
 //
 
 import Foundation
@@ -11,7 +11,7 @@ import Amplitude_iOS
 import PBWebViewController
 import FBSDKShareKit
 
-class PreferencesViewController: GameViewController, UITableViewDelegate, UITableViewDataSource, FBSDKSharingDelegate {
+class PreferencesViewController: GameViewController, UITableViewDelegate, UITableViewDataSource {
 
     let idNormalTableViewCell = "idNormalTableViewCell"
     let idSwitchTableViewCell = "idSwitchTableViewCell"
@@ -177,17 +177,20 @@ class PreferencesViewController: GameViewController, UITableViewDelegate, UITabl
         return viewHeader
     }
     
-    func sharer(_ sharer: FBSDKSharing!, didCompleteWithResults results: [AnyHashable: Any]!) {
-        
-    }
     
-    func sharer(_ sharer: FBSDKSharing!, didFailWithError error: NSError!) {
-        
-    }
+//MARK: FBSDKSharingDelegate
     
-    func sharerDidCancel(_ sharer: FBSDKSharing!) {
-        
-    }
+//    func sharer(_ sharer: FBSDKSharing!, didCompleteWithResults results: [AnyHashable: Any]!) {
+//        
+//    }
+//    
+//    func sharer(_ sharer: FBSDKSharing!, didFailWithError error: NSError!) {
+//        
+//    }
+//    
+//    func sharerDidCancel(_ sharer: FBSDKSharing!) {
+//        
+//    }
     
     
 //MARK: @IBAction Methods

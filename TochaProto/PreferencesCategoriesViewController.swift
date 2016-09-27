@@ -3,11 +3,10 @@
 //  Docha
 //
 //  Created by Mathis D on 27/06/2016.
-//  Copyright © 2016 LaTV. All rights reserved.
+//  Copyright © 2016 Slymoover. All rights reserved.
 //
 
 import Foundation
-import SCLAlertView
 import Amplitude_iOS
 
 class PreferencesCategoriesViewController: RootViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
@@ -17,7 +16,7 @@ class PreferencesCategoriesViewController: RootViewController, UICollectionViewD
     
     let categoriesImagesPathArray = ["lifestyle", "high-tech", "maison_deco", "bijoux_montres", "electromenager", "art", "objets_connectes", "gastronomie_vin", "beauty", "sport"]
     let categoriesNames = ["Lifestyle", "High-Tech", "Maison / déco", "Bijoux / Montres", "Électroménager", "Art", "Objets connectés", "Gastronomie", "Beauté", "Sport"]
-    var categoriesImages = [UIImage]?()
+    var categoriesImages: [UIImage]?
     var categoriesPrefered: [String]?
     
     @IBOutlet weak var backButton: UIBarButtonItem!
@@ -69,14 +68,14 @@ class PreferencesCategoriesViewController: RootViewController, UICollectionViewD
                 print("Success categories VC")
                 PopupManager.sharedInstance.dismissPopup(true, completion: {
                     PopupManager.sharedInstance.showSuccessPopup("Succès !", message: "Tes catégories préférées ont été mise à jour 😎", viewController: self, completion: nil, doneActionCompletion: {
-                        completion(success: true)
+                        completion(true)
                     })
                 })
             }, fail: { (error, listError) in
                 PopupManager.sharedInstance.dismissPopup(true, completion: {
                     print("Fail categories VC")
                     PopupManager.sharedInstance.showErrorPopup("Oups !", message: "Il semblerait que tu ne possède pas de connexion à internet... Essaie ultérieurement.", viewController: self, completion: nil, doneActionCompletion: {
-                        completion(success: false)
+                        completion(false)
                     })
                 })
             })
@@ -135,10 +134,10 @@ class PreferencesCategoriesViewController: RootViewController, UICollectionViewD
         let currentSession = UserSessionManager.sharedInstance.currentSession()
         
         if self.categoriesPrefered == nil || (self.categoriesPrefered?.isEmpty)! {
-            self.navigationController?.popViewController(animated: true)
+            _ = self.navigationController?.popViewController(animated: true)
             
         } else if self.categoriesPrefered! == (currentSession?.categoriesFavorites)! {
-            self.navigationController?.popViewController(animated: true)
+            _ = self.navigationController?.popViewController(animated: true)
             
         } else {
             PopupManager.sharedInstance.showLoadingPopup("Chargement...", message: "Mise à jour de ton profil Docha...", viewController: self, completion: nil)
@@ -148,7 +147,7 @@ class PreferencesCategoriesViewController: RootViewController, UICollectionViewD
             if let currentSession = currentSession {
                 saveCategorieFavoriteWithUserSession(currentSession, completion: { (success) in
                     if success {
-                        self.navigationController?.popViewController(animated: true)
+                        _ = self.navigationController?.popViewController(animated: true)
                     } else {
                         self.categoriesPrefered = categoriesFavoritesTemp
                         self.collectionView.reloadData()

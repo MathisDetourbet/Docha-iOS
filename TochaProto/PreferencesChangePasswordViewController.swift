@@ -3,7 +3,7 @@
 //  Docha
 //
 //  Created by Mathis D on 12/07/2016.
-//  Copyright © 2016 LaTV. All rights reserved.
+//  Copyright © 2016 Slymoover. All rights reserved.
 //
 
 import Foundation
@@ -87,10 +87,10 @@ class PreferencesChangePasswordViewController: RootViewController, UITableViewDe
 //MARK: @IBActions
 
     @IBAction func cancelButtonTouched(_ sender: UIBarButtonItem) {
-        self.navigationController?.popViewController(animated: true)
+        _ = self.navigationController?.popViewController(animated: true)
     }
     
     @IBAction func validButtonTouched(_ sender: UIBarButtonItem) {
-        self.navigationController?.popViewController(animated: true)
+        _ = self.navigationController?.popViewController(animated: true)
     }
 }

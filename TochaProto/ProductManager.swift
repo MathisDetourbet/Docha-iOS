@@ -3,7 +3,7 @@
 //  DochaProto
 //
 //  Created by Mathis D on 01/05/2016.
-//  Copyright © 2016 LaTV. All rights reserved.
+//  Copyright © 2016 Slymoover. All rights reserved.
 //
 
 import SwiftyJSON
@@ -57,7 +57,7 @@ extension UIImageView {
                     completion(false)
                     return
             }
-            DispatchQueue.global(priority: DispatchQueue.GlobalQueuePriority.high).async(execute: {
+            DispatchQueue.global(qos: DispatchQoS.QoSClass.default).async(execute: {
                 self.image = image
                 completion(true)
             })
@@ -153,7 +153,7 @@ class ProductManager {
         
         if var productsIDPlayed = productsID {
             var index = 0
-            var productsShuffled = self.products!.shuffle()
+            var productsShuffled = products!.shuffled()
             
             if productsIDPlayed.count == productsCountMax {
                 productsIDPlayed.removeAll()
@@ -162,12 +162,12 @@ class ProductManager {
                 userSession?.saveSession()
             }
             
-            while (packOfProducts?.count < numberOfProducts ?? PACK_PRODUCT_COUNT) || (index == self.products?.count) {
+            while (packOfProducts?.count < numberOfProducts ?? PACK_PRODUCT_COUNT) || (index == products?.count) {
                 let product = productsShuffled[index]
                 
                 if (!(productsIDPlayed.contains(product.id)) &&
                     ((product.gender == userGender) || (product.gender == .universal)) &&
-                    (self.currentPackOfProducts?.contains(product) == false)) {
+                    (currentPackOfProducts?.contains(product) == false)) {
                     
                     packOfProducts?.append(product)
                     productsIDPlayed.append(product.id)
@@ -184,7 +184,7 @@ class ProductManager {
                 for product in packOfProducts! {
                     productsIDPlayed.append(product.id)
                 }
-                productsShuffled = self.products!.shuffle()
+                productsShuffled = products!.shuffled()
                 index = 0
                 
                 while (packOfProducts?.count < numberOfProducts ?? PACK_PRODUCT_COUNT) || (index == self.products?.count) {
@@ -208,7 +208,7 @@ class ProductManager {
             
         } else {
             var index = 0
-            var productsShuffled = self.products!.shuffle()
+            var productsShuffled = products!.shuffled()
             var productsIDPlayed = [Int]()
             
             while (packOfProducts?.count < numberOfProducts ?? PACK_PRODUCT_COUNT) || (index == self.products?.count) {
@@ -284,7 +284,7 @@ class ProductManager {
                 
                 isDonwloadFinished = false
                 
-                DispatchQueue.global(priority: DispatchQueue.GlobalQueuePriority.default).async(execute: {
+                DispatchQueue.global(qos: DispatchQoS.QoSClass.default).async(execute: {
                     var packOfProducts = self.loadPackOfProducts(numberProductMissing)
                     
                     if (packOfProducts != nil) && (packOfProducts?.isEmpty == false) {
@@ -351,7 +351,7 @@ class ProductManager {
             let imageURL = product.imageURL
             let imageView = UIImageView()
             
-            DispatchQueue.global(priority: DispatchQueue.GlobalQueuePriority.high).async(execute: {
+            DispatchQueue.global(qos: DispatchQoS.QoSClass.default).async(execute: {
                 imageView.downloadedImageWithHightPriority(link: imageURL, contentMode: .scaleAspectFit, WithCompletion: {(success) in
                     if success {
                         successImages["\(product.id)"] = imageView.image!

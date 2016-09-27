@@ -3,7 +3,7 @@
 //  Docha
 //
 //  Created by Mathis D on 20/06/2016.
-//  Copyright © 2016 LaTV. All rights reserved.
+//  Copyright © 2016 Slymoover. All rights reserved.
 //
 
 import Foundation
@@ -233,10 +233,8 @@ class UserGameStateManager {
             } else {
                 if(allAchievementsArray != nil) {
                     for achievement in allAchievementsArray! {
-                        if let achievement: GKAchievement = achievement {
-                            if ((badgesUnlockedIdentifiers?.contains(achievement.identifier!))! == false) {
-                                badgesUnlockedIdentifiers?.append(achievement.identifier!)
-                            }
+                        if ((badgesUnlockedIdentifiers?.contains(achievement.identifier!))! == false) {
+                            badgesUnlockedIdentifiers?.append(achievement.identifier!)
                         }
                     }
                     

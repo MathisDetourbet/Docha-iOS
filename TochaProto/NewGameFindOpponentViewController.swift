@@ -3,7 +3,7 @@
 //  Docha
 //
 //  Created by Mathis D on 01/09/2016.
-//  Copyright © 2016 LaTV. All rights reserved.
+//  Copyright © 2016 Slymoover. All rights reserved.
 //
 
 import Foundation
@@ -126,6 +126,6 @@ class NewGameFindOpponentViewController: GameViewController, UITableViewDataSour
     
     
     @IBAction func backTouched(_ sender: UIBarButtonItem) {
-        self.navigationController?.popViewController(animated: true)
+        _ = self.navigationController?.popViewController(animated: true)
     }
 }

@@ -3,7 +3,7 @@
 //  Docha
 //
 //  Created by Mathis D on 21/07/2016.
-//  Copyright © 2016 LaTV. All rights reserved.
+//  Copyright © 2016 Slymoover. All rights reserved.
 //
 
 import Foundation
@@ -14,7 +14,7 @@ class PriceRecordsRequest: DochaRequest {
     
     func createPriceRecordWithUserID(_ userID: Int, productID: Int, psyPrice: Int, isInIntervalle: Bool, responseTime: Double, hadTimeToGiveAnswer: Bool, success: @escaping (() -> Void), fail failure: @escaping (_ error: NSError?, _ listErrors: [AnyObject]?) -> Void) {
         
-        let userSession = UserSessionManager.sharedInstance.currentSession()!
+        /*let userSession = UserSessionManager.sharedInstance.currentSession()!
         
         let parameters = [Constants.DataRecordsKey.kDataRecordUserID                : userID,
                           Constants.DataRecordsKey.kDataRecordProductID             : productID,
@@ -44,5 +44,6 @@ class PriceRecordsRequest: DochaRequest {
                     failure(error: response.result.error, listErrors: nil)
                 }
             }
+ */
     }
 }

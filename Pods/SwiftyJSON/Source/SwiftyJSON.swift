@@ -863,7 +863,7 @@ extension JSON {
     
     public var int: Int? {
         get {
-            return self.number?.int32Value
+            return self.number?.intValue
         }
         set {
             if let newValue = newValue {

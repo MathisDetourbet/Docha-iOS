@@ -3,7 +3,7 @@
 //  Docha
 //
 //  Created by Mathis D on 16/09/2016.
-//  Copyright © 2016 LaTV. All rights reserved.
+//  Copyright © 2016 Slymoover. All rights reserved.
 //
 
 import Foundation
@@ -19,10 +19,15 @@ class ConverterHelper {
         
         var centsString = String(eurosAndCentsArray[1])
         if centsString?.characters.count == 1 {
-            centsString += "0"
+            centsString = centsString! + "0"
         }
         
-        return (eurosArray!, centsString!)
+        if let centsString = centsString {
+            return (eurosArray!, centsString)
+            
+        } else {
+            return (eurosArray!, "00")
+        }
     }
     
     class func convertPriceArrayToInt(_ psyPriceArray: [Int]) -> Int {

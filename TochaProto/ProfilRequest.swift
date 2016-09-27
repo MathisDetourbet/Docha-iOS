@@ -3,7 +3,7 @@
 //  Docha
 //
 //  Created by Mathis D on 24/06/2016.
-//  Copyright © 2016 LaTV. All rights reserved.
+//  Copyright © 2016 Slymoover. All rights reserved.
 //
 
 import Foundation
@@ -18,15 +18,15 @@ class ProfilRequest: DochaRequest {
     
     func updateProfil(_ userDico: [String:AnyObject]!, success: @escaping (() -> Void), fail failure: @escaping (_ error: NSError?, _ listErrors: [AnyObject]?) -> Void) {
         
-        let parameters = userDico
-        let url = "\(Constants.UrlServer.UrlBase)\(Constants.UrlServer.UrlProfil.UrlProfilUpdate)/\(parameters?["id"]!).json"
-        print("URL PUT Update Profil : \(url)")
+        /*let parameters = userDico
+        let urlString = "\(Constants.UrlServer.UrlBase)\(Constants.UrlServer.UrlProfil.UrlProfilUpdate)/\(parameters?["id"]!).json"
+        print("URL PUT Update Profil : \(urlString)")
         
         let configuration = URLSessionConfiguration.default
         configuration.timeoutIntervalForResource = REQUEST_TIME_OUT
         
-        self.alamofireManager = Alamofire.Manager(configuration: configuration)
-        self.alamofireManager!.request(.PUT, url, parameters: parameters, encoding: .json)
+        alamofireManager = Alamofire.SessionManager(configuration: configuration)
+        alamofireManager!.request(urlString, method: .put, parameters: parameters, encoding: JSONEncoding.default)
             .validate()
             .responseJSON { (response) in
                 let statusCode = response.response?.statusCode // Gets HTTP status code, useful for debugging
@@ -162,10 +162,11 @@ class ProfilRequest: DochaRequest {
                     }
                 }
         }
+ */
     }
     
     func getUserFriendsDochaInstalled(_ facebookToken: String, success: (_ friendsList: [User]?) -> Void, fail failure: (_ error: NSError?, _ listErrors: [AnyObject]?) -> Void) {
-        
+        /*
         let parameters = [UserDataKey.kFacebookToken : facebookToken]
         let url = "\(Constants.UrlServer.UrlBase)\(Constants.UrlServer.UrlProfil.UrlGetFriendsDochaInstalled).json"
         print("URL GET FRIENDSLIST DOCHA INSTALLED : \(url)")
@@ -191,6 +192,6 @@ class ProfilRequest: DochaRequest {
                     }
                 }
         }
-        
+    */
     }
 }

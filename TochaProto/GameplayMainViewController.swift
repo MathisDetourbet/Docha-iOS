@@ -3,7 +3,7 @@
 //  Docha
 //
 //  Created by Mathis D on 06/09/2016.
-//  Copyright © 2016 LaTV. All rights reserved.
+//  Copyright © 2016 Slymoover. All rights reserved.
 //
 
 import Foundation
@@ -71,7 +71,6 @@ class GameplayMainViewController: GameViewController, KeyboardViewDelegate, Coun
         
         initCardsView()
         initTimer(animated: false)
-        startTimer()
         startTheRound()
     }
     
@@ -171,15 +170,14 @@ class GameplayMainViewController: GameViewController, KeyboardViewDelegate, Coun
             // Display the next card
             let nextCard = cardsViews![cursorCard + 1]
             
-            initTimer(animated: true)
             moveToNextCard(nextCard, AndMovePreviousCard: self.currentCard,
                 completion: { (_) in
                     self.cursorCounter = 0
                     self.keyboardView.enabledKeyboard(true)
                     self.keyboardView.reset()
                     self.currentCard?.counterContainerView.resetCountersViews()
-                    self.startTimer()
                     self.updateTimelineWithResult(.current, isForUser: true)
+                    self.initTimer(animated: true)
             })
             
         } else {
@@ -210,10 +208,6 @@ class GameplayMainViewController: GameViewController, KeyboardViewDelegate, Coun
         circularProgressBarView.fontColor = UIColor.darkBlueDochaColor()
         circularProgressBarView.progressColor = UIColor.darkBlueDochaColor()
         circularProgressBarView.progressStrokeColor = UIColor.darkBlueDochaColor()
-    }
-    
-    func startTimer() {
-        timer?.start()
     }
     
     func updateTimer() {
@@ -365,17 +359,17 @@ class GameplayMainViewController: GameViewController, KeyboardViewDelegate, Coun
             completion: { (finished) in
                 if errorPercent < 0 {
                     self.displayMessage(.more, completion: { (finished) in
-                        completion?(finished: finished)
+                        completion?(finished)
                     })
                     
                 } else if errorPercent > 0 {
                     self.displayMessage(.less, completion: { (finished) in
-                        completion?(finished: finished)
+                        completion?(finished)
                     })
                     
                 } else {
                     self.displayMessage(.perfect, completion: { (finished) in
-                        completion?(finished: finished)
+                        completion?(finished)
                     })
                 }
         })

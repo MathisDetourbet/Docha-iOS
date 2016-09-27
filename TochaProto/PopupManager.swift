@@ -3,7 +3,7 @@
 //  Docha
 //
 //  Created by Mathis D on 26/07/2016.
-//  Copyright © 2016 LaTV. All rights reserved.
+//  Copyright © 2016 Slymoover. All rights reserved.
 //
 
 class PopupManager {
@@ -27,7 +27,7 @@ class PopupManager {
             if self.popupWaitingArray == nil {
                 self.popupWaitingArray = []
             }
-            self.popupWaitingArray?.append(["popupType": PopupType.success.rawValue, "title": title, "message": message])
+            self.popupWaitingArray?.append(["popupType": PopupType.success.rawValue as Optional<AnyObject>, "title": title as Optional<AnyObject>, "message": message as Optional<AnyObject>])
             return
         }
         self.isDisplayingPopup = true
@@ -58,7 +58,7 @@ class PopupManager {
             if self.popupWaitingArray == nil {
                 self.popupWaitingArray = []
             }
-            self.popupWaitingArray?.append(["popupType": PopupType.error.rawValue, "title": title, "message": message])
+            self.popupWaitingArray?.append(["popupType": PopupType.error.rawValue as Optional<AnyObject>, "title": title as Optional<AnyObject>, "message": message as Optional<AnyObject>])
             return
         }
         self.isDisplayingPopup = true
@@ -90,7 +90,7 @@ class PopupManager {
                 self.popupWaitingArray = []
             }
             
-            self.popupWaitingArray?.append(["popupType": PopupType.infos.rawValue, "title": title, "message": message])
+            self.popupWaitingArray?.append(["popupType": PopupType.infos.rawValue as Optional<AnyObject>, "title": title as Optional<AnyObject>, "message": message as Optional<AnyObject>])
             return
         }
         self.isDisplayingPopup = true
@@ -121,7 +121,7 @@ class PopupManager {
             if self.popupWaitingArray == nil {
                 self.popupWaitingArray = []
             }
-            self.popupWaitingArray?.append(["popupType": PopupType.loading.rawValue, "title": title, "message": message])
+            self.popupWaitingArray?.append(["popupType": PopupType.loading.rawValue as Optional<AnyObject>, "title": title as Optional<AnyObject>, "message": message as Optional<AnyObject>])
             return
         }
         self.isDisplayingPopup = true
@@ -152,7 +152,7 @@ class PopupManager {
                 self.popupWaitingArray = []
             }
             let popupType = PopupType.reward.rawValue as Int
-            self.popupWaitingArray?.append(["popupType": popupType, "title": title, "message": message])
+            self.popupWaitingArray?.append(["popupType": popupType as Optional<AnyObject>, "title": title as Optional<AnyObject>, "message": message as Optional<AnyObject>])
             return
         }
         self.isDisplayingPopup = true

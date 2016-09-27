@@ -3,7 +3,7 @@
 //  Docha
 //
 //  Created by Mathis D on 05/09/2016.
-//  Copyright © 2016 LaTV. All rights reserved.
+//  Copyright © 2016 Slymoover. All rights reserved.
 //
 
 import Foundation
@@ -11,10 +11,10 @@ import Foundation
 extension UIImageView {
     
     func applyCircleBorder() {
-        self.layer.cornerRadius = self.frame.size.height/2
-        self.layer.borderWidth = 3.0
-        self.layer.borderColor = UIColor.white.cgColor
-        self.layer.masksToBounds = false
-        self.clipsToBounds = true
+        layer.cornerRadius = frame.size.height/2
+        layer.borderWidth = 3.0
+        layer.borderColor = UIColor.white.cgColor
+        layer.masksToBounds = false
+        clipsToBounds = true
     }
 }

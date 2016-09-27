@@ -3,12 +3,11 @@
 //  DochaProto
 //
 //  Created by Mathis D on 27/05/2016.
-//  Copyright © 2016 LaTV. All rights reserved.
+//  Copyright © 2016 Slymoover. All rights reserved.
 //
 
 import Foundation
 import TextFieldEffects
-import SCLAlertView
 import GoogleSignIn
 import SwiftyJSON
 
@@ -111,7 +110,7 @@ class InscriptionIdentifiantsViewController: RootViewController, UITextFieldDele
     @IBAction func registerWithFacebookTouched(_ sender: UIButton) {
         let fbLoginManager : FBSDKLoginManager = FBSDKLoginManager()
         
-        fbLoginManager.logIn(withReadPermissions: ["email", "public_profile"], from: self)
+        fbLoginManager.logIn(withReadPermissions: ["email", "public_profile", "user_friends"], from: self)
         { (result, error) -> Void in
             
             if error != nil {
@@ -182,12 +181,12 @@ class InscriptionIdentifiantsViewController: RootViewController, UITextFieldDele
     }
     
     @IBAction func EmailTextFieldEditingChanged(_ sender: HoshiTextField) {
-        isEmailValid()
-        isPasswordValid()
+        _ = isEmailValid()
+        _ = isPasswordValid()
     }
     
     @IBAction func PasswordTextFieldEditingChanged(_ sender: HoshiTextField) {
-        isPasswordValid()
-        isEmailValid()
+        _ = isPasswordValid()
+        _ = isEmailValid()
     }
 }

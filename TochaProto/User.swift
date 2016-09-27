@@ -3,7 +3,7 @@
 //  DochaProto
 //
 //  Created by Mathis D on 17/03/2016.
-//  Copyright © 2016 LaTV. All rights reserved.
+//  Copyright © 2016 Slymoover. All rights reserved.
 //
 
 import Foundation
@@ -51,7 +51,7 @@ class User: NSObject {
     
     func initPropertiesWithResponseObject(_ responseObject: AnyObject) {
         if let dicoUser = responseObject["user"] as? [String: AnyObject] {
-            if let userID = dicoUser["id"]?.intValue { self.userID = userID }
+            if let userID = dicoUser["id"]?.integerValue { self.userID = userID }
             if let pseudo = dicoUser["pseudo"]?.string { self.pseudo = pseudo }
             if let lastName = dicoUser["last_name"]?.string { self.lastName = lastName }
             if let firstName = dicoUser["first_name"]?.string { self.firstName = firstName }
@@ -60,10 +60,10 @@ class User: NSObject {
             if let dateBirthday = dicoUser["date_birthday"]?.date { self.dateBirthday = dateBirthday }
             if let categoriesFavorites = dicoUser["category_favorite"]?.array { self.categoriesFavorites = categoriesFavorites as? [String] }
             if let avatar = dicoUser["avatar"]?.string { self.avatar = avatar }
-            if let levelMaxUnlocked = dicoUser["level_max_unlocked"]?.intValue { self.levelMaxUnlocked = levelMaxUnlocked }
-            if let dochos = dicoUser["dochos"]?.intValue { self.dochos = dochos }
-            if let experience = dicoUser["experience"]?.intValue { self.experience = experience }
-            if let perfectPriceCpt = dicoUser["perfect_price_cpt"]?.intValue { self.perfectPriceCpt = perfectPriceCpt }
+            if let levelMaxUnlocked = dicoUser["level_max_unlocked"]?.integerValue { self.levelMaxUnlocked = levelMaxUnlocked }
+            if let dochos = dicoUser["dochos"]?.integerValue { self.dochos = dochos }
+            if let experience = dicoUser["experience"]?.integerValue { self.experience = experience }
+            if let perfectPriceCpt = dicoUser["perfect_price_cpt"]?.integerValue { self.perfectPriceCpt = perfectPriceCpt }
             if let badgesUnlockedIdentifiers = dicoUser["badges_unlocked"]?.array as? [String] { self.badgesUnlockedIdentifiers = badgesUnlockedIdentifiers }
         }
     }

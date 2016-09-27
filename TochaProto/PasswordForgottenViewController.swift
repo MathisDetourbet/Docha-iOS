@@ -3,7 +3,7 @@
 //  DochaProto
 //
 //  Created by Mathis D on 24/05/2016.
-//  Copyright © 2016 LaTV. All rights reserved.
+//  Copyright © 2016 Slymoover. All rights reserved.
 //
 
 import Foundation
@@ -23,6 +23,6 @@ class PasswordForgottenViewController: RootViewController {
     
     // MARK: @IBAction
     @IBAction func backButtonTouched(_ sender: UIBarButtonItem) {
-        self.navigationController?.popViewController(animated: true)
+        _ = self.navigationController?.popViewController(animated: true)
     }
 }

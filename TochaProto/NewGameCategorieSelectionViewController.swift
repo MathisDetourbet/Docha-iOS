@@ -3,7 +3,7 @@
 //  Docha
 //
 //  Created by Mathis D on 01/09/2016.
-//  Copyright © 2016 LaTV. All rights reserved.
+//  Copyright © 2016 Slymoover. All rights reserved.
 //
 
 import Foundation
@@ -70,7 +70,7 @@ class NewGameCategorieSelectionViewController: GameViewController, UICollectionV
     }
     
     @IBAction func backButtonTouched(_ sender: UIBarButtonItem) {
-        self.navigationController?.popViewController(animated: true)
+        _ = self.navigationController?.popViewController(animated: true)
     }
     
     
@@ -79,7 +79,7 @@ class NewGameCategorieSelectionViewController: GameViewController, UICollectionV
     func generateCategories(_ number: Int? = 4) {
         var categoriesGenerated: [String] = []
         let categoriesAvailables = ["Lifestyle", "High-Tech", "Maison / déco", "Bijoux / Montres", "Électroménager", "Art", "Objets connectés", "Gastronomie", "Beauté", "Sport"]
-        let categoriesShuffled = categoriesAvailables.shuffle()
+        let categoriesShuffled = categoriesAvailables.shuffled()
         
         for i in 0...3 {
             categoriesGenerated.append(categoriesShuffled[i])

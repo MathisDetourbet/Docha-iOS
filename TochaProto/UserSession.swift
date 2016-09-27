@@ -3,7 +3,7 @@
 //  DochaProto
 //
 //  Created by Mathis D on 20/05/2016.
-//  Copyright © 2016 LaTV. All rights reserved.
+//  Copyright © 2016 Slymoover. All rights reserved.
 //
 
 import Foundation
@@ -119,7 +119,7 @@ class UserSession: User, NSCoding {
         super.initPropertiesWithResponseObject(responseObject)
         if let dicoUser = responseObject["user"] as? [String: AnyObject] {
             if let authToken = dicoUser["auth_token"]?.string { self.authToken = authToken }
-            if let sessionID = dicoUser["session_id"]?.intValue { self.sessionID = sessionID }
+            if let sessionID = dicoUser["session_id"]?.integerValue { self.sessionID = sessionID }
         }
     }
     

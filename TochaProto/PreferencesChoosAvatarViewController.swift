@@ -3,7 +3,7 @@
 //  Docha
 //
 //  Created by Mathis D on 12/07/2016.
-//  Copyright © 2016 LaTV. All rights reserved.
+//  Copyright © 2016 Slymoover. All rights reserved.
 //
 
 import Foundation
@@ -18,7 +18,7 @@ class PreferencesChoosAvatarViewController: RootViewController {
     var womanAvatarsArray = ["avatar_woman_indian", "avatar_woman_blond", "avatar_woman_latina", "avatar_woman_punk", "avatar_woman", "avatar_woman_glasses"]
     
     var delegate: ChooseAvatarDochaDelegate?
-    var avatarImageArray = [String]?()
+    var avatarImageArray: [String]?
     var avatarImageSelected: String?
     var userGender: String?
     
@@ -62,15 +62,15 @@ class PreferencesChoosAvatarViewController: RootViewController {
     
     @IBAction func avatarButtonTouched(_ sender: UIButton) {
         let index = sender.tag
-        self.userAvatarImageView.image = UIImage(named: "\(self.avatarImageArray![index])_profil")
-        self.userAvatarImageView.animatedLikeBubbleWithDelay(0.0, duration: 0.5)
-        self.avatarImageSelected = self.avatarImageArray![index]
+        userAvatarImageView.image = UIImage(named: "\(avatarImageArray![index])_profil")
+        userAvatarImageView.animatedLikeBubbleWithDelay(0.0, duration: 0.5)
+        avatarImageSelected = avatarImageArray![index]
     }
     
     @IBAction func validButtonTouched(_ sender: UIButton) {
         if let avatarString = self.avatarImageSelected {
-            self.delegate?.didChosenAvatarDochaWithImage(avatarString)
+            delegate?.didChosenAvatarDochaWithImage(avatarString)
         }
-        self.dismiss(animated: true, completion: nil)
+        dismiss(animated: true, completion: nil)
     }
 }

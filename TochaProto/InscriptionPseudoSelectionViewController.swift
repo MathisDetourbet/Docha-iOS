@@ -3,7 +3,7 @@
 //  Docha
 //
 //  Created by Mathis D on 02/09/2016.
-//  Copyright © 2016 LaTV. All rights reserved.
+//  Copyright © 2016 Slymoover. All rights reserved.
 //
 
 import Foundation
@@ -60,7 +60,7 @@ class InscriptionPseudoSelectionViewController: RootViewController {
         PopupManager.sharedInstance.showLoadingPopup("Connexion...", message: "Création d'un nouveau Docher en cours.", completion: {
             
             let userSessionManager = UserSessionManager.sharedInstance
-            userSessionManager.dicoUserDataInscription!["pseudo"] = self.pseudoTextField.text
+            userSessionManager.dicoUserDataInscription!["pseudo"] = self.pseudoTextField.text as AnyObject?
             let registrationParams = userSessionManager.dicoUserDataInscription!
             
             UserSessionManager.sharedInstance.inscriptionEmail(registrationParams,success: { (session) in
@@ -88,6 +88,6 @@ class InscriptionPseudoSelectionViewController: RootViewController {
     }
     
     @IBAction func backButtonTouched(_ sender: UIBarButtonItem) {
-        self.navigationController?.popViewController(animated: true)
+        _ = self.navigationController?.popViewController(animated: true)
     }
 }

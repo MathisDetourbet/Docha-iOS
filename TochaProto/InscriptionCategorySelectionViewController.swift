@@ -3,11 +3,10 @@
 //  DochaProto
 //
 //  Created by Mathis D on 27/05/2016.
-//  Copyright © 2016 LaTV. All rights reserved.
+//  Copyright © 2016 Slymoover. All rights reserved.
 //
 
 import Foundation
-import SCLAlertView
 
 class InscriptionCategorySelectionViewController: RootViewController, UICollectionViewDelegate, UICollectionViewDataSource {
     
@@ -16,7 +15,7 @@ class InscriptionCategorySelectionViewController: RootViewController, UICollecti
     
     let categoriesImagesPathArray = ["lifestyle", "high-tech", "maison_deco", "bijoux_montres", "electromenager", "art", "objets_connectes", "gastronomie_vin", "beauty", "sport"]
     let categoriesNames = ["Lifestyle", "High-Tech", "Maison / déco", "Bijoux / Montres", "Électroménager", "Art", "Objets connectés", "Gastronomie", "Beauté", "Sport"]
-    var categoriesImages = [UIImage]?()
+    var categoriesImages: [UIImage]?
     var categoryPrefered: [String]?
     var comeFromConnexionVC: Bool = false
     
@@ -131,7 +130,7 @@ class InscriptionCategorySelectionViewController: RootViewController, UICollecti
     }
     
     @IBAction func backButtonTouched(_ sender: UIBarButtonItem) {
-        self.navigationController?.popViewController(animated: true)
+        _ = self.navigationController?.popViewController(animated: true)
     }
     
     @IBAction func infosButtonTouched(_ sender: UIBarButtonItem) {

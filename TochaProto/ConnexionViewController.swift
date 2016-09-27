@@ -3,7 +3,7 @@
 //  DochaProto
 //
 //  Created by Mathis D on 22/05/2016.
-//  Copyright © 2016 LaTV. All rights reserved.
+//  Copyright © 2016 Slymoover. All rights reserved.
 //
 
 import Foundation
@@ -95,7 +95,7 @@ class ConnexionViewController: RootViewController, GIDSignInUIDelegate {
     @IBAction func facebookButtonTouched(_ sender: UIButton) {
         let fbLoginManager : FBSDKLoginManager = FBSDKLoginManager()
         
-        fbLoginManager.logIn(withReadPermissions: ["email", "public_profile"],
+        fbLoginManager.logIn(withReadPermissions: ["email", "public_profile", "user_friends"],
                                                 from: self)
         { (result, error) -> Void in
             

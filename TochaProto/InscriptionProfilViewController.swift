@@ -3,11 +3,10 @@
 //  DochaProto
 //
 //  Created by Mathis D on 27/05/2016.
-//  Copyright © 2016 LaTV. All rights reserved.
+//  Copyright © 2016 Slymoover. All rights reserved.
 //
 
 import Foundation
-import SCLAlertView
 
 extension UIViewController {
     
@@ -17,7 +16,7 @@ extension UIViewController {
             
             for aViewController in allViewController {
                 if aViewController.isKind(of: viewControllerClass) {
-                    self.navigationController?.popToViewController(aViewController, animated: true)
+                    _ = self.navigationController?.popToViewController(aViewController, animated: true)
                 }
             }
         }
@@ -26,7 +25,7 @@ extension UIViewController {
 
 class InscriptionProfilViewController: RootViewController {
     
-    var avatarImageArray = [String]?()
+    var avatarImageArray: [String] = []
     var avatarImageSelected: String?
     
     @IBOutlet weak var userAvatarImageView: UIImageView!
@@ -54,16 +53,16 @@ class InscriptionProfilViewController: RootViewController {
         }
         
         for (index, avatar) in avatarsButtonsCollection.enumerated() {
-            avatar.setImage(UIImage(named: avatarImageArray![index]), for: UIControlState())
+            avatar.setImage(UIImage(named: avatarImageArray[index]), for: UIControlState())
             avatar.animatedLikeBubbleWithDelay(Double(index/100)+0.2, duration: 0.5)
         }
     }
     
     @IBAction func avatarButtonTouched(_ sender: UIButton) {
         let index = sender.tag
-        self.userAvatarImageView.image = UIImage(named: "\(self.avatarImageArray![index])_profil")
+        self.userAvatarImageView.image = UIImage(named: "\(self.avatarImageArray[index])_profil")
         self.userAvatarImageView.animatedLikeBubbleWithDelay(0.0, duration: 0.5)
-        self.avatarImageSelected = self.avatarImageArray![index]
+        self.avatarImageSelected = self.avatarImageArray[index]
     }
     
     @IBAction func validProfilButtonTouched(_ sender: UIButton) {
@@ -74,7 +73,7 @@ class InscriptionProfilViewController: RootViewController {
                 if userSessionManager.dicoUserDataInscription == nil {
                     userSessionManager.dicoUserDataInscription = [String:AnyObject]()
                 }
-                userSessionManager.dicoUserDataInscription!["avatar"] = avatar
+                userSessionManager.dicoUserDataInscription!["avatar"] = avatar as AnyObject?
             }
             
             let registrationParams = userSessionManager.dicoUserDataInscription!
