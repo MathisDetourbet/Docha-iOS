@@ -31,6 +31,8 @@ class ConnexionRequest: DochaRequest {
             }
             .responseJSON { response in
                 debugPrint(response)
+                let jsonResponse = JSON(response)
+                debugPrint(jsonResponse)
             }
         
     }
@@ -40,20 +42,28 @@ class ConnexionRequest: DochaRequest {
         let urlString = "\(Constants.UrlServer.UrlBase)\(Constants.UrlServer.UrlConnexion.UrlFacebookConnexion)"
         print("URL connexion with Facebook : \(urlString)")
         
-        let parameters = [UserDataKey.kFacebookToken: accessToken]
+        let parameters: Parameters = [UserDataKey.kFacebookToken: accessToken!]
+        print("access_token_fb : \(accessToken)")
         
         let configuration = URLSessionConfiguration.default
         configuration.timeoutIntervalForResource = REQUEST_TIME_OUT
         
         alamofireManager = Alamofire.SessionManager(configuration: configuration)
-        alamofireManager!.request(urlString, method: .post, parameters: parameters, encoding: JSONEncoding.default)
+        Alamofire.request(urlString, method: .post, parameters: parameters, encoding: JSONEncoding.default)
             .validate { request, response, data in
-                debugPrint("Response after validation : \(response)")
                 return .success
             }
-            .responseJSON { (response) in
-                debugPrint("ResponseJSON : \(response)")
-            }
+            .responseJSON { response in
+                debugPrint(response)
+                let jsonResponse = JSON(response.result.value)
+                debugPrint(jsonResponse)
+                if let authToken = jsonResponse["key"].string {
+                    debugPrint(authToken)
+                    
+                } else {
+                    
+                }
+        }
     }
     
     func disconnectUserSession(_ dicoParameters: [String: AnyObject], success: @escaping ((Void) -> Void), fail failure: @escaping (_ error: NSError?, _ listErrors: [AnyObject]?) -> Void) {
@@ -61,13 +71,11 @@ class ConnexionRequest: DochaRequest {
         let urlString = "\(Constants.UrlServer.UrlBase)\(Constants.UrlServer.UrlConnexion.UrlLogOut)"
         print("URL Logout : \(urlString)")
         
-        let dicoApi: [String: AnyObject] = ["user": dicoParameters as AnyObject]
-        
         let configuration = URLSessionConfiguration.default
-        configuration.timeoutIntervalForResource = 15
+        configuration.timeoutIntervalForResource = REQUEST_TIME_OUT
         
         alamofireManager = Alamofire.SessionManager(configuration: configuration)
-        alamofireManager!.request(urlString, method: .delete, parameters: dicoApi, encoding: JSONEncoding.default)
+        alamofireManager!.request(urlString, method: .post, encoding: JSONEncoding.default)
             .validate()
             .responseJSON { (response) in
                 switch (response.result) {

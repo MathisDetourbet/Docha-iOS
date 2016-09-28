@@ -10,11 +10,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TochaProto/ConnexionRequest.swift"
-            timestampString = "496677518.612417"
+            timestampString = "496745783.442319"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "56"
-            endingLineNumber = "56"
+            startingLineNumber = "60"
+            endingLineNumber = "60"
             landmarkName = "connexionWithFacebook(token:success:fail:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -26,11 +26,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TochaProto/ConnexionRequest.swift"
-            timestampString = "496680570.969063"
+            timestampString = "496745783.442319"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "43"
-            endingLineNumber = "43"
+            startingLineNumber = "61"
+            endingLineNumber = "61"
             landmarkName = "connexionWithFacebook(token:success:fail:)"
             landmarkType = "7">
          </BreakpointContent>

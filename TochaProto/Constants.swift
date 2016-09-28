@@ -88,13 +88,8 @@ struct Constants {
         
         static let UrlBase = testing ? "http://127.0.0.1:8005" : "https://afternoon-beyond-49404.herokuapp.com"
         
-        struct UrlProfil {
-            static let UrlProfilUpdate = ""
-            static let UrlGetFriendsDochaInstalled = ""
-        }
-        
-        struct UrlDataRecords {
-            static let UrlPriceRecords = ""
+        struct UrlUser {
+            static let UrlGetUser = "/rest-auth/user/"
         }
         
         struct UrlRegister {

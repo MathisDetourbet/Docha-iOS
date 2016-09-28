@@ -93,6 +93,7 @@
 		67A3021C1C5939C40065D097 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 67A3021B1C5939C40065D097 /* Assets.xcassets */; };
 		67B90ECF1D86BA860009F32C /* GameplayDebriefViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67B90ECE1D86BA860009F32C /* GameplayDebriefViewController.swift */; };
 		67B90ED11D880BED0009F32C /* GameplayDebriefPageContentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67B90ED01D880BED0009F32C /* GameplayDebriefPageContentViewController.swift */; };
+		67BC525E1D9AD4BE00715B74 /* UserRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67BC525D1D9AD4BE00715B74 /* UserRequest.swift */; };
 		67C42D991D4A254B00DF4E5D /* DochaFastlaneUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67C42D981D4A254B00DF4E5D /* DochaFastlaneUITests.swift */; };
 		67C42DA11D4A258900DF4E5D /* SnapshotHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67C42DA01D4A258900DF4E5D /* SnapshotHelper.swift */; };
 		67C42DA21D4A26C100DF4E5D /* TochaProtoUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6701D9931C108A2100F87043 /* TochaProtoUITests.swift */; };
@@ -273,6 +274,7 @@
 		67A3021B1C5939C40065D097 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		67B90ECE1D86BA860009F32C /* GameplayDebriefViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameplayDebriefViewController.swift; sourceTree = "<group>"; };
 		67B90ED01D880BED0009F32C /* GameplayDebriefPageContentViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameplayDebriefPageContentViewController.swift; sourceTree = "<group>"; };
+		67BC525D1D9AD4BE00715B74 /* UserRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserRequest.swift; sourceTree = "<group>"; };
 		67C42D961D4A254B00DF4E5D /* DochaFastlaneUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DochaFastlaneUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		67C42D981D4A254B00DF4E5D /* DochaFastlaneUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DochaFastlaneUITests.swift; sourceTree = "<group>"; };
 		67C42D9A1D4A254B00DF4E5D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -546,6 +548,7 @@
 			children = (
 				67DA29AF1CEB327400CE621F /* ConnexionRequest.swift */,
 				67DA29B51CEB384700CE621F /* InscriptionRequest.swift */,
+				67BC525D1D9AD4BE00715B74 /* UserRequest.swift */,
 				67D482791D1D9203009F1992 /* ProfilRequest.swift */,
 				67748A2A1D41774600525091 /* PriceRecordsRequest.swift */,
 				6750B0FC1D46285000AA33E2 /* DochaRequest.swift */,
@@ -1407,6 +1410,7 @@
 				679B23CE1D05E66F00692400 /* DochaColorsHealper.swift in Sources */,
 				679B23BE1D058F2900692400 /* PreferencesViewController.swift in Sources */,
 				67EFFDD41D900A57003EE8E5 /* RankingTableViewCell.swift in Sources */,
+				67BC525E1D9AD4BE00715B74 /* UserRequest.swift in Sources */,
 				67300B921D09A9730061D06F /* StringHelper.swift in Sources */,
 				6775CE441C494BB700550041 /* JDFlipNumberViewImageFactory.m in Sources */,
 				679B84901D8FD0E70031EC27 /* GameplayMatchRoundYourTurnCell.swift in Sources */,

@@ -157,13 +157,6 @@ class UserSessionManager {
         connexionRequest?.connexionWithFacebook(token: accessToken,
             success: { (session) in
                 
-                // If user have already choose his favorite category (Inscription -> facebook inscription)
-                if let categoriesFavorites = UserSessionManager.sharedInstance.dicoUserDataInscription?["category_favorite"] {
-                    session.categoriesFavorites = categoriesFavorites as? [String]
-                }
-                // Save user infos in the device
-                session.saveSession()
-                
                 if UserSessionManager.sharedInstance.isLogged() {
                     success()
                 } else {

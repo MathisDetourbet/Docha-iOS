@@ -12,10 +12,6 @@ import SwiftyJSON
 
 class ProfilRequest: DochaRequest {
     
-    func getUserProfilWithID(_ userID: String!, success: (_ user: User) -> Void, fail failure: (_ error: NSError?, _ listErrors: [AnyObject]?) -> Void) {
-        
-    }
-    
     func updateProfil(_ userDico: [String:AnyObject]!, success: @escaping (() -> Void), fail failure: @escaping (_ error: NSError?, _ listErrors: [AnyObject]?) -> Void) {
         
         /*let parameters = userDico
