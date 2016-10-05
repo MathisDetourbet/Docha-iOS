@@ -6,13 +6,12 @@
 //  Copyright © 2016 Slymoover. All rights reserved.
 //
 
-import GoogleSignIn
-
 class UserSessionManager {
 	
     var connexionRequest: ConnexionRequest?
-    var inscriptionRequest: InscriptionRequest?
-    var profilRequest: ProfilRequest?
+    var registrationRequest: RegistrationRequest?
+    var userRequest: UserRequest?
+    var categoryRequest: CategoryRequest?
     var dicoUserDataInscription: [String: AnyObject]?
     var needsToUpdateHome: Bool = false
     
@@ -30,6 +29,7 @@ class UserSessionManager {
         
         if (connexionEncodedObject != nil) {
             currentSession = NSKeyedUnarchiver.unarchiveObject(with: connexionEncodedObject!) as? UserSession
+            
         } else {
             return nil
         }
@@ -38,158 +38,186 @@ class UserSessionManager {
     }
     
     func isLogged() -> Bool {
-        //return NSUserDefaults.standardUserDefaults().objectForKey(Constants.UserDefaultsKey.kUserSessionObject) != nil
-        return true
+        return UserDefaults.standard.object(forKey: Constants.UserDefaultsKey.kUserSessionObject) != nil
+    }
+    
+    func getAuthToken() -> String? {
+        let currentSession = self.currentSession()
+        if let currentSession = currentSession {
+            return currentSession.authToken ?? nil
+        }
+        
+        return nil
     }
     
     
 // MARK: Inscription Methods
     
     // Email inscription
-    func inscriptionEmail(_ dicoParams: [String:AnyObject], success: @escaping () -> Void, fail failure: @escaping (_ error: NSError?, _ listError: [AnyObject]?) -> Void) {
-        self.inscriptionRequest = InscriptionRequest()
+    func registrationByEmail(_ email: String!, andPassword password: String!, success: @escaping () -> Void, fail failure: @escaping (_ error: Error?) -> Void) {
         
-        inscriptionRequest?.inscriptionEmailWithDicoParameters(dicoParams,
-            success: { (session) in
-                // Saving user data in the device
-                session.saveSession()
-                
-                if UserSessionManager.sharedInstance.isLogged() {
-                    success()
-                } else {
-                    let error = NSError(domain: kCFErrorFilePathKey as String, code: 900, userInfo: ["message" : "Error when exctracting user in the user defaults"])
-                    failure(error, nil)
-                }
-                
-            }, fail: { (error, listErrors) in
-                failure(error, listErrors)
-        })
-    }
-    
-    func inscriptionByFacebook(_ dicoParams: [String:AnyObject], success: @escaping (_ session: UserSessionFacebook) -> Void, fail failure: @escaping (_ error: NSError?, _ listError: [AnyObject]?) -> Void) {
-        self.inscriptionRequest = InscriptionRequest()
+        registrationRequest = RegistrationRequest()
         
-        inscriptionRequest?.inscriptionFacebookWithDicoParameters(dicoParams,
-            success: { (session) in
+        registrationRequest?.registrationByEmail(withEmail: email, andPassword: password,
+            success: { (authToken) in
                 
-                session.facebookID = dicoParams[UserDataKey.kFacebookID] as? String
-                session.facebookAccessToken = dicoParams[UserDataKey.kFacebookToken] as? String
-                
-                session.saveSession()
-                
-                if UserSessionManager.sharedInstance.isLogged() {
-                    success(session)
-                } else {
-                    let error = NSError(domain: kCFErrorFilePathKey as String, code: 900, userInfo: ["message" : "Error when exctracting user in the user defaults"])
-                    failure(error, nil)
-                }
-            
-            }, fail: { (error, listErrors) in
-                failure(error, listErrors)
-        })
+                self.userRequest = UserRequest()
+                self.userRequest?.getUser(withAuthToken: authToken,
+                    success: { (user) in
+                        let userSessionFacebook = UserSessionFacebook()
+                        userSessionFacebook.initPropertiesFromUser(user: user)
+                        userSessionFacebook.authToken = authToken
+                        
+                        userSessionFacebook.saveSession()
+                        success()
+                        
+                    }, fail: { (error) in
+                        failure(error)
+                    }
+                )
+            },
+            fail: { (error) in
+                failure(error)
+            }
+        )
     }
     
 
 // MARK: Connexion Methods
     
-    func signIn(_ success: @escaping () -> Void, fail failure: @escaping (_ error: NSError?, _ listErrors: [AnyObject]?) -> Void) {
-        let userSession = self.currentSession()!
-        self.connexionRequest = ConnexionRequest()
+    func signIn(_ success: @escaping () -> Void, fail failure: @escaping (_ error: Error?) -> Void) {
+        let userSession = self.currentSession()
         
-        if userSession.isKind(of: UserSessionEmail.self) {
-            let userSessionEmail = userSession as! UserSessionEmail
-            let dicoParams = userSessionEmail.generateJSONFromUserSession()
-            let email = dicoParams![UserDataKey.kEmail] as? String
-            let password = dicoParams![UserDataKey.kPassword] as? String
-            if let email = email, let password = password {
-                connectByEmail(email, andPassword: password, success: { 
+        guard let _ = userSession, let _ = userSession?.authToken else {
+            failure(DochaRequestError.notAuthenticated)
+            self.currentSession()?.deleteSession()
+            return
+        }
+        
+        let authToken = userSession!.authToken!
+        userRequest = UserRequest()
+        
+        if userSession!.isKind(of: UserSessionEmail.self) {
+            userRequest?.getUser(withAuthToken: authToken,
+                success: { (user) in
+                    
+                    userSession!.initPropertiesFromUser(user: user)
+                    userSession!.saveSession()
                     success()
                     
-                    }, fail: { (error, listError) in
-                    failure(error, listError)
-                })
-            } else {
-                print("Email or password are nil")
-                failure(nil, nil)
-            }
-        } else if userSession.isKind(of: UserSessionFacebook.self) {
-            let userSessionFacebook = userSession as! UserSessionFacebook
-            if let accessToken = userSessionFacebook.facebookAccessToken {
-                self.connexionRequest?.connexionWithFacebook(
-                    token: accessToken,
-                    success: { (session) in
-                        session.saveSession()
-                        success()
-                                                                
-                    }, fail: { (error, listErrors) in
-                        failure(error, listErrors)
-                })
-            } else {
-                failure(nil, nil)
-            }
+                }, fail: { (error) in
+                    self.currentSession()?.deleteSession()
+                    failure(error)
+                }
+            )
+            
+        } else if userSession!.isKind(of: UserSessionFacebook.self) {
+            userRequest?.getUser(withAuthToken: authToken,
+                success: { (user) in
+                    
+                    userSession!.initPropertiesFromUser(user: user)
+                    userSession!.saveSession()
+                    success()
+                    
+                }, fail: { (error) in
+                    self.currentSession()?.deleteSession()
+                    failure(error)
+                }
+            )
         }
     }
     
-    func connectByEmail(_ email: String, andPassword password: String, success: @escaping () -> Void, fail failure: @escaping (_ error: NSError?, _ listError: [AnyObject]?) -> Void) {
-        self.connexionRequest = ConnexionRequest()
+    func connectByEmail(_ email: String, andPassword password: String, success: @escaping () -> Void, fail failure: @escaping (_ error: Error?) -> Void) {
+        connexionRequest = ConnexionRequest()
             
         connexionRequest?.connexionWithEmail(email, password: password,
-            success: { (session) in
+            success: { (authToken) in
                 
-                session.saveSession()
-                
-                if UserSessionManager.sharedInstance.isLogged() {
-                    success()
-                } else {
-                    let error = NSError(domain: kCFErrorFilePathKey as String, code: 900, userInfo: ["message" : "Error when exctracting user in the user defaults"])
-                    failure(error, nil)
-                }
-                
-            }, fail: { (error, listError) in
-                failure(error, listError)
-        })
+                let authToken = authToken
+                self.userRequest = UserRequest()
+                self.userRequest?.getUser(withAuthToken: authToken,
+                    success: { (user) in
+                        
+                        let userSessionEmail = UserSessionEmail()
+                        userSessionEmail.initPropertiesFromUser(user: user)
+                        userSessionEmail.authToken = authToken
+                        
+                        userSessionEmail.saveSession()
+                        success()
+                        
+                    }, fail: { (error) in
+                        failure(error)
+                    }
+                )
+            },
+            fail: { (error) in
+                failure(error)
+            }
+        )
     }
     
-    func connectByFacebook(token accessToken: String!, success: @escaping () -> Void, fail failure: @escaping (_ error: NSError?, _ listError: [AnyObject]?) -> Void) {
-        
+    func connectByFacebook(withFacebookToken accessToken: String!, success: @escaping () -> Void, fail failure: @escaping (_ error: Error?) -> Void) {
         connexionRequest = ConnexionRequest()
-        
-        connexionRequest?.connexionWithFacebook(token: accessToken,
-            success: { (session) in
+        connexionRequest?.connexionWithFacebook(withFacebookToken: accessToken,
+            success: { (authToken) in
                 
-                if UserSessionManager.sharedInstance.isLogged() {
-                    success()
-                } else {
-                    let error = NSError(domain: kCFErrorFilePathKey as String, code: 900, userInfo: ["message" : "Error when exctracting user in the user defaults"])
-                    failure(error, nil)
-                }
-                
-            }, fail: { (error, listError) in
-                failure(error, listError)
-        })
+                let authToken = authToken
+                self.userRequest = UserRequest()
+                self.userRequest?.getUser(withAuthToken: authToken,
+                    success: { (user) in
+                        
+                        let userSessionFacebook = UserSessionFacebook()
+                        userSessionFacebook.initPropertiesFromUser(user: user)
+                        userSessionFacebook.authToken = authToken
+                        userSessionFacebook.facebookAccessToken = accessToken
+                        
+                        userSessionFacebook.saveSession()
+                        success()
+                                            
+                    },
+                    fail: { (error) in
+                        failure(error)
+                    }
+                )
+            },
+            fail: { (error) in
+                failure(error)
+            }
+        )
     }
     
-    func updateUserProfil(_ dicoParameters: [String:AnyObject], success: @escaping () -> Void, fail failure: @escaping (_ error: NSError?, _ listError: [AnyObject]?) -> Void) {
-        self.profilRequest = ProfilRequest()
+    func updateUser(withData data: [String: Any]!, success: @escaping () -> Void, fail failure: @escaping (_ error: Error?) -> Void) {
+        guard let authToken = getAuthToken() else {
+            failure(DochaRequestError.authTokenNotFound)
+            return
+        }
         
-        self.profilRequest?.updateProfil(dicoParameters, success: {
-            success()
-            
-            }, fail: { (error, listErrors) in
-                failure(error, listErrors)
-        })
+        userRequest = UserRequest()
+        userRequest?.patchUser(withToken: authToken, andData: data,
+            success: { (user) in
+                
+                let currentSession = self.currentSession()
+                
+                guard let currentSessionUnwrapped = currentSession else {
+                    failure(DochaRequestError.userDefaultsNotFound)
+                    return
+                }
+                
+                currentSessionUnwrapped.initPropertiesFromUser(user: user)
+                currentSessionUnwrapped.saveSession()
+                
+                success()
+                
+            }, fail: { (error) in
+                failure(error)
+            }
+        )
     }
     
     func logout() {
-        if let currentSession = self.currentSession() {
-            let dicoParams = currentSession.generateJSONFromUserSession()!
-            self.connexionRequest = ConnexionRequest()
-            self.connexionRequest!.disconnectUserSession(dicoParams,
-                success: { (_) in
-                    print("Logout successful")
-                }, fail: { (error, listErrors) in
-                    print("Logout error : \(error)")
-            })
+        connexionRequest = ConnexionRequest()
+        connexionRequest?.logOutUser()
+        if let currentSession = currentSession() {
             
             if currentSession.isKind(of: UserSessionFacebook.self) {
                 let loginManager = FBSDKLoginManager()
@@ -199,5 +227,44 @@ class UserSessionManager {
             currentSession.deleteSession()
             currentSession.deleteProfilImage()
         }
+    }
+    
+    
+//MARK: Category Request
+    
+    func getAllCategory(success: @escaping (_ categoriesList: [Category]) -> Void, fail failure: @escaping (_ error: Error?) -> Void) {
+        guard let authToken = getAuthToken() else {
+            failure(DochaRequestError.authTokenNotFound)
+            return
+        }
+        
+        categoryRequest = CategoryRequest()
+        categoryRequest?.getAllCategories(withAuthToken: authToken,
+            success: { (categoriesList) in
+                
+                success(categoriesList)
+                
+            }, fail: { (error) in
+                failure(error)
+            }
+        )
+    }
+    
+    func get(category slugName: String!, success: @escaping (_ category: Category) -> Void, fail failure: @escaping (_ error: Error?) -> Void) {
+        guard let authToken = getAuthToken() else {
+            failure(DochaRequestError.authTokenNotFound)
+            return
+        }
+        
+        categoryRequest = CategoryRequest()
+        categoryRequest?.get(category: slugName, andAuthToken: authToken,
+            success: { (category) in
+                
+                success(category)
+                
+            }, fail: { (error) in
+                failure(error)
+            }
+        )
     }
 }

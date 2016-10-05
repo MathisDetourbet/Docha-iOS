@@ -34,19 +34,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         initManagers()
         
         // Sign in user
-//        if  UserSessionManager.sharedInstance.isLogged() {
-//            UserSessionManager.sharedInstance.signIn({
-//                    print("Sign in successful")
-//                }) { (error, listErrors) in
-//                    PopupManager.sharedInstance.showErrorPopup("Oups !", message: "La connexion internet semble interrompue...", completion: nil)
-//            }
-//        }
-        
-        NavSchemeManager.sharedInstance.initRootController()
-        
-        let apperance = UITabBarItem.appearance()
-        let attributes = [NSFontAttributeName:UIFont(name: "Montserrat-Regular", size: 10)!]
-        apperance.setTitleTextAttributes(attributes, for: UIControlState())
+        UserSessionManager.sharedInstance.signIn({
+            NavSchemeManager.sharedInstance.initRootController()
+            
+        }) { (error) in
+            NavSchemeManager.sharedInstance.initRootController()
+        }
         
         // Facebook SDK
         FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
@@ -97,7 +90,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 // MARK: Facebook Sign In
     
-    func facebookSignIn(_ success:@escaping () -> Void, fail failure: @escaping (_ error: NSError?, _ listError: [AnyObject]?) -> Void) {
+    func facebookSignIn(_ success:@escaping () -> Void, fail failure: @escaping (_ error: Error?) -> Void) {
         if((FBSDKAccessToken.current()) != nil) {
             
             FBSDKGraphRequest(graphPath: "me", parameters: ["fields": "id, name, first_name, last_name, picture.type(large), email, gender, birthday"]).start(completionHandler: { (connection, result, error) -> Void in
@@ -109,16 +102,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                     let accessToken = FBSDKAccessToken.current().tokenString as String
                     
                     UserSessionManager.sharedInstance.connectByFacebook(
-                        token: accessToken,
+                        withFacebookToken: accessToken,
                         success: {
                             success()
-                        }, fail: { (error, listError) in
+                        }, fail: { (error) in
                             print("error saving Facebook user data in database : \(error)")
-                            failure(error, listError)
+                            failure(error)
                     })
                 } else {
                     print("Facebook get user data : error : \(error)")
-                    failure(error as NSError?, nil)
+                    failure(error as Error?)
                 }
             })
         }

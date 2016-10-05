@@ -419,6 +419,9 @@
                             </tableView>
                             <imageView contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="avatar_man_large" translatesAutoresizingMaskIntoConstraints="NO" id="c9l-Ug-fCQ" userLabel="avatarImageView">
                                 <gestureRecognizers/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="c9l-Ug-fCQ" secondAttribute="height" multiplier="1:1" id="w1C-z0-YsA"/>
+                                </constraints>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Docha" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PWv-L7-2qL">
                                 <fontDescription key="fontDescription" name="CaviarDreams-Bold" family="Caviar Dreams" pointSize="20"/>
@@ -509,7 +512,6 @@
                             <constraint firstItem="b91-v8-JcW" firstAttribute="top" secondItem="erz-g7-6On" secondAttribute="bottom" id="L6Q-FZ-GeT"/>
                             <constraint firstItem="RFo-K7-MF3" firstAttribute="centerY" secondItem="vFU-kv-iGs" secondAttribute="centerY" id="LRR-FQ-cAh"/>
                             <constraint firstItem="TSk-An-EHe" firstAttribute="top" secondItem="DRl-OW-9dn" secondAttribute="bottom" constant="2" id="MDe-ce-FDg"/>
-                            <constraint firstItem="c9l-Ug-fCQ" firstAttribute="centerX" secondItem="5Oy-Gn-ChQ" secondAttribute="centerX" id="MWK-r2-Zef"/>
                             <constraint firstItem="xKJ-n2-yad" firstAttribute="leading" secondItem="5Oy-Gn-ChQ" secondAttribute="leading" id="OXN-Dg-52l"/>
                             <constraint firstItem="3fK-9f-Gk9" firstAttribute="bottom" secondItem="vFU-kv-iGs" secondAttribute="top" constant="9" id="OaJ-dC-RPI"/>
                             <constraint firstItem="erz-g7-6On" firstAttribute="top" secondItem="vFU-kv-iGs" secondAttribute="top" id="PvI-HP-bRZ"/>
@@ -517,6 +519,7 @@
                             <constraint firstItem="TSk-An-EHe" firstAttribute="centerX" secondItem="5Oy-Gn-ChQ" secondAttribute="centerX" id="RYZ-yE-BgP"/>
                             <constraint firstItem="kTh-DW-V8g" firstAttribute="leading" secondItem="5Oy-Gn-ChQ" secondAttribute="leading" constant="10" id="TqV-Dh-3Kl"/>
                             <constraint firstItem="NOd-tj-akb" firstAttribute="top" secondItem="vFU-kv-iGs" secondAttribute="top" id="UcK-O3-APr"/>
+                            <constraint firstAttribute="trailing" secondItem="c9l-Ug-fCQ" secondAttribute="trailing" constant="137" id="VHq-X5-ZFd"/>
                             <constraint firstItem="vhx-Ed-szr" firstAttribute="leading" secondItem="DRl-OW-9dn" secondAttribute="trailing" constant="10" id="bD0-ke-32c"/>
                             <constraint firstItem="ZNa-bP-3U2" firstAttribute="centerY" secondItem="vFU-kv-iGs" secondAttribute="centerY" id="e3M-9g-hHk"/>
                             <constraint firstItem="xKJ-n2-yad" firstAttribute="top" secondItem="VDR-vw-imF" secondAttribute="bottom" id="f2M-6Z-gJK"/>
@@ -532,6 +535,7 @@
                             <constraint firstItem="vhx-Ed-szr" firstAttribute="centerY" secondItem="DRl-OW-9dn" secondAttribute="centerY" id="qIv-7W-kFp"/>
                             <constraint firstItem="NOd-tj-akb" firstAttribute="leading" secondItem="5Oy-Gn-ChQ" secondAttribute="leading" id="rvM-Ve-bZt"/>
                             <constraint firstItem="b91-v8-JcW" firstAttribute="top" secondItem="NOd-tj-akb" secondAttribute="bottom" id="wRQ-Gm-6aa"/>
+                            <constraint firstItem="c9l-Ug-fCQ" firstAttribute="leading" secondItem="5Oy-Gn-ChQ" secondAttribute="leading" constant="138" id="whj-Fq-6tW"/>
                             <constraint firstAttribute="trailing" secondItem="RFo-K7-MF3" secondAttribute="trailing" constant="60" id="yJ1-3i-wvo"/>
                             <constraint firstItem="PWv-L7-2qL" firstAttribute="top" secondItem="VDR-vw-imF" secondAttribute="bottom" constant="10" id="zSV-Bh-xDE"/>
                         </constraints>
@@ -2678,7 +2682,7 @@
                                     <action selector="emailConnexionTouched:" destination="xDt-My-EAi" eventType="touchUpInside" id="WKf-TW-713"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ou inscription par email" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QiS-EB-iek">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ou connexion par email" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QiS-EB-iek">
                                 <fontDescription key="fontDescription" name="Montserrat-ExtraBold" family="Montserrat" pointSize="15"/>
                                 <color key="textColor" red="0.1450980392" green="0.23921568630000001" blue="0.30980392159999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
@@ -3235,7 +3239,7 @@
                             <constraint firstItem="1Lp-uv-MHF" firstAttribute="centerX" secondItem="7kY-eX-m4H" secondAttribute="centerX" id="ziN-gX-aI9"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="UoZ-u1-Flr"/>
+                    <navigationItem key="navigationItem" title="Qui es-tu ?" id="UoZ-u1-Flr"/>
                     <nil key="simulatedStatusBarMetrics"/>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" translucent="NO" prompted="NO"/>
                     <connections>

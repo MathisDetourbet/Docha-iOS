@@ -9,10 +9,9 @@
 import Foundation
 import SwiftyJSON
 import TextFieldEffects
-// Google+
-import GoogleSignIn
 
-class ConnexionViewController: RootViewController, GIDSignInUIDelegate {
+
+class ConnexionViewController: RootViewController {
     
     var emailString: String?
     var passwordString: String?
@@ -22,27 +21,62 @@ class ConnexionViewController: RootViewController, GIDSignInUIDelegate {
     @IBOutlet weak var passwordTextField: HoshiTextField!
     @IBOutlet weak var connexionEmailButton: UIButton!
     
+    
+//MARK: Life View Cycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.configNavigationBarWithTitle("Connexion")
+        
+        configNavigationBarWithTitle("Connexion")
         hideKeyboardWhenTappedAround()
-        self.connexionEmailButton.isEnabled = false
+        connexionEmailButton.isEnabled = false
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.navigationController!.setNavigationBarHidden(false, animated: false)
-        GIDSignIn.sharedInstance().uiDelegate = self
+    }
+    
+    
+//MARK: Facebook Method
+    
+    func getFBUserData() {
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        appDelegate.facebookSignIn({
+            
+            PopupManager.sharedInstance.dismissPopup(true, completion: {
+                let categoryPrefered = UserSessionManager.sharedInstance.currentSession()!.categoriesPrefered
+                
+                if categoryPrefered.isEmpty {
+                    let categoryViewController = self.storyboard?.instantiateViewController(withIdentifier: "idInscriptionCategorySelectionViewController") as! InscriptionCategorySelectionViewController
+                    categoryViewController.comeFromConnexionVC = true
+                    self.navigationController?.pushViewController(categoryViewController, animated: true)
+                    
+                } else {
+                    self.goToHome()
+                }
+            })
+            
+        }) { (error) in
+            PopupManager.sharedInstance.dismissPopup(true, completion: {
+                print("Error fetching user facebook data : \(error)")
+                PopupManager.sharedInstance.showErrorPopup("Oups !", message: "Une erreure est survenue. Vérifie que tu es bien connecté à internet.", completion: nil)
+            })
+        }
     }
     
     func isEmailValid() -> Bool {
         if let emailString = emailTextField.text {
+            
             if !emailString.isEmpty {
+                
                 if emailString.isValidEmail() {
-                    self.emailTextField.borderActiveColor = UIColor.blueDochaColor()
-                    self.emailTextField.borderInactiveColor = UIColor.blueDochaColor()
+                    emailTextField.borderActiveColor = UIColor.blueDochaColor()
+                    emailTextField.borderInactiveColor = UIColor.blueDochaColor()
                     self.emailString = emailTextField.text
+                    
                     return true
+                    
                 } else {
                     // Email is not valid
                     //print("Email is not valid")
@@ -56,8 +90,8 @@ class ConnexionViewController: RootViewController, GIDSignInUIDelegate {
             //print("Email is nil")
         }
         
-        self.emailTextField.borderActiveColor = UIColor.redDochaColor()
-        self.emailTextField.borderInactiveColor = UIColor.redDochaColor()
+        emailTextField.borderActiveColor = UIColor.redDochaColor()
+        emailTextField.borderInactiveColor = UIColor.redDochaColor()
         
         return false
     }
@@ -65,8 +99,8 @@ class ConnexionViewController: RootViewController, GIDSignInUIDelegate {
     func isPasswordValid() -> Bool {
         if let passwordString = passwordTextField.text {
             if !passwordString.isEmpty {
-                self.passwordTextField.borderActiveColor = UIColor.blueDochaColor()
-                self.passwordTextField.borderInactiveColor = UIColor.blueDochaColor()
+                passwordTextField.borderActiveColor = UIColor.blueDochaColor()
+                passwordTextField.borderInactiveColor = UIColor.blueDochaColor()
                 self.passwordString = passwordTextField.text
                 return true
             } else {
@@ -78,18 +112,21 @@ class ConnexionViewController: RootViewController, GIDSignInUIDelegate {
             //print("Password is nil")
         }
         
-        self.passwordTextField.borderActiveColor = UIColor.redDochaColor()
-        self.passwordTextField.borderInactiveColor = UIColor.redDochaColor()
+        passwordTextField.borderActiveColor = UIColor.redDochaColor()
+        passwordTextField.borderInactiveColor = UIColor.redDochaColor()
         
         return false
     }
     
+
+//MARK: @IBActions
+    
     @IBAction func EmailTextFieldEditingChanged(_ sender: HoshiTextField) {
-        self.connexionEmailButton.isEnabled = (isEmailValid() && isPasswordValid()) ? true : false
+        connexionEmailButton.isEnabled = (isEmailValid() && isPasswordValid()) ? true : false
     }
     
     @IBAction func PasswordTextFieldEditingChanged(_ sender: HoshiTextField) {
-        self.connexionEmailButton.isEnabled = (isPasswordValid() && isEmailValid()) ? true : false
+        connexionEmailButton.isEnabled = (isPasswordValid() && isEmailValid()) ? true : false
     }
     
     @IBAction func facebookButtonTouched(_ sender: UIButton) {
@@ -101,11 +138,12 @@ class ConnexionViewController: RootViewController, GIDSignInUIDelegate {
             
             if error != nil {
                 print("Facebook login : process error : \(error)")
-                
                 return
+                
             } else if (result?.isCancelled)! {
                 print("Facebook login : cancelled")
                 return
+                
             } else {
                 let fbloginresult : FBSDKLoginManagerLoginResult = result!
                 
@@ -119,54 +157,30 @@ class ConnexionViewController: RootViewController, GIDSignInUIDelegate {
         }
     }
     
-    func getFBUserData() {
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        appDelegate.facebookSignIn({
-            
-            PopupManager.sharedInstance.dismissPopup(true, completion: {
-                if UserSessionManager.sharedInstance.currentSession()?.categoriesFavorites != nil {
-                    self.goToHome()
-                    
-                } else {
-                    let categoryViewController = self.storyboard?.instantiateViewController(withIdentifier: "idInscriptionCategorySelectionViewController") as! InscriptionCategorySelectionViewController
-                    categoryViewController.comeFromConnexionVC = true
-                    self.navigationController?.pushViewController(categoryViewController, animated: true)
-                }
-            })
-            
-        }) { (error, listError) in
-            PopupManager.sharedInstance.dismissPopup(true, completion: {
-                print("Error fetching user facebook data : \(error)")
-                PopupManager.sharedInstance.showErrorPopup("Oups !", message: "Une erreure est survenue. Vérifie que tu es bien connecté à internet.", completion: nil)
-            })
-        }
-    }
-    
     @IBAction func emailConnexionTouched(_ sender: UIButton) {
-        PopupManager.sharedInstance.showLoadingPopup("Connexion en cours...", message: nil, completion: {
-            if self.emailString != nil && self.passwordString != nil {
-                let email = self.emailString!
-                let password = self.passwordString!
+        PopupManager.sharedInstance.showLoadingPopup("Connexion en cours...", message: nil,
+            completion: {
                 
-                UserSessionManager.sharedInstance.connectByEmail(email, andPassword: password,
+                UserSessionManager.sharedInstance.connectByEmail(self.emailString!, andPassword: self.passwordString!,
                     success: {
-                        PopupManager.sharedInstance.dismissPopup(true, completion: {
-                            self.goToHome()
-                        })
-                        print("User connexion by email : success !")
                         
-                    }, fail: { (error, listError) in
-                        print("User connexion by email failed...")
-                        PopupManager.sharedInstance.dismissPopup(true, completion: {
-                            PopupManager.sharedInstance.showErrorPopup("Oups !", message: "L'email ou le mot de passe est incorrecte.", completion: nil)
-                        })
-                })
+                        PopupManager.sharedInstance.dismissPopup(true,
+                            completion: {
+                                self.goToHome()
+                            }
+                        )
+                        
+                    }, fail: { (error) in
+                        
+                        PopupManager.sharedInstance.dismissPopup(true,
+                            completion: {
+                                PopupManager.sharedInstance.showErrorPopup(message: Constants.PopupMessage.ErrorMessage.kErrorConnexionEmailBadEmailOrPassword)
+                            }
+                        )
+                    }
+                )
             }
-        })
-    }
-    
-    @IBAction func googlePlusButtonTouched(_ sender: UIButton) {
-        GIDSignIn.sharedInstance().signIn()
+        )
     }
     
     @IBAction func backButtonTapped(_ sender: UIBarButtonItem) {

@@ -68,7 +68,7 @@ class GameplayDebriefViewController: GameViewController, UIPageViewControllerDat
         let userSession = UserSessionManager.sharedInstance.currentSession()
         
         if let userSession = userSession {
-            if let avatar = userSession.avatar {
+            if let avatar = userSession.avatarUrl {
                 userAvatarImageView.image = UIImage(named: avatar)
                 
             } else {

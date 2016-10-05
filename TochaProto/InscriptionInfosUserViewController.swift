@@ -11,8 +11,9 @@ import TextFieldEffects
 
 class InscriptionInfosUserViewController: RootViewController, UITextFieldDelegate {
     
-    var genderSelected: String? = "M"
-    var dateOfBirthday: String? = "1 Janvier 1990"
+    var genderSelected: String? = "other"
+    var dateOfBirthday: String?
+    var avatarUrl: String = "avatar_man"
     
     @IBOutlet weak var manButton: UIButton!
     @IBOutlet weak var womanButton: UIButton!
@@ -22,12 +23,17 @@ class InscriptionInfosUserViewController: RootViewController, UITextFieldDelegat
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.hideKeyboardWhenTappedAround()
-        self.validProfilButton.isEnabled = false
         self.navigationController!.setNavigationBarHidden(false, animated: false)
         self.navigationItem.setHidesBackButton(true, animated: false)
-        self.configNavigationBarWithTitle("Qui es-tu ?")
-        self.birthdayTextField.placeholderColor = UIColor.blueDochaColor()
+        
+        hideKeyboardWhenTappedAround()
+        configNavigationBarWithTitle("Qui es-tu ?")
+        buildUI()
+    }
+    
+    func buildUI() {
+        validProfilButton.isEnabled = false
+        birthdayTextField.placeholderColor = UIColor.blueDochaColor()
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
@@ -59,67 +65,76 @@ class InscriptionInfosUserViewController: RootViewController, UITextFieldDelegat
     func handleDatePicker(_ sender: UIDatePicker) {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "dd MMMM yyyy"
-        self.birthdayTextField.text = dateFormatter.string(from: sender.date)
-        self.dateOfBirthday = birthdayTextField.text
+        birthdayTextField.text = dateFormatter.string(from: sender.date)
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        dateOfBirthday = dateFormatter.string(from: sender.date)
         
-        if self.birthdayTextField.text != nil || !((self.birthdayTextField.text?.isEmpty)!) {
-            self.birthdayTextField.borderActiveColor = UIColor.blueDochaColor()
-            self.birthdayTextField.borderInactiveColor = UIColor.blueDochaColor()
-            self.birthdayTextField.placeholder = ""
-            self.validProfilButton.isEnabled = true
+        if birthdayTextField.text != nil || !((birthdayTextField.text?.isEmpty)!) {
+            birthdayTextField.borderActiveColor = UIColor.blueDochaColor()
+            birthdayTextField.borderInactiveColor = UIColor.blueDochaColor()
+            birthdayTextField.placeholder = ""
+            validProfilButton.isEnabled = true
             
         } else {
-            self.validProfilButton.isEnabled = false
-            self.birthdayTextField.borderActiveColor = UIColor.redDochaColor()
-            self.birthdayTextField.borderInactiveColor = UIColor.redDochaColor()
-            self.birthdayTextField.placeholder = "Exemple : 1er Janvier 1990"
+            validProfilButton.isEnabled = false
+            birthdayTextField.borderActiveColor = UIColor.redDochaColor()
+            birthdayTextField.borderInactiveColor = UIColor.redDochaColor()
+            birthdayTextField.placeholder = "Exemple : 1er Janvier 1990"
         }
     }
     
     @IBAction func skipButtonTouched(_ sender: UIButton) {
-//        self.genderSelected = "M"
-//        self.dateOfBirthday = "1 Janvier 1990"
-//        self.validButtonTouched(nil)
-//        let inscriptionAvatarVC = self.storyboard?.instantiateViewControllerWithIdentifier("idInscriptionProfilViewController") as! InscriptionProfilViewController
-//        self.navigationController?.pushViewController(inscriptionAvatarVC, animated: true)
+        let inscriptionAvatarVC = self.storyboard?.instantiateViewController(withIdentifier: "idInscriptionProfilViewController") as! InscriptionProfilViewController
+        self.navigationController?.pushViewController(inscriptionAvatarVC, animated: true)
     }
     
     @IBAction func genderButtonTouched(_ sender: UIButton) {
         if sender.tag == 1 {
             // Man selected
-            self.genderSelected = "M"
-            self.manButton.setImage(UIImage(named: "avatar_homme_selected_infos_user.png"), for: UIControlState())
-            self.womanButton.setImage(UIImage(named: "avatar_femme_infos_user.png"), for: UIControlState())
-            self.manButton.animatedLikeBubbleWithDelay(0.0, duration: 0.5)
+            genderSelected = "male"
+            avatarUrl = "avatar_man"
+            manButton.setImage(UIImage(named: "avatar_man_large_selected"), for: UIControlState())
+            womanButton.setImage(UIImage(named: "avatar_woman_large"), for: UIControlState())
+            manButton.animatedLikeBubbleWithDelay(0.0, duration: 0.5)
             
         } else {
             // Woman selected
-            self.genderSelected = "F"
-            self.womanButton.setImage(UIImage(named: "avatar_femme_selected_infos_user.png"), for: UIControlState())
-            self.manButton.setImage(UIImage(named: "avatar_homme_infos_user.png"), for: UIControlState())
-            self.womanButton.animatedLikeBubbleWithDelay(0.0, duration: 0.5)
+            genderSelected = "female"
+            avatarUrl = "avatar_woman"
+            womanButton.setImage(UIImage(named: "avatar_woman_large_selected"), for: UIControlState())
+            manButton.setImage(UIImage(named: "avatar_man_large"), for: UIControlState())
+            womanButton.animatedLikeBubbleWithDelay(0.0, duration: 0.5)
         }
     }
     
     @IBAction func validButtonTouched(_ sender: UIButton?) {
-        let userSessionManager = UserSessionManager.sharedInstance
-        
-        if userSessionManager.dicoUserDataInscription == nil {
-            userSessionManager.dicoUserDataInscription = [String:AnyObject]()
-        }
-        
-        if let genderString = self.genderSelected, let birthday = self.dateOfBirthday {
-            userSessionManager.dicoUserDataInscription!["sexe"] = genderString as AnyObject?
-            userSessionManager.dicoUserDataInscription!["date_birthday"] = birthday as AnyObject?
+        if let gender = genderSelected, let birthday = dateOfBirthday {
+            PopupManager.sharedInstance.showLoadingPopup("Chargement en cours", message: "Création du profil...", completion: nil)
             
-            if genderString == "F" {
-                userSessionManager.dicoUserDataInscription!["avatar"] = "avatar_woman" as AnyObject?
-            } else {
-                userSessionManager.dicoUserDataInscription!["avatar"] = "avatar_man" as AnyObject?
+            let data = [UserDataKey.kGender: gender,
+                        UserDataKey.kDateBirthday: birthday,
+                        UserDataKey.kAvatarUrl: avatarUrl]
+            
+            UserSessionManager.sharedInstance.updateUser(withData: data,
+                success: {
+                    
+                    PopupManager.sharedInstance.dismissPopup(true,
+                        completion: {
+                            let inscriptionPseudoVC = self.storyboard?.instantiateViewController(withIdentifier: "idInscriptionPseudoSelectionViewController") as! InscriptionPseudoSelectionViewController
+                            self.navigationController?.pushViewController(inscriptionPseudoVC, animated: true)
+                        }
+                    )
+                }
+            ) { (error) in
+                PopupManager.sharedInstance.dismissPopup(true,
+                    completion: {
+                        PopupManager.sharedInstance.showErrorPopup(message: Constants.PopupMessage.ErrorMessage.kErrorNoInternetConnection)
+                    }
+                )
             }
+            
+        } else {
+            PopupManager.sharedInstance.showErrorPopup(message: Constants.PopupMessage.ErrorMessage.kErrorInscriptionBadBirthOrGender)
         }
-        
-        let inscriptionPseudoVC = self.storyboard?.instantiateViewController(withIdentifier: "idInscriptionPseudoSelectionViewController") as! InscriptionPseudoSelectionViewController
-        self.navigationController?.pushViewController(inscriptionPseudoVC, animated: true)
     }
 }

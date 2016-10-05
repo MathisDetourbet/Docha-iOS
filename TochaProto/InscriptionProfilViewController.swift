@@ -78,24 +78,24 @@ class InscriptionProfilViewController: RootViewController {
             
             let registrationParams = userSessionManager.dicoUserDataInscription!
             
-            UserSessionManager.sharedInstance.inscriptionEmail(registrationParams,success: { (session) in
-                print("Saving in the database : success !")
-                
-                PopupManager.sharedInstance.dismissPopup(true, completion: {
-                    self.goToHome()
-                })
-                
-                }, fail: { (error, listErrors) in
-                    PopupManager.sharedInstance.dismissPopup(true, completion: {
-                    
-                        if let error = error {
-                            if error.code == 422 {
-                                PopupManager.sharedInstance.showErrorPopup("Oups !", message: "Une erreur est survenue.", completion: nil)
-                            }
-                        }
-                        print("Error inscription : \(error)")
-                    })
-            })
+//            UserSessionManager.sharedInstance.inscriptionEmail(registrationParams,success: { (session) in
+//                print("Saving in the database : success !")
+//                
+//                PopupManager.sharedInstance.dismissPopup(true, completion: {
+//                    self.goToHome()
+//                })
+//                
+//                }, fail: { (error, listErrors) in
+//                    PopupManager.sharedInstance.dismissPopup(true, completion: {
+//                    
+//                        if let error = error {
+//                            if error.code == 422 {
+//                                PopupManager.sharedInstance.showErrorPopup("Oups !", message: "Une erreur est survenue.", completion: nil)
+//                            }
+//                        }
+//                        print("Error inscription : \(error)")
+//                    })
+//            })
         })
     }
 }

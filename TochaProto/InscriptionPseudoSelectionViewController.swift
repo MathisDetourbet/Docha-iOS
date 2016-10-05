@@ -8,6 +8,7 @@
 
 import Foundation
 import TextFieldEffects
+
 fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
   switch (lhs, rhs) {
   case let (l?, r?):
@@ -37,7 +38,7 @@ class InscriptionPseudoSelectionViewController: RootViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.submitButton.isEnabled = false
+        submitButton.isEnabled = false
     }
     
 
@@ -47,44 +48,42 @@ class InscriptionPseudoSelectionViewController: RootViewController {
         if sender.text?.characters.count > 2 && sender.text?.characters.count < 128 {
             sender.borderActiveColor = UIColor.blue
             sender.borderInactiveColor = UIColor.blueDochaColor()
-            self.submitButton.isEnabled = true
+            submitButton.isEnabled = true
             
         } else {
             sender.borderActiveColor = UIColor.redDochaColor()
             sender.borderInactiveColor = UIColor.redDochaColor()
-            self.submitButton.isEnabled = false
+            submitButton.isEnabled = false
         }
     }
     
     @IBAction func submitButtonTouched(_ sender: UIButton) {
-        PopupManager.sharedInstance.showLoadingPopup("Connexion...", message: "Création d'un nouveau Docher en cours.", completion: {
-            
-            let userSessionManager = UserSessionManager.sharedInstance
-            userSessionManager.dicoUserDataInscription!["pseudo"] = self.pseudoTextField.text as AnyObject?
-            let registrationParams = userSessionManager.dicoUserDataInscription!
-            
-            UserSessionManager.sharedInstance.inscriptionEmail(registrationParams,success: { (session) in
-                print("Saving in the database : success !")
+        PopupManager.sharedInstance.showLoadingPopup("Connexion...", message: "Création d'un nouveau Docher en cours.",
+            completion: {
                 
-                PopupManager.sharedInstance.dismissPopup(true, completion: {
-                    let homeViewController = self.storyboard?.instantiateViewController(withIdentifier: "idHomeNavController") as! UINavigationController
-                    NavSchemeManager.sharedInstance.changeRootViewController(homeViewController)
-                    let tutorialVC = self.storyboard?.instantiateViewController(withIdentifier: "idTutorialViewController") as! TutorialViewController
-                    homeViewController.present(tutorialVC, animated: true, completion: nil)
-                })
-                
-                }, fail: { (error, listErrors) in
-                    PopupManager.sharedInstance.dismissPopup(true, completion: {
-                        
-                        if let error = error {
-                            if error.code == 422 {
-                                PopupManager.sharedInstance.showErrorPopup("Oups !", message: "Une erreur est survenue.", completion: nil)
-                            }
+                if let username = self.pseudoTextField.text {
+                    let data = [UserDataKey.kUsername: username]
+                    
+                    UserSessionManager.sharedInstance.updateUser(withData: data,
+                        success: {
+                            
+                            PopupManager.sharedInstance.dismissPopup(true,
+                                completion: {
+                                    self.goToHome()
+                                }
+                            )
+                            
+                        }, fail: { (error) in
+                            PopupManager.sharedInstance.dismissPopup(true,
+                                completion: {
+                                    PopupManager.sharedInstance.showErrorPopup(message: Constants.PopupMessage.ErrorMessage.kErrorNoInternetConnection)
+                                }
+                            )
                         }
-                        print("Error inscription : \(error)")
-                    })
-            })
-        })
+                    )
+                }
+            }
+        )
     }
     
     @IBAction func backButtonTouched(_ sender: UIBarButtonItem) {

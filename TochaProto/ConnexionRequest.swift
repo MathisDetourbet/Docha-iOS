@@ -12,79 +12,61 @@ import SwiftyJSON
 
 class ConnexionRequest: DochaRequest {
     
-    func connexionWithEmail(_ email: String, password: String, success: @escaping (_ session: UserSessionEmail) -> Void, fail failure: @escaping (_ error: NSError?, _ listErrors: [AnyObject]?) -> Void) {
+    func connexionWithEmail(_ email: String, password: String, success: @escaping (_ authToken: String) -> Void, fail failure: @escaping (_ error: Error?) -> Void) {
         
-        let parameters = [UserDataKey.kEmail: email, UserDataKey.kPassword: password]
-        var dicoApi = [String:AnyObject]()
-        dicoApi["user"] = parameters as AnyObject?
+        let parameters: Parameters = [UserDataKey.kUsername: email,
+                                      UserDataKey.kPassword: password]
         
-        let urlString = "\(Constants.UrlServer.UrlBase)\(Constants.UrlServer.UrlConnexion.UrlEmailConnexion)"
-        print("URL connexion with email : \(urlString)")
+        let urlString = Constants.UrlServer.UrlBase + Constants.UrlServer.UrlConnexion.UrlEmailConnexion
+        debugPrint("URL connexion with email : \(urlString)")
         
-        let configuration = URLSessionConfiguration.default
-        configuration.timeoutIntervalForResource = REQUEST_TIME_OUT
-        
-        alamofireManager = Alamofire.SessionManager(configuration: configuration)
         alamofireManager!.request(urlString, method: .post, parameters: parameters, encoding: JSONEncoding.default)
-            .validate { request, response, data in
-                return .success
-            }
+            .validate(statusCode: 200..<300)
             .responseJSON { response in
-                debugPrint(response)
-                let jsonResponse = JSON(response)
-                debugPrint(jsonResponse)
-            }
-        
-    }
-    
-    func connexionWithFacebook(token accessToken: String!, success: @escaping (_ session: UserSessionFacebook) -> Void, fail failure: @escaping (_ error: NSError?, _ listErrors: [AnyObject]?) -> Void) {
-        
-        let urlString = "\(Constants.UrlServer.UrlBase)\(Constants.UrlServer.UrlConnexion.UrlFacebookConnexion)"
-        print("URL connexion with Facebook : \(urlString)")
-        
-        let parameters: Parameters = [UserDataKey.kFacebookToken: accessToken!]
-        print("access_token_fb : \(accessToken)")
-        
-        let configuration = URLSessionConfiguration.default
-        configuration.timeoutIntervalForResource = REQUEST_TIME_OUT
-        
-        alamofireManager = Alamofire.SessionManager(configuration: configuration)
-        Alamofire.request(urlString, method: .post, parameters: parameters, encoding: JSONEncoding.default)
-            .validate { request, response, data in
-                return .success
-            }
-            .responseJSON { response in
-                debugPrint(response)
                 let jsonResponse = JSON(response.result.value)
-                debugPrint(jsonResponse)
-                if let authToken = jsonResponse["key"].string {
-                    debugPrint(authToken)
-                    
-                } else {
-                    
+                let authToken = jsonResponse[UserDataKey.kAuthToken].string
+                
+                guard response.result.isSuccess, let _ = authToken else {
+                    failure(response.result.error)
+                    return
                 }
+                
+                success(authToken!)
         }
     }
     
-    func disconnectUserSession(_ dicoParameters: [String: AnyObject], success: @escaping ((Void) -> Void), fail failure: @escaping (_ error: NSError?, _ listErrors: [AnyObject]?) -> Void) {
+    func connexionWithFacebook(withFacebookToken accessToken: String!, success: @escaping (_ authToken: String) -> Void, fail failure: @escaping (_ error: Error?) -> Void) {
         
-        let urlString = "\(Constants.UrlServer.UrlBase)\(Constants.UrlServer.UrlConnexion.UrlLogOut)"
-        print("URL Logout : \(urlString)")
+        let urlString = Constants.UrlServer.UrlBase + Constants.UrlServer.UrlConnexion.UrlFacebookConnexion
+        debugPrint("URL connexion with Facebook : \(urlString)")
         
-        let configuration = URLSessionConfiguration.default
-        configuration.timeoutIntervalForResource = REQUEST_TIME_OUT
+        let parameters: Parameters! = [UserDataKey.kFacebookToken: accessToken!]
         
-        alamofireManager = Alamofire.SessionManager(configuration: configuration)
-        alamofireManager!.request(urlString, method: .post, encoding: JSONEncoding.default)
-            .validate()
-            .responseJSON { (response) in
-                switch (response.result) {
-                case .success:
-                    success()
-                case .failure(let error):
-                    print(error)
-                    failure(error as NSError?, nil)
+        alamofireManager!.request(urlString, method: .post, parameters: parameters, encoding: JSONEncoding.default)
+            .validate(statusCode: 200..<300)
+            .responseJSON { response in
+                let jsonResponse = JSON(response.result.value)
+                let authToken = jsonResponse[UserDataKey.kAuthToken].string
+                
+                guard response.result.isSuccess, let _ = authToken  else {
+                    failure(response.result.error)
+                    return
                 }
-        }
+                
+                success(authToken!)
+            }
+    }
+    
+    //Error : Connexion au serveur impossible.
+    
+    func logOutUser() {
+        
+        let urlString = Constants.UrlServer.UrlBase + Constants.UrlServer.UrlConnexion.UrlLogOut
+        debugPrint("URL Logout : \(urlString)")
+        
+        alamofireManager!.request(urlString, method: .get, encoding: JSONEncoding.default)
+            .responseJSON { _ in
+                
+            }
     }
 }

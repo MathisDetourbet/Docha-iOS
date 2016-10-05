@@ -12,16 +12,16 @@ class InscriptionCategoryCollectionViewCell: UICollectionViewCell {
     
     var categoryName: String! {
         didSet {
-            self.categoryNameLabel.text = categoryName
+            categoryNameLabel.text = categoryName
         }
     }
     
     var imageSelected: Bool = false {
         didSet {
             if imageSelected {
-                self.categoryImageView.image = UIImage(named: "\(self.categoryName)_selected")
+                categoryImageView.image = UIImage(named: "\(categoryName!)_selected")
             } else {
-                self.categoryImageView.image = UIImage(named: self.categoryName)
+                categoryImageView.image = UIImage(named: categoryName)
             }
         }
     }

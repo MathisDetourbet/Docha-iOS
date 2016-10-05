@@ -321,7 +321,7 @@ class PreferencesChangeProfilViewController: RootViewController, UITableViewDele
             if let pseudo = pseudoString {
                 if pseudo != currentPseudo {
                     needToUpdateProfil = true
-                    dicoParameters[UserDataKey.kPseudo] = pseudo as AnyObject?
+                    dicoParameters[UserDataKey.kUsername] = pseudo as AnyObject?
                 }
             }
             
@@ -333,13 +333,13 @@ class PreferencesChangeProfilViewController: RootViewController, UITableViewDele
             }
             
             if needToUpdateProfil {
-                UserSessionManager.sharedInstance.updateUserProfil(dicoParameters, success: {
-                        print("Success update user profil")
-                        completion(true)
-                    }, fail: { (error, listError) in
-                        print("Fail updating user profil")
-                        completion(false)
-                })
+//                UserSessionManager.sharedInstance.updateUserProfil(dicoParameters, success: {
+//                        print("Success update user profil")
+//                        completion(true)
+//                    }, fail: { (error, listError) in
+//                        print("Fail updating user profil")
+//                        completion(false)
+//                })
             }
         }
     }

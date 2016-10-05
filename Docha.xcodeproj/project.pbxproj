@@ -16,6 +16,8 @@
 		6701D9A21C108AAE00F87043 /* Product.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6701D9A11C108AAE00F87043 /* Product.swift */; };
 		670F61F61D6DCBEC00CE96F4 /* BadgesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 670F61F51D6DCBEC00CE96F4 /* BadgesViewController.swift */; };
 		670F61F81D6DCD1A00CE96F4 /* BadgeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 670F61F71D6DCD1A00CE96F4 /* BadgeTableViewCell.swift */; };
+		6715C7AB1DA29C22008C50F4 /* CategoryRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6715C7AA1DA29C22008C50F4 /* CategoryRequest.swift */; };
+		6715C7AE1DA29D09008C50F4 /* Category.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6715C7AD1DA29D09008C50F4 /* Category.swift */; };
 		67240CEC1CEF0BCD001F4DC6 /* UserSessionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67240CEB1CEF0BCD001F4DC6 /* UserSessionManager.swift */; };
 		67240CF01CEF5C68001F4DC6 /* UserSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67240CEF1CEF5C68001F4DC6 /* UserSession.swift */; };
 		67240CF41CF0CEB5001F4DC6 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 67240CF31CF0CEB5001F4DC6 /* Security.framework */; };
@@ -103,7 +105,7 @@
 		67D4827F1D216FAC009F1992 /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67D4827E1D216FAC009F1992 /* GameViewController.swift */; };
 		67D482811D217CAF009F1992 /* PreferencesAboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67D482801D217CAF009F1992 /* PreferencesAboutViewController.swift */; };
 		67DA29B01CEB327400CE621F /* ConnexionRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67DA29AF1CEB327400CE621F /* ConnexionRequest.swift */; };
-		67DA29B61CEB384700CE621F /* InscriptionRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67DA29B51CEB384700CE621F /* InscriptionRequest.swift */; };
+		67DA29B61CEB384700CE621F /* RegistrationRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67DA29B51CEB384700CE621F /* RegistrationRequest.swift */; };
 		67DD961B1D78B586007598E0 /* NewGameFindOpponentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67DD961A1D78B586007598E0 /* NewGameFindOpponentViewController.swift */; };
 		67DED2241D4768E300A4027E /* PopupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67DED2231D4768E300A4027E /* PopupViewController.swift */; };
 		67DED22A1D47B32100A4027E /* PopupManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67DED2291D47B32100A4027E /* PopupManager.swift */; };
@@ -195,6 +197,8 @@
 		6701D9A11C108AAE00F87043 /* Product.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Product.swift; sourceTree = "<group>"; };
 		670F61F51D6DCBEC00CE96F4 /* BadgesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BadgesViewController.swift; sourceTree = "<group>"; };
 		670F61F71D6DCD1A00CE96F4 /* BadgeTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BadgeTableViewCell.swift; sourceTree = "<group>"; };
+		6715C7AA1DA29C22008C50F4 /* CategoryRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CategoryRequest.swift; sourceTree = "<group>"; };
+		6715C7AD1DA29D09008C50F4 /* Category.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Category.swift; sourceTree = "<group>"; };
 		67240CEB1CEF0BCD001F4DC6 /* UserSessionManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserSessionManager.swift; sourceTree = "<group>"; };
 		67240CEF1CEF5C68001F4DC6 /* UserSession.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserSession.swift; sourceTree = "<group>"; };
 		67240CF31CF0CEB5001F4DC6 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
@@ -285,7 +289,7 @@
 		67D4827E1D216FAC009F1992 /* GameViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
 		67D482801D217CAF009F1992 /* PreferencesAboutViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreferencesAboutViewController.swift; sourceTree = "<group>"; };
 		67DA29AF1CEB327400CE621F /* ConnexionRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConnexionRequest.swift; sourceTree = "<group>"; };
-		67DA29B51CEB384700CE621F /* InscriptionRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InscriptionRequest.swift; sourceTree = "<group>"; };
+		67DA29B51CEB384700CE621F /* RegistrationRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegistrationRequest.swift; sourceTree = "<group>"; };
 		67DD961A1D78B586007598E0 /* NewGameFindOpponentViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewGameFindOpponentViewController.swift; sourceTree = "<group>"; };
 		67DED2231D4768E300A4027E /* PopupViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PopupViewController.swift; sourceTree = "<group>"; };
 		67DED2291D47B32100A4027E /* PopupManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PopupManager.swift; sourceTree = "<group>"; };
@@ -485,6 +489,14 @@
 			path = TochaProtoUITests;
 			sourceTree = "<group>";
 		};
+		6715C7AC1DA29CF1008C50F4 /* Category */ = {
+			isa = PBXGroup;
+			children = (
+				6715C7AD1DA29D09008C50F4 /* Category.swift */,
+			);
+			name = Category;
+			sourceTree = "<group>";
+		};
 		67240CF71CF1C886001F4DC6 /* Starter */ = {
 			isa = PBXGroup;
 			children = (
@@ -547,11 +559,12 @@
 			isa = PBXGroup;
 			children = (
 				67DA29AF1CEB327400CE621F /* ConnexionRequest.swift */,
-				67DA29B51CEB384700CE621F /* InscriptionRequest.swift */,
+				67DA29B51CEB384700CE621F /* RegistrationRequest.swift */,
 				67BC525D1D9AD4BE00715B74 /* UserRequest.swift */,
+				6715C7AA1DA29C22008C50F4 /* CategoryRequest.swift */,
+				6750B0FC1D46285000AA33E2 /* DochaRequest.swift */,
 				67D482791D1D9203009F1992 /* ProfilRequest.swift */,
 				67748A2A1D41774600525091 /* PriceRecordsRequest.swift */,
-				6750B0FC1D46285000AA33E2 /* DochaRequest.swift */,
 			);
 			name = Requests;
 			sourceTree = "<group>";
@@ -748,6 +761,7 @@
 		67A302201C5AA56D0065D097 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				6715C7AC1DA29CF1008C50F4 /* Category */,
 				679274051CFCA96E00DABA88 /* Product */,
 				679274041CFC8BA300DABA88 /* User */,
 			);
@@ -1417,6 +1431,7 @@
 				67E61A561CF606220055411F /* InscriptionCategoryCollectionViewCell.swift in Sources */,
 				67E5C55E1CF8864C009F3FCA /* InscriptionIdentifiantsViewController.swift in Sources */,
 				677BFD5A1D18156E0014878C /* UserGameStateManager.swift in Sources */,
+				6715C7AB1DA29C22008C50F4 /* CategoryRequest.swift in Sources */,
 				677BFD641D18C1380014878C /* ArrayHelper.swift in Sources */,
 				679B23D31D05EE2100692400 /* HomeFriendsTableViewCell.swift in Sources */,
 				67EFFDDB1D9029D2003EE8E5 /* NewGameFindFriendsTableViewCell.swift in Sources */,
@@ -1447,6 +1462,7 @@
 				67D4827A1D1D9203009F1992 /* ProfilRequest.swift in Sources */,
 				67240CFB1CF1DA6D001F4DC6 /* StarterPageContentViewController.swift in Sources */,
 				67E7ED071D7D893C00D04536 /* GameplayLauncherViewController.swift in Sources */,
+				6715C7AE1DA29D09008C50F4 /* Category.swift in Sources */,
 				679B23D71D05EEAC00692400 /* HomeBadgesTableViewCell.swift in Sources */,
 				679B848E1D8FCF820031EC27 /* GameplayMatchRoundWaitingCell.swift in Sources */,
 				67584CBC1D37D2760082F506 /* PreferencesChangePasswordTableViewCell.swift in Sources */,
@@ -1476,7 +1492,7 @@
 				67B90ECF1D86BA860009F32C /* GameplayDebriefViewController.swift in Sources */,
 				6791CDE81D3450080091DDB0 /* PreferencesChoosAvatarViewController.swift in Sources */,
 				67C83B011CF498780066B982 /* PasswordForgottenViewController.swift in Sources */,
-				67DA29B61CEB384700CE621F /* InscriptionRequest.swift in Sources */,
+				67DA29B61CEB384700CE621F /* RegistrationRequest.swift in Sources */,
 				679273E11CFB0FC000DABA88 /* UserSessionEmail.swift in Sources */,
 				678338301D04E754002907EC /* HomeViewController.swift in Sources */,
 				67F75F701C42E00C00E78102 /* CounterView.swift in Sources */,

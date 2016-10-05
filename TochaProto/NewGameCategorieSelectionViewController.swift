@@ -10,7 +10,7 @@ import Foundation
 
 class NewGameCategorieSelectionViewController: GameViewController, UICollectionViewDataSource, UICollectionViewDelegate {
     
-    let categoriesNamesImageView = ["Lifestyle" : "lifestyle", "High-Tech" : "high-tech", "Maison / déco" : "maison_deco", "Bijoux / Montres" : "bijoux_montres", "Électroménager" : "electromenager", "Art" : "art", "Objets connectés" : "objets_connectes", "Gastronomie" : "gastronomie_vin", "Beauté" : "beauty", "Sport" : "sport"]
+    let categoriesNamesImageView = ["Lifestyle" : "lifestyle", "High-Tech" : "high_tech", "Maison / déco" : "maison_deco", "Bijoux / Montres" : "bijoux_montres", "Électroménager" : "electromenager", "Art" : "art", "Objets connectés" : "objets_connectes", "Gastronomie" : "gastronomie_vin", "Beauté" : "beauty", "Sport" : "sport"]
     var categoriesDisplayed: [String]?
     
     @IBOutlet weak var collectionView: UICollectionView!

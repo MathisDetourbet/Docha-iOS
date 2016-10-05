@@ -52,8 +52,8 @@ class GameplayLauncherViewController: GameViewController {
     
     func buildUI() {
         self.navigationController?.isNavigationBarHidden = true
-        self.userImageView.applyCircleBorder()
-        self.opponentImageView.applyCircleBorder()
+        //self.userImageView.applyCircleBorder()
+        //self.opponentImageView.applyCircleBorder()
     }
     
     func startLoaderAnimation() {

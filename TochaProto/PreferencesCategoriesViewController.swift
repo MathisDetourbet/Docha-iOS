@@ -54,7 +54,7 @@ class PreferencesCategoriesViewController: RootViewController, UICollectionViewD
         self.collectionView.reloadData()
         
         let currentSession = UserSessionManager.sharedInstance.currentSession()
-        self.categoriesPrefered = currentSession?.categoriesFavorites
+        self.categoriesPrefered = currentSession?.categoriesPrefered
         if self.categoriesPrefered == nil {
             self.categoriesPrefered = []
         }
@@ -64,21 +64,21 @@ class PreferencesCategoriesViewController: RootViewController, UICollectionViewD
         let params = userSession.generateJSONFromUserSession()
         
         if let param = params {
-            UserSessionManager.sharedInstance.updateUserProfil(param, success: {
-                print("Success categories VC")
-                PopupManager.sharedInstance.dismissPopup(true, completion: {
-                    PopupManager.sharedInstance.showSuccessPopup("Succès !", message: "Tes catégories préférées ont été mise à jour 😎", viewController: self, completion: nil, doneActionCompletion: {
-                        completion(true)
-                    })
-                })
-            }, fail: { (error, listError) in
-                PopupManager.sharedInstance.dismissPopup(true, completion: {
-                    print("Fail categories VC")
-                    PopupManager.sharedInstance.showErrorPopup("Oups !", message: "Il semblerait que tu ne possède pas de connexion à internet... Essaie ultérieurement.", viewController: self, completion: nil, doneActionCompletion: {
-                        completion(false)
-                    })
-                })
-            })
+//            UserSessionManager.sharedInstance.updateUserProfil(param, success: {
+//                print("Success categories VC")
+//                PopupManager.sharedInstance.dismissPopup(true, completion: {
+//                    PopupManager.sharedInstance.showSuccessPopup("Succès !", message: "Tes catégories préférées ont été mise à jour 😎", viewController: self, completion: nil, doneActionCompletion: {
+//                        completion(true)
+//                    })
+//                })
+//            }, fail: { (error, listError) in
+//                PopupManager.sharedInstance.dismissPopup(true, completion: {
+//                    print("Fail categories VC")
+//                    PopupManager.sharedInstance.showErrorPopup("Oups !", message: "Il semblerait que tu ne possède pas de connexion à internet... Essaie ultérieurement.", viewController: self, completion: nil, doneActionCompletion: {
+//                        completion(false)
+//                    })
+//                })
+//            })
         }
     }
     
@@ -136,13 +136,13 @@ class PreferencesCategoriesViewController: RootViewController, UICollectionViewD
         if self.categoriesPrefered == nil || (self.categoriesPrefered?.isEmpty)! {
             _ = self.navigationController?.popViewController(animated: true)
             
-        } else if self.categoriesPrefered! == (currentSession?.categoriesFavorites)! {
+        } else if self.categoriesPrefered! == (currentSession?.categoriesPrefered)! {
             _ = self.navigationController?.popViewController(animated: true)
             
         } else {
             PopupManager.sharedInstance.showLoadingPopup("Chargement...", message: "Mise à jour de ton profil Docha...", viewController: self, completion: nil)
-            let categoriesFavoritesTemp = currentSession?.categoriesFavorites
-            currentSession?.categoriesFavorites = self.categoriesPrefered
+            let categoriesFavoritesTemp = currentSession?.categoriesPrefered
+            currentSession?.categoriesPrefered = self.categoriesPrefered!
             
             if let currentSession = currentSession {
                 saveCategorieFavoriteWithUserSession(currentSession, completion: { (success) in

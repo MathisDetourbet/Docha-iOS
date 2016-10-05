@@ -101,87 +101,33 @@ class HomeViewController: GameViewController, UITableViewDelegate, UITableViewDa
 //MARK: Load Data Methods
     
     func loadUserInfos() {
-        if let userSession = UserSessionManager.sharedInstance.currentSession() {
+        let userSession = UserSessionManager.sharedInstance.currentSession()!
+        
+        if userSession.isKind(of: UserSessionEmail.self) {
+            let userSessionEmail = userSession as! UserSessionEmail
+            let pseudo = userSessionEmail.pseudo
+            let avatarUrl = userSessionEmail.avatarUrl
             
-            if userSession.isKind(of: UserSessionEmail.self) {
-                let userSessionEmail = userSession as! UserSessionEmail
-                
-                if userSession.pseudo == "" {
-                    if let _ = userSessionEmail.firstName, let _ = userSessionEmail.lastName {
-                        //userNameLabel.text = "\(firstName) \(Array(arrayLiteral: lastName)[0])."
-                        userNameLabel.text = ""
-                        
-                    } else {
-                        userNameLabel.text = ""
-                    }
-                    
-                } else {
-                    userNameLabel.text = userSession.pseudo
+            userNameLabel.text = pseudo ?? "docher"
+            avatarImageView.downloadedFrom(link: avatarUrl!, contentMode: .scaleToFill,
+                WithCompletion: { (_) in
+                    self.avatarImageView.applyCircleBorder()
                 }
-                
-                var profilImage: UIImage?
-                
-                if let avatar = userSession.avatar {
-                    profilImage = UIImage(named: avatar)
-                    
-                } else if let gender = userSession.gender {
-                    if gender == "M" || userSession.gender == "U" {
-                        profilImage = UIImage(named: "avatar_man_large")
-                        userSession.avatar = "avatar_man_large"
-                        
-                    } else {
-                        profilImage = UIImage(named: "avatar_woman_large")
-                        userSession.avatar = "avatar_woman_large"
-                    }
-                    userSession.saveSession()
-                    
-                } else {
-                    profilImage = UIImage(named: "avatar_man_large")
+            )
+            
+        } else if userSession.isKind(of: UserSessionFacebook.self) {
+            let userSessionFacebook = userSession as! UserSessionFacebook
+            let pseudo = userSessionFacebook.pseudo
+            let avatarUrl = userSessionFacebook.avatarUrl
+            let firstName = userSessionFacebook.firstName
+            
+            userNameLabel.text = pseudo ?? firstName! + "."
+            avatarImageView.downloadedFrom(link: avatarUrl!, contentMode: .scaleToFill,
+                WithCompletion: { (_) in
+                    self.avatarImageView.applyCircleBorder()
                 }
-                
-                avatarImageView.image = profilImage
-                
-            } else if userSession.isKind(of: UserSessionFacebook.self) {
-                let userSessionFacebook = userSession as! UserSessionFacebook
-                
-                if userSession.pseudo != "" {
-                    userNameLabel.text = userSession.pseudo
-                    
-                } else if let firstName = userSessionFacebook.firstName, let lastName = userSessionFacebook.lastName {
-                    userNameLabel.text = "\(firstName) \(lastName[0])."
-                }
-                
-                var profilImage: UIImage?
-                
-                if let fbImageURL = userSessionFacebook.facebookImageURL {
-                    avatarImageView.downloadedFrom(link: fbImageURL, contentMode: .scaleToFill, WithCompletion: { (success) in
-                        if success == false {
-                            if let gender = userSession.gender {
-                                if gender == "M" || gender == "U" {
-                                    profilImage = UIImage(named: "avatar_man_large")
-                                    
-                                } else {
-                                    profilImage = UIImage(named: "avatar_woman_large")
-                                }
-                                self.avatarImageView.image = profilImage
-                                
-                            } else {
-                                profilImage = UIImage(named: "avatar_man_large")
-                            }
-                        }
-                    })
-                    
-                } else {
-                    profilImage = UIImage(named: "avatar_man_large")
-                }
-                
-            } else {
-                userNameLabel.text = ""
-                avatarImageView.image = UIImage(named: "avatar_man_large")
-            }
+            )
         }
-        avatarImageView.image = UIImage(named: "avatar_man_large")
-        avatarImageView.applyCircleBorder()
     }
     
     
@@ -294,6 +240,7 @@ class HomeViewController: GameViewController, UITableViewDelegate, UITableViewDa
         
     }
 
+    
 //MARK: HomeFriendsCellDelegate Methods
     
     func displayAllFriendsButtonTouched() {

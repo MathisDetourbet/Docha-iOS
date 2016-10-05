@@ -8,7 +8,6 @@
 
 import Foundation
 import TextFieldEffects
-import GoogleSignIn
 import SwiftyJSON
 
 // Dismiss keyboard on UITextField for UIViewControllers
@@ -36,6 +35,7 @@ class InscriptionIdentifiantsViewController: RootViewController, UITextFieldDele
     
     var emailString: String?
     var passwordString: String?
+    var categoryFavorites: [String]?
     
     @IBOutlet weak var btnLoginFacebook: FBSDKLoginButton!
     @IBOutlet weak var emailTextField: HoshiTextField!
@@ -44,11 +44,12 @@ class InscriptionIdentifiantsViewController: RootViewController, UITextFieldDele
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.hideKeyboardWhenTappedAround()
-        self.registerButton.isEnabled = true
+        
+        hideKeyboardWhenTappedAround()
+        registerButton.isEnabled = true
         self.navigationController!.setNavigationBarHidden(false, animated: false)
         self.navigationItem.setHidesBackButton(true, animated: false)
-        self.configNavigationBarWithTitle("Inscription")
+        configNavigationBarWithTitle("Inscription")
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
@@ -60,8 +61,8 @@ class InscriptionIdentifiantsViewController: RootViewController, UITextFieldDele
         if let emailString = emailTextField.text {
             if !emailString.isEmpty {
                 if emailString.isValidEmail() {
-                    self.emailTextField.borderActiveColor = UIColor.blueDochaColor()
-                    self.emailTextField.borderInactiveColor = UIColor.blueDochaColor()
+                    emailTextField.borderActiveColor = UIColor.blueDochaColor()
+                    emailTextField.borderInactiveColor = UIColor.blueDochaColor()
                     self.emailString = emailTextField.text
                     return true
                 } else {
@@ -77,8 +78,8 @@ class InscriptionIdentifiantsViewController: RootViewController, UITextFieldDele
             //print("Email is nil")
         }
         
-        self.emailTextField.borderActiveColor = UIColor.redDochaColor()
-        self.emailTextField.borderInactiveColor = UIColor.redDochaColor()
+        emailTextField.borderActiveColor = UIColor.redDochaColor()
+        emailTextField.borderInactiveColor = UIColor.redDochaColor()
         
         return false
     }
@@ -108,6 +109,10 @@ class InscriptionIdentifiantsViewController: RootViewController, UITextFieldDele
     }
     
     @IBAction func registerWithFacebookTouched(_ sender: UIButton) {
+        if self.categoryFavorites == nil {
+            _ = self.navigationController?.popViewController(animated: true)
+        }
+        
         let fbLoginManager : FBSDKLoginManager = FBSDKLoginManager()
         
         fbLoginManager.logIn(withReadPermissions: ["email", "public_profile", "user_friends"], from: self)
@@ -134,49 +139,67 @@ class InscriptionIdentifiantsViewController: RootViewController, UITextFieldDele
     }
     
     func getFBUserData() {
-        
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         appDelegate.facebookSignIn({
             // Success
+            let data = [UserDataKey.kCategoryPrefered : self.categoryFavorites!]
+            UserSessionManager.sharedInstance.updateUser(withData: data,
+                success: {
+                    
+                    PopupManager.sharedInstance.dismissPopup(true,
+                        completion: {
+                            self.goToHome()
+                        }
+                    )
+                    
+                }, fail: { (error) in
+                    
+                    PopupManager.sharedInstance.dismissPopup(true,
+                        completion: {
+                            PopupManager.sharedInstance.showErrorPopup(message: Constants.PopupMessage.ErrorMessage.kErrorNoInternetConnection)
+                        }
+                    )
+                }
+            )
+            
+        }) { (error) in
+            // Failure
             PopupManager.sharedInstance.dismissPopup(true, completion: { 
-                self.goToHome()
-            })
-        }) { (error, listError) in
-            // Fail
-            PopupManager.sharedInstance.dismissPopup(true, completion: { 
-                PopupManager.sharedInstance.showInfosPopup("Oups !", message: "Une erreur est survenue. Essaie à nouveau ultérieurement.", completion: nil)
+                PopupManager.sharedInstance.showErrorPopup(message: Constants.PopupMessage.ErrorMessage.kErrorNoInternetConnection)
             })
             print("error saving Facebook user data in database : \(error)")
-            print("list error : \(listError)")
         }
-    }
-
-
-    @IBAction func registerWithGooglePlusTouched(_ sender: UIButton) {
-        GIDSignIn.sharedInstance().signIn()
     }
     
     @IBAction func registerButtonTouched(_ sender: UIButton) {
-        if  isEmailValid() {
-            
+        if isEmailValid() {
             if isPasswordValid() {
-                let currentSessionManager = UserSessionManager.sharedInstance
-                if currentSessionManager.dicoUserDataInscription == nil {
-                    currentSessionManager.dicoUserDataInscription = [String:AnyObject]()
-                }
-                if let email = self.emailString, let password = self.passwordString {
-                    currentSessionManager.dicoUserDataInscription!["email"] = email as AnyObject?
-                    currentSessionManager.dicoUserDataInscription!["password"] = password as AnyObject?
-                    
-                    let inscriptionInfosUserVC = self.storyboard?.instantiateViewController(withIdentifier: "idInscriptionInfosUserViewController") as! InscriptionInfosUserViewController
-                    self.navigationController?.pushViewController(inscriptionInfosUserVC, animated: true)
-                }
+                
+                UserSessionManager.sharedInstance.registrationByEmail(emailString!, andPassword: passwordString!,
+                    success: {
+                        
+                        let data = [UserDataKey.kCategoryPrefered: self.categoryFavorites! as AnyObject]
+                        UserSessionManager.sharedInstance.updateUser(withData: data,
+                            success: {
+                                
+                                let inscriptionInfosUserVC = self.storyboard?.instantiateViewController(withIdentifier: "idInscriptionInfosUserViewController") as! InscriptionInfosUserViewController
+                                self.navigationController?.pushViewController(inscriptionInfosUserVC, animated: true)
+                                
+                            }, fail: { (error) in
+                                PopupManager.sharedInstance.showErrorPopup(message: Constants.PopupMessage.ErrorMessage.kErrorNoInternetConnection)
+                            }
+                        )
+                    }, fail: { (error) in
+                        PopupManager.sharedInstance.showErrorPopup(message: Constants.PopupMessage.ErrorMessage.kErrorNoInternetConnection)
+                    }
+                )
                 
             } else {
-                PopupManager.sharedInstance.showErrorPopup("Oups !", message: "Vérifie que ton mot de passe possède au minimum 6 caractères.", completion: nil)
+                PopupManager.sharedInstance.showErrorPopup(message: Constants.PopupMessage.ErrorMessage.kErrorRegistrationPasswordMinimumCharacters)
             }
+            
         } else {
-            PopupManager.sharedInstance.showErrorPopup("Oups !", message: "Cette adresse email n'est pas valide.", completion: nil)
+            PopupManager.sharedInstance.showErrorPopup(message: Constants.PopupMessage.ErrorMessage.kErrorRegistrationEmailNotValid)
         }
     }
     

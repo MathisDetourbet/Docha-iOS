@@ -41,7 +41,7 @@ class PreferencesChoosAvatarViewController: RootViewController {
             userAvatarImageView.image = UIImage(named: "avatar_woman_profil")
         }
         
-        if let avatarString = UserSessionManager.sharedInstance.currentSession()?.avatar {
+        if let avatarString = UserSessionManager.sharedInstance.currentSession()?.avatarUrl {
             userAvatarImageView.image = UIImage(named: "\(avatarString)_profil")
             if avatarString.range(of: "woman") != nil {
                 avatarImageArray = womanAvatarsArray

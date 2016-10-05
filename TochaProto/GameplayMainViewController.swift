@@ -20,6 +20,7 @@ enum MessageType {
     case perfect
     case less
     case more
+    case go
 }
 
 class GameplayMainViewController: GameViewController, KeyboardViewDelegate, CounterContainerViewDelegate {
@@ -75,7 +76,11 @@ class GameplayMainViewController: GameViewController, KeyboardViewDelegate, Coun
     }
     
     func startTheRound() {
-        moveToNextCard(cardsViews?.first, AndMovePreviousCard: nil, completion: nil)
+        moveToNextCard(cardsViews?.first, AndMovePreviousCard: nil,
+            completion: { (_) in
+                self.displayMessage(MessageType.go, completion: nil)
+            }
+        )
         updateTimelineWithResult(.current, isForUser: true)
     }
     
@@ -178,7 +183,8 @@ class GameplayMainViewController: GameViewController, KeyboardViewDelegate, Coun
                     self.currentCard?.counterContainerView.resetCountersViews()
                     self.updateTimelineWithResult(.current, isForUser: true)
                     self.initTimer(animated: true)
-            })
+                }
+            )
             
         } else {
             // Game Finished !
@@ -193,14 +199,17 @@ class GameplayMainViewController: GameViewController, KeyboardViewDelegate, Coun
     
     func initTimer(animated: Bool) {
         timeleft = kTimePerProduct
+        
         if animated {
-            UIView.animate(withDuration: 1.0, animations: { 
-                self.circularProgressBarView.value = CGFloat(self.timeleft!)
-                self.view.layoutIfNeeded()
-            })
+            UIView.animate(withDuration: 1.0,
+                animations: {
+                    self.circularProgressBarView.value = CGFloat(self.timeleft!)
+                    self.view.layoutIfNeeded()
+                }
+            )
             
         } else {
-            self.circularProgressBarView.value = CGFloat(self.timeleft!)
+            circularProgressBarView.value = CGFloat(self.timeleft!)
         }
         
         timer = Timer.scheduledTimer(timeInterval: 0.01, target: self, selector: #selector(GameplayMainViewController.updateTimer), userInfo: nil, repeats: true)
@@ -233,9 +242,9 @@ class GameplayMainViewController: GameViewController, KeyboardViewDelegate, Coun
     }
     
     func animateTimer() {
-        self.circularProgressBarView.fontColor = UIColor.redDochaColor()
-        self.circularProgressBarView.progressColor = UIColor.redDochaColor()
-        self.circularProgressBarView.progressStrokeColor = UIColor.redDochaColor()
+        circularProgressBarView.fontColor = UIColor.redDochaColor()
+        circularProgressBarView.progressColor = UIColor.redDochaColor()
+        circularProgressBarView.progressStrokeColor = UIColor.redDochaColor()
     }
     
 
@@ -327,6 +336,7 @@ class GameplayMainViewController: GameViewController, KeyboardViewDelegate, Coun
             case .perfect:  messageName = "perfect"; break
             case .less:     messageName = "less"; break
             case .more:     messageName = "more"; break
+            case .go:       messageName = "go"; break
         }
         
         if let messageName = messageName {
@@ -340,13 +350,15 @@ class GameplayMainViewController: GameViewController, KeyboardViewDelegate, Coun
             UIView.animate(withDuration: 1.0,
                 animations: {
                     messageImageView!.alpha = 0.0
+                    self.view.layoutIfNeeded()
                 },
                 completion: { (finished) in
                     messageImageView!.removeFromSuperview()
                     messageImageView = nil
                     
                     completion?(finished)
-            })
+                }
+            )
         }
     }
     
@@ -357,22 +369,33 @@ class GameplayMainViewController: GameViewController, KeyboardViewDelegate, Coun
         let errorPercent = calculateUserEstimationErrorPercent()
         currentCard?.updatePinIconPositionWithErrorPercent(errorPercent,
             completion: { (finished) in
+                
                 if errorPercent < 0 {
-                    self.displayMessage(.more, completion: { (finished) in
-                        completion?(finished)
-                    })
+                    self.displayMessage(.more,
+                        completion: { (finished) in
+                            
+                            completion?(finished)
+                        }
+                    )
                     
                 } else if errorPercent > 0 {
-                    self.displayMessage(.less, completion: { (finished) in
-                        completion?(finished)
-                    })
+                    self.displayMessage(.less,
+                        completion: { (finished) in
+                            
+                            completion?(finished)
+                        }
+                    )
                     
                 } else {
-                    self.displayMessage(.perfect, completion: { (finished) in
-                        completion?(finished)
-                    })
+                    self.displayMessage(.perfect,
+                        completion: { (finished) in
+                            
+                            completion?(finished)
+                        }
+                    )
                 }
-        })
+            }
+        )
     }
     
     func calculateUserEstimationErrorPercent() -> Double {

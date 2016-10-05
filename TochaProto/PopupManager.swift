@@ -84,7 +84,7 @@ class PopupManager {
         }
     }
     
-    func showInfosPopup(_ title: String? = "Information", message: String?, viewController: UIViewController? = nil, completion: (() -> Void)?, doneActionCompletion: (() -> Void)? = nil) {
+    func showInfosPopup(_ title: String? = "Information", message: String?, viewController: UIViewController? = nil, completion: (() -> Void)? = nil, doneActionCompletion: (() -> Void)? = nil) {
         if self.isDisplayingPopup == true {
             if self.popupWaitingArray == nil {
                 self.popupWaitingArray = []

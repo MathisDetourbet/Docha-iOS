@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import SwiftyJSON
 
 enum ProfilImageType : Int {
     case facebookImage
@@ -15,15 +16,14 @@ enum ProfilImageType : Int {
 }
 
 class User: NSObject {
-    var userID: Int?
     var pseudo: String?
     var lastName: String?
     var firstName: String?
     var email: String?
     var gender: String?
     var dateBirthday: Date?
-    var categoriesFavorites: [String]?
-    var avatar: String?
+    var categoriesPrefered: [String] = []
+    var avatarUrl: String?
     var levelMaxUnlocked: Int = 1
     var dochos: Int = 0
     var experience: Int = 0
@@ -32,16 +32,15 @@ class User: NSObject {
     
     override init() {}
     
-    init(userID: Int?, pseudo: String?, lastName: String?, firstName: String?, email: String?, gender: String?, dateBirthday: Date?, categoriesFavorites: [String]?, avatar: String?, levelMaxUnlocked: Int?, dochos: Int?, experience: Int?, perfectPriceCpt: Int?, badgesUnlockedIdentifiers: [String]?) {
-        self.userID = userID
+    init(pseudo: String?, lastName: String?, firstName: String?, email: String?, gender: String?, dateBirthday: Date?, categoriesPrefered: [String]?, avatar: String?, levelMaxUnlocked: Int?, dochos: Int?, experience: Int?, perfectPriceCpt: Int?, badgesUnlockedIdentifiers: [String]?) {
         self.pseudo = pseudo
         self.lastName = lastName
         self.firstName = firstName
         self.email = email
         self.gender = gender
         self.dateBirthday = dateBirthday
-        self.categoriesFavorites = categoriesFavorites
-        self.avatar = avatar
+        self.categoriesPrefered = categoriesPrefered!
+        self.avatarUrl = avatar
         self.levelMaxUnlocked = levelMaxUnlocked!
         self.dochos = dochos!
         self.experience = experience!
@@ -49,22 +48,33 @@ class User: NSObject {
         self.badgesUnlockedIdentifiers = badgesUnlockedIdentifiers
     }
     
-    func initPropertiesWithResponseObject(_ responseObject: AnyObject) {
-        if let dicoUser = responseObject["user"] as? [String: AnyObject] {
-            if let userID = dicoUser["id"]?.integerValue { self.userID = userID }
-            if let pseudo = dicoUser["pseudo"]?.string { self.pseudo = pseudo }
-            if let lastName = dicoUser["last_name"]?.string { self.lastName = lastName }
-            if let firstName = dicoUser["first_name"]?.string { self.firstName = firstName }
-            if let email = dicoUser["email"]?.string { self.email = email }
-            if let gender = dicoUser["gender"]?.string { self.gender = gender }
-            if let dateBirthday = dicoUser["date_birthday"]?.date { self.dateBirthday = dateBirthday }
-            if let categoriesFavorites = dicoUser["category_favorite"]?.array { self.categoriesFavorites = categoriesFavorites as? [String] }
-            if let avatar = dicoUser["avatar"]?.string { self.avatar = avatar }
-            if let levelMaxUnlocked = dicoUser["level_max_unlocked"]?.integerValue { self.levelMaxUnlocked = levelMaxUnlocked }
-            if let dochos = dicoUser["dochos"]?.integerValue { self.dochos = dochos }
-            if let experience = dicoUser["experience"]?.integerValue { self.experience = experience }
-            if let perfectPriceCpt = dicoUser["perfect_price_cpt"]?.integerValue { self.perfectPriceCpt = perfectPriceCpt }
-            if let badgesUnlockedIdentifiers = dicoUser["badges_unlocked"]?.array as? [String] { self.badgesUnlockedIdentifiers = badgesUnlockedIdentifiers }
+    func initPropertiesWithResponseObject(_ jsonObject: JSON) {
+        
+        self.email      = jsonObject[UserDataKey.kEmail].string
+        self.pseudo     = jsonObject[UserDataKey.kUsername].string
+        self.firstName  = jsonObject[UserDataKey.kFirstName].string
+        self.lastName   = jsonObject[UserDataKey.kLastName].string
+        self.gender     = jsonObject[UserDataKey.kGender].string
+        self.avatarUrl  = jsonObject[UserDataKey.kAvatarUrl].string
+        
+        self.categoriesPrefered = jsonObject[UserDataKey.kCategoryPrefered].arrayObject as! [String]
+        
+        if let birthdayString = jsonObject[UserDataKey.kDateBirthday].string {
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "yyyy-MM-dd"
+            self.dateBirthday = dateFormatter.date(from: birthdayString)
         }
+    }
+    
+    func initPropertiesFromUser(user: User) {
+        let user = user
+        if let email = user.email { self.email = email }
+        if let pseudo = user.pseudo { self.pseudo = pseudo }
+        if let firstName = user.firstName { self.firstName = firstName }
+        if let lastName = user.lastName { self.lastName = lastName }
+        if let gender = user.gender { self.gender = gender }
+        if let dateBirthday = user.dateBirthday { self.dateBirthday = dateBirthday }
+        if let avatarUrl = user.avatarUrl { self.avatarUrl = avatarUrl }
+        if user.categoriesPrefered.isEmpty == false { self.categoriesPrefered = user.categoriesPrefered }
     }
 }

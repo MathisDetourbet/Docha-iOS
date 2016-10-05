@@ -12,26 +12,76 @@ import SwiftyJSON
 
 class UserRequest: DochaRequest {
     
-    func getUser(success: (_ user: User) -> Void, fail failure: (_ error: NSError?, _ listErrors: [AnyObject]?) -> Void) {
+    func getUser(withAuthToken authToken: String!, success: @escaping (_ user: User) -> Void, fail failure: @escaping (_ error: Error?) -> Void) {
         
-        let urlString = "\(Constants.UrlServer.UrlBase)\(Constants.UrlServer.UrlUser.UrlGetUser)"
-        print("URL connexion with Facebook : \(urlString)")
+        let urlString = Constants.UrlServer.UrlBase + Constants.UrlServer.UrlUser.UrlUser
+        debugPrint("URL GET User : \(urlString)")
         
-        let configuration = URLSessionConfiguration.default
-        configuration.timeoutIntervalForResource = REQUEST_TIME_OUT
-        
-        alamofireManager = Alamofire.SessionManager(configuration: configuration)
-        alamofireManager?.adapter = AccessTokenAdapter(accessToken: "")
+        alamofireManager!.adapter = AccessTokenAdapter(accessToken: authToken)
         alamofireManager!.request(urlString, method: .get, encoding: JSONEncoding.default)
-            .validate { request, response, data in
-                debugPrint("Response after validation : \(response)")
-                return .success
+            .validate(statusCode: 200..<300)
+            .responseJSON { response in
+                
+                guard response.result.isSuccess else {
+                    failure(response.result.error)
+                    return
+                }
+                
+                let jsonResponse = JSON(response.result.value)
+                let user = User()
+                user.initPropertiesWithResponseObject(jsonResponse)
+                debugPrint("jsonResponse :\(response.result.value)")
+                success(user)
             }
-            .responseJSON { (response) in
-                debugPrint("ResponseJSON : \(response)")
+    }
+    
+    func putUser(withAuthToken authToken: String!, andData data: [String: Any]!, success: @escaping (_ user: User) -> Void, fail failure: @escaping (_ error: Error?) -> Void) {
+        
+        let urlString = Constants.UrlServer.UrlBase + Constants.UrlServer.UrlUser.UrlUser
+        debugPrint("URL PUT User : \(urlString)")
+        
+        let parameters: Parameters = [data.first!.key: data.first!.value]
+        
+        alamofireManager!.adapter = AccessTokenAdapter(accessToken: authToken)
+        alamofireManager!.request(urlString, method: .put, parameters: parameters, encoding: JSONEncoding.default)
+            .validate(statusCode: 200..<300)
+            .responseJSON { response in
+                
+                guard response.result.isSuccess else {
+                    failure(response.result.error)
+                    return
+                }
+                
+                let jsonResponse = JSON(response.result.value)
+                let user = User()
+                user.initPropertiesWithResponseObject(jsonResponse)
+                
+                success(user)
         }
     }
     
+    func patchUser(withToken authToken: String!, andData data: [String: Any]!, success : @escaping (_ user: User) -> Void, fail failure: @escaping (_ error: Error?) -> Void) {
+        
+        let urlString = Constants.UrlServer.UrlBase + Constants.UrlServer.UrlUser.UrlUser
+        debugPrint("URL PATCH User : \(urlString)")
+        
+        let parameters: Parameters = data
+        
+        alamofireManager!.adapter = AccessTokenAdapter(accessToken: authToken)
+        alamofireManager!.request(urlString, method: .patch, parameters: parameters, encoding: JSONEncoding.default)
+            .validate(statusCode: 200..<300)
+            .responseJSON { response in
+                
+                guard response.result.isSuccess else {
+                    failure(response.result.error)
+                    return
+                }
+                
+                let jsonResponse = JSON(response.result.value)
+                let user = User()
+                user.initPropertiesWithResponseObject(jsonResponse)
+                
+                success(user)
+            }
+    }
 }
-
-// 36a39af61aff1d3112e9258435a113eaa0eeb214

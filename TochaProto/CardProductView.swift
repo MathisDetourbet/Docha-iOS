@@ -30,7 +30,7 @@ class CardProductView: UIView {
         userPinIconView.isHidden = true
         opponentPinIconView.isHidden = true
         
-        userPinIconView.setAvatarImage(UIImage(named: "avatar_man_profil")!)
+        userPinIconView.setAvatarImage(UIImage(named: "avatar_man_small")!)
         
         productImageView.layer.cornerRadius = 18.0
         productImageView.layer.masksToBounds = false
