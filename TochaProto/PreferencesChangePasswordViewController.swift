@@ -8,9 +8,11 @@
 
 import Foundation
 
-class PreferencesChangePasswordViewController: RootViewController, UITableViewDelegate, UITableViewDataSource {
+class PreferencesChangePasswordViewController: RootViewController, UITableViewDelegate, UITableViewDataSource, ChangePasswordCellDelegate {
     
     let textFielsdPlaceholders = ["Ancien mot de passe", "Nouveau mot de passe", "Confirmation mot de passe"]
+    let passwordDataKeyArray = [UserDataKey.kOldPassword, UserDataKey.kNewPassword1, UserDataKey.kNewPassword2]
+    var data: [String: String] = [:]
     
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var validBarButtonItem: UIBarButtonItem!
@@ -22,14 +24,14 @@ class PreferencesChangePasswordViewController: RootViewController, UITableViewDe
         super.viewDidLoad()
         
         self.view.backgroundColor = UIColor.lightGrayDochaColor()
-        self.tableView.backgroundColor = UIColor.lightGrayDochaColor()
+        tableView.backgroundColor = UIColor.lightGrayDochaColor()
         
         configNavigationBarWithTitle("Modifier le mot de passe", andFontSize: 15.0)
         
-        self.validBarButtonItem.setTitleTextAttributes([NSFontAttributeName: UIFont(name: "Montserrat-SemiBold", size: 11.0)!], for: UIControlState())
-        self.cancelBarButtonItem.setTitleTextAttributes([NSFontAttributeName: UIFont(name: "Montserrat-SemiBold", size: 11.0)!], for: UIControlState())
+        validBarButtonItem.setTitleTextAttributes([NSFontAttributeName: UIFont(name: "Montserrat-SemiBold", size: 11.0)!], for: UIControlState())
+        cancelBarButtonItem.setTitleTextAttributes([NSFontAttributeName: UIFont(name: "Montserrat-SemiBold", size: 11.0)!], for: UIControlState())
         
-        self.heightTableViewConstraint.constant = CGFloat(self.textFielsdPlaceholders.count) * tableView.rowHeight + tableView.sectionHeaderHeight * 2 + tableView.sectionFooterHeight * 2
+        heightTableViewConstraint.constant = CGFloat(self.textFielsdPlaceholders.count) * tableView.rowHeight + tableView.sectionHeaderHeight * 2 + tableView.sectionFooterHeight * 2
     }
 
 
@@ -47,21 +49,22 @@ class PreferencesChangePasswordViewController: RootViewController, UITableViewDe
         return 2
     }
     
-    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return ""//"Section \(section)"
-    }
-    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = self.tableView.dequeueReusableCell(withIdentifier: "idPreferencesChangePasswordCell") as? PreferencesChangePasswordTableViewCell
-//        if indexPath.section == 0 {
-//            cell?.contentView.layer.borderColor = UIColor(red:0.78, green:0.78, blue:0.80, alpha:1.0).CGColor
-//            cell?.contentView.layer.borderWidth = 1.0
-//        }
+        let cell = tableView.dequeueReusableCell(withIdentifier: "idPreferencesChangePasswordCell", for: indexPath) as! PreferencesChangePasswordTableViewCell
+        
         let placeholderString = self.textFielsdPlaceholders[(indexPath as NSIndexPath).row + (indexPath as NSIndexPath).section]
-        cell!.placeholderString = placeholderString
-        cell!.textField.attributedPlaceholder = NSAttributedString(string: placeholderString, attributes: [NSFontAttributeName: UIFont(name: "Montserrat-Regular", size: 15.0)!])
-        cell?.textField.font = UIFont(name: "Montserrat-Regular", size: 15.0)
-        return cell!
+        cell.placeholderString = placeholderString
+        cell.textField.attributedPlaceholder = NSAttributedString(string: placeholderString, attributes: [NSFontAttributeName: UIFont(name: "Montserrat-Regular", size: 15.0)!])
+        cell.textField.font = UIFont(name: "Montserrat-Regular", size: 15.0)
+        if indexPath.section == 0 {
+            cell.dataKey = passwordDataKeyArray[0]
+            
+        } else {
+            cell.dataKey = passwordDataKeyArray[indexPath.row + indexPath.section]
+        }
+        cell.delegate = self
+        
+        return cell
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
@@ -80,8 +83,30 @@ class PreferencesChangePasswordViewController: RootViewController, UITableViewDe
 //MARK: UITableView Delegate Methods
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
+        return
     }
+    
+
+//MARK: Change Password Cell Delegate
+    
+    func textFieldTouched(_ sender: UITextField, dataKey: String) {
+        data[dataKey] = sender.text
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        self.view.endEditing(true)
+        return false
+    }
+    
+//    func containsEmptyField(data: [String: Any]!) -> Bool {
+//        for (_, value):(String, String) in data {
+//            if value == "" {
+//                return true
+//            }
+//        }
+//        
+//        return false
+//    }
     
     
 //MARK: @IBActions
@@ -91,6 +116,46 @@ class PreferencesChangePasswordViewController: RootViewController, UITableViewDe
     }
     
     @IBAction func validButtonTouched(_ sender: UIBarButtonItem) {
-        _ = self.navigationController?.popViewController(animated: true)
+        if data.count != textFielsdPlaceholders.count {
+            PopupManager.sharedInstance.showErrorPopup(message: Constants.PopupMessage.ErrorMessage.kErrorChangePasswordFieldMissing, viewController: self,
+                doneActionCompletion: {
+                    return
+                }
+            )
+            
+        } else if (data[UserDataKey.kNewPassword1]) != (data[UserDataKey.kNewPassword2]) {
+            PopupManager.sharedInstance.showErrorPopup(message: Constants.PopupMessage.ErrorMessage.kErrorChangePasswordNewPwdNotEqual, viewController: self,
+                    doneActionCompletion: {
+                        return
+                }
+            )
+            
+        } else if data.values.contains("") {
+            PopupManager.sharedInstance.showErrorPopup(message: Constants.PopupMessage.ErrorMessage.kErrorChangePasswordFieldMissing, viewController: self,
+                    doneActionCompletion: {
+                        return
+                }
+            )
+            
+        } else {
+            PopupManager.sharedInstance.showLoadingPopup(message: Constants.PopupMessage.InfosMessage.kUserProfilUpdating, viewController: self,
+                completion: {
+                    UserSessionManager.sharedInstance.changeUserPassword(withData: self.data,
+                        success: {
+                            PopupManager.sharedInstance.dismissPopup(true, completion: { 
+                                    _ = self.navigationController?.popViewController(animated: true)
+                                }
+                            )
+                        }
+                    ) { (error) in
+                        PopupManager.sharedInstance.dismissPopup(true,
+                            completion: {
+                                PopupManager.sharedInstance.showErrorPopup(message: Constants.PopupMessage.ErrorMessage.kErrorOccured)
+                            }
+                        )
+                    }
+                }
+            )
+        }
     }
 }

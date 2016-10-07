@@ -16,7 +16,7 @@ import Fabric
 import Crashlytics
 import Amplitude_iOS
 
-public var testing = true
+public var testing = false
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -32,14 +32,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         IQKeyboardManager.sharedManager().enable = true
         
         initManagers()
-        
-        // Sign in user
-        UserSessionManager.sharedInstance.signIn({
-            NavSchemeManager.sharedInstance.initRootController()
-            
-        }) { (error) in
-            NavSchemeManager.sharedInstance.initRootController()
-        }
         
         // Facebook SDK
         FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)

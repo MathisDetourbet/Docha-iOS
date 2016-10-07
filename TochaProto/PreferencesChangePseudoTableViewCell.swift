@@ -34,7 +34,7 @@ class PreferencesChangePseudoTableViewCell: UITableViewCell, UITextFieldDelegate
     @IBAction func textFieldTouched(_ sender: UITextField) {
         if isPseudoCell {
             if self.pseudoTextField.text == "" {
-                self.pseudoTextField.placeholder = "Vous n'avez pas de nom ?!"
+                self.pseudoTextField.placeholder = "Tu n'as pas de pseudo ?!"
             }
         } else {
             self.delegate?.textFieldTouched(sender)

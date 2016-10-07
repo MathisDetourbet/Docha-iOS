@@ -30,7 +30,7 @@ class UserRequest: DochaRequest {
                 let jsonResponse = JSON(response.result.value)
                 let user = User()
                 user.initPropertiesWithResponseObject(jsonResponse)
-                debugPrint("jsonResponse :\(response.result.value)")
+                
                 success(user)
             }
     }
@@ -82,6 +82,27 @@ class UserRequest: DochaRequest {
                 user.initPropertiesWithResponseObject(jsonResponse)
                 
                 success(user)
+            }
+    }
+    
+    func postChangePassword(withAuthToken authToken: String!, andData data: [String: Any]!, success: @escaping () -> Void, fail failure: @escaping (_ error: Error?) -> Void) {
+        
+        let urlString = Constants.UrlServer.UrlBase + Constants.UrlServer.UrlUser.UrlChangePassword
+        debugPrint("URL POST Change Password : \(urlString)")
+        
+        let parameters: Parameters = data
+        
+        alamofireManager!.adapter = AccessTokenAdapter(accessToken: authToken)
+        alamofireManager!.request(urlString, method: .post, parameters: parameters, encoding: JSONEncoding.default)
+            .validate(statusCode: 200..<300)
+            .responseJSON { response in
+                
+                guard response.result.isSuccess else {
+                    failure(response.result.error)
+                    return
+                }
+                
+                success()
             }
     }
 }

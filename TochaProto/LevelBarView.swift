@@ -49,6 +49,11 @@ class LevelBarView: UIView {
         //fatalError("init(coder:) has not been implemented")
     }
     
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        initLevelBar()
+    }
+    
     func initLevelBar() {
         
         self.backgroundColor = UIColor.clear

@@ -17,7 +17,8 @@ class PreferencesCategoriesViewController: RootViewController, UICollectionViewD
     let categoriesImagesPathArray = ["lifestyle", "high-tech", "maison_deco", "bijoux_montres", "electromenager", "art", "objets_connectes", "gastronomie_vin", "beauty", "sport"]
     let categoriesNames = ["Lifestyle", "High-Tech", "Maison / déco", "Bijoux / Montres", "Électroménager", "Art", "Objets connectés", "Gastronomie", "Beauté", "Sport"]
     var categoriesImages: [UIImage]?
-    var categoriesPrefered: [String]?
+    var categoriesPrefered: [String]? = UserSessionManager.sharedInstance.getUserInfosAndAvatarImage().user?.categoriesPrefered
+    var categoriesList: [Category]?
     
     @IBOutlet weak var backButton: UIBarButtonItem!
     @IBOutlet weak var infoButton: UIBarButtonItem!
@@ -31,54 +32,55 @@ class PreferencesCategoriesViewController: RootViewController, UICollectionViewD
         Amplitude.instance().logEvent("Preferences category selection opened")
         
         self.navigationController!.setNavigationBarHidden(false, animated: false)
-        self.footerValidateView.alpha = 0.0
+        footerValidateView.alpha = 0.0
         
-        self.collectionView.backgroundColor = UIColor.clear
-        self.collectionView.backgroundView = nil
+        collectionView.backgroundColor = UIColor.clear
+        collectionView.backgroundView = nil
         
-        self.configNavigationBarWithTitle("Choisissez votre catégorie préférée", andFontSize: 13.0)
+        configNavigationBarWithTitle("Choisis tes catégories préférées")
         
-        loadData()
+        loadCategories()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
     }
     
-    func loadData() {
-        self.categoriesImages = [UIImage]()
-        for item in categoriesImagesPathArray {
-            categoriesImages?.append(UIImage(named: item)!)
-        }
+    func loadCategories() {
+        categoriesList = []
         
-        self.collectionView.reloadData()
-        
-        let currentSession = UserSessionManager.sharedInstance.currentSession()
-        self.categoriesPrefered = currentSession?.categoriesPrefered
-        if self.categoriesPrefered == nil {
-            self.categoriesPrefered = []
+        UserSessionManager.sharedInstance.getAllCategory(
+            success: { (categoriesList) in
+                
+                for category in categoriesList {
+                    category.image = UIImage(named: category.slugName)
+                    self.categoriesList?.append(category)
+                }
+                
+                self.collectionView.reloadData()
+            }
+        )
+        { (error) in
+            
+            var index = 0
+            for item in self.categoriesImagesPathArray {
+                let image = UIImage(named: item)
+                let category = Category(name: self.categoriesNames[index], slugName: item, image: image)
+                self.categoriesList?.append(category)
+                index += 1
+            }
+            
+            self.collectionView.reloadData()
         }
     }
     
-    func saveCategorieFavoriteWithUserSession(_ userSession: UserSession, completion: @escaping ( (_ success: Bool) -> Void)) {
-        let params = userSession.generateJSONFromUserSession()
-        
-        if let param = params {
-//            UserSessionManager.sharedInstance.updateUserProfil(param, success: {
-//                print("Success categories VC")
-//                PopupManager.sharedInstance.dismissPopup(true, completion: {
-//                    PopupManager.sharedInstance.showSuccessPopup("Succès !", message: "Tes catégories préférées ont été mise à jour 😎", viewController: self, completion: nil, doneActionCompletion: {
-//                        completion(true)
-//                    })
-//                })
-//            }, fail: { (error, listError) in
-//                PopupManager.sharedInstance.dismissPopup(true, completion: {
-//                    print("Fail categories VC")
-//                    PopupManager.sharedInstance.showErrorPopup("Oups !", message: "Il semblerait que tu ne possède pas de connexion à internet... Essaie ultérieurement.", viewController: self, completion: nil, doneActionCompletion: {
-//                        completion(false)
-//                    })
-//                })
-//            })
+    func saveCategorieFavorite(withdData data: [String: Any], _ success: @escaping () -> Void, fail failure: @escaping (_ error: Error?) -> Void) {
+        UserSessionManager.sharedInstance.updateUser(withData: data,
+            success: {
+                success()
+            }
+        ) { (error) in
+                failure(error)
         }
     }
     
@@ -86,7 +88,12 @@ class PreferencesCategoriesViewController: RootViewController, UICollectionViewD
 //MARK: Collection View Data Source Methods
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return CATEGORY_NUMBER
+        if let categoriesList = self.categoriesList {
+            return categoriesList.count
+            
+        } else {
+            return 0
+        }
     }
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
@@ -96,19 +103,20 @@ class PreferencesCategoriesViewController: RootViewController, UICollectionViewD
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! InscriptionCategoryCollectionViewCell
         
-        cell.categoryImageView.image = self.categoriesImages![(indexPath as NSIndexPath).item]
-        cell.categoryName = self.categoriesImagesPathArray[(indexPath as NSIndexPath).item]
-        cell.categoryNameLabel.text = self.categoriesNames[(indexPath as NSIndexPath).item]
-        
-        if let categoriesPrefered = self.categoriesPrefered {
-            if categoriesPrefered.contains(cell.categoryName!) == true {
-                cell.imageSelected = true
+        if let category = categoriesList?[indexPath.item] {
+            cell.categoryName = category.slugName
+            cell.categoryNameLabel.text = category.name
+            cell.categoryImageView.image = category.image
+            cell.imageSelected = false
+            
+            if let categoriesPrefered = categoriesPrefered {
+                cell.imageSelected = categoriesPrefered.contains(category.slugName) ? true : false
+                
             } else {
                 cell.imageSelected = false
             }
-        } else {
-            cell.imageSelected = false
         }
+        
         return cell
     }
     
@@ -119,11 +127,11 @@ class PreferencesCategoriesViewController: RootViewController, UICollectionViewD
         let cellSelected = collectionView.cellForItem(at: indexPath) as! InscriptionCategoryCollectionViewCell
         if cellSelected.imageSelected {
             cellSelected.imageSelected = false
-            self.categoriesPrefered?.removeObject(cellSelected.categoryName)
+            categoriesPrefered?.removeObject(cellSelected.categoryName)
             
         } else {
             cellSelected.imageSelected = true
-            self.categoriesPrefered?.append(cellSelected.categoryName)
+            categoriesPrefered?.append(cellSelected.categoryName)
         }
     }
     
@@ -131,33 +139,64 @@ class PreferencesCategoriesViewController: RootViewController, UICollectionViewD
 //MARK: @IBActions
     
     @IBAction func backButtonTouched(_ sender: UIBarButtonItem) {
-        let currentSession = UserSessionManager.sharedInstance.currentSession()
+        let userData = UserSessionManager.sharedInstance.getUserInfosAndAvatarImage().user!
         
-        if self.categoriesPrefered == nil || (self.categoriesPrefered?.isEmpty)! {
-            _ = self.navigationController?.popViewController(animated: true)
-            
-        } else if self.categoriesPrefered! == (currentSession?.categoriesPrefered)! {
-            _ = self.navigationController?.popViewController(animated: true)
+        if let categoriesPrefered = self.categoriesPrefered {
+            if categoriesPrefered.isEmpty {
+                PopupManager.sharedInstance.showErrorPopup(message: Constants.PopupMessage.ErrorMessage.kErrorNoCategorySelected, viewController: self, doneActionCompletion: {
+                        _ = self.navigationController?.popViewController(animated: true)
+                    }
+                )
+                
+            } else if containSameElements(array1: userData.categoriesPrefered, categoriesPrefered) {
+                _ = self.navigationController?.popViewController(animated: true)
+                
+            } else {
+                PopupManager.sharedInstance.showLoadingPopup(message: Constants.PopupMessage.InfosMessage.kUserProfilUpdating, viewController: self, completion: {
+                    let data = [UserDataKey.kCategoryPrefered: categoriesPrefered]
+                    self.saveCategorieFavorite(withdData: data,
+                        {
+                            PopupManager.sharedInstance.dismissPopup(true,
+                                completion: {
+                                    _ = self.navigationController?.popViewController(animated: true)
+                                }
+                            )
+                                            
+                        }, fail: { (error) in
+                            PopupManager.sharedInstance.dismissPopup(true,
+                                completion: {
+                                    PopupManager.sharedInstance.showErrorPopup(message: Constants.PopupMessage.ErrorMessage.kErrorNoInternetConnection, viewController: self,
+                                            doneActionCompletion: {
+                                                _ = self.navigationController?.popViewController(animated: true)
+                                            }
+                                    )
+                                }
+                            )
+                        }
+                    )}
+                )
+            }
             
         } else {
-            PopupManager.sharedInstance.showLoadingPopup("Chargement...", message: "Mise à jour de ton profil Docha...", viewController: self, completion: nil)
-            let categoriesFavoritesTemp = currentSession?.categoriesPrefered
-            currentSession?.categoriesPrefered = self.categoriesPrefered!
-            
-            if let currentSession = currentSession {
-                saveCategorieFavoriteWithUserSession(currentSession, completion: { (success) in
-                    if success {
-                        _ = self.navigationController?.popViewController(animated: true)
-                    } else {
-                        self.categoriesPrefered = categoriesFavoritesTemp
-                        self.collectionView.reloadData()
-                    }
-                })
-            }
+            PopupManager.sharedInstance.showErrorPopup(message: Constants.PopupMessage.ErrorMessage.kErrorNoCategorySelected, viewController: self, doneActionCompletion: {
+                    _ = self.navigationController?.popViewController(animated: true)
+                }
+            )
         }
     }
     
     @IBAction func infosButtonTouched(_ sender: UIBarButtonItem) {
-        PopupManager.sharedInstance.showInfosPopup("Info", message: "Nous souhaitons te proposer au maximum des produits qui te correspondent.", viewController: self, completion: nil)
+        PopupManager.sharedInstance.showInfosPopup(message: Constants.PopupMessage.InfosMessage.kInfosCategoryHelp, viewController: self, completion: nil)
+    }
+    
+    
+//MARK: Helper Method
+    
+    func containSameElements<T: Comparable>(array1: [T], _ array2: [T]) -> Bool {
+        guard array1.count == array2.count else {
+            return false // No need to sorting if they already have different counts
+        }
+        
+        return array1.sorted() == array2.sorted()
     }
 }

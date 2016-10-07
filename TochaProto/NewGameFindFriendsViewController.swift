@@ -13,6 +13,7 @@ class NewGameFindFriendsViewController: GameViewController, UITableViewDataSourc
     var friendsList: [AnyObject]? = []
     
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var heightTableViewConstraint: NSLayoutConstraint!
     
     
 //MARK: Life View Cycle
@@ -20,6 +21,12 @@ class NewGameFindFriendsViewController: GameViewController, UITableViewDataSourc
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        if let friendsList = self.friendsList {
+            heightTableViewConstraint.constant = CGFloat(friendsList.count) * tableView.rowHeight
+            
+        } else {
+            heightTableViewConstraint.constant = 0.0
+        }
     }
     
     

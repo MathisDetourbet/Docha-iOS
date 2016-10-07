@@ -35,7 +35,6 @@ class InscriptionCategorySelectionViewController: RootViewController, UICollecti
         categoryPrefered = []
         
         configNavigationBarWithTitle("Choisis tes catégories préférées")
-        
         loadCategories()
     }
     

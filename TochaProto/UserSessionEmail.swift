@@ -8,6 +8,10 @@
 
 import Foundation
 
+enum AvatarDochaSize: String {
+    case small = "small", medium = "medium", large = "large"
+}
+
 class UserSessionEmail: UserSession {
     
     override init() {
@@ -22,12 +26,12 @@ class UserSessionEmail: UserSession {
         super.encode(with: aCoder)
     }
     
-    override func getUserProfileImage() -> UIImage? {
-        if let avatarString = self.avatarUrl {
-            return UIImage(named: avatarString)
+    func getUserAvatarImage(withSize size: AvatarDochaSize) -> UIImage? {
+        if let avatarUrl = avatarUrl {
+            return UIImage(named: "\(avatarUrl)_\(size))")
             
         } else {
-            return UIImage(named: "avatar_man")
+            return UIImage(named: "avatar_man_\(size)")
         }
     }
 }

@@ -16,6 +16,9 @@ struct UserDataKey {
     static let kPassword = "password"
     static let kPassword1 = "password1"
     static let kPassword2 = "password2"
+    static let kOldPassword = "old_password"
+    static let kNewPassword1 = "new_password1"
+    static let kNewPassword2 = "new_password2"
     static let kGender = "gender"
     static let kDateBirthday = "birthday"
     static let kCategoryPrefered = "categories_prefered"
@@ -61,7 +64,7 @@ struct Constants {
         
         static let kUserInfosFacebookAccessToken = "userInfosFacebookAccessToken"
         
-        static let kUserInfosProfileImageFilePath = "userInfosProfileImageFilePath"
+        static let kUserInfosAvatarImage = "userInfosAvatarImage"
         static let kProductsIDPlayed = "userInfosProductsIDPlayed"
         static let kUserInfosBadgesUnlockedIdentifiers = "userInfosBadgesUnlockedIdentifiers"
     }
@@ -86,24 +89,34 @@ struct Constants {
     
     struct PopupMessage {
         struct ErrorMessage {
-            static let kErrorNoInternetConnection = "Une erreur est survenue. Essaie de te connecter à nouveau"
+            static let kErrorOccured = "Une erreur est survenue. Essaie à nouveau maintenant ou un peu plus tard."
+            static let kErrorNoInternetConnection = "Une erreur est survenue. Essaie de te connecter à nouveau."
+            
             static let kErrorRegistrationPasswordMinimumCharacters = "Vérifie que ton mot de passe possède au minimum 6 caractères."
             static let kErrorRegistrationEmailNotValid = "Cette adresse email n'est pas valide."
+            
             static let kErrorConnexionEmailBadEmailOrPassword = "L'email ou le mot de passe est incorrecte."
             static let kErrorInscriptionBadBirthOrGender = "Les informations ne sont pas valides. Essaie à nouveau."
+            static let kErrorNoCategorySelected = "Choisis au minimum une catégorie."
+            
+            static let kErrorChangePasswordFieldMissing = "Vérifie que tous les champs sont bien remplis."
+            static let kErrorChangePasswordNewPwdNotEqual = "Les nouveaux mots de passe sont différents."
+            static let kErrorChangePasswordBadOldPwd = "Ce n'est pas le bon ancien mot de passe."
         }
         
         struct InfosMessage {
             static let kInfosCategoryHelp = "Nous souhaitons vous proposer au maximum des produits qui vous correspondent."
+            static let kUserProfilUpdating = "Mise à jour de ton profil Docha..."
         }
     }
     
     struct UrlServer {
         
-        static let UrlBase = testing ? "http://127.0.0.1:8005" : "https://afternoon-beyond-49404.herokuapp.com"
+        static let UrlBase = testing ? "http://127.0.0.1:8005" : "https://docha.nextmap.io"
         
         struct UrlUser {
             static let UrlUser = "/rest-auth/user/"
+            static let UrlChangePassword = "/rest-auth/password/change/"
         }
         
         struct UrlCategory {

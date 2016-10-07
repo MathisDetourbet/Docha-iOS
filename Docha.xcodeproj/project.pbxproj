@@ -36,6 +36,8 @@
 		67584CBC1D37D2760082F506 /* PreferencesChangePasswordTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67584CBB1D37D2760082F506 /* PreferencesChangePasswordTableViewCell.swift */; };
 		6758DFFC1D958BB300CAFEF2 /* NewGameFindByPseudoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6758DFFB1D958BB300CAFEF2 /* NewGameFindByPseudoViewController.swift */; };
 		676291031D70464300E49487 /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 676291021D70464300E49487 /* GameKit.framework */; };
+		676D0EB61DA5BFDA005ABBC1 /* UIImageHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 676D0EB51DA5BFD9005ABBC1 /* UIImageHelper.swift */; };
+		676D0EB81DA681B4005ABBC1 /* LaunchScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 676D0EB71DA681B4005ABBC1 /* LaunchScreenViewController.swift */; };
 		676FEAD21D758BAE006E6B3E /* products_beta_v0.2.json in Resources */ = {isa = PBXBuildFile; fileRef = 676FEAD11D758BAE006E6B3E /* products_beta_v0.2.json */; };
 		67748A2B1D41774600525091 /* PriceRecordsRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67748A2A1D41774600525091 /* PriceRecordsRequest.swift */; };
 		6775CE431C494BB700550041 /* JDFlipImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6775CE3E1C494BB700550041 /* JDFlipImageView.m */; };
@@ -218,6 +220,8 @@
 		67584CBB1D37D2760082F506 /* PreferencesChangePasswordTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreferencesChangePasswordTableViewCell.swift; sourceTree = "<group>"; };
 		6758DFFB1D958BB300CAFEF2 /* NewGameFindByPseudoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewGameFindByPseudoViewController.swift; sourceTree = "<group>"; };
 		676291021D70464300E49487 /* GameKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameKit.framework; path = System/Library/Frameworks/GameKit.framework; sourceTree = SDKROOT; };
+		676D0EB51DA5BFD9005ABBC1 /* UIImageHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIImageHelper.swift; sourceTree = "<group>"; };
+		676D0EB71DA681B4005ABBC1 /* LaunchScreenViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LaunchScreenViewController.swift; sourceTree = "<group>"; };
 		676FEAD11D758BAE006E6B3E /* products_beta_v0.2.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = products_beta_v0.2.json; sourceTree = "<group>"; };
 		67748A2A1D41774600525091 /* PriceRecordsRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PriceRecordsRequest.swift; sourceTree = "<group>"; };
 		6775CE3D1C494BB700550041 /* JDFlipImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JDFlipImageView.h; sourceTree = "<group>"; };
@@ -826,6 +830,7 @@
 				67DED2301D47DCA500A4027E /* UIViewHelper.swift */,
 				675368DC1D7D9E720018EE62 /* UIImageViewHelper.swift */,
 				679598F11D8C316D009AC9CA /* ConverterHelper.swift */,
+				676D0EB51DA5BFD9005ABBC1 /* UIImageHelper.swift */,
 			);
 			name = Swift;
 			sourceTree = "<group>";
@@ -1020,6 +1025,7 @@
 		67FEE21E1C8E1B5B008F842C /* LaunchScreen */ = {
 			isa = PBXGroup;
 			children = (
+				676D0EB71DA681B4005ABBC1 /* LaunchScreenViewController.swift */,
 				6701D97C1C108A2100F87043 /* LaunchScreen.storyboard */,
 			);
 			name = LaunchScreen;
@@ -1451,6 +1457,7 @@
 				67DD961B1D78B586007598E0 /* NewGameFindOpponentViewController.swift in Sources */,
 				6786E4041CF485ED00729D8E /* RootViewController.swift in Sources */,
 				679B84831D8C5C7C0031EC27 /* GameplayMatchViewController.swift in Sources */,
+				676D0EB81DA681B4005ABBC1 /* LaunchScreenViewController.swift in Sources */,
 				67E7ED051D79B63B00D04536 /* InscriptionPseudoSelectionViewController.swift in Sources */,
 				67D482811D217CAF009F1992 /* PreferencesAboutViewController.swift in Sources */,
 				6701D9A21C108AAE00F87043 /* Product.swift in Sources */,
@@ -1493,6 +1500,7 @@
 				6791CDE81D3450080091DDB0 /* PreferencesChoosAvatarViewController.swift in Sources */,
 				67C83B011CF498780066B982 /* PasswordForgottenViewController.swift in Sources */,
 				67DA29B61CEB384700CE621F /* RegistrationRequest.swift in Sources */,
+				676D0EB61DA5BFDA005ABBC1 /* UIImageHelper.swift in Sources */,
 				679273E11CFB0FC000DABA88 /* UserSessionEmail.swift in Sources */,
 				678338301D04E754002907EC /* HomeViewController.swift in Sources */,
 				67F75F701C42E00C00E78102 /* CounterView.swift in Sources */,

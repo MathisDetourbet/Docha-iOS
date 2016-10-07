@@ -16,13 +16,14 @@ class PreferencesViewController: GameViewController, UITableViewDelegate, UITabl
     let idNormalTableViewCell = "idNormalTableViewCell"
     let idSwitchTableViewCell = "idSwitchTableViewCell"
     let sections: [String] = ["COMPTE", "INFORMATIONS"]
-    let cellContent: [[[String:String]]] = [[["title" : "Modifier le profil", "iconPath" : "profil_icon"],
+    var cellContent: [[[String:String]]] = [[["title" : "Modifier le profil", "iconPath" : "profil_icon"],
                                             ["title" : "Changer le mot de passe", "iconPath" : "password_change_icon"],
                                             ["title" : "Catégories préférées", "iconPath" : "category_selection_icon"]],
                                             [["title" :"Notifications", "iconPath" : "notifications_icon"],
                                             ["title" : "À propos", "iconPath" : "rocket_icon"],
                                             ["title" : "Tutoriel", "iconPath" : "play_icon"],
                                             ["title" :"Donne nous ton avis !","iconPath": "mail_icon"]]]
+    
     @IBOutlet weak var tableView: UITableView!
     
     override func viewDidLoad() {
@@ -30,6 +31,13 @@ class PreferencesViewController: GameViewController, UITableViewDelegate, UITabl
         
         // Amplitude
         Amplitude.instance().logEvent("Preferences tab opened")
+        let currentSession = UserSessionManager.sharedInstance.currentSession()
+        
+        if let currentSession = currentSession {
+            if currentSession.isKind(of: UserSessionFacebook.self) {
+                cellContent[0].remove(at: 1)
+            }
+        }
         
         self.buildUI()
     }

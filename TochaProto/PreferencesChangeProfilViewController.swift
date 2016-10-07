@@ -10,7 +10,6 @@ import Foundation
 
 class PreferencesChangeProfilViewController: RootViewController, UITableViewDelegate, UITableViewDataSource, PseudoCellDelegate, UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, RSKImageCropViewControllerDelegate, ChooseAvatarDochaDelegate {
     
-    var userSession: UserSession?
     var pseudoIndexPath: IndexPath?
     var birthdayIndexPathCell: IndexPath?
     var avatarIndexPath: IndexPath?
@@ -19,6 +18,7 @@ class PreferencesChangeProfilViewController: RootViewController, UITableViewDele
     var genderNotConverted: String?
     var birthdayString: String?
     var avatarImageName: String?
+    var dataUser = UserSessionManager.sharedInstance.getUserInfosAndAvatarImage()
     
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var cancelBarButtonItem: UIBarButtonItem!
@@ -27,16 +27,15 @@ class PreferencesChangeProfilViewController: RootViewController, UITableViewDele
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        userSession = UserSessionManager.sharedInstance.currentSession()!
         
         configNavigationBarWithTitle("Modifier le profil", andFontSize: 15.0)
 
-        self.validBarButtonItem.setTitleTextAttributes([NSFontAttributeName: UIFont(name: "Montserrat-SemiBold", size: 11.0)!], for: UIControlState())
-        self.cancelBarButtonItem.setTitleTextAttributes([NSFontAttributeName: UIFont(name: "Montserrat-SemiBold", size: 11.0)!], for: UIControlState())
+        validBarButtonItem.setTitleTextAttributes([NSFontAttributeName: UIFont(name: "Montserrat-SemiBold", size: 11.0)!], for: UIControlState())
+        cancelBarButtonItem.setTitleTextAttributes([NSFontAttributeName: UIFont(name: "Montserrat-SemiBold", size: 11.0)!], for: UIControlState())
 
-        self.heightTableViewConstraint.constant = 4 * tableView.rowHeight + tableView.sectionHeaderHeight + tableView.sectionFooterHeight
+        heightTableViewConstraint.constant = 4 * tableView.rowHeight + tableView.sectionHeaderHeight + tableView.sectionFooterHeight
         
-        self.imagePicker.delegate = self
+        imagePicker.delegate = self
     }
     
     
@@ -53,12 +52,11 @@ class PreferencesChangeProfilViewController: RootViewController, UITableViewDele
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if (indexPath as NSIndexPath).row == 0 {
             let cell = tableView.dequeueReusableCell(withIdentifier: "idPreferencesChangePseudoCell") as! PreferencesChangePseudoTableViewCell
-            let userName = userSession?.pseudo
-            if userName != nil && userName != "" {
-                cell.pseudoTextField.text = userName
+            
+            if let pseudo = dataUser.user?.pseudo {
+                cell.pseudoTextField.text = pseudo.isEmpty ? nil : pseudo
                 cell.pseudoTextField.font = UIFont(name: "Montserrat-Regular", size: 15.0)
                 cell.pseudoTextField.placeholder = nil
-                cell.delegate = self
                 
             } else {
                 cell.pseudoTextField.placeholder = "Pseudo"
@@ -66,6 +64,7 @@ class PreferencesChangeProfilViewController: RootViewController, UITableViewDele
                 cell.pseudoTextField.text = nil
             }
             
+            cell.delegate = self
             cell.imageViewCell.image = UIImage(named: "profil_icon")
             self.pseudoIndexPath = indexPath
             
@@ -73,50 +72,42 @@ class PreferencesChangeProfilViewController: RootViewController, UITableViewDele
             
         } else {
             let cell = tableView.dequeueReusableCell(withIdentifier: "idPreferencesChangeProfilCell") as! PreferencesChangeProfilTableViewCell
-//            if indexPath.row == 1 {
-//                cell.titleLabel.text = "Avatar / Photo de profil"
-//                cell.imageViewCell.image = UIImage(named: "smile_icon")
-//                cell.accessoryType = .DisclosureIndicator
-//                self.avatarIndexPath = indexPath
             
             if (indexPath as NSIndexPath).row == 1 {
                 let newCell = tableView.dequeueReusableCell(withIdentifier: "idPreferencesChangePseudoCell") as! PreferencesChangePseudoTableViewCell
+                
                 newCell.pseudoTextField.attributedPlaceholder = NSAttributedString(string: "Anniversaire", attributes: [NSFontAttributeName: UIFont(name: "Montserrat-Regular", size: 15.0)!])
                 
-                if let dateOfBirthday = userSession!.dateBirthday {
+                if let birthday = dataUser.user?.dateBirthday {
                     let dateFormatter = DateFormatter()
                     dateFormatter.dateFormat = "dd MMMM yyyy"
-                    newCell.pseudoTextField.text = dateFormatter.string(from: dateOfBirthday as Date)
+                    newCell.pseudoTextField.text = dateFormatter.string(from: birthday as Date)
                     newCell.pseudoTextField.placeholder = nil
+                    
                 } else {
                     newCell.pseudoTextField.placeholder = "Anniversaire"
                     newCell.pseudoTextField.text = nil
                 }
+                
                 newCell.imageViewCell.image = UIImage(named: "cake_icon")
                 newCell.delegate = self
                 newCell.isPseudoCell = false
-                self.birthdayIndexPathCell = indexPath
+                birthdayIndexPathCell = indexPath
                 
                 return newCell
                 
             } else if (indexPath as NSIndexPath).row == 2 {
-                let gender = userSession!.gender
                 
-                if let genderString = gender {
-                    if genderString == "M" {
-                        cell.titleLabel.text = "Homme"
-                        
-                    } else if genderString == "F" {
-                        cell.titleLabel.text = "Femme"
-                        
-                    } else {
-                        cell.titleLabel.text = "Autre"
-                    }
+                if let gender = dataUser.user?.getGenderDataForDisplay() {
+                    cell.titleLabel.text = gender
+                    
                 } else {
                     cell.titleLabel.text = ""
                 }
+                
                 cell.imageViewCell.image = UIImage(named: "sex_icon")
             }
+            
             return cell
         }
     }
@@ -125,62 +116,6 @@ class PreferencesChangeProfilViewController: RootViewController, UITableViewDele
 //MARK: UITableViewDelegate Methods
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        if indexPath.row == 1 {
-//            let alertController = UIAlertController(title: "Choisir une action", message: nil, preferredStyle: .ActionSheet)
-//            alertController.view.tintColor = UIColor.redDochaColor()
-//            var action = UIAlertAction(title: "Choisir un avatar Docha", style: .Default, handler: { (_) in
-//                let chooseAvatarVC = self.storyboard?.instantiateViewControllerWithIdentifier("idChooseAvatarViewController") as! PreferencesChoosAvatarViewController
-//                chooseAvatarVC.delegate = self
-//                if let genderNotConvertedString = self.genderNotConverted {
-//                    var finalGender = ""
-//                    if genderNotConvertedString == "Homme" {
-//                        finalGender = "M"
-//                        
-//                    } else if genderNotConvertedString == "Femme" {
-//                        finalGender = "F"
-//                        
-//                    } else {
-//                        finalGender = "U"
-//                    }
-//                    chooseAvatarVC.userGender = finalGender
-//                } else {
-//                    let gender = self.userSession!.gender
-//                    if let gender = gender {
-//                        chooseAvatarVC.userGender = gender
-//                    }
-//                }
-//                self.presentViewController(chooseAvatarVC, animated: true, completion: nil)
-//            })
-//            alertController.addAction(action)
-//            
-//            action = UIAlertAction(title: "Choisir dans vos albums", style: .Default, handler: { (_) in
-//                self.imagePicker.allowsEditing = false
-//                self.imagePicker.sourceType = .PhotoLibrary
-//                self.presentViewController(self.imagePicker, animated: true, completion: nil)
-//            })
-//            alertController.addAction(action)
-//            
-//            action = UIAlertAction(title: "Prendre une photo", style: .Default, handler: { (_) in
-//                if (UIImagePickerController.availableCaptureModesForCameraDevice(.Front) != nil) || (UIImagePickerController.availableCaptureModesForCameraDevice(.Rear) != nil) {
-//                    self.imagePicker.allowsEditing = false
-//                    self.imagePicker.sourceType = .Camera
-//                    self.imagePicker.cameraCaptureMode = .Photo
-//                    self.imagePicker.modalPresentationStyle = .FullScreen
-//                    self.presentViewController(self.imagePicker, animated: true, completion: nil)
-//                    
-//                } else {
-//                    self.noCameraAlert()
-//                }
-//            })
-//            alertController.addAction(action)
-//            
-//            let cancelAction = UIAlertAction(title: "Annuler", style: .Cancel, handler: { (_) in
-//                self.tableView.deselectRowAtIndexPath(indexPath, animated: true)
-//            })
-//            alertController.addAction(cancelAction)
-//            self.presentViewController(alertController, animated: true, completion: nil)
-//            alertController.view.tintColor = UIColor.redDochaColor()
-            
         if  (indexPath as NSIndexPath).row == 1 {
             let cell = tableView.cellForRow(at: indexPath) as! PreferencesChangePseudoTableViewCell
             textFieldTouched(cell.pseudoTextField)
@@ -250,6 +185,66 @@ class PreferencesChangeProfilViewController: RootViewController, UITableViewDele
         _ = self.navigationController?.popViewController(animated: true)
     }
     
+    func handleDatePicker(_ sender: UIDatePicker, textField: UITextField) {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "dd MMMM yyyy"
+        textField.text = dateFormatter.string(from: sender.date)
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        birthdayString = dateFormatter.string(from: sender.date)
+        
+        let cell = tableView.cellForRow(at: self.birthdayIndexPathCell!) as! PreferencesChangePseudoTableViewCell
+        cell.pseudoTextField.text = dateFormatter.string(from: sender.date)
+    }
+    
+    
+//MARK: Save User Data Method
+    
+    func saveUserProfilData(withSuccess success: @escaping () -> Void, fail failure: @escaping (_ errorMessage: String?) -> Void) {
+        var data: [String: Any] = [:]
+        let pseudoCell = tableView.cellForRow(at: pseudoIndexPath!) as! PreferencesChangePseudoTableViewCell
+        if let pseudo = pseudoCell.pseudoTextField.text {
+            if pseudo != dataUser.user?.pseudo {
+                data[UserDataKey.kUsername] = pseudo
+            }
+            
+        } else {
+            failure("Entre un pseudo valide.")
+            return
+        }
+        
+        if let birthday = birthdayString {
+            data[UserDataKey.kDateBirthday] = birthday
+        }
+        
+        if let gender = genderNotConverted {
+            let genderData = ConverterHelper.convertGenderToData(withGender: gender)
+            data[UserDataKey.kGender] = genderData
+        }
+        
+        if data.isEmpty {
+            success()
+            return
+        }
+        
+        UserSessionManager.sharedInstance.updateUser(withData: data,
+            success: {
+                success()
+                
+            }, fail: { error in
+                failure(Constants.PopupMessage.ErrorMessage.kErrorNoInternetConnection)
+            }
+        )
+    }
+    
+    func noCameraAlert() {
+        let alertVC = UIAlertController(title: "Oups !", message: "Désolé, aucune camera détectée... :-(", preferredStyle: .alert)
+        let agreeAction = UIAlertAction(title: "D'accord", style: .default, handler: nil)
+        alertVC.addAction(agreeAction)
+        self.present(alertVC, animated: true, completion: nil)
+    }
+    
+    
+//MARK: Pseudo Cell Delegate
     
     func textFieldTouched(_ sender: UITextField) {
         let datePickerView: UIDatePicker = UIDatePicker()
@@ -272,111 +267,42 @@ class PreferencesChangeProfilViewController: RootViewController, UITableViewDele
         datePickerView.addTarget(self, action: #selector(PreferencesChangeProfilViewController.handleDatePicker(_:textField:)), for: UIControlEvents.valueChanged)
     }
     
-    func handleDatePicker(_ sender: UIDatePicker, textField: UITextField) {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "dd MMMM yyyy"
-        textField.text = dateFormatter.string(from: sender.date)
-        
-        birthdayString = dateFormatter.string(from: sender.date)
-        
-        let cell = tableView.cellForRow(at: self.birthdayIndexPathCell!) as! PreferencesChangePseudoTableViewCell
-        cell.pseudoTextField.text = dateFormatter.string(from: sender.date)
-    }
-    
-    func saveUserProfilDataWithCompletion(_ completion: @escaping (_ success: Bool) -> Void) {
-        var needToUpdateProfil = false
-        
-        // Save Profile Image
-//        if let _ = self.imageViewPicked, imageToSave = self.imageViewPicked?.image {
-//            needToUpdateProfil = true
-//            UserSessionManager.sharedInstance.currentSession()?.saveProfileImage(imageToSave)
-//        }
-        
-        // Save other user data
-        if var dicoParameters = self.userSession?.generateJSONFromUserSession() {
-            
-//            if let _ = self.avatarImageName {
-//                needToUpdateProfil = true
-//                dicoParameters[UserDataKey.kAvatar] = self.avatarImageName
-//            }
-            
-            if let genderNotConvertedString = self.genderNotConverted {
-                var finalGender = ""
-                if genderNotConvertedString == "Homme" {
-                   finalGender = "M"
-                    
-                } else if genderNotConvertedString == "Femme" {
-                    finalGender = "F"
-                    
-                } else {
-                    finalGender = "U"
-                }
-                needToUpdateProfil = true
-                dicoParameters[UserDataKey.kGender] = finalGender as AnyObject?
-            }
-            
-            let pseudoCell = self.tableView.cellForRow(at: self.pseudoIndexPath!) as! PreferencesChangePseudoTableViewCell
-            let pseudoString = pseudoCell.pseudoTextField.text
-            let currentPseudo = UserSessionManager.sharedInstance.currentSession()?.pseudo
-            if let pseudo = pseudoString {
-                if pseudo != currentPseudo {
-                    needToUpdateProfil = true
-                    dicoParameters[UserDataKey.kUsername] = pseudo as AnyObject?
-                }
-            }
-            
-            if let birthday = self.birthdayString {
-                if birthday != "" {
-                    needToUpdateProfil = true
-                    dicoParameters[UserDataKey.kDateBirthday] = birthday as AnyObject?
-                }
-            }
-            
-            if needToUpdateProfil {
-//                UserSessionManager.sharedInstance.updateUserProfil(dicoParameters, success: {
-//                        print("Success update user profil")
-//                        completion(true)
-//                    }, fail: { (error, listError) in
-//                        print("Fail updating user profil")
-//                        completion(false)
-//                })
-            }
-        }
-    }
-    
-    func noCameraAlert() {
-        let alertVC = UIAlertController(title: "Oups !", message: "Désolé, aucune camera détectée... :-(", preferredStyle: .alert)
-        let agreeAction = UIAlertAction(title: "D'accord", style: .default, handler: nil)
-        alertVC.addAction(agreeAction)
-        self.present(alertVC, animated: true, completion: nil)
-    }
-    
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         self.view.endEditing(true)
         return false
     }
     
+    
+//MARK: ChooseAvatarDocha Delegate
+    
     func didChosenAvatarDochaWithImage(_ imageName: String) {
-        self.avatarImageName = imageName
+        
     }
     
 
-//MARK: @IBActions
+//MARK: @IBActions: Valid & Cancel
     
     @IBAction func validBarButtonItemTouched(_ sender: UIBarButtonItem) {
-        PopupManager.sharedInstance.showLoadingPopup("Mise à jour de ton profil...", message: nil, viewController: self, completion: {
-            self.saveUserProfilDataWithCompletion { (success) in
-                PopupManager.sharedInstance.dismissPopup(true, completion: {
-                    if success {
-                        UserSessionManager.sharedInstance.needsToUpdateHome = true
-                        _ = self.navigationController?.popViewController(animated: true)
+        PopupManager.sharedInstance.showLoadingPopup("Mise à jour de ton profil...", message: nil, viewController: self,
+            completion: {
+                self.saveUserProfilData(
+                    withSuccess: {
+                        PopupManager.sharedInstance.dismissPopup(true,
+                            completion: {
+                                _ = self.navigationController?.popViewController(animated: true)
+                            }
+                        )
                         
-                    } else {
-                        PopupManager.sharedInstance.showErrorPopup("Oups !", message: "La connexion internet semble interrompue. Essaie à nouveau ultérieurement.", completion: nil)
+                    }, fail: { (errorMessage) in
+                        PopupManager.sharedInstance.dismissPopup(true,
+                            completion: {
+                                PopupManager.sharedInstance.showErrorPopup(message: errorMessage, viewController: self)
+                            }
+                        )
                     }
-                })
+                )
             }
-        })
+        )
     }
     
     @IBAction func cancelBarButtonItemTouched(_ sender: UIBarButtonItem) {

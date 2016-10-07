@@ -9,12 +9,6 @@
 import Foundation
 import SwiftyJSON
 
-enum ProfilImageType : Int {
-    case facebookImage
-    case avatarDochaImage
-    case photoImage
-}
-
 class User: NSObject {
     var pseudo: String?
     var lastName: String?
@@ -76,5 +70,17 @@ class User: NSObject {
         if let dateBirthday = user.dateBirthday { self.dateBirthday = dateBirthday }
         if let avatarUrl = user.avatarUrl { self.avatarUrl = avatarUrl }
         if user.categoriesPrefered.isEmpty == false { self.categoriesPrefered = user.categoriesPrefered }
+    }
+    
+    func getGenderDataForDisplay() -> String? {
+        if let gender = self.gender {
+            switch gender {
+                case "male":    return "Homme"
+                case "female":  return "Femme"
+                default:        return "Autre"
+            }
+        }
+        
+        return nil
     }
 }

@@ -10,11 +10,11 @@ import Foundation
 
 extension UIImageView {
     
-    func applyCircleBorder() {
+    func applyCircleBorder(withImage image: UIImage) {
+        self.image = image
         layer.cornerRadius = frame.size.height/2
         layer.borderWidth = 3.0
         layer.borderColor = UIColor.white.cgColor
-        layer.masksToBounds = false
         clipsToBounds = true
     }
 }

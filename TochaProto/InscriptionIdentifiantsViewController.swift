@@ -175,22 +175,29 @@ class InscriptionIdentifiantsViewController: RootViewController, UITextFieldDele
         if isEmailValid() {
             if isPasswordValid() {
                 
-                UserSessionManager.sharedInstance.registrationByEmail(emailString!, andPassword: passwordString!,
-                    success: {
-                        
-                        let data = [UserDataKey.kCategoryPrefered: self.categoryFavorites! as AnyObject]
-                        UserSessionManager.sharedInstance.updateUser(withData: data,
+                PopupManager.sharedInstance.showLoadingPopup(message: "",
+                    completion: {
+                        UserSessionManager.sharedInstance.registrationByEmail(self.emailString!, andPassword: self.passwordString!,
                             success: {
-                                
-                                let inscriptionInfosUserVC = self.storyboard?.instantiateViewController(withIdentifier: "idInscriptionInfosUserViewController") as! InscriptionInfosUserViewController
-                                self.navigationController?.pushViewController(inscriptionInfosUserVC, animated: true)
+                                let data = [UserDataKey.kCategoryPrefered: self.categoryFavorites! as AnyObject]
+                                UserSessionManager.sharedInstance.updateUser(withData: data,
+                                    success: {
+                                        let inscriptionInfosUserVC = self.storyboard?.instantiateViewController(withIdentifier: "idInscriptionInfosUserViewController") as! InscriptionInfosUserViewController
+                                        self.navigationController?.pushViewController(inscriptionInfosUserVC, animated: true)
+                                        
+                                    }, fail: { (error) in
+                                        PopupManager.sharedInstance.dismissPopup(true,
+                                            completion: {
+                                                PopupManager.sharedInstance.showErrorPopup(message: Constants.PopupMessage.ErrorMessage.kErrorNoInternetConnection)
+                                            }
+                                        )
+                                    }
+                                )
                                 
                             }, fail: { (error) in
                                 PopupManager.sharedInstance.showErrorPopup(message: Constants.PopupMessage.ErrorMessage.kErrorNoInternetConnection)
                             }
                         )
-                    }, fail: { (error) in
-                        PopupManager.sharedInstance.showErrorPopup(message: Constants.PopupMessage.ErrorMessage.kErrorNoInternetConnection)
                     }
                 )
                 

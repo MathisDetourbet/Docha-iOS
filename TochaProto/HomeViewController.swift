@@ -25,7 +25,7 @@ class HomeViewController: GameViewController, UITableViewDelegate, UITableViewDa
     var isBubbleOpen: Bool = false
     
     @IBOutlet weak var tableView: UITableView!
-    @IBOutlet weak var avatarImageView: UIImageView!
+    @IBOutlet weak var userAvatarImageView: UIImageView!
     @IBOutlet weak var userNameLabel: UILabel!
     @IBOutlet weak var userLevelBar: LevelBarView!
     @IBOutlet weak var userLevelLabel: UILabel!
@@ -37,6 +37,7 @@ class HomeViewController: GameViewController, UITableViewDelegate, UITableViewDa
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         loadUserInfos()
         UserGameStateManager.sharedInstance.authenticateLocalPlayer()
         self.navigationController?.isNavigationBarHidden = true
@@ -50,23 +51,12 @@ class HomeViewController: GameViewController, UITableViewDelegate, UITableViewDa
         super.viewWillAppear(animated)
         self.navigationController?.isNavigationBarHidden = true
         
-        if UserSessionManager.sharedInstance.needsToUpdateHome {
-            loadUserInfos()
-            UserSessionManager.sharedInstance.needsToUpdateHome = false
-        }
+        loadUserInfos()
         
         buildUI()
         
         // Amplitude
         Amplitude.instance().logEvent("TabNavHome")
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-    }
-    
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
     }
     
     func buildUI() {
@@ -90,7 +80,6 @@ class HomeViewController: GameViewController, UITableViewDelegate, UITableViewDa
         tableView.addPullToRefresh(refresher) {}
         
         userLevelLabel.text = "Niveau \(self.userGameManager.getUserLevel())"
-        userLevelBar.initLevelBar()
         userLevelBar.updateLevelBarWithWidth(CGFloat(UserGameStateManager.sharedInstance.getExperienceProgressionInPercent()))
         
         bubbleDochosImageView.isHidden = true
@@ -101,33 +90,10 @@ class HomeViewController: GameViewController, UITableViewDelegate, UITableViewDa
 //MARK: Load Data Methods
     
     func loadUserInfos() {
-        let userSession = UserSessionManager.sharedInstance.currentSession()!
-        
-        if userSession.isKind(of: UserSessionEmail.self) {
-            let userSessionEmail = userSession as! UserSessionEmail
-            let pseudo = userSessionEmail.pseudo
-            let avatarUrl = userSessionEmail.avatarUrl
-            
-            userNameLabel.text = pseudo ?? "docher"
-            avatarImageView.downloadedFrom(link: avatarUrl!, contentMode: .scaleToFill,
-                WithCompletion: { (_) in
-                    self.avatarImageView.applyCircleBorder()
-                }
-            )
-            
-        } else if userSession.isKind(of: UserSessionFacebook.self) {
-            let userSessionFacebook = userSession as! UserSessionFacebook
-            let pseudo = userSessionFacebook.pseudo
-            let avatarUrl = userSessionFacebook.avatarUrl
-            let firstName = userSessionFacebook.firstName
-            
-            userNameLabel.text = pseudo ?? firstName! + "."
-            avatarImageView.downloadedFrom(link: avatarUrl!, contentMode: .scaleToFill,
-                WithCompletion: { (_) in
-                    self.avatarImageView.applyCircleBorder()
-                }
-            )
-        }
+        let userData = UserSessionManager.sharedInstance.getUserInfosAndAvatarImage(withImageSize: .large)
+        userNameLabel.text = userData.user?.pseudo ?? "docher"
+        let image = userData.avatarImage ?? #imageLiteral(resourceName: "avatar_man_large")
+        userAvatarImageView.image = image.roundCornersToCircle(withBorder: 10.0, color: UIColor.white)
     }
     
     

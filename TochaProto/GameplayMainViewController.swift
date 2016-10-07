@@ -114,13 +114,12 @@ class GameplayMainViewController: GameViewController, KeyboardViewDelegate, Coun
         }
         
         cardsViews = cardsArray
-        currentCard?.productImageView.layer.borderColor = UIColor.red.cgColor
-        currentCard?.productImageView.layer.borderWidth = 2.0
     }
     
     func moveToNextCard(_ nextCard: CardProductView!, AndMovePreviousCard previousCard: CardProductView?, completion: ((_ finished: Bool) -> Void)?) {
         if previousCard == nil {
             nextCard?.translatesAutoresizingMaskIntoConstraints = false
+            nextCard.frame = cardContainerView.frame
             cardContainerView.addSubview(nextCard)
             
             cardCenterXConstraint = NSLayoutConstraint(item: nextCard, attribute: .centerX, relatedBy: .lessThanOrEqual, toItem: cardContainerView, attribute: .centerX, multiplier: 1.0, constant: 0.0)
@@ -128,6 +127,7 @@ class GameplayMainViewController: GameViewController, KeyboardViewDelegate, Coun
             cardContainerView.addConstraint(NSLayoutConstraint(item: nextCard, attribute: .centerY, relatedBy: .equal, toItem: cardContainerView, attribute: .centerY, multiplier: 1.0, constant: 0.0))
             cardContainerView.addConstraint(NSLayoutConstraint(item: nextCard, attribute: .height, relatedBy: .equal, toItem: cardContainerView, attribute: .height, multiplier: 1.0, constant: 0.0))
             cardContainerView.addConstraint(NSLayoutConstraint(item: nextCard, attribute: .width, relatedBy: .equal, toItem: cardContainerView, attribute: .width, multiplier: 1.0, constant: 0.0))
+            completion?(true)
             
         } else {
             nextCard.translatesAutoresizingMaskIntoConstraints = false
@@ -147,18 +147,25 @@ class GameplayMainViewController: GameViewController, KeyboardViewDelegate, Coun
                 initialSpringVelocity: 10.0,
                 options: .allowUserInteraction,
                 animations: {
+                    
                     self.cardCenterXConstraint?.constant = -CGFloat(self.view.frame.width)
                     centerXNextCard.constant = 0.0
                     self.view.layoutIfNeeded()
-                }, completion: { (_) in
                     
+                }, completion: { (finished) in
+                    if finished {
+                        completion?(true)
+                        
+                    } else {
+                        completion?(false)
+                    }
             })
             
             cardCenterXConstraint = centerXNextCard
             cursorCard += 1
         }
         
-        // Initialize current product data
+        // Initialize/Update current product data
         currentCard = nextCard
         currentPriceArray = ConverterHelper.convertPriceToArrayOfInt(self.productsData?[cursorCard].price).priceArray
         userEstimation = Array(repeating: -1, count: (currentPriceArray?.count)!)

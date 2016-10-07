@@ -39,7 +39,6 @@ class CounterContainerView: UIView {
     }
     
     func initCountersViews() {
-        
         for counterView in counterViewArray {
             counterView.counterImage = JDFlipImageView(frame: CGRect(x: 0, y: 0, width: counterView.frame.width, height: counterView.frame.height))
             counterView.counterImage.image = UIImage(named: "counter_base")
@@ -56,7 +55,6 @@ class CounterContainerView: UIView {
     }
     
     func resetCountersViews() {
-        
         for counterView in counterViewArray {
             counterView.counterImage.setImageAnimated(UIImage(named: "counter_base"), duration: 0.1, completion: { (_) in
                 counterView.currentNumber = -1

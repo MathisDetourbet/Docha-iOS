@@ -39,4 +39,12 @@ class ConverterHelper {
         
         return psyPriceInt
     }
+    
+    class func convertGenderToData(withGender gender: String) -> String {
+        switch gender {
+            case "Homme":    return "male"
+            case "Femme":  return "female"
+            default:        return "other"
+        }
+    }
 }

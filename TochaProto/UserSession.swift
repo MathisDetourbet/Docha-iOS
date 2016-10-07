@@ -70,30 +70,17 @@ class UserSession: User, NSCoding {
         UserDefaults.standard.synchronize()
     }
     
-    func getUserProfileImage() -> UIImage? {
-//        let imagePath = NSUserDefaults.standardUserDefaults().objectForKey(Constants.UserDefaultsKey.kUserInfosProfileImageFilePath) as? String
-//        if let oldImagePath = imagePath {
-//            let oldFullPath = self.documentsPathForFileName(oldImagePath)
-//            let oldImageData = NSData(contentsOfFile: oldFullPath)
-//            let oldImage = UIImage(data: oldImageData!)
-//            
-//            return oldImage!
-//        }
-//        
-        return nil
-    }
-    
-    func saveProfileImage(_ image: UIImage) {
+    func saveUserAvatarImage(_ image: UIImage) {
         let imageData = UIImageJPEGRepresentation(image, 1)
-        let relativePath = "image_\(Date.timeIntervalSinceReferenceDate).jpg"
-        let path = self.documentsPathForFileName(relativePath)
+        let relativePath = "image_\(Date.timeIntervalSinceReferenceDate).png"
+        let path = documentsPathForFileName(relativePath)
         try? imageData?.write(to: URL(fileURLWithPath: path), options: [.atomic])
-        UserDefaults.standard.set(relativePath, forKey: Constants.UserDefaultsKey.kUserInfosProfileImageFilePath)
+        UserDefaults.standard.set(relativePath, forKey: Constants.UserDefaultsKey.kUserInfosAvatarImage)
         UserDefaults.standard.synchronize()
     }
     
-    func deleteProfilImage() {
-        UserDefaults.standard.removeObject(forKey: Constants.UserDefaultsKey.kUserInfosProfileImageFilePath)
+    func deleteUserAvatarImage() {
+        UserDefaults.standard.removeObject(forKey: Constants.UserDefaultsKey.kUserInfosAvatarImage)
         UserDefaults.standard.synchronize()
     }
     
@@ -110,7 +97,7 @@ class UserSession: User, NSCoding {
     
     override func initPropertiesWithResponseObject(_ jsonObject: JSON) {
         super.initPropertiesWithResponseObject(jsonObject)
-        self.authToken = jsonObject[UserDataKey.kAuthToken].string
+        authToken = jsonObject[UserDataKey.kAuthToken].string
     }
     
     func generateJSONFromUserSession() -> [String:AnyObject]? {

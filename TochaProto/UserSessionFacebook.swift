@@ -33,4 +33,17 @@ class UserSessionFacebook: UserSession {
         
         return dataUser
     }
+    
+    func getUserAvatarImage() -> UIImage? {
+        let imagePath = UserDefaults.standard.object(forKey: Constants.UserDefaultsKey.kUserInfosAvatarImage) as? String
+        if let oldImagePath = imagePath {
+            let oldFullPath = documentsPathForFileName(oldImagePath)
+            let oldImageData = NSData(contentsOfFile: oldFullPath)
+            let oldImage = UIImage(data: oldImageData! as Data)
+            
+            return oldImage!
+        }
+        
+        return nil
+    }
 }

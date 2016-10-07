@@ -41,14 +41,19 @@ class PopupManager {
         if let rootController = UIApplication.rootViewControllerForPopup() {
             if let vc = viewController {
                 addBackgroundViewForCurrentViewController(vc)
-                vc.present(self.popupViewController!, animated: true, completion: {
-                    completion?()
-                })
+                vc.present(self.popupViewController!, animated: true,
+                    completion: {
+                        completion?()
+                    }
+                )
+                
             } else {
                 addBackgroundViewForCurrentViewController(rootController)
-                rootController.present(self.popupViewController!, animated: true, completion: {
-                    completion?()
-                })
+                rootController.present(self.popupViewController!, animated: true,
+                    completion: {
+                        completion?()
+                    }
+                )
             }
         }
     }
@@ -72,14 +77,19 @@ class PopupManager {
         if let rootController = UIApplication.rootViewControllerForPopup() {
             if let vc = viewController {
                 addBackgroundViewForCurrentViewController(vc)
-                vc.present(self.popupViewController!, animated: true, completion: {
-                    completion?()
-                })
+                vc.present(self.popupViewController!, animated: true,
+                    completion: {
+                        completion?()
+                    }
+                )
+                
             } else {
                 addBackgroundViewForCurrentViewController(rootController)
-                rootController.present(self.popupViewController!, animated: true, completion: {
-                    completion?()
-                })
+                rootController.present(self.popupViewController!, animated: true,
+                    completion: {
+                        completion?()
+                    }
+                )
             }
         }
     }
@@ -104,14 +114,19 @@ class PopupManager {
         if let rootController = UIApplication.rootViewControllerForPopup() {
             if let vc = viewController {
                 addBackgroundViewForCurrentViewController(vc)
-                vc.present(self.popupViewController!, animated: true, completion: {
-                    completion?()
-                })
+                vc.present(self.popupViewController!, animated: true,
+                    completion: {
+                        completion?()
+                    }
+                )
+                
             } else {
                 addBackgroundViewForCurrentViewController(rootController)
-                rootController.present(self.popupViewController!, animated: true, completion: {
-                    completion?()
-                })
+                rootController.present(self.popupViewController!, animated: true,
+                    completion: {
+                        completion?()
+                    }
+                )
             }
         }
     }
@@ -134,14 +149,19 @@ class PopupManager {
         if let rootController = UIApplication.rootViewControllerForPopup() {
             if let vc = viewController {
                 addBackgroundViewForCurrentViewController(vc)
-                vc.present(self.popupViewController!, animated: true, completion: {
-                    completion?()
-                })
+                vc.present(self.popupViewController!, animated: true,
+                    completion: {
+                        completion?()
+                    }
+                )
+                
             } else {
                 addBackgroundViewForCurrentViewController(rootController)
-                rootController.present(self.popupViewController!, animated: true, completion: {
-                    completion?()
-                })
+                rootController.present(self.popupViewController!, animated: true,
+                    completion: {
+                        completion?()
+                    }
+                )
             }
         }
     }
@@ -165,9 +185,11 @@ class PopupManager {
         
         if let rootController = UIApplication.rootViewControllerForPopup() {
             addBackgroundViewForCurrentViewController(rootController)
-            rootController.present(self.popupViewController!, animated: true, completion: {
-                completion?()
-            })
+            rootController.present(self.popupViewController!, animated: true,
+                completion: {
+                    completion?()
+                }
+            )
         }
     }
     
@@ -207,6 +229,7 @@ class PopupManager {
         self.backgroundView!.alpha = 0.0
         self.backgroundView?.translatesAutoresizingMaskIntoConstraints = false
         viewController.view.addSubview(self.backgroundView!)
+        
         viewController.view.addConstraint(NSLayoutConstraint(item: self.backgroundView!, attribute: .top, relatedBy: .equal, toItem: viewController.view, attribute: .top, multiplier: 1.0, constant: 0.0))
         viewController.view.addConstraint(NSLayoutConstraint(item: self.backgroundView!, attribute: .bottom, relatedBy: .equal, toItem: viewController.view, attribute: .bottom, multiplier: 1.0, constant: 0.0))
         viewController.view.addConstraint(NSLayoutConstraint(item: self.backgroundView!, attribute: .leading, relatedBy: .equal, toItem: viewController.view, attribute: .leading, multiplier: 1.0, constant: 0.0))
@@ -219,12 +242,16 @@ class PopupManager {
     
     func dismissBackgroundView() {
         var backgroundViewCopy = self.backgroundView
-        UIView.animate(withDuration: 0.3, animations: {
-            backgroundViewCopy!.alpha = 0.0
-        }, completion: { (_) in
-            backgroundViewCopy!.removeFromSuperview()
-            backgroundViewCopy = nil
-        }) 
+        
+        UIView.animate(withDuration: 0.3,
+            animations: {
+                backgroundViewCopy!.alpha = 0.0
+                
+        },  completion: { (_) in
+                backgroundViewCopy!.removeFromSuperview()
+                backgroundViewCopy = nil
+            }
+        )
     }
     
     func dismissPopup(_ animated: Bool, completion: (() -> Void)?) {

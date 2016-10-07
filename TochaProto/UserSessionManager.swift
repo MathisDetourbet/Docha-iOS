@@ -1,4 +1,4 @@
- //
+//
 //  UserSessionManager.swift
 //  DochaProto
 //
@@ -6,14 +6,14 @@
 //  Copyright © 2016 Slymoover. All rights reserved.
 //
 
+import Alamofire
+
 class UserSessionManager {
 	
     var connexionRequest: ConnexionRequest?
     var registrationRequest: RegistrationRequest?
     var userRequest: UserRequest?
     var categoryRequest: CategoryRequest?
-    var dicoUserDataInscription: [String: AnyObject]?
-    var needsToUpdateHome: Bool = false
     
     class var sharedInstance: UserSessionManager {
         struct Singleton {
@@ -21,6 +21,9 @@ class UserSessionManager {
         }
         return Singleton.instance
     }
+    
+    
+//MARK: User Data Methods
 	
     func currentSession() -> UserSession? {
         let currentSession: UserSession?
@@ -50,8 +53,38 @@ class UserSessionManager {
         return nil
     }
     
+    func downloadAndSaveAvatarImage(withAvatarUrl avatarUrl: String!) {
+        Alamofire.request(avatarUrl)
+            .responseImage { response in
+                if let image = response.result.value {
+                    self.currentSession()?.saveUserAvatarImage(image)
+                }
+            }
+    }
     
-// MARK: Inscription Methods
+    func getUserInfosAndAvatarImage(withImageSize imageSize: AvatarDochaSize = .medium) -> (user: User?, avatarImage: UIImage?) {
+        if let currentSession = currentSession() {
+            let user = User()
+            user.initPropertiesFromUser(user: currentSession)
+            
+            if currentSession.isKind(of: UserSessionEmail.self) {
+                let userSessionEmail = currentSession as! UserSessionEmail
+                let avatarImage = userSessionEmail.getUserAvatarImage(withSize: imageSize)
+                return (user, avatarImage)
+                
+            } else if currentSession.isKind(of: UserSessionFacebook.self) {
+                let userSessionFacebook = currentSession as! UserSessionFacebook
+                let avatarImage = userSessionFacebook.getUserAvatarImage()
+                
+                return (user, avatarImage)
+            }
+        }
+        
+        return (nil, nil)
+    }
+    
+    
+// MARK: User Inscription Request
     
     // Email inscription
     func registrationByEmail(_ email: String!, andPassword password: String!, success: @escaping () -> Void, fail failure: @escaping (_ error: Error?) -> Void) {
@@ -83,14 +116,14 @@ class UserSessionManager {
     }
     
 
-// MARK: Connexion Methods
+// MARK: User Connection Requests
     
     func signIn(_ success: @escaping () -> Void, fail failure: @escaping (_ error: Error?) -> Void) {
         let userSession = self.currentSession()
         
         guard let _ = userSession, let _ = userSession?.authToken else {
+            currentSession()?.deleteSession()
             failure(DochaRequestError.notAuthenticated)
-            self.currentSession()?.deleteSession()
             return
         }
         
@@ -171,6 +204,10 @@ class UserSessionManager {
                         userSessionFacebook.authToken = authToken
                         userSessionFacebook.facebookAccessToken = accessToken
                         
+                        if let avatarUrl = userSessionFacebook.avatarUrl {
+                            self.downloadAndSaveAvatarImage(withAvatarUrl: avatarUrl)
+                        }
+                        
                         userSessionFacebook.saveSession()
                         success()
                                             
@@ -185,6 +222,24 @@ class UserSessionManager {
             }
         )
     }
+    
+    func logout() {
+        connexionRequest = ConnexionRequest()
+        connexionRequest?.logOutUser()
+        if let currentSession = currentSession() {
+            
+            if currentSession.isKind(of: UserSessionFacebook.self) {
+                let loginManager = FBSDKLoginManager()
+                loginManager.logOut()
+            }
+            
+            currentSession.deleteSession()
+            currentSession.deleteUserAvatarImage()
+        }
+    }
+    
+    
+//MARK: User Update Requests
     
     func updateUser(withData data: [String: Any]!, success: @escaping () -> Void, fail failure: @escaping (_ error: Error?) -> Void) {
         guard let authToken = getAuthToken() else {
@@ -214,23 +269,25 @@ class UserSessionManager {
         )
     }
     
-    func logout() {
-        connexionRequest = ConnexionRequest()
-        connexionRequest?.logOutUser()
-        if let currentSession = currentSession() {
-            
-            if currentSession.isKind(of: UserSessionFacebook.self) {
-                let loginManager = FBSDKLoginManager()
-                loginManager.logOut()
-            }
-            
-            currentSession.deleteSession()
-            currentSession.deleteProfilImage()
+    func changeUserPassword(withData data: [String: Any]!, success: @escaping () -> Void, fail failure: @escaping (_ error: Error?) -> Void) {
+        guard let authToken = getAuthToken() else {
+            failure(DochaRequestError.authTokenNotFound)
+            return
         }
+        
+        userRequest = UserRequest()
+        userRequest?.postChangePassword(withAuthToken: authToken, andData: data,
+            success: {
+                success()
+                
+            }, fail: { (error) in
+                failure(error)
+            }
+        )
     }
     
     
-//MARK: Category Request
+//MARK: Category Requests
     
     func getAllCategory(success: @escaping (_ categoriesList: [Category]) -> Void, fail failure: @escaping (_ error: Error?) -> Void) {
         guard let authToken = getAuthToken() else {
@@ -250,7 +307,7 @@ class UserSessionManager {
         )
     }
     
-    func get(category slugName: String!, success: @escaping (_ category: Category) -> Void, fail failure: @escaping (_ error: Error?) -> Void) {
+    func getCategory(withSlugName slugName: String!, success: @escaping (_ category: Category) -> Void, fail failure: @escaping (_ error: Error?) -> Void) {
         guard let authToken = getAuthToken() else {
             failure(DochaRequestError.authTokenNotFound)
             return

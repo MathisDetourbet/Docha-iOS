@@ -50,7 +50,7 @@ class GameplayDebriefViewController: GameViewController, UIPageViewControllerDat
         pageViewController.dataSource = self
         
         let pageContentVC = self.viewControllerAtIndex(0)
-        pageContentVC!.counterContainerView.updateCountersViewsWithPrice(ConverterHelper.convertPriceToArrayOfInt(self.productsList!.first!.price).priceArray)
+        pageContentVC!.counterContainerView.updateCountersViewsWithPrice(ConverterHelper.convertPriceToArrayOfInt(productsList!.first!.price).priceArray)
         pageViewController.setViewControllers([pageContentVC!], direction: .forward, animated: true, completion: nil)
         
         pageViewController.view.translatesAutoresizingMaskIntoConstraints = false

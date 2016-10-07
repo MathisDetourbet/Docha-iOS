@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11201" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" colorMatched="YES" initialViewController="Qbv-ht-2nT">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11201" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" colorMatched="YES" initialViewController="3R4-oh-dhV">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
         <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
@@ -545,10 +545,10 @@
                     <nil key="simulatedTopBarMetrics"/>
                     <nil key="simulatedBottomBarMetrics"/>
                     <connections>
-                        <outlet property="avatarImageView" destination="c9l-Ug-fCQ" id="lep-5I-TRN"/>
                         <outlet property="bubbleDochosImageView" destination="3fK-9f-Gk9" id="LNA-fD-xGl"/>
                         <outlet property="bubblePerfectsImageView" destination="hm4-Kx-7EK" id="jnM-ab-kch"/>
                         <outlet property="tableView" destination="b91-v8-JcW" id="PBM-QB-Nao"/>
+                        <outlet property="userAvatarImageView" destination="c9l-Ug-fCQ" id="beJ-c8-OOj"/>
                         <outlet property="userLevelBar" destination="Nd9-cC-Ji2" id="ywP-HR-zXF"/>
                         <outlet property="userLevelLabel" destination="TSk-An-EHe" id="kZ0-hD-VJ6"/>
                         <outlet property="userNameLabel" destination="DRl-OW-9dn" id="gfM-ba-azf"/>
@@ -1453,7 +1453,7 @@
                         <viewControllerLayoutGuide type="bottom" id="Mso-3v-SuW"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="eNH-5E-1f7">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="618"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Lih-9N-9tT">
@@ -1549,7 +1549,7 @@
                     </navigationItem>
                     <nil key="simulatedStatusBarMetrics"/>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
-                    <simulatedTabBarMetrics key="simulatedBottomBarMetrics" translucent="NO"/>
+                    <nil key="simulatedBottomBarMetrics"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="WK8-dZ-QHg" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -2018,6 +2018,9 @@
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="o85-QN-pty">
                                 <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="543" id="DW9-oh-41d"/>
+                                </constraints>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="idNewGameFindFriendsCell" rowHeight="71" id="UQw-EU-RP2" customClass="NewGameFindFriendsTableViewCell" customModule="Docha" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="375" height="71"/>
@@ -2085,7 +2088,6 @@
                         <color key="backgroundColor" red="0.92156862745098034" green="0.92156862745098034" blue="0.94901960784313721" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="o85-QN-pty" firstAttribute="leading" secondItem="G2b-Wb-qRw" secondAttribute="leading" id="7KA-2h-zZf"/>
-                            <constraint firstItem="edu-2I-mgv" firstAttribute="top" secondItem="o85-QN-pty" secondAttribute="bottom" id="Ozh-54-Gfx"/>
                             <constraint firstAttribute="trailing" secondItem="HCm-2I-68Y" secondAttribute="trailing" constant="20" id="TeD-cy-XeL"/>
                             <constraint firstItem="HCm-2I-68Y" firstAttribute="leading" secondItem="G2b-Wb-qRw" secondAttribute="leading" constant="20" id="aQ5-vZ-FMn"/>
                             <constraint firstAttribute="trailing" secondItem="o85-QN-pty" secondAttribute="trailing" id="cTe-rh-cGA"/>
@@ -2104,6 +2106,7 @@
                     <nil key="simulatedStatusBarMetrics"/>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <connections>
+                        <outlet property="heightTableViewConstraint" destination="DW9-oh-41d" id="3gc-vi-DPH"/>
                         <outlet property="tableView" destination="o85-QN-pty" id="LbB-GS-q7I"/>
                     </connections>
                 </viewController>
@@ -3588,6 +3591,42 @@
             </objects>
             <point key="canvasLocation" x="-575" y="7"/>
         </scene>
+        <!--Launch Screen View Controller-->
+        <scene sceneID="9Ki-EB-pRf">
+            <objects>
+                <viewController storyboardIdentifier="idLaunchScreenViewController" id="3R4-oh-dhV" customClass="LaunchScreenViewController" customModule="Docha" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="VKU-4p-fEC"/>
+                        <viewControllerLayoutGuide type="bottom" id="Vfv-a1-HGq"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="9Rq-pe-UIi">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo_slymoover" translatesAutoresizingMaskIntoConstraints="NO" id="Rb3-Xr-6d6"/>
+                            <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="splash_screen_docha" translatesAutoresizingMaskIntoConstraints="NO" id="GID-hx-jmO">
+                                <frame key="frameInset" width="375" height="667"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" red="0.039215686270000001" green="0.08235294118" blue="0.13725490200000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="Rb3-Xr-6d6" firstAttribute="centerX" secondItem="9Rq-pe-UIi" secondAttribute="centerX" id="Yzz-zQ-RZU"/>
+                            <constraint firstItem="Rb3-Xr-6d6" firstAttribute="centerY" secondItem="9Rq-pe-UIi" secondAttribute="centerY" id="fzb-dY-vJF"/>
+                        </constraints>
+                    </view>
+                    <nil key="simulatedStatusBarMetrics"/>
+                    <nil key="simulatedTopBarMetrics"/>
+                    <nil key="simulatedBottomBarMetrics"/>
+                    <connections>
+                        <outlet property="launchScreenDochaImageView" destination="GID-hx-jmO" id="NAw-1n-hug"/>
+                        <outlet property="slymooverLogoImageView" destination="Rb3-Xr-6d6" id="Oby-ep-pUX"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="4op-ty-NgV" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-4140.5" y="-384.5"/>
+        </scene>
         <!--Starter Navigation Controller-->
         <scene sceneID="Op2-3h-BlE">
             <objects>
@@ -3619,7 +3658,7 @@
                         <viewControllerLayoutGuide type="bottom" id="8t0-7k-gKa"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="hTr-Eg-o1c">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="618"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="42" sectionHeaderHeight="32" sectionFooterHeight="30" translatesAutoresizingMaskIntoConstraints="NO" id="Udu-fB-lHQ">
@@ -3714,7 +3753,7 @@
                             </connections>
                         </barButtonItem>
                     </navigationItem>
-                    <simulatedTabBarMetrics key="simulatedBottomBarMetrics" translucent="NO"/>
+                    <nil key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="tableView" destination="Udu-fB-lHQ" id="aGO-wo-qJl"/>
                     </connections>
@@ -3732,7 +3771,7 @@
                         <viewControllerLayoutGuide type="bottom" id="9Wc-jz-PPQ"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="VNX-lw-prc">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="618"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="45" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="gx6-Yp-VNo">
@@ -3832,7 +3871,7 @@
                     </navigationItem>
                     <nil key="simulatedStatusBarMetrics"/>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
-                    <simulatedTabBarMetrics key="simulatedBottomBarMetrics" translucent="NO"/>
+                    <nil key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="cancelBarButtonItem" destination="2bL-XJ-8fy" id="FXC-Na-Eya"/>
                         <outlet property="heightTableViewConstraint" destination="URu-ts-mdv" id="2rw-Ro-P3A"/>
@@ -3847,37 +3886,43 @@
         <!--Modifier le mot de passe-->
         <scene sceneID="9YS-eo-4KY">
             <objects>
-                <viewController storyboardIdentifier="idPreferencesChangePasswordViewController" id="6xB-TR-4Cc" customClass="PreferencesChangePasswordViewController" customModule="Docha" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="idPreferencesChangePasswordViewController" automaticallyAdjustsScrollViewInsets="NO" id="6xB-TR-4Cc" customClass="PreferencesChangePasswordViewController" customModule="Docha" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="mkj-sl-4Rn"/>
                         <viewControllerLayoutGuide type="bottom" id="2N3-Tk-yMy"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="IbB-m5-y5y">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="618"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="45" sectionHeaderHeight="30" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="C63-ZE-C4K">
                                 <color key="backgroundColor" red="0.90196078430000004" green="0.90196078430000004" blue="0.92549019610000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="519" id="MyL-lb-JMM"/>
+                                    <constraint firstAttribute="height" constant="623" id="MyL-lb-JMM"/>
                                 </constraints>
                                 <inset key="separatorInset" minX="56" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="idPreferencesChangePasswordCell" id="fpa-do-Mli" customClass="PreferencesChangePasswordTableViewCell" customModule="Docha" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="74" width="375" height="45"/>
+                                        <rect key="frame" x="0.0" y="30" width="375" height="45"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="fpa-do-Mli" id="Dnk-SK-Ash">
                                             <frame key="frameInset" width="375" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="password_change_icon" translatesAutoresizingMaskIntoConstraints="NO" id="fqq-8N-QNb"/>
-                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="YzP-Gz-SEc">
+                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="YzP-Gz-SEc">
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="262" id="8ay-vO-vXV"/>
                                                         <constraint firstAttribute="height" constant="44" id="bBA-UA-3KT"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                    <textInputTraits key="textInputTraits"/>
+                                                    <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" secureTextEntry="YES"/>
+                                                    <connections>
+                                                        <action selector="textFieldTouched:" destination="fpa-do-Mli" eventType="editingChanged" id="EmQ-Dz-u8t"/>
+                                                        <action selector="textFieldTouched:" destination="fpa-do-Mli" eventType="valueChanged" id="Nwp-Zr-97d"/>
+                                                        <action selector="textFieldTouched:" destination="fpa-do-Mli" eventType="editingDidBegin" id="lpy-Ub-TB8"/>
+                                                        <action selector="textFieldTouched:" destination="fpa-do-Mli" eventType="editingDidEnd" id="oub-gL-22B"/>
+                                                    </connections>
                                                 </textField>
                                             </subviews>
                                             <constraints>
@@ -3900,8 +3945,8 @@
                         </subviews>
                         <color key="backgroundColor" red="0.90196078430000004" green="0.90196078430000004" blue="0.92549019610000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="C63-ZE-C4K" firstAttribute="top" secondItem="mkj-sl-4Rn" secondAttribute="bottom" constant="-44" id="6qF-jv-npC"/>
                             <constraint firstAttribute="trailing" secondItem="C63-ZE-C4K" secondAttribute="trailing" id="Hn9-Gp-cbs"/>
+                            <constraint firstItem="C63-ZE-C4K" firstAttribute="top" secondItem="mkj-sl-4Rn" secondAttribute="bottom" id="nvK-Ya-FNl"/>
                             <constraint firstItem="C63-ZE-C4K" firstAttribute="leading" secondItem="IbB-m5-y5y" secondAttribute="leading" id="pku-eV-WQf"/>
                         </constraints>
                     </view>
@@ -3921,7 +3966,7 @@
                     </navigationItem>
                     <nil key="simulatedStatusBarMetrics"/>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
-                    <simulatedTabBarMetrics key="simulatedBottomBarMetrics" translucent="NO"/>
+                    <nil key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="cancelBarButtonItem" destination="iV8-zs-YBf" id="HGi-om-usN"/>
                         <outlet property="heightTableViewConstraint" destination="MyL-lb-JMM" id="Pfy-li-c9g"/>
@@ -3931,7 +3976,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="73A-Tv-LxI" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1698" y="-628"/>
+            <point key="canvasLocation" x="1697.5" y="-628.5"/>
         </scene>
         <!--HomeNavController-->
         <scene sceneID="B2O-sx-n15">
@@ -4107,7 +4152,7 @@
                         <viewControllerLayoutGuide type="bottom" id="ITx-8D-Vzt"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="ODZ-Vy-ajZ">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="618"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="background_avatar" translatesAutoresizingMaskIntoConstraints="NO" id="Ajq-jq-cJv"/>
@@ -4198,7 +4243,7 @@
                     </view>
                     <nil key="simulatedStatusBarMetrics"/>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
-                    <simulatedTabBarMetrics key="simulatedBottomBarMetrics" translucent="NO"/>
+                    <nil key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="userAvatarImageView" destination="Zhv-Ba-aFC" id="HPt-v1-uG2"/>
                         <outletCollection property="avatarsButtonsCollection" destination="0hV-kS-5uR" collectionClass="NSMutableArray" id="fXQ-bE-Dpt"/>
@@ -4466,6 +4511,7 @@
         <image name="icon_informations" width="15" height="15"/>
         <image name="info_icon" width="14" height="14"/>
         <image name="lifestyle" width="130" height="130"/>
+        <image name="logo_slymoover" width="250" height="29"/>
         <image name="medal_blue" width="46" height="63"/>
         <image name="more_details_btn" width="124" height="34"/>
         <image name="next_btn" width="257" height="45"/>
@@ -4484,6 +4530,7 @@
         <image name="sharing_icon_blue" width="20" height="20"/>
         <image name="sharing_icon_white" width="20" height="20"/>
         <image name="smile_icon" width="20" height="18"/>
+        <image name="splash_screen_docha" width="320" height="568"/>
         <image name="timeline_unlock" width="20" height="20"/>
         <image name="waiting_btn" width="113" height="50"/>
         <image name="waiting_icon" width="35" height="35"/>
