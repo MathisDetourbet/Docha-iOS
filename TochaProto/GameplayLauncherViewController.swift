@@ -52,8 +52,6 @@ class GameplayLauncherViewController: GameViewController {
     
     func buildUI() {
         self.navigationController?.isNavigationBarHidden = true
-        let userSession = UserSessionManager.sharedInstance.currentSession()!
-        
     }
     
     func startLoaderAnimation() {

@@ -31,7 +31,7 @@ class RankingViewController: GameViewController, UITableViewDataSource, UITableV
     }
     
     func buildUI() {
-        configNavigationBarWithTitle("Classement")
+        configNavigationBarWithTitle("Classements")
         
     }
     

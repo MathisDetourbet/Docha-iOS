@@ -54,7 +54,6 @@ class InscriptionCategorySelectionViewController: RootViewController, UICollecti
                 }
                 
                 self.collectionView.reloadData()
-                
             })
             {(error) in
                 

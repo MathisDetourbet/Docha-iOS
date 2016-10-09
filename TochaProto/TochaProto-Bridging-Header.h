@@ -4,8 +4,8 @@
 #import "JDFlipImageView.h"
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
 #import <FBSDKLoginKit/FBSDKLoginKit.h>
-#import <GooglePlus/GooglePlus.h>
-#import <GoogleOpenSource/GoogleOpenSource.h>
+//#import <GooglePlus/GooglePlus.h>
+//#import <GoogleOpenSource/GoogleOpenSource.h>
 #import <MBCircularProgressBar/MBCircularProgressBarView.h>
 #import <PBWebViewController/PBWebViewController.h>
 #import <RSKImageCropper/RSKImageCropper.h>

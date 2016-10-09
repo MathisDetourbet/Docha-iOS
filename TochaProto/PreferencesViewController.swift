@@ -13,6 +13,7 @@ import FBSDKShareKit
 
 class PreferencesViewController: GameViewController, UITableViewDelegate, UITableViewDataSource {
 
+    var isPasswordChangeCellHidden = false
     let idNormalTableViewCell = "idNormalTableViewCell"
     let idSwitchTableViewCell = "idSwitchTableViewCell"
     let sections: [String] = ["COMPTE", "INFORMATIONS"]
@@ -36,6 +37,7 @@ class PreferencesViewController: GameViewController, UITableViewDelegate, UITabl
         if let currentSession = currentSession {
             if currentSession.isKind(of: UserSessionFacebook.self) {
                 cellContent[0].remove(at: 1)
+                isPasswordChangeCellHidden = true
             }
         }
         
@@ -75,8 +77,8 @@ class PreferencesViewController: GameViewController, UITableViewDelegate, UITabl
         footerView.addConstraint(NSLayoutConstraint(item: logoutButton, attribute: .top, relatedBy: .equal, toItem: inviteFacebookFriendsButton, attribute: .bottom, multiplier: 1, constant: 10))
         footerView.addConstraint(NSLayoutConstraint(item: logoutButton, attribute: .centerX, relatedBy: .equal, toItem: footerView, attribute: .centerX, multiplier: 1, constant: 0))
         
-        self.tableView.tableFooterView = footerView
-        self.tableView.backgroundColor = UIColor.lightGrayDochaColor()
+        tableView.tableFooterView = footerView
+        tableView.backgroundColor = UIColor.lightGrayDochaColor()
     }
     
     
@@ -96,16 +98,16 @@ class PreferencesViewController: GameViewController, UITableViewDelegate, UITabl
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if cellContent[(indexPath as NSIndexPath).section][(indexPath as NSIndexPath).row]["title"] == "Notifications" {
-            let cell = tableView.dequeueReusableCell(withIdentifier: self.idSwitchTableViewCell, for: indexPath) as? PreferencesSwitchTableViewCell
-            let cellTitle = self.cellContent[1][(indexPath as NSIndexPath).row]["title"]
+            let cell = tableView.dequeueReusableCell(withIdentifier: idSwitchTableViewCell, for: indexPath) as? PreferencesSwitchTableViewCell
+            let cellTitle = cellContent[1][(indexPath as NSIndexPath).row]["title"]
             cell?.titleLabel.text = cellTitle
             cell?.iconImageView.image = UIImage(named: self.cellContent[(indexPath as NSIndexPath).section][(indexPath as NSIndexPath).row]["iconPath"]!)
             
             return cell!
             
         } else {
-            let cell = tableView.dequeueReusableCell(withIdentifier: self.idNormalTableViewCell, for: indexPath) as? PreferencesNormalTableViewCell
-            let title = self.cellContent[(indexPath as NSIndexPath).section][(indexPath as NSIndexPath).row]["title"]
+            let cell = tableView.dequeueReusableCell(withIdentifier: idNormalTableViewCell, for: indexPath) as? PreferencesNormalTableViewCell
+            let title = cellContent[(indexPath as NSIndexPath).section][(indexPath as NSIndexPath).row]["title"]
             cell?.titleLabel.text = title
             cell?.iconImageView.image = UIImage(named: self.cellContent[(indexPath as NSIndexPath).section][(indexPath as NSIndexPath).row]["iconPath"]!)
             cell?.accessoryType = .disclosureIndicator
@@ -132,9 +134,15 @@ class PreferencesViewController: GameViewController, UITableViewDelegate, UITabl
                 self.navigationController?.pushViewController(changeProfilVC, animated: true)
                 break
             case 1:
-                // Changer le mdp
-                let changePasswordVC = self.storyboard?.instantiateViewController(withIdentifier: "idPreferencesChangePasswordViewController") as! PreferencesChangePasswordViewController
-                self.navigationController?.pushViewController(changePasswordVC, animated: true)
+                if isPasswordChangeCellHidden {
+                    let categoriesVC = self.storyboard?.instantiateViewController(withIdentifier: "idPreferencesCategoryViewController") as! PreferencesCategoriesViewController
+                    self.navigationController?.pushViewController(categoriesVC, animated: true)
+                    
+                } else {
+                    // Changer le mdp
+                    let changePasswordVC = self.storyboard?.instantiateViewController(withIdentifier: "idPreferencesChangePasswordViewController") as! PreferencesChangePasswordViewController
+                    self.navigationController?.pushViewController(changePasswordVC, animated: true)
+                }
                 break
             default:
                 // Catégories préférées
