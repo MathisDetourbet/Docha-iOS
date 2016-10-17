@@ -9,16 +9,18 @@
 import Foundation
 import PBWebViewController
 
-class PreferencesFeedbackViewController: PBWebViewController {
+class CustomWebViewController: PBWebViewController {
+    
+    var titleNavBar: String?
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        configNavigationBarWithTitle(titleNavBar ?? "", andFontSize: 15.0)
     }
     
     override func webViewDidFinishLoad(_ webView: UIWebView) {
         super.webViewDidFinishLoad(webView)
-        configNavigationBarWithTitle("Docha a besoin de toi", andFontSize: 15.0)
+        configNavigationBarWithTitle(titleNavBar!, andFontSize: 15.0)
     }
     
     func configNavigationBarWithTitle(_ title: String, andFontSize size: CGFloat) {

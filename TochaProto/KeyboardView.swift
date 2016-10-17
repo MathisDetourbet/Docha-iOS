@@ -12,7 +12,7 @@ import MBCircularProgressBar
 protocol KeyboardViewDelegate {
     func validatePricing()
     func eraseAllCounters()
-    func clickOnPadWithNumber(_ number: Int)
+    func clickOnPad(withNumber number: Int)
 }
 
 class KeyboardView: UIView {
@@ -58,7 +58,7 @@ class KeyboardView: UIView {
     
     @IBAction func clickOnPad(_ sender: UIButton) {
         let padNumber = sender.tag
-        self.delegate?.clickOnPadWithNumber(padNumber)
+        self.delegate?.clickOnPad(withNumber: padNumber)
         self.eraseButton.isEnabled = true
     }
 }

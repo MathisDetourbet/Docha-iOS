@@ -8,25 +8,35 @@
 
 import Foundation
 import AlamofireImage
+import Kingfisher
 import Amplitude_iOS
 import FBSDKShareKit
 import SwiftyJSON
 import SWTableViewCell
 import PullToRefresh
 
+enum HomeSectionName: Int {
+    case userTurn = 0
+    case opponentTurn = 1
+    case finished = 2
+    case friends = 3
+}
+
 class HomeViewController: GameViewController, UITableViewDelegate, UITableViewDataSource, HomeUserTurnCellDelegate, HomeFriendsCellDelegate, SWTableViewCellDelegate {
     
     let idsTableViewCell: [String] = ["idHomeUserTurnTableViewCell", "idHomeOpponentTurnTableViewCell", "idHomeGameFinishedTableViewCell", "idHomeFriendsTableViewCell"]
-    let userGameManager: UserGameStateManager = UserGameStateManager.sharedInstance
     let sectionsNames = ["TON TOUR", "SON TOUR", "TERMINÉS", "AMIS"]
     
     let numberOfRows = [2, 1, 2, 1]
+    var sortedMatch: [[Match]] = []
     
     var isBubbleOpen: Bool = false
     
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var userAvatarImageView: UIImageView!
     @IBOutlet weak var userNameLabel: UILabel!
+    @IBOutlet weak var userDochosLabel: UILabel!
+    @IBOutlet weak var userPerfectLabel: UILabel!
     @IBOutlet weak var userLevelBar: LevelBarView!
     @IBOutlet weak var userLevelLabel: UILabel!
     @IBOutlet weak var bubbleDochosImageView: UIImageView!
@@ -38,7 +48,21 @@ class HomeViewController: GameViewController, UITableViewDelegate, UITableViewDa
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        if UserSessionManager.sharedInstance.hasFinishedTutorial() == false {
+            let tutorialVC = self.storyboard?.instantiateViewController(withIdentifier: "idTutorialViewController") as! TutorialViewController
+            if PopupManager.sharedInstance.isDisplayingPopup {
+                PopupManager.sharedInstance.dismissPopup(true,
+                    completion: {
+                        self.navigationController?.present(tutorialVC, animated: true, completion: nil)
+                    }
+                )
+            } else {
+                self.navigationController?.present(tutorialVC, animated: true, completion: nil)
+            }
+        }
+        
         loadUserInfos()
+        loadAllMatch(withCompletion: nil)
         UserGameStateManager.sharedInstance.authenticateLocalPlayer()
         self.navigationController?.isNavigationBarHidden = true
     }
@@ -52,7 +76,6 @@ class HomeViewController: GameViewController, UITableViewDelegate, UITableViewDa
         self.navigationController?.isNavigationBarHidden = true
         
         loadUserInfos()
-        
         buildUI()
         
         // Amplitude
@@ -74,12 +97,19 @@ class HomeViewController: GameViewController, UITableViewDelegate, UITableViewDa
         headerView.addConstraint(NSLayoutConstraint(item: newGameButton, attribute: .centerY, relatedBy: .equal, toItem: headerView, attribute: .centerY, multiplier: 1.0, constant: 0.0))
         
         tableView.tableHeaderView = headerView
-        
         tableView.backgroundColor = UIColor.lightGrayDochaColor()
-        let refresher = PullToRefresh()
-        tableView.addPullToRefresh(refresher) {}
         
-        userLevelLabel.text = "Niveau \(self.userGameManager.getUserLevel())"
+        let refresher = PullToRefresh()
+        tableView.addPullToRefresh(refresher) { 
+            self.loadAllMatch(
+                withCompletion: {
+                    self.tableView.endRefreshing(at: Position.top)
+                }
+            )
+        }
+        
+        let userLevel = UserGameStateManager.sharedInstance.getUserLevel()
+        userLevelLabel.text = "Niveau \(userLevel)"
         userLevelBar.updateLevelBarWithWidth(CGFloat(UserGameStateManager.sharedInstance.getExperienceProgressionInPercent()))
         
         bubbleDochosImageView.isHidden = true
@@ -91,20 +121,59 @@ class HomeViewController: GameViewController, UITableViewDelegate, UITableViewDa
     
     func loadUserInfos() {
         let userData = UserSessionManager.sharedInstance.getUserInfosAndAvatarImage(withImageSize: .large)
-        userNameLabel.text = userData.user?.pseudo ?? "docher"
+        userNameLabel.text = userData.user?.pseudo ?? Player.defaultPlayer().pseudo
+        
         let image = userData.avatarImage ?? #imageLiteral(resourceName: "avatar_man_large")
         userAvatarImageView.image = image.roundCornersToCircle(withBorder: 10.0, color: UIColor.white)
+        
+        userDochosLabel.text = "\(userData.user!.dochos)"
+        userPerfectLabel.text = "\(userData.user!.perfectPriceCpt)"
+    }
+    
+    func loadAllMatch(withCompletion completion: (() -> Void)?) {
+        MatchManager.sharedInstance.getAllMatch(
+            success: { (allMatch) in
+                
+                self.sortedMatch = self.sortMatchArray(matchArray: allMatch)
+                self.tableView.reloadData()
+                completion?()
+                
+            }) { (error) in
+                PopupManager.sharedInstance.showErrorPopup(message: Constants.PopupMessage.ErrorMessage.kErrorNoInternetConnection)
+                completion?()
+        }
+    }
+    
+    func sortMatchArray(matchArray: [Match]) -> [[Match]] {
+        var sortedMatch: [[Match]] = [[], [], [], []]
+        
+        for match in matchArray {
+            
+            switch match.status {
+            case .userTurn:
+                sortedMatch[HomeSectionName.userTurn.rawValue].append(match)
+                break
+            case .opponentTurn, .waiting:
+                sortedMatch[HomeSectionName.opponentTurn.rawValue].append(match)
+                break
+            case .won, .lost, .tie:
+                sortedMatch[HomeSectionName.finished.rawValue].append(match)
+                break
+            }
+        }
+        
+        return sortedMatch
     }
     
     
 //MARK: Table View Controller - Data Source Methods
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return numberOfRows[section]
+        return sortedMatch[section].count
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return sectionsNames.count
+        return sortedMatch.count
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
@@ -112,59 +181,103 @@ class HomeViewController: GameViewController, UITableViewDelegate, UITableViewDa
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if (indexPath as NSIndexPath).section == 0 {
+        
+        if (indexPath as NSIndexPath).section == HomeSectionName.userTurn.rawValue {
             // TON TOUR
-            let cell = tableView.dequeueReusableCell(withIdentifier: self.idsTableViewCell[(indexPath as NSIndexPath).section], for: indexPath) as! HomeUserTurnTableViewCell
-            cell.opponentNameLabel.text = "Martin A."
-            cell.opponentLevelLabel.text = "Niveau 3"
-            cell.opponentScoreLabel.text = "1"
-            cell.userScoreLabel.text = "0"
-            cell.opponentImageView.image = UIImage(named: "avatar_man_medium")
+            let cell = tableView.dequeueReusableCell(withIdentifier: idsTableViewCell[(indexPath as NSIndexPath).section], for: indexPath) as! HomeUserTurnTableViewCell
+            let match = sortedMatch[HomeSectionName.userTurn.rawValue][indexPath.row]
+            
+            cell.opponentNameLabel.text = match.opponent.pseudo
+            cell.opponentLevelLabel.text = "Niveau 1 (fake)"
+            cell.opponentScoreLabel.text = String(match.opponentScore ?? 0)
+            cell.userScoreLabel.text = String(match.userScore ?? 0)
+            
+            if match.opponent.avatarUrl.contains("https://graph.facebook.com/") {
+                cell.opponentImageView.af_setImage(withURL: URL(string: match.opponent.avatarUrl)!)
+                
+            } else {
+                cell.opponentImageView.image = UIImage(named: "\(match.opponent.avatarUrl)_medium")
+            }
+            
             cell.delegateUserTurn = self
             cell.delegate = self
-            cell.rightUtilityButtons = [self.buildDeleteButtonCell()]
+            cell.rightUtilityButtons = [buildDeleteButtonCell()]
             
             return cell
             
-        } else if (indexPath as NSIndexPath).section == 1 {
+        } else if (indexPath as NSIndexPath).section == HomeSectionName.opponentTurn.rawValue {
             // SON TOUR
-            let cell = tableView.dequeueReusableCell(withIdentifier: self.idsTableViewCell[(indexPath as NSIndexPath).section], for: indexPath) as! HomeOpponentTurnTableViewCell
-            cell.opponentNameLabel.text = "Alice A."
-            cell.opponentLevelLabel.text = "Niveau 1"
-            cell.opponentScoreLabel.text = "1"
-            cell.userScoreLabel.text = "2"
-            cell.opponentImageView.image = UIImage(named: "avatar_woman_medium")
-            cell.rightUtilityButtons = [self.buildDeleteButtonCell()]
+            let cell = tableView.dequeueReusableCell(withIdentifier: idsTableViewCell[(indexPath as NSIndexPath).section], for: indexPath) as! HomeOpponentTurnTableViewCell
+            let match = sortedMatch[HomeSectionName.opponentTurn.rawValue][indexPath.row]
+            
+            cell.opponentNameLabel.text = match.opponent.pseudo
+            cell.opponentLevelLabel.text = "Niveau 1 (fake)"
+            cell.opponentScoreLabel.text = String(match.opponentScore ?? 0)
+            cell.userScoreLabel.text = String(match.userScore ?? 0)
+            cell.delegate = self
+            
+            if match.opponent.avatarUrl.contains("https://graph.facebook.com/") {
+                cell.opponentImageView.af_setImage(withURL: URL(string: match.opponent.avatarUrl)!)
+                
+            } else {
+                cell.opponentImageView.image = UIImage(named: "\(match.opponent.avatarUrl)_medium")
+            }
+            
+            if match.status == .opponentTurn {
+                cell.rightUtilityButtons = [buildDeleteButtonCell()]
+            }
             
             return cell
             
-        } else if (indexPath as NSIndexPath).section == 2 {
+        } else if (indexPath as NSIndexPath).section == HomeSectionName.finished.rawValue {
             // TERMINES
-            let cell = tableView.dequeueReusableCell(withIdentifier: self.idsTableViewCell[(indexPath as NSIndexPath).section], for: indexPath) as! HomeGameFinishedTableViewCell
-            cell.opponentNameLabel.text = "Tristan B."
-            cell.opponentLevelLabel.text = "Niveau 8"
-            cell.opponentScoreLabel.text = "3"
-            cell.userScoreLabel.text = "1"
-            cell.opponentImageView.image = UIImage(named: "avatar_man_medium")
-            cell.wonGame = true
-            cell.rightUtilityButtons = [self.buildDeleteButtonCell()]
+            let cell = tableView.dequeueReusableCell(withIdentifier: idsTableViewCell[(indexPath as NSIndexPath).section], for: indexPath) as! HomeGameFinishedTableViewCell
+            
+            let match = sortedMatch[HomeSectionName.finished.rawValue][indexPath.row]
+            
+            cell.opponentNameLabel.text = match.opponent.pseudo
+            cell.opponentLevelLabel.text = "Niveau 1 (fake)"
+            cell.opponentScoreLabel.text = String(match.opponentScore!)
+            cell.userScoreLabel.text = String(match.userScore!)
+            cell.delegate = self
+            
+            if match.opponent.avatarUrl.contains("https://graph.facebook.com/") {
+                cell.opponentImageView.af_setImage(withURL: URL(string: match.opponent.avatarUrl)!)
+                
+            } else {
+                cell.opponentImageView.image = UIImage(named: "\(match.opponent.avatarUrl)_medium")
+            }
+            
+            cell.matchResult = match.getMatchResult()
+            cell.rightUtilityButtons = [buildDeleteButtonCell()]
             
             return cell
             
         } else {
             // AMIS
-            let cell = tableView.dequeueReusableCell(withIdentifier: self.idsTableViewCell[(indexPath as NSIndexPath).section], for: indexPath) as! HomeFriendsTableViewCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: idsTableViewCell[(indexPath as NSIndexPath).section], for: indexPath) as! HomeFriendsTableViewCell
             cell.delegate = self
             
             return cell
         }
     }
     
-    
+
 //MARK: Table View Controller - Delegate Methods
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        return
+        if indexPath.section == HomeSectionName.friends.rawValue {
+            
+            
+        } else {
+            let matchData = sortedMatch[indexPath.section][indexPath.row]
+            let matchVC = self.storyboard?.instantiateViewController(withIdentifier: "idGameplayMatchViewController") as! GameplayMatchViewController
+            MatchManager.sharedInstance.currentMatch = matchData
+            matchVC.match = matchData
+            self.navigationController?.pushViewController(matchVC, animated: true)
+        }
+        
+        //tableView.deselectRow(at: indexPath, animated: true)
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
@@ -172,7 +285,7 @@ class HomeViewController: GameViewController, UITableViewDelegate, UITableViewDa
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let headerView = UIView(frame: CGRect(x: 0, y: 0, width: self.tableView.frame.width, height: 30))
+        let headerView = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.width, height: 30))
         headerView.backgroundColor = UIColor.lightGrayDochaColor()
         
         let sectionLabel = UILabel(frame: CGRect(x: 10.0, y: 5.0, width: 100.0, height: 28.0))
@@ -188,7 +301,21 @@ class HomeViewController: GameViewController, UITableViewDelegate, UITableViewDa
 //MARK: SWTableViewCell - Delegate Methods
     
     func swipeableTableViewCell(_ cell: SWTableViewCell!, didTriggerRightUtilityButtonWith index: Int) {
+        let indexPath = tableView.indexPath(for: cell)
         
+        if let indexPath = indexPath {
+            let match = sortedMatch[indexPath.section][indexPath.row]
+            MatchManager.sharedInstance.deleteMatch(ForMatchID: match.id, andRoundID: match.rounds.last?.id,
+                success: {
+                    
+                    self.sortedMatch[indexPath.section].remove(at: indexPath.row)
+                    self.tableView.deleteRows(at: [indexPath], with: .fade)
+                    
+                }, fail: { (error) in
+                    PopupManager.sharedInstance.showErrorPopup(message: Constants.PopupMessage.ErrorMessage.kErrorOccured)
+                }
+            )
+        }
     }
 
     

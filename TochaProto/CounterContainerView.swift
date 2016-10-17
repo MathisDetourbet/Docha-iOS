@@ -34,7 +34,6 @@ class CounterContainerView: UIView {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        
         initCountersViews()
     }
     
@@ -42,7 +41,8 @@ class CounterContainerView: UIView {
         for counterView in counterViewArray {
             counterView.counterImage = JDFlipImageView(frame: CGRect(x: 0, y: 0, width: counterView.frame.width, height: counterView.frame.height))
             counterView.counterImage.image = UIImage(named: "counter_base")
-            counterView.counterImage.contentMode = .scaleAspectFit
+            counterView.counterImage.contentMode = .scaleToFill
+            counterView.addSubview(counterView.counterImage)
         }
     }
     

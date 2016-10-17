@@ -27,6 +27,10 @@ class ConnexionRequest: DochaRequest {
                 let authToken = jsonResponse[UserDataKey.kAuthToken].string
                 
                 guard response.result.isSuccess, let _ = authToken else {
+                    if let data = response.data {
+                        print("Failure Response: \(String(data: data, encoding: String.Encoding.utf8))")
+                    }
+                    
                     failure(response.result.error)
                     return
                 }
@@ -49,6 +53,10 @@ class ConnexionRequest: DochaRequest {
                 let authToken = jsonResponse[UserDataKey.kAuthToken].string
                 
                 guard response.result.isSuccess, let _ = authToken  else {
+                    if let data = response.data {
+                        print("Failure Response: \(String(data: data, encoding: String.Encoding.utf8))")
+                    }
+                    
                     failure(response.result.error)
                     return
                 }

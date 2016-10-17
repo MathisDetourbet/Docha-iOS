@@ -81,6 +81,8 @@ class ProductManager {
         return Singleton.instance
     }
     
+    /*
+    
     func loadProductsWithCurrentCategory() {
         let jsonName = "products_beta_v0.2"
         guard
@@ -95,12 +97,10 @@ class ProductManager {
         for jsonDico in jsonArray {
             let id = jsonDico["id"].intValue
             let pageURL = jsonDico["page_url"].stringValue
-            let category = "Lifestyle"
             let model = jsonDico["name"].stringValue
             let brand = jsonDico["brand"].stringValue
             let price = jsonDico["price"].doubleValue
             let imageURL = jsonDico["image_url"].stringValue
-            let categoriesString = jsonDico["description"].stringValue
             
             let genderString = jsonDico["gender"].stringValue
             let gender: Gender
@@ -115,9 +115,8 @@ class ProductManager {
                 gender = Gender.universal
                 break
             }
-            let caracteristiques: [String] = categoriesString.characters.split{$0 == "#"}.map(String.init)
             
-            let product = Product(id: id, category: category, model: model, brand: brand, price: price, imageURL: imageURL, caracteristiques: caracteristiques, image: nil, pageURL: pageURL, gender: gender)
+            let product = Product(id: id, model: model, brand: brand, price: price, imageUrl: imageURL, image: nil, pageUrl: pageURL, gender: gender)
             
             self.products!.append(product)
         }
@@ -348,7 +347,7 @@ class ProductManager {
         var errorProductsArray: [Product] = []
         
         for product in packOfProducts! {
-            let imageURL = product.imageURL
+            let imageURL = product.imageUrl
             let imageView = UIImageView()
             
             DispatchQueue.global(qos: DispatchQoS.QoSClass.default).async(execute: {
@@ -372,4 +371,5 @@ class ProductManager {
             })
         }
     }
+ */
 }

@@ -41,7 +41,7 @@ class CardProductView: UIView {
         super.layoutSubviews()
     }
     
-    func updatePinIconPositionWithErrorPercent(_ errorPercent: Double, completion: ((_ finished: Bool) -> Void)?) {
+    func updatePinIconPosition(withErrorPercent errorPercent: Double, forPlayer isForUser: Bool, andCompletion completion: ((_ finished: Bool) -> Void)?) {
         var newPosX = 0.0 as CGFloat
         
         if errorPercent != 0.0 {
@@ -59,14 +59,25 @@ class CardProductView: UIView {
             }
         }
         
-        self.userPinIconView.isHidden = false
+        var constraintToSet: NSLayoutConstraint
+        
+        if isForUser {
+            self.userPinIconView.isHidden = false
+            constraintToSet = centerXUserPinIconConstraint
+            
+        } else {
+            self.opponentPinIconView.isHidden = false
+            constraintToSet = centerXOpponentPinIconConstraint
+            
+        }
         
         UIView.animate(withDuration: 1.0, animations: {
-            self.centerXUserPinIconConstraint.constant = newPosX
+            constraintToSet.constant = newPosX
             self.layoutIfNeeded()
             
             }, completion: { (finished) in
                 completion?(finished)
-            })
+            }
+        )
     }
 }

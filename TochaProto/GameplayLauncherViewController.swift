@@ -8,13 +8,18 @@
 
 import Foundation
 import Amplitude_iOS
+import Kingfisher
 
-class GameplayLauncherViewController: GameViewController {
+class GameplayLauncherViewController: GameViewController, ProductImageDownloaderDelegate {
+    
+    var userPlayer: Player?
+    var opponentPlayer: Player?
+    var round: Round?
     
     var productsArray: [Product]?
     let categoryImagesNames = ["art_picture_icon", "ball_icon", "burger_icon", "chair_icon", "drone_icon", "machine_icon", "palet_icon", "ring_icon", "screen_icon", "velo_icon"]
     var imagesArray: [UIImage]?
-    var categoryNameSelected: String?
+    var categorySelected: Category?
     
     var productsReady: Bool = false {
         didSet {
@@ -41,6 +46,9 @@ class GameplayLauncherViewController: GameViewController {
     @IBOutlet weak var loaderTitleLabel: UILabel!
     @IBOutlet weak var counterImageView: UIImageView!
     
+    
+//MARK: Life View Cycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -51,6 +59,33 @@ class GameplayLauncherViewController: GameViewController {
     }
     
     func buildUI() {
+        let matchManager = MatchManager.sharedInstance
+        
+        userPlayer = matchManager.userPlayer
+        opponentPlayer = matchManager.opponentPlayer
+        
+        if let userPlayer = self.userPlayer {
+            userImageView.image = userPlayer.avatarImage
+            userNameLabel.text = userPlayer.pseudo
+        }
+        
+        if let opponentPlayer = self.opponentPlayer {
+            if let opponentAvatarImage = opponentPlayer.avatarImage {
+                opponentImageView.image = opponentAvatarImage.roundCornersToCircle(withBorder: 10.0, color: UIColor.white)
+                
+            } else {
+                opponentImageView.image = UIImage(named: "\(opponentPlayer.avatarUrl)_large")?.roundCornersToCircle(withBorder: 10.0, color: UIColor.white)
+            }
+            
+            opponentNameLabel.text = opponentPlayer.pseudo
+            
+            if let level = opponentPlayer.level {
+                opponentLevelLabel.text = "Niveau \(level)"
+                
+            } else {
+                opponentLevelLabel.text = "Niveau ?"
+            }
+        }
         self.navigationController?.isNavigationBarHidden = true
     }
     
@@ -62,27 +97,108 @@ class GameplayLauncherViewController: GameViewController {
         }
         imagesArray?.shuffle()
         
-        counterImageView!.animationImages = self.imagesArray
+        counterImageView!.animationImages = imagesArray
         counterImageView!.animationDuration = 2.0
         counterImageView.startAnimating()
     }
     
+    
+//MARK: Downloader Data Methods + Delegate
+    
     func loadProducts() {
-        DispatchQueue.main.async(execute: {
-            ProductManager.sharedInstance.getPackOfProducts({ (finished, packOfProducts) in
+        let currentMatch = MatchManager.sharedInstance.currentMatch
+        
+        if let match = currentMatch {
+            if let categorySelected = categorySelected {
+                let data = [RoundDataKey.kCategory: categorySelected.slugName, RoundDataKey.kPropositions: []] as [String : Any]
+                put(round: match.rounds.last, withData: data, andMatchID: match.id)
                 
-                if finished && packOfProducts != nil {
-                    self.productsReady = true
-                    self.productsArray = packOfProducts
+            } else {
+                get(round: match.rounds.last, withMatchID: match.id)
+            }
+        }
+    }
+    
+    func put(round: Round!, withData data: [String: Any]!, andMatchID matchID: Int!) {
+        MatchManager.sharedInstance.putRound(withData: data!, ForMatchID: matchID, andRoundID: round.id,
+            success: { (roundFull) in
+                let roundFull = roundFull
+                self.round = roundFull
+                let products = roundFull.products
+                
+                if products.isEmpty == false {
+                    let productDownloader = ProductImageDownloader()
+                    productDownloader.productsDelegate = self
+                    productDownloader.downloadImages(withProducts: products,
+                        fail: { (error) in
+                            PopupManager.sharedInstance.showErrorPopup(message: Constants.PopupMessage.ErrorMessage.kErrorOccured,
+                                doneActionCompletion: {
+                                    self.goToHome()
+                                }
+                            )
+                        }
+                    )
+
+                } else {
+                    PopupManager.sharedInstance.showErrorPopup(message: Constants.PopupMessage.ErrorMessage.kErrorOccuredHomeRedirection,
+                        doneActionCompletion: {
+                            self.goToHome()
+                        }
+                    )
+                }
+            }, fail: { (error) in
+                
+                PopupManager.sharedInstance.showErrorPopup("Oups !", message: Constants.PopupMessage.ErrorMessage.kErrorOccuredHomeRedirection, viewController: nil, completion: nil,
+                    doneActionCompletion: {
+                        self.goToHome()
+                    }
+                )
+            }
+        )
+    }
+    
+    func get(round: Round!, withMatchID matchID: Int!) {
+        MatchManager.sharedInstance.getRound(ForMatchID: matchID, andRoundID: round.id,
+            success: { (roundFull) in
+                let roundFull = roundFull
+                self.round = roundFull
+                let products = roundFull.products
+                
+                if products.isEmpty == false {
+                    let productDownloader = ProductImageDownloader()
+                    productDownloader.productsDelegate = self
+                    productDownloader.downloadImages(withProducts: products,
+                        fail: { (error) in
+                            PopupManager.sharedInstance.showErrorPopup(message: Constants.PopupMessage.ErrorMessage.kErrorOccured,
+                                doneActionCompletion: {
+                                    self.goToHome()
+                                }
+                            )
+                        }
+                    )
                     
                 } else {
-                    PopupManager.sharedInstance.showErrorPopup("Oups !", message: "Une erreur est survenue... Tu seras redirigé vers le menu principal", viewController: nil, completion: nil, doneActionCompletion: {
-                        self.goToHome()
-                    })
-                    print("Error when loading products...")
+                    PopupManager.sharedInstance.showErrorPopup(message: Constants.PopupMessage.ErrorMessage.kErrorOccuredHomeRedirection,
+                        doneActionCompletion: {
+                            self.goToHome()
+                        }
+                    )
                 }
-            })
-        })
+                                                
+            }, fail: { (error) in
+                PopupManager.sharedInstance.showErrorPopup("Oups !", message: Constants.PopupMessage.ErrorMessage.kErrorOccuredHomeRedirection, viewController: nil, completion: nil,
+                    doneActionCompletion: {
+                        self.goToHome()
+                    }
+                )
+            }
+        )
+    }
+    
+    func didFinishedDownloadImages(withProducts products: [Product]) {
+        self.round?.products = products
+        self.productsArray = products
+        self.productsReady = true
     }
     
     
@@ -90,7 +206,9 @@ class GameplayLauncherViewController: GameViewController {
     
     func startTheGameWithProducts(_ products: [Product]!) {
         let gameplayMainVC = self.storyboard?.instantiateViewController(withIdentifier: "idGameplayMainViewController") as! GameplayMainViewController
-        gameplayMainVC.productsData = products
+        gameplayMainVC.round = round
+        gameplayMainVC.userPlayer = userPlayer
+        gameplayMainVC.opponentPlayer = opponentPlayer!
         self.navigationController?.pushViewController(gameplayMainVC, animated: true)
     }
     

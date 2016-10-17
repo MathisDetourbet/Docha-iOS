@@ -23,6 +23,10 @@ class GameplayDebriefPageContentViewController: UIViewController {
     @IBOutlet weak var productNameLabel: UILabel!
     @IBOutlet weak var productBrandLabel: UILabel!
     
+    override func awakeFromNib() {
+        super.awakeFromNib()
+    }
+    
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         

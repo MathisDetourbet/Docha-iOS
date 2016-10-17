@@ -1,5 +1,5 @@
 //
-//  GameplayMatchRoundYourTurnCell.swift
+//  GameplayMatchRoundYourTurnMaskCell.swift
 //  Docha
 //
 //  Created by Mathis D on 19/09/2016.
@@ -8,11 +8,22 @@
 
 import Foundation
 
+protocol RoundYourTurnCellDelegate {
+    func yourTurnButtonTouched()
+}
+
 class GameplayMatchRoundYourTurnCell: UITableViewCell {
     
+    var delegate: RoundYourTurnCellDelegate?
     
-    @IBAction func yourTurnMaskButtonTouched(_ sender: UIButton) {
+    override func awakeFromNib() {
+        super.awakeFromNib()
         
+        self.backgroundColor = UIColor.clear
+    }
+    
+    @IBAction func yourTurnButtonTouched(_ sender: UIButton) {
+        self.delegate?.yourTurnButtonTouched()
     }
     
 }

@@ -175,15 +175,19 @@ class InscriptionIdentifiantsViewController: RootViewController, UITextFieldDele
         if isEmailValid() {
             if isPasswordValid() {
                 
-                PopupManager.sharedInstance.showLoadingPopup(message: "",
+                PopupManager.sharedInstance.showLoadingPopup(message: nil,
                     completion: {
                         UserSessionManager.sharedInstance.registrationByEmail(self.emailString!, andPassword: self.passwordString!,
                             success: {
                                 let data = [UserDataKey.kCategoryPrefered: self.categoryFavorites! as AnyObject]
                                 UserSessionManager.sharedInstance.updateUser(withData: data,
                                     success: {
-                                        let inscriptionInfosUserVC = self.storyboard?.instantiateViewController(withIdentifier: "idInscriptionInfosUserViewController") as! InscriptionInfosUserViewController
-                                        self.navigationController?.pushViewController(inscriptionInfosUserVC, animated: true)
+                                        PopupManager.sharedInstance.dismissPopup(true,
+                                            completion: {
+                                                let inscriptionInfosUserVC = self.storyboard?.instantiateViewController(withIdentifier: "idInscriptionInfosUserViewController") as! InscriptionInfosUserViewController
+                                                self.navigationController?.pushViewController(inscriptionInfosUserVC, animated: true)
+                                            }
+                                        )
                                         
                                     }, fail: { (error) in
                                         PopupManager.sharedInstance.dismissPopup(true,
@@ -195,18 +199,30 @@ class InscriptionIdentifiantsViewController: RootViewController, UITextFieldDele
                                 )
                                 
                             }, fail: { (error) in
-                                PopupManager.sharedInstance.showErrorPopup(message: Constants.PopupMessage.ErrorMessage.kErrorNoInternetConnection)
+                                PopupManager.sharedInstance.dismissPopup(true,
+                                    completion: {
+                                        PopupManager.sharedInstance.showErrorPopup(message: Constants.PopupMessage.ErrorMessage.kErrorNoInternetConnection)
+                                    }
+                                )
                             }
                         )
                     }
                 )
                 
             } else {
-                PopupManager.sharedInstance.showErrorPopup(message: Constants.PopupMessage.ErrorMessage.kErrorRegistrationPasswordMinimumCharacters)
+                PopupManager.sharedInstance.dismissPopup(true,
+                    completion: {
+                        PopupManager.sharedInstance.showErrorPopup(message: Constants.PopupMessage.ErrorMessage.kErrorRegistrationPasswordMinimumCharacters)
+                    }
+                )
             }
             
         } else {
-            PopupManager.sharedInstance.showErrorPopup(message: Constants.PopupMessage.ErrorMessage.kErrorRegistrationEmailNotValid)
+            PopupManager.sharedInstance.dismissPopup(true,
+                completion: {
+                    PopupManager.sharedInstance.showErrorPopup(message: Constants.PopupMessage.ErrorMessage.kErrorRegistrationEmailNotValid)
+                }
+            )
         }
     }
     

@@ -7,35 +7,41 @@
 //
 
 import Foundation
+import SwiftyJSON
 
-enum Gender {
-    case male
-    case female
-    case universal
+enum Gender: String {
+    case male = "male"
+    case female = "female"
+    case universal = "other"
 }
 
-class Product: NSObject {
+class Product {
     let id: Int
     let model: String
     let brand: String
     let price: Double
-    let category: String
-    let imageURL: String
+    let imageUrl: String
     var image: UIImage?
-    let caracteristiques: [String]
-    let pageURL: String
-    let gender: Gender
+    let pageUrl: String
     
-    init(id: Int, category: String, model: String, brand: String, price: Double, imageURL: String, caracteristiques: [String], image: UIImage?, pageURL: String, gender: Gender) {
+    init(id: Int, model: String, brand: String, price: Double, imageUrl: String, image: UIImage?, pageUrl: String) {
         self.id = id
-        self.category = category
         self.model = model
         self.price = price
-        self.imageURL = imageURL
-        self.caracteristiques = caracteristiques
+        self.imageUrl = imageUrl
         self.image = image
-        self.pageURL = pageURL
+        self.pageUrl = pageUrl
         self.brand = brand
-        self.gender = gender
+    }
+    
+    convenience init(jsonObject: JSON) {
+        let id = jsonObject[ProductDataKey.kId].intValue
+        let brand = jsonObject[ProductDataKey.kBrand].stringValue
+        let model = jsonObject[ProductDataKey.kModel].stringValue
+        let price = Double(jsonObject[ProductDataKey.kPrice].stringValue)
+        let pageUrl = jsonObject[ProductDataKey.kPageUrl].stringValue
+        let imageUrl = jsonObject[ProductDataKey.kimageUrl].stringValue
+        
+        self.init(id: id, model: model, brand: brand, price: price!, imageUrl: imageUrl, image: nil, pageUrl: pageUrl)
     }
 }

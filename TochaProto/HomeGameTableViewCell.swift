@@ -9,6 +9,12 @@
 import Foundation
 import SWTableViewCell
 
+enum MatchResult: String {
+    case won = "Gagné"
+    case lost = "Perdu"
+    case tie = "Égalité"
+}
+
 class HomeGameTableViewCell: SWTableViewCell {
     
     @IBOutlet weak var opponentNameLabel: UILabel!
@@ -28,7 +34,7 @@ class HomeUserTurnTableViewCell: HomeGameTableViewCell {
     var delegateUserTurn: HomeUserTurnCellDelegate?
     
     @IBAction func playButtonTouched(_ sender: UIButton) {
-        self.delegateUserTurn?.playButtonTouched()
+        delegateUserTurn?.playButtonTouched()
     }
 }
 
@@ -39,10 +45,21 @@ class HomeOpponentTurnTableViewCell: HomeGameTableViewCell {
 
 class HomeGameFinishedTableViewCell: HomeGameTableViewCell {
     
-    var wonGame: Bool? {
+    var matchResult: MatchResult? {
         didSet {
-            self.gameResultLabel.text = (self.wonGame == true) ? "Gagné" : "Perdu"
-            self.gameResultLabel.textColor = (self.wonGame == true) ? UIColor.greenDochaColor() : UIColor.redDochaColor()
+            gameResultLabel.text = matchResult!.rawValue
+            switch matchResult! {
+            case .won:
+                gameResultLabel.textColor = UIColor.greenDochaColor()
+                break
+            case .lost:
+                gameResultLabel.textColor = UIColor.redDochaColor()
+                break
+            case .tie:
+                gameResultLabel.textColor = UIColor.darkBlueDochaColor()
+                break
+            }
+            
         }
     }
     

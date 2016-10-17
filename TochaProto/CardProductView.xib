@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11201" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" colorMatched="YES">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
-        <mutableArray key="Montserrat-ExtraBold.otf">
+        <array key="Montserrat-ExtraBold.otf">
             <string>Montserrat-ExtraBold</string>
-        </mutableArray>
-        <mutableArray key="Montserrat-Regular.otf">
+        </array>
+        <array key="Montserrat-Regular.otf">
             <string>Montserrat-Regular</string>
-        </mutableArray>
-        <mutableArray key="Montserrat-SemiBold.otf">
+        </array>
+        <array key="Montserrat-SemiBold.otf">
             <string>Montserrat-SemiBold</string>
-            <string>Montserrat-SemiBold</string>
-        </mutableArray>
+        </array>
     </customFonts>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
@@ -24,44 +24,38 @@
             <rect key="frame" x="0.0" y="0.0" width="310" height="264"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="card_product" translatesAutoresizingMaskIntoConstraints="NO" id="08c-Ds-492">
-                    <rect key="frame" x="0.0" y="0.0" width="310" height="264"/>
-                </imageView>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="card_product" translatesAutoresizingMaskIntoConstraints="NO" id="08c-Ds-492"/>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0sd-UP-DAy" userLabel="counterContainerView" customClass="CounterContainerView" customModule="Docha" customModuleProvider="target">
-                    <rect key="frame" x="0.0" y="210" width="310" height="54"/>
                     <subviews>
                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="counter_base" translatesAutoresizingMaskIntoConstraints="NO" id="BHl-zo-n2y" customClass="CounterView" customModule="Docha" customModuleProvider="target">
-                            <rect key="frame" x="68" y="2" width="50" height="50"/>
                             <constraints>
                                 <constraint firstAttribute="width" secondItem="BHl-zo-n2y" secondAttribute="height" multiplier="1:1" id="yOc-rl-QhD"/>
                             </constraints>
                         </imageView>
                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="counter_base" translatesAutoresizingMaskIntoConstraints="NO" id="Boe-To-TMJ" customClass="CounterView" customModule="Docha" customModuleProvider="target">
-                            <rect key="frame" x="178" y="2" width="50" height="50"/>
                             <constraints>
                                 <constraint firstAttribute="width" secondItem="Boe-To-TMJ" secondAttribute="height" multiplier="1:1" id="71I-cG-yZx"/>
                             </constraints>
                         </imageView>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="84 €" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="STb-R4-qFh">
-                            <rect key="frame" x="249" y="31" width="28" height="15"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="37" id="KfX-pl-IIF"/>
+                            </constraints>
                             <fontDescription key="fontDescription" name="Montserrat-SemiBold" family="Montserrat" pointSize="12"/>
-                            <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="," lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GLS-VY-Jtq">
-                            <rect key="frame" x="240" y="14" width="8" height="40"/>
                             <fontDescription key="fontDescription" name="Montserrat-SemiBold" family="Montserrat" pointSize="32"/>
-                            <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="counter_base" translatesAutoresizingMaskIntoConstraints="NO" id="kmu-tc-eQc" customClass="CounterView" customModule="Docha" customModuleProvider="target">
-                            <rect key="frame" x="123" y="2" width="50" height="50"/>
                             <constraints>
                                 <constraint firstAttribute="width" secondItem="kmu-tc-eQc" secondAttribute="height" multiplier="1:1" id="0po-6f-QhC"/>
                             </constraints>
                         </imageView>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nb1-c9-VDY" userLabel="infosButton">
-                            <rect key="frame" x="288" y="27" width="14" height="22"/>
                             <state key="normal" image="info_icon"/>
                             <connections>
                                 <action selector="infosButtonTouched:" destination="0sd-UP-DAy" eventType="touchUpInside" id="TdL-fr-IzF"/>
@@ -94,20 +88,12 @@
                     </connections>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PPU-aO-ZlO" userLabel="gaugeContainerView">
-                    <rect key="frame" x="5" y="5" width="300" height="26"/>
                     <subviews>
-                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="jauge" translatesAutoresizingMaskIntoConstraints="NO" id="G2E-mt-V4h">
-                            <rect key="frame" x="0.0" y="0.0" width="300" height="26"/>
-                        </imageView>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="jauge" translatesAutoresizingMaskIntoConstraints="NO" id="G2E-mt-V4h"/>
                         <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="EW8-vB-hU4" userLabel="opponentPinIconView" customClass="PinIconView" customModule="Docha" customModuleProvider="target">
-                            <rect key="frame" x="136" y="-20" width="28" height="34"/>
                             <subviews>
-                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="pin_icon" translatesAutoresizingMaskIntoConstraints="NO" id="AgI-fT-Clf">
-                                    <rect key="frame" x="0.0" y="0.0" width="28" height="34"/>
-                                </imageView>
-                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="d7y-au-pF9">
-                                    <rect key="frame" x="3" y="3" width="22" height="22"/>
-                                </imageView>
+                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="pin_icon" translatesAutoresizingMaskIntoConstraints="NO" id="AgI-fT-Clf"/>
+                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="d7y-au-pF9"/>
                             </subviews>
                             <constraints>
                                 <constraint firstAttribute="trailing" secondItem="d7y-au-pF9" secondAttribute="trailing" constant="3" id="23j-m8-BiZ"/>
@@ -125,13 +111,14 @@
                             </connections>
                         </view>
                         <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gzG-RV-YNJ" userLabel="userPinIconView" customClass="PinIconView" customModule="Docha" customModuleProvider="target">
-                            <rect key="frame" x="136" y="-20" width="28" height="34"/>
                             <subviews>
                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="pin_icon" translatesAutoresizingMaskIntoConstraints="NO" id="9qH-Ka-rpe">
-                                    <rect key="frame" x="0.0" y="0.0" width="28" height="34"/>
+                                    <frame key="frameInset" width="28" height="34"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 </imageView>
                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qqp-xI-OyV">
-                                    <rect key="frame" x="3" y="3" width="22" height="22"/>
+                                    <frame key="frameInset" minX="3" minY="3" width="22" height="22"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 </imageView>
                             </subviews>
                             <constraints>
@@ -157,34 +144,30 @@
                     </constraints>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Y8O-1B-8Xa" userLabel="productContainerView">
-                    <rect key="frame" x="0.0" y="32" width="310" height="135"/>
                     <subviews>
                         <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="et8-L4-JqH" userLabel="productImageView">
-                            <rect key="frame" x="87" y="0.0" width="135" height="135"/>
+                            <constraints>
+                                <constraint firstAttribute="width" secondItem="et8-L4-JqH" secondAttribute="height" multiplier="1:1" id="SbL-YM-pK3"/>
+                            </constraints>
                         </imageView>
                     </subviews>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <constraints>
-                        <constraint firstItem="et8-L4-JqH" firstAttribute="leading" secondItem="Y8O-1B-8Xa" secondAttribute="leading" constant="87" id="41v-rK-yZA"/>
-                        <constraint firstAttribute="bottom" secondItem="et8-L4-JqH" secondAttribute="bottom" id="7Mh-RY-KBV"/>
                         <constraint firstAttribute="width" secondItem="Y8O-1B-8Xa" secondAttribute="height" multiplier="62:27" id="Dlr-ru-6ty"/>
-                        <constraint firstAttribute="trailing" secondItem="et8-L4-JqH" secondAttribute="trailing" constant="88" id="paa-MM-VaG"/>
-                        <constraint firstItem="et8-L4-JqH" firstAttribute="top" secondItem="Y8O-1B-8Xa" secondAttribute="top" id="x0p-Wg-F8G"/>
+                        <constraint firstItem="et8-L4-JqH" firstAttribute="centerX" secondItem="Y8O-1B-8Xa" secondAttribute="centerX" id="Jfr-ma-aoq"/>
+                        <constraint firstItem="et8-L4-JqH" firstAttribute="top" secondItem="Y8O-1B-8Xa" secondAttribute="top" id="muO-ht-euG"/>
                     </constraints>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8o8-Ne-7NS" userLabel="productInfosContainerView">
-                    <rect key="frame" x="5" y="172" width="300" height="38"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="o9H-Tn-CJk" userLabel="productNameLabel">
-                            <rect key="frame" x="0.0" y="1" width="300" height="19"/>
                             <fontDescription key="fontDescription" name="Montserrat-ExtraBold" family="Montserrat" pointSize="15"/>
-                            <color key="textColor" red="0.1450980392" green="0.23921568630000001" blue="0.30980392159999998" alpha="1" colorSpace="calibratedRGB"/>
+                            <color key="textColor" red="0.1450980392" green="0.23921568630000001" blue="0.30980392159999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="749" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hWn-mZ-zrM">
-                            <rect key="frame" x="0.0" y="20" width="300" height="18"/>
                             <fontDescription key="fontDescription" name="Montserrat-Regular" family="Montserrat" pointSize="15"/>
-                            <color key="textColor" red="0.54117647059999996" green="0.56862745100000001" blue="0.60784313729999995" alpha="1" colorSpace="calibratedRGB"/>
+                            <color key="textColor" red="0.54117647059999996" green="0.56862745100000001" blue="0.60784313729999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
                     </subviews>
@@ -216,6 +199,7 @@
                 <constraint firstItem="PPU-aO-ZlO" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="5" id="cax-e7-z0n"/>
                 <constraint firstAttribute="bottom" secondItem="08c-Ds-492" secondAttribute="bottom" id="g8X-Od-DsE"/>
                 <constraint firstItem="0sd-UP-DAy" firstAttribute="top" secondItem="8o8-Ne-7NS" secondAttribute="bottom" id="geQ-aI-MUV"/>
+                <constraint firstItem="et8-L4-JqH" firstAttribute="width" secondItem="iN0-l3-epB" secondAttribute="width" multiplier="135:310" id="hUy-iB-6NA"/>
                 <constraint firstAttribute="bottom" secondItem="0sd-UP-DAy" secondAttribute="bottom" id="kzQ-Dt-Ik3"/>
                 <constraint firstAttribute="trailing" secondItem="0sd-UP-DAy" secondAttribute="trailing" id="uUZ-na-XKg"/>
                 <constraint firstItem="08c-Ds-492" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="wBA-bx-dtg"/>
@@ -246,4 +230,9 @@
         <image name="jauge" width="300" height="28"/>
         <image name="pin_icon" width="33" height="41"/>
     </resources>
+    <simulatedMetricsContainer key="defaultSimulatedMetrics">
+        <simulatedStatusBarMetrics key="statusBar"/>
+        <simulatedOrientationMetrics key="orientation"/>
+        <simulatedScreenMetrics key="destination" type="retina4_7.fullscreen"/>
+    </simulatedMetricsContainer>
 </document>

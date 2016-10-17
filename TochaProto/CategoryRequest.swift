@@ -31,8 +31,8 @@ class CategoryRequest: DochaRequest {
                 var categoriesList: [Category] = []
                 
                 for (_ ,subJson):(String, JSON) in jsonResponse {
-                    let name = subJson[UserDataKey.kCategoryName].string
-                    let slugName = subJson[UserDataKey.kCategorySlugName].string
+                    let name = subJson[CategoryDataKey.kName].string
+                    let slugName = subJson[CategoryDataKey.kSlugName].string
                     
                     if let name = name, let slugName = slugName {
                         let category = Category(name: name, slugName: slugName)
@@ -65,8 +65,8 @@ class CategoryRequest: DochaRequest {
                 }
                 
                 let jsonResponse = JSON(response.result.value)
-                let name = jsonResponse[UserDataKey.kCategoryName].string
-                let slugName = jsonResponse[UserDataKey.kCategorySlugName].string
+                let name = jsonResponse[CategoryDataKey.kName].string
+                let slugName = jsonResponse[CategoryDataKey.kSlugName].string
                 
                 if let name = name, let slugName = slugName {
                     let category = Category(name: name, slugName: slugName)

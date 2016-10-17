@@ -24,8 +24,8 @@ struct UserDataKey {
     static let kCategoryPrefered = "categories_prefered"
     static let kAvatarUrl = "avatar"
     static let kDochos = "dochos"
-    static let kExperience = "experience"
-    static let kLevelMaxUnlocked = "levelUser"
+    static let kExperience = "xp"
+    static let kLevelMaxUnlocked = "level"
     static let kPerfectPriceCpt = "perfects"
     
     static let kFacebookToken = "access_token"
@@ -33,15 +33,61 @@ struct UserDataKey {
     static let kAuthToken = "key"
     static let kSessionID = "session_id"
     static let kBadgesUnlockedIdentifiers = "badges_unlocked_identifiers"
-    
-    static let kCategoryName = "name"
-    static let kCategorySlugName = "slug_name"
+}
+
+struct MatchDataKey {
+    static let kId = "id"
+    static let kRounds = "rounds"
+    static let kMaxRounds = "max_rounds"
+    static let kStatus = "status"
+    static let kOpponent = "user"
+    static let kUserScore = "user_score"
+    static let kOpponentScore = "opponent_score"
+}
+
+struct RoundDataKey {
+    static let kId = "id"
+    static let kStatus = "status"
+    static let kProducts = "products"
+    static let kCategory = "category"
+    static let kWinner = "winner"
+    static let kFirstPlayer = "first_player"
+    static let kProposedCategories = "proposed_categories"
+    static let kPropositions = "propositions"
+    static let kUserScore = "user_score"
+    static let kUserTime = "user_time"
+    static let kOpponentScore = "opponent_score"
+    static let kOpponentTime = "opponent_time"
+}
+
+struct ProductDataKey {
+    static let kId = "id"
+    static let kModel = "name"
+    static let kBrand = "brand"
+    static let kPrice = "price"
+    static let kCategory = "categories"
+    static let kimageUrl = "image_url"
+    static let kPageUrl = "page_url"
+    static let kGender = "gender"
+}
+
+struct PropositionDataKey {
+    static let kPseudo = "username"
+    static let kProductID = "product"
+    static let kPrice = "price"
+    static let kTimeStamp = "timestamp"
+}
+
+struct CategoryDataKey {
+    static let kName = "name"
+    static let kSlugName = "slug_name"
 }
 
 struct Constants {
     struct UserDefaultsKey {
         // User object key
         static let kUserSessionObject = "userSessionObject"
+        static let kUserHasFinishedTutorial = "userInfosHasFinishedTutorial"
         
         // User infos keys
         static let kUserInfosPseudo = "userInfosPseudo"
@@ -91,9 +137,11 @@ struct Constants {
         struct ErrorMessage {
             static let kErrorOccured = "Une erreur est survenue. Essaie à nouveau maintenant ou un peu plus tard."
             static let kErrorNoInternetConnection = "Une erreur est survenue. Essaie de te connecter à nouveau."
+            static let kErrorOccuredHomeRedirection = "Une erreur est survenue... Tu seras redirigé vers le menu principal."
             
             static let kErrorRegistrationPasswordMinimumCharacters = "Vérifie que ton mot de passe possède au minimum 6 caractères."
             static let kErrorRegistrationEmailNotValid = "Cette adresse email n'est pas valide."
+            static let kErrorRegistrationUsernameAlreadyTaken = "Ce pseudo est déjà pris."
             
             static let kErrorConnexionEmailBadEmailOrPassword = "L'email ou le mot de passe est incorrecte."
             static let kErrorInscriptionBadBirthOrGender = "Les informations ne sont pas valides. Essaie à nouveau."
@@ -102,6 +150,7 @@ struct Constants {
             static let kErrorChangePasswordFieldMissing = "Vérifie que tous les champs sont bien remplis."
             static let kErrorChangePasswordNewPwdNotEqual = "Les nouveaux mots de passe sont différents."
             static let kErrorChangePasswordBadOldPwd = "Ce n'est pas le bon ancien mot de passe."
+            
         }
         
         struct InfosMessage {
@@ -132,6 +181,13 @@ struct Constants {
             static let UrlFacebookConnexion = "/rest-auth/facebook/"
             static let UrlEmailConnexion = "/rest-auth/login/"
             static let UrlLogOut = "/rest-auth/logout/"
+        }
+        
+        struct UrlMatch {
+            static let UrlGetAllMatch = "/match"
+            static let UrlGetMatch = "/match"
+            static let UrlPostMatch = "/match"
+            static let UrlGetRounds = "/round"
         }
     }
 }

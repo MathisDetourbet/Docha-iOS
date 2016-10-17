@@ -28,7 +28,10 @@ enum MessageType: String {
 
 class GameplayMainViewController: GameViewController, KeyboardViewDelegate, CounterContainerViewDelegate {
     
-    var productsData: [Product]?
+    var userPlayer: Player!
+    var opponentPlayer: Player!
+    var round: Round!
+    
     var cardsViews: [CardProductView]?
     
     var currentProductData: Product?
@@ -42,16 +45,24 @@ class GameplayMainViewController: GameViewController, KeyboardViewDelegate, Coun
     var cursorCard: Int = 0
     var cursorCounter: Int = 0
     
-    let kTimePerRound: Double = 90.0
+    let kTimePerRound: Double = 50.0
     var timer: Timer?
     var timeleft: Double!
+    
+    var userPropositions: [Proposition] = []
+    var opponentPropositions: [Proposition]?
+    var sortedOpponentPropositions: [Int: [Int: Double]]?
+    var propositionTimer: Timer?
+    var currentMillisecondsTime: Int = 0
     
 
 //MARK: @IBOutlets
     
     // Top Container View
     @IBOutlet weak var userAvatarImageView: UIImageView!
+    @IBOutlet weak var userPseudoLabel: UILabel!
     @IBOutlet weak var opponentAvatarImageView: UIImageView!
+    @IBOutlet weak var opponentPseudoLabel: UILabel!
     @IBOutlet weak var circularProgressBarView: MBCircularProgressBarView!
     
     // Timeline
@@ -73,27 +84,95 @@ class GameplayMainViewController: GameViewController, KeyboardViewDelegate, Coun
         
         keyboardView.delegate = self
         
+        loadPlayersInfos()
         initCardsView()
+        prepareOpponentPropositions()
         initTimer(animated: false)
         startTheRound()
     }
     
     func startTheRound() {
         moveToNextCard(cardsViews?.first, AndMovePreviousCard: nil, completion: nil)
-        updateTimelineWithResult(.current, isForUser: true)
+        updateTimeline(withResult: .current, isForUser: true)
+        updateTimeline(withResult: .current, isForUser: false)
     }
     
     func roundFinished() {
-        if cursorCard <= cardsViews!.count {
+        if cursorCard < cardsViews!.count-1 {
             for _ in cursorCard..<cardsViews!.count {
                 userResultsArray.append(.wrong)
             }
         }
+        var propositionsJSON: [[String: Any]] = []
+        for proposition in userPropositions {
+            let propositionJSON = proposition.generateJSONObject()
+            propositionsJSON.append(propositionJSON)
+        }
         
-        let debriefVC = self.storyboard?.instantiateViewController(withIdentifier: "idGameplayDebriefViewController") as! GameplayDebriefViewController
-        debriefVC.productsList = productsData
-        debriefVC.userResultsArray = userResultsArray
-        self.navigationController?.pushViewController(debriefVC, animated: true)
+        let roundData = [RoundDataKey.kUserTime: Int(timeleft*1000), RoundDataKey.kPropositions: propositionsJSON] as [String : Any]
+        let matchID = MatchManager.sharedInstance.currentMatch?.id
+        MatchManager.sharedInstance.putRound(withData: roundData, ForMatchID: matchID, andRoundID: round!.id,
+            success: { (_) in
+                
+                let debriefVC = self.storyboard?.instantiateViewController(withIdentifier: "idGameplayDebriefViewController") as! GameplayDebriefViewController
+                debriefVC.productsList = self.round?.products
+                debriefVC.userResultsArray = self.userResultsArray
+                self.navigationController?.pushViewController(debriefVC, animated: true)
+            }
+        ) { (error) in
+            
+        }
+    }
+    
+    func loadPlayersInfos() {
+        if let userPlayer = self.userPlayer {
+            userAvatarImageView.image = userPlayer.avatarImage
+            userPseudoLabel.text = userPlayer.pseudo
+        }
+        
+        if let opponentPlayer = opponentPlayer {
+            opponentPseudoLabel.text = opponentPlayer.pseudo
+            
+            if let opponentAvatarImage = opponentPlayer.avatarImage {
+                opponentAvatarImageView.image = opponentAvatarImage.roundCornersToCircle(withBorder: 10.0, color: UIColor.white)
+                
+            } else {
+                opponentAvatarImageView.image = UIImage(named: "\(opponentPlayer.avatarUrl)_large")?.roundCornersToCircle(withBorder: 10.0, color: UIColor.white)
+            }
+        }
+    }
+    
+    func prepareOpponentPropositions() {
+        if let opponentPropositions = self.opponentPropositions {
+            if opponentPropositions.isEmpty == false {
+                
+                // Set all product IDs in an Array
+                var productsIDs: [Int] = []
+                for proposition in opponentPropositions {
+                    if productsIDs.contains(proposition.productID) == false {
+                        productsIDs.append(proposition.productID)
+                    }
+                }
+                
+                // For each product ID set a dictionary [timestamp: price]
+                sortedOpponentPropositions = [:]
+                for productID in productsIDs {
+                    sortedOpponentPropositions![productID] = sortPropositions(propositions: opponentPropositions, forProductID: productID)
+                }
+            }
+        }
+    }
+    
+    func sortPropositions(propositions: [Proposition], forProductID productID: Int) -> [Int: Double] {
+        var result: [Int: Double] = [:]
+        
+        for proposition in propositions {
+            if proposition.productID == productID {
+                result[proposition.timeStamp] = proposition.price
+            }
+        }
+        
+        return result
     }
     
     
@@ -102,7 +181,7 @@ class GameplayMainViewController: GameViewController, KeyboardViewDelegate, Coun
     func initCardsView() {
         var cardsArray: [CardProductView] = []
         
-        for product in self.productsData! {
+        for product in self.round!.products {
             let cardProductView = CardProductView.loadFromNibNamed("CardProductView") as? CardProductView
             let priceArray = ConverterHelper.convertPriceToArrayOfInt(product.price)
             let centsString = priceArray.centsString
@@ -115,12 +194,20 @@ class GameplayMainViewController: GameViewController, KeyboardViewDelegate, Coun
             cardProductView?.counterContainerView.delegate = self
             print("Real price : \(product.price)")
             
+            cardProductView?.userPinIconView.avatarImageView.image = userPlayer.avatarImage
+            cardProductView?.opponentPinIconView.avatarImageView.image = opponentPlayer.avatarImage
+            
+            cardProductView?.frame = CGRect(x: self.view.frame.size.width, y: cardContainerView.frame.origin.y, width: cardContainerView.frame.width, height: cardContainerView.frame.height)
+            
+            cardContainerView.addSubview(cardProductView!)
+            
             cardsArray.append(cardProductView!)
         }
         
         if cardsArray.isEmpty {
             PopupManager.sharedInstance.showErrorPopup(message: Constants.PopupMessage.ErrorMessage.kErrorOccured,
                 doneActionCompletion: {
+                    
                     self.goToHome()
                     return
                 }
@@ -128,6 +215,31 @@ class GameplayMainViewController: GameViewController, KeyboardViewDelegate, Coun
             
         } else {
             cardsViews = cardsArray
+        }
+    }
+    
+    
+    func nextProduct(withResult result: TimelineState) {
+        updateTimeline(withResult: result, isForUser: true)
+        
+        if cursorCard < cardsViews!.count-1 {
+            // Display the next card
+            let nextCard = cardsViews![cursorCard + 1]
+            
+            moveToNextCard(nextCard, AndMovePreviousCard: currentCard,
+                           completion: { (_) in
+                            self.cursorCounter = 0
+                            self.keyboardView.enabledKeyboard(true)
+                            self.keyboardView.reset()
+                            //self.currentCard?.counterContainerView.resetCountersViews()
+                            self.updateTimeline(withResult: .current, isForUser: true)
+                }
+            )
+            
+        } else {
+            // Game Finished !
+            stopTimer()
+            roundFinished()
         }
     }
     
@@ -145,35 +257,27 @@ class GameplayMainViewController: GameViewController, KeyboardViewDelegate, Coun
             
         } else {
             nextCard.translatesAutoresizingMaskIntoConstraints = false
-            let currentFrame = currentCard?.frame
-            nextCard.frame = CGRect(x: self.view.frame.size.width, y: currentFrame!.origin.y, width: currentFrame!.width, height: currentFrame!.height)
-            cardContainerView.addSubview(nextCard)
+            nextCard.frame = cardContainerView.frame
             
-            let centerXNextCard = NSLayoutConstraint(item: nextCard, attribute: .centerX, relatedBy: .equal, toItem: cardContainerView, attribute: .centerX, multiplier: 1.0, constant: self.view.frame.width)
+            let centerXNextCard = NSLayoutConstraint(item: nextCard, attribute: .centerX, relatedBy: .lessThanOrEqual, toItem: cardContainerView, attribute: .centerX, multiplier: 1.0, constant: self.view.frame.width+1.0)
             cardContainerView.addConstraint(centerXNextCard)
             cardContainerView.addConstraint(NSLayoutConstraint(item: nextCard, attribute: .centerY, relatedBy: .equal, toItem: cardContainerView, attribute: .centerY, multiplier: 1.0, constant: 0.0))
             cardContainerView.addConstraint(NSLayoutConstraint(item: nextCard, attribute: .height, relatedBy: .equal, toItem: cardContainerView, attribute: .height, multiplier: 1.0, constant: 0.0))
             cardContainerView.addConstraint(NSLayoutConstraint(item: nextCard, attribute: .width, relatedBy: .equal, toItem: cardContainerView, attribute: .width, multiplier: 1.0, constant: 0.0))
+            self.view.layoutIfNeeded()
             
             UIView.animate(withDuration: 1.0,
-                delay: 0.0,
+                delay: 0.6,
                 usingSpringWithDamping: 0.8,
                 initialSpringVelocity: 10.0,
                 options: .allowUserInteraction,
                 animations: {
-                    
                     self.cardCenterXConstraint?.constant = -CGFloat(self.view.frame.width)
                     centerXNextCard.constant = 0.0
                     self.view.layoutIfNeeded()
                     
-                }, completion: { (finished) in
-                    
-                    if finished {
-                        completion?(true)
-                        
-                    } else {
-                        completion?(false)
-                    }
+                }, completion: { (_) in
+                    self.currentMillisecondsTime = 0
                 }
             )
             
@@ -183,38 +287,11 @@ class GameplayMainViewController: GameViewController, KeyboardViewDelegate, Coun
         
         // Initialize/Update current product data
         currentCard = nextCard
-        currentPriceArray = ConverterHelper.convertPriceToArrayOfInt(self.productsData?[cursorCard].price).priceArray
+        currentPriceArray = ConverterHelper.convertPriceToArrayOfInt(round.products[cursorCard].price).priceArray
         userEstimation = Array(repeating: -1, count: (currentPriceArray?.count)!)
-        currentProductData = productsData?[cursorCard]
-        keyboardView.reset()
+        currentProductData = round.products[cursorCard]
         
         completion?(true)
-    }
-    
-    func nextProductWithResult(_ result: TimelineState) {
-        updateTimelineWithResult(result, isForUser: true)
-        
-        if cursorCard < cardsViews!.count-1 {
-            // Display the next card
-            let nextCard = cardsViews![cursorCard + 1]
-            
-            moveToNextCard(nextCard, AndMovePreviousCard: self.currentCard,
-                completion: { (_) in
-                    self.cursorCounter = 0
-                    self.keyboardView.enabledKeyboard(true)
-                    self.keyboardView.reset()
-                    self.currentCard?.counterContainerView.resetCountersViews()
-                    self.updateTimelineWithResult(.current, isForUser: true)
-                    self.initTimer(animated: true)
-                }
-            )
-            
-        } else {
-            // Game Finished !
-            timeleft = 0.0
-            stopTimer()
-            roundFinished()
-        }
     }
     
     
@@ -237,6 +314,8 @@ class GameplayMainViewController: GameViewController, KeyboardViewDelegate, Coun
         
         timer = Timer.scheduledTimer(timeInterval: 0.01, target: self, selector: #selector(GameplayMainViewController.updateTimer), userInfo: nil, repeats: true)
         
+        propositionTimer = Timer.scheduledTimer(timeInterval: 0.001, target: self, selector: #selector(GameplayMainViewController.updatePropositionTimer), userInfo: nil, repeats: true)
+        
         circularProgressBarView.maxValue = CGFloat(kTimePerRound)
         circularProgressBarView.fontColor = UIColor.darkBlueDochaColor()
         circularProgressBarView.progressColor = UIColor.darkBlueDochaColor()
@@ -255,9 +334,28 @@ class GameplayMainViewController: GameViewController, KeyboardViewDelegate, Coun
         }
     }
     
+    func updatePropositionTimer() {
+        currentMillisecondsTime += 1
+        
+        if let sortedOpponentPropositions = self.sortedOpponentPropositions {
+            
+            if sortedOpponentPropositions[currentProductData!.id]!.keys.contains(currentMillisecondsTime)
+            {
+                let opponentEstimation = sortedOpponentPropositions[currentProductData!.id]![currentMillisecondsTime]
+                animateUserPinIcon(withEstimation: opponentEstimation, forPlayer: false, andCompletion: nil)
+                
+                if opponentEstimation == currentProductData?.price {
+                    updateTimeline(withResult: .perfect, isForUser: false)
+                }
+            }
+        }
+    }
+    
     func stopTimer() {
         timer?.invalidate()
         timer = nil
+        propositionTimer?.invalidate()
+        propositionTimer = nil
     }
     
     func timeIsUp() {
@@ -274,7 +372,7 @@ class GameplayMainViewController: GameViewController, KeyboardViewDelegate, Coun
 
 //MARK: Timeline Methods
     
-    func updateTimelineWithResult(_ result: TimelineState, isForUser: Bool) {
+    func updateTimeline(withResult result: TimelineState, isForUser: Bool) {
         var timelineImageName: String?
         
         switch result {
@@ -308,13 +406,13 @@ class GameplayMainViewController: GameViewController, KeyboardViewDelegate, Coun
 //MARK: Counter Container View Delegate
     
     func infosButtonTouched() {
-        PopupManager.sharedInstance.showInfosPopup("Informations prix", message: "Le prix de ce produit a été relevé le [DATE] sur le site internet [URL_RACINE].\n Images et copyright appartiennent à \((currentProductData?.brand)!)", viewController: self, completion: nil, doneActionCompletion: nil)
+        PopupManager.sharedInstance.showInfosPopup("Informations prix", message: "Le prix de ce produit a été relevé le [DATE].\n Images et copyright appartiennent à \((currentProductData?.brand)!)", viewController: self, completion: nil, doneActionCompletion: nil)
     }
     
     
 //MARK: Keyboard Delegate
     
-    func clickOnPadWithNumber(_ number: Int) {
+    func clickOnPad(withNumber number: Int) {
         if cursorCounter == currentPriceArray?.count {
             return
         }
@@ -330,11 +428,13 @@ class GameplayMainViewController: GameViewController, KeyboardViewDelegate, Coun
     
     func validatePricing() {
         keyboardView.enabledKeyboard(false)
+        addProposition()
         
-        animateUserPinIcon { (finished) in
+        animateUserPinIcon(withEstimation: nil, forPlayer: true) { (finished) in
+            
             if finished {
                 if self.userEstimation! == self.currentPriceArray! {
-                    self.nextProductWithResult(.perfect)
+                    self.nextProduct(withResult: .perfect)
                     
                 } else {
                     self.cursorCounter = 0
@@ -351,11 +451,21 @@ class GameplayMainViewController: GameViewController, KeyboardViewDelegate, Coun
         cursorCounter = 0
     }
     
+    func addProposition() {
+        let productID = currentProductData!.id
+        let price = currentProductData!.price
+        
+        let proposition = Proposition(productID: productID, price: price, timeStamp: currentMillisecondsTime)
+        userPropositions.append(proposition)
+    }
+    
 
 //MARK: Displaying Message
     
     func displayMessage(_ messageType: MessageType!, completion: ((_ finished: Bool) -> Void)?) {
         var messageImageView: UIImageView? = UIImageView(image: UIImage(named: "answer_\(messageType.rawValue)"))
+        messageImageView?.contentMode = .scaleAspectFit
+        messageImageView?.frame = CGRect(x: currentCard!.frame.midX-75.0, y: currentCard!.frame.midY-25.0, width: 150.0, height: 50.0)
         messageImageView!.translatesAutoresizingMaskIntoConstraints = false
         currentCard?.addSubview(messageImageView!)
         
@@ -364,10 +474,13 @@ class GameplayMainViewController: GameViewController, KeyboardViewDelegate, Coun
         
         UIView.animate(withDuration: 1.0,
             animations: {
+                
                 messageImageView!.alpha = 0.0
                 self.view.layoutIfNeeded()
             },
+            
             completion: { (finished) in
+                
                 messageImageView!.removeFromSuperview()
                 messageImageView = nil
                 completion?(finished)
@@ -378,42 +491,52 @@ class GameplayMainViewController: GameViewController, KeyboardViewDelegate, Coun
 
 //MARK: Gauge Methods
     
-    func animateUserPinIcon(_ completion: ((_ finished: Bool) -> Void)?) {
-        let errorPercent = calculateUserEstimationErrorPercent()
-        currentCard?.updatePinIconPositionWithErrorPercent(errorPercent,
-            completion: { (finished) in
-                
-                if errorPercent < 0 {
-                    self.displayMessage(.more,
-                        completion: { (finished) in
-                            
-                            completion?(finished)
-                        }
-                    )
-                    
-                } else if errorPercent > 0 {
-                    self.displayMessage(.less,
-                        completion: { (finished) in
-                            
-                            completion?(finished)
-                        }
-                    )
-                    
-                } else {
-                    self.displayMessage(.perfect,
-                        completion: { (finished) in
-                            
-                            completion?(finished)
-                        }
-                    )
+    func animateUserPinIcon(withEstimation estimation: Double? = nil, forPlayer isForUser: Bool, andCompletion completion: ((_ finished: Bool) -> Void)?) {
+        let errorPercent = calculateUserEstimationErrorPercent(withEstimation: estimation)
+        
+        if isForUser {
+            currentCard?.updatePinIconPosition(withErrorPercent: errorPercent, forPlayer: isForUser,
+                andCompletion: { (finished) in
+                    if errorPercent < 0 {
+                        self.displayMessage(.more,
+                            completion: { (finished) in
+                                completion?(finished)
+                            }
+                        )
+                        
+                    } else if errorPercent > 0 {
+                        self.displayMessage(.less,
+                            completion: { (finished) in
+                                completion?(finished)
+                            }
+                        )
+                        
+                    } else {
+                        self.displayMessage(.perfect,
+                            completion: { (finished) in
+                                completion?(finished)
+                            }
+                        )
+                    }
                 }
-            }
-        )
+            )
+            
+        } else {
+            completion?(true)
+        }
     }
     
-    func calculateUserEstimationErrorPercent() -> Double {
+    func calculateUserEstimationErrorPercent(withEstimation estimation: Double? = nil) -> Double {
         let kErrorPercent = 0.36
-        let userEstimation = Double(ConverterHelper.convertPriceArrayToInt(self.userEstimation!))
+        let userEstimation: Double
+        
+        if let estimation = estimation {
+            userEstimation = estimation
+            
+        } else {
+            userEstimation = Double(ConverterHelper.convertPriceArrayToInt(self.userEstimation!))
+        }
+        
         let realPrice = Double(ConverterHelper.convertPriceArrayToInt(currentPriceArray!))
         
         if userEstimation == realPrice {

@@ -32,13 +32,16 @@ fileprivate func > <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
 
 class InscriptionPseudoSelectionViewController: RootViewController {
     
-    
     @IBOutlet weak var pseudoTextField: HoshiTextField!
     @IBOutlet weak var submitButton: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         submitButton.isEnabled = false
+        let pseudoPlaceHolder = UserSessionManager.sharedInstance.currentSession()?.pseudo
+        if let pseudoPlaceHolder = pseudoPlaceHolder {
+            pseudoTextField.placeholder = "Entre ton pseudo. Exemple : " + pseudoPlaceHolder
+        }
     }
     
 
@@ -69,6 +72,7 @@ class InscriptionPseudoSelectionViewController: RootViewController {
                             
                             PopupManager.sharedInstance.dismissPopup(true,
                                 completion: {
+                                    
                                     self.goToHome()
                                 }
                             )
@@ -76,7 +80,13 @@ class InscriptionPseudoSelectionViewController: RootViewController {
                         }, fail: { (error) in
                             PopupManager.sharedInstance.dismissPopup(true,
                                 completion: {
-                                    PopupManager.sharedInstance.showErrorPopup(message: Constants.PopupMessage.ErrorMessage.kErrorNoInternetConnection)
+                                    
+                                    if error.unsafelyUnwrapped.localizedDescription == "Response status code was unacceptable: 400." {
+                                        PopupManager.sharedInstance.showErrorPopup(message: Constants.PopupMessage.ErrorMessage.kErrorRegistrationUsernameAlreadyTaken)
+                                        
+                                    } else {
+                                        PopupManager.sharedInstance.showErrorPopup(message: Constants.PopupMessage.ErrorMessage.kErrorNoInternetConnection)
+                                    }
                                 }
                             )
                         }

@@ -18,4 +18,10 @@ class GameplayMatchScoreTableViewCell: UITableViewCell {
     @IBOutlet var opponentNameLabel: UILabel!
     
     @IBOutlet var scoreLabel: UILabel!
+    
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        
+        self.backgroundColor = UIColor.clear
+    }
 }

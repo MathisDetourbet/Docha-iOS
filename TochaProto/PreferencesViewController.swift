@@ -46,8 +46,8 @@ class PreferencesViewController: GameViewController, UITableViewDelegate, UITabl
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.configNavigationBarWithTitle("Préférences")
-        self.tableView.reloadData()
+        configNavigationBarWithTitle("Préférences")
+        tableView.reloadData()
     }
     
     override func viewDidLayoutSubviews() {
@@ -166,13 +166,14 @@ class PreferencesViewController: GameViewController, UITableViewDelegate, UITabl
             } else if (indexPath as NSIndexPath).row == 3 {
                 // Feedbacks
                 let url = URL(string: "https://morganegr.typeform.com/to/NbeMZ2")
-                let feedbackWebVC = self.storyboard?.instantiateViewController(withIdentifier: "idPreferencesFeedbackWebViewController") as! PreferencesFeedbackViewController
-                feedbackWebVC.url = url
+                let webViewController = storyboard?.instantiateViewController(withIdentifier: "idCustomWebViewController") as! CustomWebViewController
+                webViewController.url = url
+                webViewController.titleNavBar = "Docha a besoin de toi"
                 
                 let activity = UIActivity()
-                feedbackWebVC.applicationActivities = [activity]
-                feedbackWebVC.hidesBottomBarWhenPushed = true
-                self.navigationController?.pushViewController(feedbackWebVC, animated: true)
+                webViewController.applicationActivities = [activity]
+                webViewController.hidesBottomBarWhenPushed = true
+                self.navigationController?.pushViewController(webViewController, animated: true)
             }
         default:
             // Autres section

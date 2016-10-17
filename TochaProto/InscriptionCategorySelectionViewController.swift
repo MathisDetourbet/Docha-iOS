@@ -103,20 +103,24 @@ class InscriptionCategorySelectionViewController: RootViewController, UICollecti
             categoryPrefered?.removeObject(cellSelected.categoryName)
             
             if categoryPrefered!.isEmpty {
-                UIView.animate(withDuration: 0.3, animations: { 
-                    self.footerValidateView.alpha = 0.0
-                    self.view.layoutIfNeeded()
-                })
+                UIView.animate(withDuration: 0.3,
+                    animations: {
+                        self.footerValidateView.alpha = 0.0
+                        self.view.layoutIfNeeded()
+                    }
+                )
             }
             
         } else {
             cellSelected.imageSelected = true
             
             if categoryPrefered!.isEmpty {
-                UIView.animate(withDuration: 0.3, animations: {
-                    self.footerValidateView.alpha = 1.0
-                    self.view.layoutIfNeeded()
-                })
+                UIView.animate(withDuration: 0.3,
+                    animations: {
+                        self.footerValidateView.alpha = 1.0
+                        self.view.layoutIfNeeded()
+                    }
+                )
             }
             
             categoryPrefered?.append(cellSelected.categoryName)
@@ -129,20 +133,22 @@ class InscriptionCategorySelectionViewController: RootViewController, UICollecti
     @IBAction func validButtonTouched(_ sender: UIButton) {
         if comeFromConnexionVC {
             
-            PopupManager.sharedInstance.showLoadingPopup(message: nil, completion: nil)
-            
-            let data = [UserDataKey.kCategoryPrefered: self.categoryPrefered!]
-            
-            UserSessionManager.sharedInstance.updateUser(withData: data,
-                success: {
-                    PopupManager.sharedInstance.dismissPopup(true,
-                        completion: {
-                            self.goToHome()
+            PopupManager.sharedInstance.showLoadingPopup(message: nil,
+                completion: {
+                    let data = [UserDataKey.kCategoryPrefered: self.categoryPrefered!]
+                    
+                    UserSessionManager.sharedInstance.updateUser(withData: data,
+                        success: {
+                            PopupManager.sharedInstance.dismissPopup(true,
+                                completion: {
+                                    self.goToHome()
+                                }
+                            )
+                                                                    
+                        }, fail: { (error) in
+                            PopupManager.sharedInstance.showErrorPopup(message: Constants.PopupMessage.ErrorMessage.kErrorNoInternetConnection)
                         }
                     )
-                    
-                }, fail: { (error) in
-                    PopupManager.sharedInstance.showErrorPopup(message: Constants.PopupMessage.ErrorMessage.kErrorNoInternetConnection)
                 }
             )
             

@@ -109,29 +109,30 @@ class InscriptionInfosUserViewController: RootViewController, UITextFieldDelegat
     
     @IBAction func validButtonTouched(_ sender: UIButton?) {
         if let gender = genderSelected, let birthday = dateOfBirthday {
-            PopupManager.sharedInstance.showLoadingPopup("Chargement en cours", message: "Création du profil...", completion: nil)
-            
-            let data = [UserDataKey.kGender: gender,
-                        UserDataKey.kDateBirthday: birthday,
-                        UserDataKey.kAvatarUrl: avatarUrl]
-            
-            UserSessionManager.sharedInstance.updateUser(withData: data,
-                success: {
+            PopupManager.sharedInstance.showLoadingPopup("Chargement en cours", message: "Création du profil...",
+                completion: {
+                    let data = [UserDataKey.kGender: gender,
+                                UserDataKey.kDateBirthday: birthday,
+                                UserDataKey.kAvatarUrl: self.avatarUrl]
                     
-                    PopupManager.sharedInstance.dismissPopup(true,
-                        completion: {
-                            let inscriptionPseudoVC = self.storyboard?.instantiateViewController(withIdentifier: "idInscriptionPseudoSelectionViewController") as! InscriptionPseudoSelectionViewController
-                            self.navigationController?.pushViewController(inscriptionPseudoVC, animated: true)
+                    UserSessionManager.sharedInstance.updateUser(withData: data,
+                        success: {
+                            PopupManager.sharedInstance.dismissPopup(true,
+                                completion: {
+                                    let inscriptionPseudoVC = self.storyboard?.instantiateViewController(withIdentifier: "idInscriptionPseudoSelectionViewController") as! InscriptionPseudoSelectionViewController
+                                    self.navigationController?.pushViewController(inscriptionPseudoVC, animated: true)
+                                }
+                            )
                         }
-                    )
-                }
-            ) { (error) in
-                PopupManager.sharedInstance.dismissPopup(true,
-                    completion: {
-                        PopupManager.sharedInstance.showErrorPopup(message: Constants.PopupMessage.ErrorMessage.kErrorNoInternetConnection)
+                    ) { (error) in
+                        PopupManager.sharedInstance.dismissPopup(true,
+                            completion: {
+                                PopupManager.sharedInstance.showErrorPopup(message: Constants.PopupMessage.ErrorMessage.kErrorNoInternetConnection)
+                            }
+                        )
                     }
-                )
-            }
+                }
+            )
             
         } else {
             PopupManager.sharedInstance.showErrorPopup(message: Constants.PopupMessage.ErrorMessage.kErrorInscriptionBadBirthOrGender)

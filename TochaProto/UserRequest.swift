@@ -23,6 +23,10 @@ class UserRequest: DochaRequest {
             .responseJSON { response in
                 
                 guard response.result.isSuccess else {
+                    if let data = response.data {
+                        print("Failure Response: \(String(data: data, encoding: String.Encoding.utf8))")
+                    }
+                    
                     failure(response.result.error)
                     return
                 }
@@ -48,6 +52,10 @@ class UserRequest: DochaRequest {
             .responseJSON { response in
                 
                 guard response.result.isSuccess else {
+                    if let data = response.data {
+                        print("Failure Response: \(String(data: data, encoding: String.Encoding.utf8))")
+                    }
+                    
                     failure(response.result.error)
                     return
                 }
@@ -73,6 +81,10 @@ class UserRequest: DochaRequest {
             .responseJSON { response in
                 
                 guard response.result.isSuccess else {
+                    if let data = response.data {
+                        print("Failure Response: \(String(data: data, encoding: String.Encoding.utf8))")
+                    }
+                    
                     failure(response.result.error)
                     return
                 }
@@ -98,6 +110,10 @@ class UserRequest: DochaRequest {
             .responseJSON { response in
                 
                 guard response.result.isSuccess else {
+                    if let data = response.data {
+                        print("Failure Response: \(String(data: data, encoding: String.Encoding.utf8))")
+                    }
+                    
                     failure(response.result.error)
                     return
                 }

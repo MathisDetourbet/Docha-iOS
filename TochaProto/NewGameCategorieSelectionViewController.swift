@@ -10,8 +10,7 @@ import Foundation
 
 class NewGameCategorieSelectionViewController: GameViewController, UICollectionViewDataSource, UICollectionViewDelegate {
     
-    let categoriesNamesImageView = ["Lifestyle" : "lifestyle", "High-Tech" : "high_tech", "Maison / déco" : "maison_deco", "Bijoux / Montres" : "bijoux_montres", "Électroménager" : "electromenager", "Art" : "art", "Objets connectés" : "objets_connectes", "Gastronomie" : "gastronomie_vin", "Beauté" : "beauty", "Sport" : "sport"]
-    var categoriesDisplayed: [String]?
+    var categoriesDisplayed: [Category] = []
     
     @IBOutlet weak var collectionView: UICollectionView!
     
@@ -22,12 +21,35 @@ class NewGameCategorieSelectionViewController: GameViewController, UICollectionV
         super.viewDidLoad()
         
         buildUI()
-        generateCategories()
+        loadCategory(withCompletion: nil)
     }
     
     func buildUI() {
         self.view.backgroundColor = UIColor.lightGrayDochaColor()
-        self.collectionView.backgroundColor = UIColor.lightGrayDochaColor()
+        collectionView.backgroundColor = UIColor.lightGrayDochaColor()
+    }
+    
+    func loadCategory(withCompletion completion: (() -> Void)?) {
+        let match = MatchManager.sharedInstance.currentMatch
+        
+        if let match = match {
+            MatchManager.sharedInstance.getRound(ForMatchID: match.id, andRoundID: match.rounds.last?.id,
+                success: { (roundFull) in
+                    
+                    for categorie in roundFull.proposedCategories {
+                        self.categoriesDisplayed.append(categorie)
+                    }
+                    
+                    self.collectionView.reloadData()
+                    
+                }, fail: { (error) in
+                    PopupManager.sharedInstance.showErrorPopup(message: Constants.PopupMessage.ErrorMessage.kErrorOccured, doneActionCompletion: {
+                            self.goToHome()
+                        }
+                    )
+                }
+            )
+        }
     }
     
     
@@ -38,15 +60,15 @@ class NewGameCategorieSelectionViewController: GameViewController, UICollectionV
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 4
+        return categoriesDisplayed.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = self.collectionView.dequeueReusableCell(withReuseIdentifier: "idNewGameCategorySelectionCollectionCell", for: indexPath) as! InscriptionCategoryCollectionViewCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "idNewGameCategorySelectionCollectionCell", for: indexPath) as! InscriptionCategoryCollectionViewCell
         
-        cell.categoryName = self.categoriesDisplayed![(indexPath as NSIndexPath).item]
+        cell.categoryName = categoriesDisplayed[indexPath.item].name
         cell.imageSelected = false
-        cell.categoryImageView.image = UIImage(named: self.categoriesNamesImageView[self.categoriesDisplayed![(indexPath as NSIndexPath).item]]!)
+        cell.categoryImageView.image = UIImage(named: categoriesDisplayed[indexPath.item].slugName)
         
         return cell
     }
@@ -55,18 +77,30 @@ class NewGameCategorieSelectionViewController: GameViewController, UICollectionV
 //MARK: UICollectionView - Delegate Methods
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let cell = self.collectionView.cellForItem(at: indexPath) as! InscriptionCategoryCollectionViewCell
-        let categorySelected = cell.categoryName
-        let launcherVC = self.storyboard?.instantiateViewController(withIdentifier: "idGameplayLauncherViewController") as! GameplayLauncherViewController
-        launcherVC.categoryNameSelected = categorySelected
-        self.navigationController?.pushViewController(launcherVC, animated: true)
+        PopupManager.sharedInstance.showLoadingPopup(message: "Un instant...")
+        {
+            MatchManager.sharedInstance.loadPlayersInfos(
+                withCompletion: {
+                    
+                    PopupManager.sharedInstance.dismissPopup(true,
+                        completion: {
+                            
+                            let categorySelected = self.categoriesDisplayed[indexPath.item]
+                            let launcherVC = self.storyboard?.instantiateViewController(withIdentifier: "idGameplayLauncherViewController") as! GameplayLauncherViewController
+                            launcherVC.categorySelected = categorySelected
+                            self.navigationController?.pushViewController(launcherVC, animated: true)
+                        }
+                    )
+                }
+            )
+        }
     }
     
     
 //MARK: @IBActions Methods
     
     @IBAction func changeCategorieButtonTouched(_ sender: UIButton) {
-        generateCategories()
+        
     }
     
     @IBAction func backButtonTouched(_ sender: UIBarButtonItem) {
@@ -76,16 +110,16 @@ class NewGameCategorieSelectionViewController: GameViewController, UICollectionV
     
 //MARK: Helper Methods
     
-    func generateCategories(_ number: Int? = 4) {
-        var categoriesGenerated: [String] = []
-        let categoriesAvailables = ["Lifestyle", "High-Tech", "Maison / déco", "Bijoux / Montres", "Électroménager", "Art", "Objets connectés", "Gastronomie", "Beauté", "Sport"]
-        let categoriesShuffled = categoriesAvailables.shuffled()
-        
-        for i in 0...3 {
-            categoriesGenerated.append(categoriesShuffled[i])
-        }
-        
-        self.categoriesDisplayed = categoriesGenerated
-        self.collectionView.reloadData()
-    }
+//    func generateCategories(_ number: Int? = 4) {
+//        var categoriesGenerated: [String] = []
+//        let categoriesAvailables = ["Lifestyle", "High-Tech", "Maison / déco", "Bijoux / Montres", "Électroménager", "Art", "Objets connectés", "Gastronomie", "Beauté", "Sport"]
+//        let categoriesShuffled = categoriesAvailables.shuffled()
+//        
+//        for i in 0...3 {
+//            categoriesGenerated.append(categoriesShuffled[i])
+//        }
+//        
+//        categoriesDisplayed = categoriesGenerated
+//        collectionView.reloadData()
+//    }
 }

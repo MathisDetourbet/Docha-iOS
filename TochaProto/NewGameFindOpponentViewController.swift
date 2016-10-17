@@ -50,10 +50,10 @@ class NewGameFindOpponentViewController: GameViewController, UITableViewDataSour
     func buildUI() {
         configNavigationBarWithTitle("Trouve un adversaire")
         self.view.backgroundColor = UIColor.lightGrayDochaColor()
-        self.collectionView.backgroundColor = UIColor.lightGrayDochaColor()
+        collectionView.backgroundColor = UIColor.lightGrayDochaColor()
         
-        self.tableView.backgroundColor = UIColor.lightGrayDochaColor()
-        self.heightTableViewConstraint.constant = self.tableViewRowHeight * CGFloat(self.titlesArray.count)
+        tableView.backgroundColor = UIColor.lightGrayDochaColor()
+        heightTableViewConstraint.constant = tableViewRowHeight * CGFloat(titlesArray.count)
     }
 
     
@@ -68,7 +68,7 @@ class NewGameFindOpponentViewController: GameViewController, UITableViewDataSour
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = self.collectionView.dequeueReusableCell(withReuseIdentifier: "idNewGameFriendsCollectionViewCell", for: indexPath) as! NewGameFriendsCollectionViewCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "idNewGameFriendsCollectionViewCell", for: indexPath) as! NewGameFriendsCollectionViewCell
         
         return cell
     }
@@ -110,8 +110,16 @@ class NewGameFindOpponentViewController: GameViewController, UITableViewDataSour
             self.navigationController?.pushViewController(newGameFacebookFriendsVC, animated: true)
             
         } else if (indexPath as NSIndexPath).row == 1 {
-            let newGameCategorieSelectionVC = self.storyboard?.instantiateViewController(withIdentifier: "idNewGameCategorieSelectionViewController") as! NewGameCategorieSelectionViewController
-            self.navigationController?.pushViewController(newGameCategorieSelectionVC, animated: true)
+            MatchManager.sharedInstance.postMatch(
+                success: { (match) in
+                    
+                    let newGameCategorieSelectionVC = self.storyboard?.instantiateViewController(withIdentifier: "idNewGameCategorieSelectionViewController") as! NewGameCategorieSelectionViewController
+                    MatchManager.sharedInstance.currentMatch = match
+                    self.navigationController?.pushViewController(newGameCategorieSelectionVC, animated: true)
+                    
+            }) { (error) in
+                PopupManager.sharedInstance.showErrorPopup(message: Constants.PopupMessage.ErrorMessage.kErrorOccured)
+            }
             
         } else if (indexPath as NSIndexPath).row == 2 {
             let newGameFindByPseudoVC = self.storyboard?.instantiateViewController(withIdentifier: "idNewGameFindByPseudoViewController") as! NewGameFindByPseudoViewController

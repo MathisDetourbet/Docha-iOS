@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "0B49F61F32ABAEC9F6F81C0CA3A5DCF9"
+               BlueprintIdentifier = "FFEC22EBF4716AD625467C815EFCF0BF"
                BuildableName = "SACountingLabel.bundle"
                BlueprintName = "SACountingLabel-SACountingLabel"
                ReferencedContainer = "container:Pods.xcodeproj">
@@ -45,7 +45,7 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "0B49F61F32ABAEC9F6F81C0CA3A5DCF9"
+            BlueprintIdentifier = "FFEC22EBF4716AD625467C815EFCF0BF"
             BuildableName = "SACountingLabel.bundle"
             BlueprintName = "SACountingLabel-SACountingLabel"
             ReferencedContainer = "container:Pods.xcodeproj">

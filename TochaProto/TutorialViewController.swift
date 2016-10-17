@@ -21,6 +21,11 @@ class TutorialViewController: RootViewController, TutorialViewDelegate {
         self.nextButtonTouched()
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        UserSessionManager.sharedInstance.didFinishedTutorial()
+    }
+    
     func nextButtonTouched() {
         if currentIndex > kNumberOfViews {
             self.dismiss(animated: true, completion: nil)

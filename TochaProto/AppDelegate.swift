@@ -16,7 +16,7 @@ import Fabric
 import Crashlytics
 import Amplitude_iOS
 
-public var testing = false
+public var testing = true
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -32,7 +32,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         IQKeyboardManager.sharedManager().enable = true
         
         initManagers()
-        
+                
         // Facebook SDK
         FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
         
@@ -115,7 +115,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         // Load all products
         _ = ProductManager.sharedInstance
-        ProductManager.sharedInstance.loadProductsWithCurrentCategory()
         
         _ = NavSchemeManager.sharedInstance
     }

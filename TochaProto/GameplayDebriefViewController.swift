@@ -50,7 +50,6 @@ class GameplayDebriefViewController: GameViewController, UIPageViewControllerDat
         pageViewController.dataSource = self
         
         let pageContentVC = self.viewControllerAtIndex(0)
-        pageContentVC!.counterContainerView.updateCountersViewsWithPrice(ConverterHelper.convertPriceToArrayOfInt(productsList!.first!.price).priceArray)
         pageViewController.setViewControllers([pageContentVC!], direction: .forward, animated: true, completion: nil)
         
         pageViewController.view.translatesAutoresizingMaskIntoConstraints = false
@@ -62,34 +61,58 @@ class GameplayDebriefViewController: GameViewController, UIPageViewControllerDat
         containerPageViewController.addConstraint(NSLayoutConstraint(item: pageViewController.view, attribute: .bottom, relatedBy: .equal, toItem: containerPageViewController, attribute: .bottom, multiplier: 1.0, constant: 0.0))
         
         pageViewController.didMove(toParentViewController: self)
+        let priceArray = ConverterHelper.convertPriceToArrayOfInt(productsList!.first!.price).priceArray
+        pageContentVC!.counterContainerView.updateCountersViewsWithPrice(priceArray)
     }
     
     func buildUI() {
-        let userSession = UserSessionManager.sharedInstance.currentSession()
+        let matchManager = MatchManager.sharedInstance
         
-        if let userSession = userSession {
-            if let avatar = userSession.avatarUrl {
-                userAvatarImageView.image = UIImage(named: avatar)
+        let userPlayer = matchManager.userPlayer
+        let opponentPlayer = matchManager.opponentPlayer
+        
+        if let userPlayer = userPlayer {
+            userAvatarImageView.image = userPlayer.avatarImage
+            userNameLabel.text = userPlayer.pseudo
+            
+            if let level = userPlayer.level {
+                userLevelLabel.text = "Niveau \(level)"
                 
             } else {
-                
+                userLevelLabel.text = "?"
             }
-            userNameLabel.text = userSession.pseudo
-            userLevelLabel.text = "Niveau \(userSession.levelMaxUnlocked)"
         }
         
-        var timelineImageName: String?
+        if let opponentPlayer = opponentPlayer {
+            opponentNameLabel.text = opponentPlayer.pseudo
+            
+            if let opponentAvatarImage = opponentPlayer.avatarImage {
+                opponentAvatarImageView.image = opponentAvatarImage.roundCornersToCircle(withBorder: 10.0, color: UIColor.white)
+                
+            } else {
+                opponentAvatarImageView.image = UIImage(named: "\(opponentPlayer.avatarUrl)_large")?.roundCornersToCircle(withBorder: 10.0, color: UIColor.white)
+            }
+            
+            if let level = opponentPlayer.level {
+                opponentLevelLabel.text = "Niveau \(level)"
+                
+            } else {
+                opponentLevelLabel.text = "?"
+            }
+        }
+        
+        var timelineImage: UIImage?
         var index = 0
         for result in userResultsArray! {
             
             if result == .perfect {
-                timelineImageName = "perfect_big_icon"
+                timelineImage = #imageLiteral(resourceName: "perfect_big_icon")
                 
             } else if result == .wrong {
-                timelineImageName = "red_big_icon"
+                timelineImage = #imageLiteral(resourceName: "red_big_icon")
             }
             
-            userTimelineImageViewCollection[index].image = UIImage(named: timelineImageName!)
+            userTimelineImageViewCollection[index].image = timelineImage
             index += 1
         }
     }
@@ -152,6 +175,9 @@ class GameplayDebriefViewController: GameViewController, UIPageViewControllerDat
             pageContentViewController.pageIndex = index
             pageContentViewController.counterContainerView.numberOfCounterDisplayed = ConverterHelper.convertPriceToArrayOfInt(product.price).priceArray.count
             pageContentViewController.counterContainerView.delegate = self
+            pageContentViewController.counterContainerView.layoutSubviews()
+            
+            pageContentViewController.counterContainerView.initCountersViews()
             
             self.pagesContentsViewControllerArray.insert(pageContentViewController, at: index)
             
@@ -164,7 +190,7 @@ class GameplayDebriefViewController: GameViewController, UIPageViewControllerDat
     
     func moreDetailsButtonTouched(_ productIndex: Int) {
         webViewController = PBWebViewController()
-        let url = URL(string: productsList![productIndex].pageURL)
+        let url = URL(string: productsList![productIndex].pageUrl)
         webViewController!.url = url
         
         let activity = UIActivity()
@@ -188,6 +214,6 @@ class GameplayDebriefViewController: GameViewController, UIPageViewControllerDat
     
     func infosButtonTouched() {
         let currentProductData = self.productsList![pageControl.currentPage]
-        PopupManager.sharedInstance.showInfosPopup("Informations prix", message: "Le prix de ce produit a été relevé le [DATE] sur le site internet [URL_RACINE].\n Images et copyright appartiennent à \((currentProductData.brand))", viewController: self, completion: nil, doneActionCompletion: nil)
+        PopupManager.sharedInstance.showInfosPopup("Informations prix", message: "Le prix de ce produit a été relevé le [DATE].\n Images et copyright appartiennent à \((currentProductData.brand))", viewController: self, completion: nil, doneActionCompletion: nil)
     }
 }

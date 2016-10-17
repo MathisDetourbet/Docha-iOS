@@ -21,15 +21,26 @@ class Category: NSObject, NSCoding {
         self.image = image
     }
     
+    convenience init?(jsonObject: JSON) {
+        if jsonObject == nil {
+            return nil
+        }
+        
+        let name = jsonObject[CategoryDataKey.kName].stringValue
+        let slugName = jsonObject[CategoryDataKey.kSlugName].stringValue
+        
+        self.init(name: name, slugName: slugName)
+    }
+    
     required convenience init(coder aDecoder: NSCoder) {
-        let name = aDecoder.decodeObject(forKey: Constants.UserDefaultsKey.kUserInfosCategoryName) as? String ?? ""
-        let slugName = aDecoder.decodeObject(forKey: Constants.UserDefaultsKey.kUserInfosCategorySlugName) as? String ?? ""
+        let name = aDecoder.decodeObject(forKey: CategoryDataKey.kName) as? String ?? ""
+        let slugName = aDecoder.decodeObject(forKey: CategoryDataKey.kSlugName) as? String ?? ""
         
         self.init(name: name, slugName: slugName)
     }
     
     func encode(with aCoder: NSCoder) {
-        aCoder.encode(self.name, forKey: Constants.UserDefaultsKey.kUserInfosCategoryName)
-        aCoder.encode(self.slugName, forKey: Constants.UserDefaultsKey.kUserInfosCategorySlugName)
+        aCoder.encode(self.name, forKey: CategoryDataKey.kName)
+        aCoder.encode(self.slugName, forKey: CategoryDataKey.kSlugName)
     }
 }

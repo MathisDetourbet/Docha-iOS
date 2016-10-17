@@ -40,6 +40,18 @@ class UserSessionManager {
         return currentSession
     }
     
+    func hasFinishedTutorial() -> Bool {
+        let userDefaults = UserDefaults.standard
+        let tutorialFinished = userDefaults.bool(forKey: Constants.UserDefaultsKey.kUserHasFinishedTutorial)
+        return tutorialFinished
+    }
+    
+    func didFinishedTutorial(finished: Bool = true) {
+        let userDefaults = UserDefaults.standard
+        userDefaults.set(finished, forKey: Constants.UserDefaultsKey.kUserHasFinishedTutorial)
+        userDefaults.synchronize()
+    }
+    
     func isLogged() -> Bool {
         return UserDefaults.standard.object(forKey: Constants.UserDefaultsKey.kUserSessionObject) != nil
     }
@@ -90,18 +102,17 @@ class UserSessionManager {
     func registrationByEmail(_ email: String!, andPassword password: String!, success: @escaping () -> Void, fail failure: @escaping (_ error: Error?) -> Void) {
         
         registrationRequest = RegistrationRequest()
-        
         registrationRequest?.registrationByEmail(withEmail: email, andPassword: password,
             success: { (authToken) in
                 
                 self.userRequest = UserRequest()
                 self.userRequest?.getUser(withAuthToken: authToken,
                     success: { (user) in
-                        let userSessionFacebook = UserSessionFacebook()
-                        userSessionFacebook.initPropertiesFromUser(user: user)
-                        userSessionFacebook.authToken = authToken
+                        let userSessionEmail = UserSessionEmail()
+                        userSessionEmail.initPropertiesFromUser(user: user)
+                        userSessionEmail.authToken = authToken
                         
-                        userSessionFacebook.saveSession()
+                        userSessionEmail.saveSession()
                         success()
                         
                     }, fail: { (error) in
@@ -119,44 +130,13 @@ class UserSessionManager {
 // MARK: User Connection Requests
     
     func signIn(_ success: @escaping () -> Void, fail failure: @escaping (_ error: Error?) -> Void) {
-        let userSession = self.currentSession()
-        
-        guard let _ = userSession, let _ = userSession?.authToken else {
-            currentSession()?.deleteSession()
-            failure(DochaRequestError.notAuthenticated)
-            return
-        }
-        
-        let authToken = userSession!.authToken!
-        userRequest = UserRequest()
-        
-        if userSession!.isKind(of: UserSessionEmail.self) {
-            userRequest?.getUser(withAuthToken: authToken,
-                success: { (user) in
-                    
-                    userSession!.initPropertiesFromUser(user: user)
-                    userSession!.saveSession()
-                    success()
-                    
-                }, fail: { (error) in
-                    self.currentSession()?.deleteSession()
-                    failure(error)
-                }
-            )
+        getUser(
+            success: {
+                success()
+            }
             
-        } else if userSession!.isKind(of: UserSessionFacebook.self) {
-            userRequest?.getUser(withAuthToken: authToken,
-                success: { (user) in
-                    
-                    userSession!.initPropertiesFromUser(user: user)
-                    userSession!.saveSession()
-                    success()
-                    
-                }, fail: { (error) in
-                    self.currentSession()?.deleteSession()
-                    failure(error)
-                }
-            )
+        ) { (error) in
+            failure(error)
         }
     }
     
@@ -240,6 +220,46 @@ class UserSessionManager {
     
     
 //MARK: User Update Requests
+    
+    func getUser(success: @escaping () -> Void, fail failure: @escaping (_ error: Error?) -> Void) {
+        guard let authToken = getAuthToken() else {
+            failure(DochaRequestError.authTokenNotFound)
+            return
+        }
+        
+        userRequest = UserRequest()
+        
+        let userSession = self.currentSession()
+        if userSession!.isKind(of: UserSessionEmail.self) {
+            userRequest?.getUser(withAuthToken: authToken,
+                                 success: { (user) in
+                                    
+                                    userSession!.initPropertiesFromUser(user: user)
+                                    userSession!.saveSession()
+                                    success()
+                                    
+                }, fail: { (error) in
+                    self.currentSession()?.deleteSession()
+                    failure(error)
+                }
+            )
+            
+        } else if userSession!.isKind(of: UserSessionFacebook.self) {
+            userRequest?.getUser(withAuthToken: authToken,
+                                 success: { (user) in
+                                    
+                                    userSession!.initPropertiesFromUser(user: user)
+                                    userSession!.saveSession()
+                                    success()
+                                    
+                }, fail: { (error) in
+                    self.currentSession()?.deleteSession()
+                    failure(error)
+                }
+            )
+        }
+    }
+        
     
     func updateUser(withData data: [String: Any]!, success: @escaping () -> Void, fail failure: @escaping (_ error: Error?) -> Void) {
         guard let authToken = getAuthToken() else {
