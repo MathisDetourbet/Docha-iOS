@@ -99,6 +99,11 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>SnapKit.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>SwiftyJSON.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -112,7 +117,22 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
+		<key>02E4CAE60FE4FB9A668F8B99F86111A8</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>0ACFACC96CD1B9C8E8E2AE8DCDB626EC</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>0D3C78D4F0C694F9331CC0E7C2585B3A</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>127BBB3AC17CC4146030E7B35CB97C9D</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -123,6 +143,11 @@
 			<true/>
 		</dict>
 		<key>18F041A991E764B5A854C75D9271B331</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>1B5FE2B89F24B648E5FC1351AFFAF424</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -152,7 +177,7 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>39A9EF3F45CFA351130E1AD176D19708</key>
+		<key>33826901B7283AFF48C8EA859F77555F</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -162,12 +187,12 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>471C043A50E9A051B16575469658CA95</key>
+		<key>446A949B95E6C7C9DFF594EC5C6E5314</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>69C099D5F7407A6D525B28BC3230947C</key>
+		<key>4D7AFD8C5FA34351CB7ADC90191C8FE6</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -182,37 +207,22 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>89196A39497B4CBD0A80344A2CEE079C</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
 		<key>8FC4B2785BB68892651401B8A26A15AD</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>91139CC8B326421560A864F2F0193FBC</key>
+		<key>C072392A97972F1BC1E61866993EE3AC</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>AC50872EB7B98B526EBB5A5AA9D6AB27</key>
+		<key>C88C2087B4BFC374FFC174F5E5F6C57C</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
 		<key>D2D17D2E6A8AD8B5A2D1F30A3032805E</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>DE613B7D39AF85DF1C9CD4588EDD4C7A</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>FFEC22EBF4716AD625467C815EFCF0BF</key>
 		<dict>
 			<key>primary</key>
 			<true/>

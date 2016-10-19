@@ -71,4 +71,23 @@ class Match {
             return MatchResult.tie
         }
     }
+    
+    func getCurrentRound() -> Round {
+        var currentRound: Round?
+        
+        for round in rounds {
+            if round.userScore == nil && round.opponentScore == nil {
+                break
+                
+            } else {
+                currentRound = round
+            }
+        }
+        
+        if currentRound == nil {
+            currentRound = rounds.first
+        }
+        
+        return currentRound!
+    }
 }

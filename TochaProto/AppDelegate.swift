@@ -26,6 +26,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         
+        
+        
         // Crashlytics
         Fabric.with([Crashlytics.self])
         
@@ -38,6 +40,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         // Amplitude Init
         Amplitude.instance().initializeApiKey("792a2eced82bad1ee03a8f0f874c70f5")
+        
+        registerForPushNotifications(application: application)
+        if let _ = launchOptions?[.remoteNotification] as? [String: AnyObject] {
+            //(window?.rootViewController as? UITabBarController)?.selectedIndex = 1
+        }
+        
+        UserGameStateManager.sharedInstance.authenticateLocalPlayer()
         
         return true
     }
@@ -77,6 +86,26 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         // Amplitude Event
         Amplitude.instance().logEvent("ApplicationWillTerminate")
+    }
+    
+    func application(_ application: UIApplication, didRegister notificationSettings: UIUserNotificationSettings) {
+        if notificationSettings.types != .none {
+            application.registerForRemoteNotifications()
+        }
+    }
+    
+    func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {
+        print("Failed to register to apple push notification")
+    }
+    
+    func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
+        let deviceTokenString = deviceToken.reduce("", {$0 + String(format: "%02X", $1)})
+        print("Device Token:", deviceTokenString)
+    }
+    
+    func registerForPushNotifications(application: UIApplication) {
+        let notificationSettings = UIUserNotificationSettings(types: [.badge, .sound, .alert], categories: nil)
+        application.registerUserNotificationSettings(notificationSettings)
     }
     
 

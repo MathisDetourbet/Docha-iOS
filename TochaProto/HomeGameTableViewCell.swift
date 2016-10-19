@@ -26,15 +26,16 @@ class HomeGameTableViewCell: SWTableViewCell {
 }
 
 protocol HomeUserTurnCellDelegate {
-    func playButtonTouched()
+    func playButtonTouched(withMatch match: Match?)
 }
 
 class HomeUserTurnTableViewCell: HomeGameTableViewCell {
     
+    var match: Match?
     var delegateUserTurn: HomeUserTurnCellDelegate?
     
     @IBAction func playButtonTouched(_ sender: UIButton) {
-        delegateUserTurn?.playButtonTouched()
+        delegateUserTurn?.playButtonTouched(withMatch: match)
     }
 }
 

@@ -7,6 +7,7 @@ target 'Docha' do
     pod 'AFNetworking', '~> 3.0'
     pod 'SwiftyJSON'
     pod 'Kingfisher', '~> 3.0'
+    pod 'SnapKit', '>= 3.0.0'
     pod 'CNPPopupController'
     pod 'Alamofire', '~> 4.0'
     pod 'AlamofireImage', '~> 3.0'

@@ -48,22 +48,8 @@ class HomeViewController: GameViewController, UITableViewDelegate, UITableViewDa
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        if UserSessionManager.sharedInstance.hasFinishedTutorial() == false {
-            let tutorialVC = self.storyboard?.instantiateViewController(withIdentifier: "idTutorialViewController") as! TutorialViewController
-            if PopupManager.sharedInstance.isDisplayingPopup {
-                PopupManager.sharedInstance.dismissPopup(true,
-                    completion: {
-                        self.navigationController?.present(tutorialVC, animated: true, completion: nil)
-                    }
-                )
-            } else {
-                self.navigationController?.present(tutorialVC, animated: true, completion: nil)
-            }
-        }
-        
         loadUserInfos()
         loadAllMatch(withCompletion: nil)
-        UserGameStateManager.sharedInstance.authenticateLocalPlayer()
         self.navigationController?.isNavigationBarHidden = true
     }
     
@@ -75,6 +61,7 @@ class HomeViewController: GameViewController, UITableViewDelegate, UITableViewDa
         super.viewWillAppear(animated)
         self.navigationController?.isNavigationBarHidden = true
         
+        checkForTutorial()
         loadUserInfos()
         buildUI()
         
@@ -88,7 +75,7 @@ class HomeViewController: GameViewController, UITableViewDelegate, UITableViewDa
         let headerView = UIView(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: 90.0))
         
         let newGameButton = UIButton(type: .custom)
-        newGameButton.setImage(UIImage(named: "btn_newgame"), for: UIControlState())
+        newGameButton.setImage(#imageLiteral(resourceName: "btn_newgame"), for: UIControlState())
         newGameButton.addTarget(self, action: #selector(HomeViewController.newGameButtonTouched), for: .touchUpInside)
         newGameButton.translatesAutoresizingMaskIntoConstraints = false
         headerView.addSubview(newGameButton)
@@ -114,6 +101,21 @@ class HomeViewController: GameViewController, UITableViewDelegate, UITableViewDa
         
         bubbleDochosImageView.isHidden = true
         bubblePerfectsImageView.isHidden = true
+    }
+    
+    func checkForTutorial() {
+        if UserSessionManager.sharedInstance.hasFinishedTutorial() == false {
+            let tutorialVC = self.storyboard?.instantiateViewController(withIdentifier: "idTutorialViewController") as! TutorialViewController
+            if PopupManager.sharedInstance.isDisplayingPopup {
+                PopupManager.sharedInstance.dismissPopup(true,
+                    completion: {
+                        self.navigationController?.present(tutorialVC, animated: true, completion: nil)
+                    }
+                )
+            } else {
+                self.navigationController?.present(tutorialVC, animated: true, completion: nil)
+            }
+        }
     }
     
     
@@ -183,6 +185,7 @@ class HomeViewController: GameViewController, UITableViewDelegate, UITableViewDa
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         if (indexPath as NSIndexPath).section == HomeSectionName.userTurn.rawValue {
+            
             // TON TOUR
             let cell = tableView.dequeueReusableCell(withIdentifier: idsTableViewCell[(indexPath as NSIndexPath).section], for: indexPath) as! HomeUserTurnTableViewCell
             let match = sortedMatch[HomeSectionName.userTurn.rawValue][indexPath.row]
@@ -206,6 +209,7 @@ class HomeViewController: GameViewController, UITableViewDelegate, UITableViewDa
             return cell
             
         } else if (indexPath as NSIndexPath).section == HomeSectionName.opponentTurn.rawValue {
+            
             // SON TOUR
             let cell = tableView.dequeueReusableCell(withIdentifier: idsTableViewCell[(indexPath as NSIndexPath).section], for: indexPath) as! HomeOpponentTurnTableViewCell
             let match = sortedMatch[HomeSectionName.opponentTurn.rawValue][indexPath.row]
@@ -230,6 +234,7 @@ class HomeViewController: GameViewController, UITableViewDelegate, UITableViewDa
             return cell
             
         } else if (indexPath as NSIndexPath).section == HomeSectionName.finished.rawValue {
+            
             // TERMINES
             let cell = tableView.dequeueReusableCell(withIdentifier: idsTableViewCell[(indexPath as NSIndexPath).section], for: indexPath) as! HomeGameFinishedTableViewCell
             
@@ -254,6 +259,7 @@ class HomeViewController: GameViewController, UITableViewDelegate, UITableViewDa
             return cell
             
         } else {
+            
             // AMIS
             let cell = tableView.dequeueReusableCell(withIdentifier: idsTableViewCell[(indexPath as NSIndexPath).section], for: indexPath) as! HomeFriendsTableViewCell
             cell.delegate = self
@@ -276,8 +282,6 @@ class HomeViewController: GameViewController, UITableViewDelegate, UITableViewDa
             matchVC.match = matchData
             self.navigationController?.pushViewController(matchVC, animated: true)
         }
-        
-        //tableView.deselectRow(at: indexPath, animated: true)
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
@@ -329,27 +333,26 @@ class HomeViewController: GameViewController, UITableViewDelegate, UITableViewDa
     
 //MARK: HomeUserTurnCellDelegate Methods
     
-    func playButtonTouched() {
-        
+    func playButtonTouched(withMatch match: Match?) {
+        if let match = match {
+            let currentRound = match.getCurrentRound()
+            
+            if let category = currentRound.category {
+                let launcherVC = self.storyboard?.instantiateViewController(withIdentifier: "idGameplayLauncherViewController") as! GameplayLauncherViewController
+                launcherVC.categorySelected = category
+                self.navigationController?.pushViewController(launcherVC, animated: true)
+                
+            } else {
+                let newGameCategorieSelectionVC = self.storyboard?.instantiateViewController(withIdentifier: "idNewGameCategorieSelectionViewController") as! NewGameCategorieSelectionViewController
+                MatchManager.sharedInstance.currentMatch = match
+                self.navigationController?.pushViewController(newGameCategorieSelectionVC, animated: true)
+            }
+        }
     }
-
     
 //MARK: HomeFriendsCellDelegate Methods
     
-    func displayAllFriendsButtonTouched() {
-        let params = ["fields" : "id, first_name, last_name, email, picture"]
-        _ = FBSDKGraphRequest(graphPath:"/me/friends", parameters: params);
-//        fbRequest?.start { (connection : FBSDKGraphRequestConnection!, result : AnyObject!, error : NSError!) -> Void in
-//            
-//            if error == nil {
-//                let jsonResponse = JSON(result)
-//                let arrayFriends = jsonResponse["data"].array
-//                print(arrayFriends!)
-//            } else {
-//                print("Error Getting Friends \(error)")
-//            }
-//        }
-    }
+    func displayAllFriendsButtonTouched() {}
     
 //MARK: HomeBadgeDelegate Methods
     
@@ -372,52 +375,6 @@ class HomeViewController: GameViewController, UITableViewDelegate, UITableViewDa
 //    func appInviteDialog(_ appInviteDialog: FBSDKAppInviteDialog!, didFailWithError error: NSError!) {
 //        PopupManager.sharedInstance.showInfosPopup("Oups !", message: "Encore un peu de patience, cette foncitonnalité sera bientôt disponible !", completion: nil)
 //    }
-    
-    /*
-    func getFriendsList() {
-        let fbLoginManager : FBSDKLoginManager = FBSDKLoginManager()
-        
-        fbLoginManager.logIn(withReadPermissions: ["user_friends"], from: self)
-        { (result, error) -> Void in
-            
-            if error != nil {
-                print("Facebook login : process error : \(error)")
-                return
-                
-            } else if (result.isCancelled) {
-                print("Facebook login : cancelled")
-                return
-                
-            } else {
-                let fbloginresult : FBSDKLoginManagerLoginResult = result
-                
-                if(fbloginresult.grantedPermissions.contains("user_friends")) {
-                    print("Facebook Access token : \(FBSDKAccessToken.current().tokenString)")
-                    
-                    if((FBSDKAccessToken.current()) != nil) {
-                        let fbRequest = FBSDKGraphRequest(graphPath:"/me/friends", parameters: nil);
-                        fbRequest.start { (connection : FBSDKGraphRequestConnection!, result : AnyObject!, error : NSError!) -> Void in
-                            
-                            if error == nil {
-                                print("Friends are : \(result)")
-                                let jsonResponse = JSON(result)
-                                let arrayFriends = jsonResponse["data"].array
-                                print(arrayFriends!.count)
-                                
-                            } else {
-                                print("Error Getting Friends \(error)")
-                            }
-                        }
-                        
-                    } else {
-                        print("Token is nil")
-                    }
-                }
-                
-            }
-        }
-    }
-    */
     
     
 //MARK: Bubbles Events Methods

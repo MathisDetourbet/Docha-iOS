@@ -33,13 +33,13 @@ class MatchManager {
         
         // User Player
         let userData = userSessionManager.getUserInfosAndAvatarImage()
-        let image = (userData.avatarImage ?? #imageLiteral(resourceName: "avatar_man_large")).roundCornersToCircle(withBorder: 10.0, color: UIColor.white)
+        let image = userData.avatarImage ?? #imageLiteral(resourceName: "avatar_man_large")
         let avatarUrl = userData.user?.avatarUrl ?? "avatar_man_large"
         let playerType: PlayerType = userSessionManager.currentSession()!.isKind(of: UserSessionFacebook.self) ? .facebookPlayer : .emailPlayer
         let userPlayer = Player(pseudo: userData.user?.pseudo ?? Player.defaultPlayer().pseudo,
                                 gender: Gender.universal,
                                 avatarUrl: avatarUrl,
-                                avatarImage: image!,
+                                avatarImage: image,
                                 playerType: playerType,
                                 level: userData.user?.levelMaxUnlocked ?? nil,
                                 dochos: userData.user?.dochos ?? 0)

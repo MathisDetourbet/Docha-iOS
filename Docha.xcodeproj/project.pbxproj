@@ -223,6 +223,7 @@
 		6740FD8F1D460C6C00BEA047 /* DoubleHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DoubleHelper.swift; sourceTree = "<group>"; };
 		67475E961DB67ACC0005677C /* SearchRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchRequest.swift; sourceTree = "<group>"; };
 		67475E991DB68AB60005677C /* NewGameFindPlayerTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewGameFindPlayerTableViewCell.swift; sourceTree = "<group>"; };
+		67475E9D1DB76BC70005677C /* Docha.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Docha.entitlements; sourceTree = SOURCE_ROOT; };
 		6750B0FC1D46285000AA33E2 /* DochaRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DochaRequest.swift; sourceTree = "<group>"; };
 		6750B1001D46483100AA33E2 /* CustomWebViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomWebViewController.swift; sourceTree = "<group>"; };
 		6752037C1D782DFA00BF76B1 /* HomeGameTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeGameTableViewCell.swift; sourceTree = "<group>"; };
@@ -1190,6 +1191,7 @@
 				679274001CFC780E00DABA88 /* GoogleService-Info.plist */,
 				6701D97F1C108A2100F87043 /* Info.plist */,
 				674055401C4664F30047B369 /* TochaProto-Bridging-Header.h */,
+				67475E9D1DB76BC70005677C /* Docha.entitlements */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -1297,7 +1299,7 @@
 								enabled = 1;
 							};
 							com.apple.Push = {
-								enabled = 0;
+								enabled = 1;
 							};
 						};
 					};
@@ -1802,6 +1804,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = Docha.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
@@ -1849,6 +1852,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = Docha.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				ENABLE_BITCODE = NO;

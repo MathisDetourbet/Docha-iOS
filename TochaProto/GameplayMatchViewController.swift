@@ -38,25 +38,17 @@ class GameplayMatchViewController: GameViewController, UITableViewDelegate, UITa
             
             if match.rounds.isEmpty == false {
                 
-                // Get the current round
-                for round in match.rounds {
-                    if round.userScore == nil && round.opponentScore == nil {
-                        break
-                        
-                    } else {
-                        currentRound = round
-                    }
-                }
-                
-                if currentRound == nil {
-                    currentRound = match.rounds.first
-                }
+                currentRound = match.getCurrentRound()
                 
                 if (currentRound?.userScore == nil) && match.status == .userTurn {
                     self.playButton.isEnabled = true
                     
                 } else {
                     self.playButton.isEnabled = false
+                }
+                
+                if match.status == .waiting {
+                    withdrawButton.isEnabled = false
                 }
             }
         }
@@ -218,27 +210,34 @@ class GameplayMatchViewController: GameViewController, UITableViewDelegate, UITa
 //MARK: Cells Delegate
     
     func yourTurnButtonTouched() {
-        if let _ = match!.rounds.last?.category {
-            
+        
+        if let category = currentRound?.category {
             let launcherVC = self.storyboard?.instantiateViewController(withIdentifier: "idGameplayLauncherViewController") as! GameplayLauncherViewController
+            launcherVC.categorySelected = category
             self.navigationController?.pushViewController(launcherVC, animated: true)
             
         } else {
-            
+            let newGameCategorieSelectionVC = self.storyboard?.instantiateViewController(withIdentifier: "idNewGameCategorieSelectionViewController") as! NewGameCategorieSelectionViewController
+            MatchManager.sharedInstance.currentMatch = match
+            self.navigationController?.pushViewController(newGameCategorieSelectionVC, animated: true)
         }
     }
+    
     
 //MARK: @IBActions
     
     @IBAction func playButtonTouched(_ sender: UIButton) {
+        
         if (currentRound?.category == nil) && (match?.status == .userTurn) {
-            
             let newGameCategorieSelectionVC = self.storyboard?.instantiateViewController(withIdentifier: "idNewGameCategorieSelectionViewController") as! NewGameCategorieSelectionViewController
             MatchManager.sharedInstance.currentMatch = match
             self.navigationController?.pushViewController(newGameCategorieSelectionVC, animated: true)
             
         } else {
-            
+            let categorySelected = currentRound?.category
+            let launcherVC = self.storyboard?.instantiateViewController(withIdentifier: "idGameplayLauncherViewController") as! GameplayLauncherViewController
+            launcherVC.categorySelected = categorySelected
+            self.navigationController?.pushViewController(launcherVC, animated: true)
         }
     }
     

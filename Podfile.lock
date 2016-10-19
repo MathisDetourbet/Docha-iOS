@@ -15,17 +15,20 @@ PODS:
   - AFNetworking/UIKit (3.1.0):
     - AFNetworking/NSURLSession
   - Alamofire (4.0.1)
-  - AlamofireImage (3.0.0):
+  - AlamofireImage (3.1.0):
     - Alamofire (~> 4.0)
   - Amplitude-iOS (3.7.1)
   - CNPPopupController (0.3.3)
-  - Crashlytics (3.8.2):
+  - Crashlytics (3.8.3):
     - Fabric (~> 1.6.3)
-  - Fabric (1.6.9)
-  - FirebaseAnalytics (3.4.2):
+  - Fabric (1.6.10)
+  - FirebaseAnalytics (3.4.4):
+    - FirebaseCore (~> 3.4)
     - FirebaseInstanceID (~> 1.0)
     - GoogleInterchangeUtilities (~> 1.2)
     - GoogleSymbolUtilities (~> 1.1)
+  - FirebaseCore (3.4.3):
+    - GoogleInterchangeUtilities (~> 1.2)
     - GoogleUtilities (~> 1.2)
   - FirebaseInstanceID (1.0.8)
   - Google/Core (3.0.3):
@@ -33,32 +36,33 @@ PODS:
   - Google/SignIn (3.0.3):
     - Google/Core
     - GoogleSignIn (~> 4.0)
-  - GoogleAppUtilities (1.1.1):
-    - GoogleSymbolUtilities (~> 1.0)
-  - GoogleAuthUtilities (2.0.1):
-    - GoogleNetworkingUtilities (~> 1.0)
-    - GoogleSymbolUtilities (~> 1.0)
-  - GoogleInterchangeUtilities (1.2.1):
-    - GoogleSymbolUtilities (~> 1.0)
-  - GoogleNetworkingUtilities (1.2.1):
-    - GoogleSymbolUtilities (~> 1.0)
+  - GoogleAppUtilities (1.1.2):
+    - GoogleSymbolUtilities (~> 1.1)
+  - GoogleAuthUtilities (2.0.2):
+    - GoogleNetworkingUtilities (~> 1.2)
+    - GoogleSymbolUtilities (~> 1.1)
+  - GoogleInterchangeUtilities (1.2.2):
+    - GoogleSymbolUtilities (~> 1.1)
+  - GoogleNetworkingUtilities (1.2.2):
+    - GoogleSymbolUtilities (~> 1.1)
   - GoogleSignIn (4.0.0):
     - GoogleAppUtilities (~> 1.1)
     - GoogleAuthUtilities (~> 2.0)
     - GoogleNetworkingUtilities (~> 1.2)
     - GoogleUtilities (~> 1.3)
-  - GoogleSymbolUtilities (1.1.1)
-  - GoogleUtilities (1.3.1):
-    - GoogleSymbolUtilities (~> 1.0)
+  - GoogleSymbolUtilities (1.1.2)
+  - GoogleUtilities (1.3.2):
+    - GoogleSymbolUtilities (~> 1.1)
   - IQKeyboardManagerSwift (4.0.6)
-  - Kingfisher (3.1.0)
+  - Kingfisher (3.1.4)
   - MBCircularProgressBar (0.3.4)
   - PageMenu (1.2.9)
   - PBWebViewController (0.5.0)
   - PullToRefresher (1.4.1)
   - RSKImageCropper (1.5.1)
   - SACountingLabel (0.1.1)
-  - SwiftyJSON (3.1.0)
+  - SnapKit (3.0.2)
+  - SwiftyJSON (3.1.1)
   - SWTableViewCell (0.3.7)
   - TextFieldEffects (1.3.0)
 
@@ -79,6 +83,7 @@ DEPENDENCIES:
   - PullToRefresher (~> 1.4.0)
   - RSKImageCropper
   - SACountingLabel
+  - SnapKit (>= 3.0.0)
   - SwiftyJSON
   - SWTableViewCell (~> 0.3.7)
   - TextFieldEffects
@@ -86,33 +91,35 @@ DEPENDENCIES:
 SPEC CHECKSUMS:
   AFNetworking: 5e0e199f73d8626b11e79750991f5d173d1f8b67
   Alamofire: 7682d43245de14874acd142ec137b144aa1dd335
-  AlamofireImage: 6594aa1139a67dcd36cde6da79ea4e5b318e60fb
+  AlamofireImage: bb8c8351c51cb1633bb6be69b6dbbaff37ce65b7
   Amplitude-iOS: 4c49e5b00ebe5bf3800f219aaba8a55cf667c6c9
   CNPPopupController: 59b06290762f68beab5fb0bbfa87eb4dcbefb7de
-  Crashlytics: 27acca95a01b042a8294291dd6dff27f8f6af6d7
-  Fabric: bc5bec42cef4bcf1ee3ce0e218fc518e4b44dfbb
-  FirebaseAnalytics: 3f5358d9104adf159cc8d99b7b501e50099a39ad
+  Crashlytics: 2b6dbe138a42395577cfa73dfa1aa7248cadf39e
+  Fabric: c73f371ee543e3f0b80608f2674750e4910d1669
+  FirebaseAnalytics: 0533a00b681e08fd0b2cd0444b7ddf0ef9fd7a1a
+  FirebaseCore: 5a885548bbc5f0c410b04f8e9ac9d73ff1221907
   FirebaseInstanceID: ba1e640935235e5fac39dfa816fe7660e72e1a8a
   Google: 813c467362eabc11385f5a5cc9ad0cb651a58f4e
-  GoogleAppUtilities: f1730f91f67767b453c289577040dd3f425ffdc7
-  GoogleAuthUtilities: d7a19615cd7627688afcf181737f1011ee8b5a23
-  GoogleInterchangeUtilities: def8415a862effc67d549d5b5b0b9c7a2f97d4de
-  GoogleNetworkingUtilities: 3e83269048cfb498dc7ec83ab36813360965c74f
+  GoogleAppUtilities: a8a552aa74f6597f805e45b5a3962766c3134973
+  GoogleAuthUtilities: ccad2e0a9284699973ff57c0dd24c3893657fda4
+  GoogleInterchangeUtilities: d5bc4d88d5b661ab72f9d70c58d02ca8c27ad1f7
+  GoogleNetworkingUtilities: 3edd3a8161347494f2da60ea0deddc8a472d94cb
   GoogleSignIn: 09036ed61f8e75f1424100d63f7719480b2428c3
-  GoogleSymbolUtilities: 33117db1b5f290c6fbf259585e4885b4c84b98d7
-  GoogleUtilities: 56c5ac05b7aa5dc417a1bb85221a9516e04d7032
+  GoogleSymbolUtilities: 631ee17048aa5e9ab133470d768ea997a5ef9b96
+  GoogleUtilities: 8bbc733218aad26306f9d4a253823986110e3358
   IQKeyboardManagerSwift: b3015e819559ca76381f87a0833f44d178564603
-  Kingfisher: 7779f22e977393e9533a89a9685beb8f679d3767
+  Kingfisher: 6c67e3e57f2d81a9cfdfa25052cd86f33ceac9bb
   MBCircularProgressBar: ff3b8e2f441214d9ee122a24ba0d4d00cc7de881
   PageMenu: ba19ff267f7a19e444e93c20a7847b78954a7011
   PBWebViewController: 6537990155ca850fb8d0563efbc12becebc953ef
   PullToRefresher: e4212ee6a221331790dd77d477dd6aa8c29c5ec7
   RSKImageCropper: edd65fedb3734332818deb139906d6b7f54b8a44
   SACountingLabel: 6b0c2a177b77e65ea63772e50f4d4285bb6d5a71
-  SwiftyJSON: 29b9f2a64f118c07e691667c2ba1efe536acfe0b
+  SnapKit: 2e456761aa92d4d4067a7a5594c18769d451a8ad
+  SwiftyJSON: f0be2e604f83e8405a624e9f891898bf6ed4e019
   SWTableViewCell: 2a94aadc9d47b2b611fa064566bf57948b95b579
   TextFieldEffects: ef594746f17997c813e07633f8ae5acaf9b04f27
 
-PODFILE CHECKSUM: ee5b614b23250bc1492a41a3419e311f9cbc783c
+PODFILE CHECKSUM: 1aac8dff6a91d071f8134a75bf52b7dd146e4eed
 
 COCOAPODS: 1.0.1
