@@ -14,7 +14,6 @@ target 'Docha' do
     pod 'TextFieldEffects'
     pod 'PageMenu'
     pod 'IQKeyboardManagerSwift'
-    pod 'Google/SignIn'
     pod 'MBCircularProgressBar'
     pod 'PBWebViewController'
     pod 'Fabric'

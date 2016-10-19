@@ -9,8 +9,6 @@
 
 import UIKit
 import IQKeyboardManagerSwift
-import GoogleSignIn
-import Google
 import SwiftyJSON
 import Fabric
 import Crashlytics
@@ -26,14 +24,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         
-        
-        
-        // Crashlytics
-        Fabric.with([Crashlytics.self])
-        
         IQKeyboardManager.sharedManager().enable = true
         
         initManagers()
+        
+        // Crashlytics
+        Fabric.with([Crashlytics.self])
                 
         // Facebook SDK
         FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
@@ -53,7 +49,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
     func application(_ application: UIApplication, open url: URL, sourceApplication: String?, annotation: Any) -> Bool
     {
-        return FBSDKApplicationDelegate.sharedInstance().application(application, open: url, sourceApplication: sourceApplication, annotation: annotation) || GIDSignIn.sharedInstance().handle(url, sourceApplication: sourceApplication, annotation: annotation)
+        return FBSDKApplicationDelegate.sharedInstance().application(application, open: url, sourceApplication: sourceApplication, annotation: annotation)
     }
 
     func applicationWillResignActive(_ application: UIApplication) {

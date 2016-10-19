@@ -84,9 +84,6 @@
 		679273FB1CFC6B4900DABA88 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 679273FA1CFC6B4900DABA88 /* UIKit.framework */; };
 		679273FE1CFC6B6900DABA88 /* GoogleOpenSource.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 679273FC1CFC6B6900DABA88 /* GoogleOpenSource.framework */; };
 		679273FF1CFC6B6900DABA88 /* GooglePlus.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 679273FD1CFC6B6900DABA88 /* GooglePlus.framework */; };
-		679274011CFC780E00DABA88 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 679274001CFC780E00DABA88 /* GoogleService-Info.plist */; };
-		679274021CFC78A000DABA88 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 679274001CFC780E00DABA88 /* GoogleService-Info.plist */; };
-		679274031CFC78A100DABA88 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 679274001CFC780E00DABA88 /* GoogleService-Info.plist */; };
 		679598F21D8C316D009AC9CA /* ConverterHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 679598F11D8C316D009AC9CA /* ConverterHelper.swift */; };
 		679965FC1D23D8F400E1F1E0 /* CircularProgressBarHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 679965FB1D23D8F400E1F1E0 /* CircularProgressBarHelper.swift */; };
 		679B23BE1D058F2900692400 /* PreferencesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 679B23BD1D058F2900692400 /* PreferencesViewController.swift */; };
@@ -280,7 +277,6 @@
 		679273FA1CFC6B4900DABA88 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		679273FC1CFC6B6900DABA88 /* GoogleOpenSource.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GoogleOpenSource.framework; sourceTree = "<group>"; };
 		679273FD1CFC6B6900DABA88 /* GooglePlus.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GooglePlus.framework; sourceTree = "<group>"; };
-		679274001CFC780E00DABA88 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		679598F11D8C316D009AC9CA /* ConverterHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConverterHelper.swift; sourceTree = "<group>"; };
 		679965FB1D23D8F400E1F1E0 /* CircularProgressBarHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CircularProgressBarHelper.swift; sourceTree = "<group>"; };
 		679B23BD1D058F2900692400 /* PreferencesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreferencesViewController.swift; sourceTree = "<group>"; };
@@ -1188,7 +1184,6 @@
 		67FEE2321C8E1ED2008F842C /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				679274001CFC780E00DABA88 /* GoogleService-Info.plist */,
 				6701D97F1C108A2100F87043 /* Info.plist */,
 				674055401C4664F30047B369 /* TochaProto-Bridging-Header.h */,
 				67475E9D1DB76BC70005677C /* Docha.entitlements */,
@@ -1372,7 +1367,6 @@
 				67FEE22D1C8E1E07008F842C /* Montserrat-Regular.otf in Resources */,
 				67FEE22E1C8E1E07008F842C /* Montserrat-SemiBold.otf in Resources */,
 				67EFFDE41D907916003EE8E5 /* Tutorial1View.xib in Resources */,
-				679274011CFC780E00DABA88 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1380,7 +1374,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				679274021CFC78A000DABA88 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1388,7 +1381,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				679274031CFC78A100DABA88 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
