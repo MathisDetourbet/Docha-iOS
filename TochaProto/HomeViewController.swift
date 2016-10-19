@@ -192,7 +192,7 @@ class HomeViewController: GameViewController, UITableViewDelegate, UITableViewDa
             cell.opponentScoreLabel.text = String(match.opponentScore ?? 0)
             cell.userScoreLabel.text = String(match.userScore ?? 0)
             
-            if match.opponent.avatarUrl.contains("https://graph.facebook.com/") {
+            if match.opponent.playerType == .facebookPlayer {
                 cell.opponentImageView.af_setImage(withURL: URL(string: match.opponent.avatarUrl)!)
                 
             } else {
@@ -216,7 +216,7 @@ class HomeViewController: GameViewController, UITableViewDelegate, UITableViewDa
             cell.userScoreLabel.text = String(match.userScore ?? 0)
             cell.delegate = self
             
-            if match.opponent.avatarUrl.contains("https://graph.facebook.com/") {
+            if match.opponent.playerType == .facebookPlayer {
                 cell.opponentImageView.af_setImage(withURL: URL(string: match.opponent.avatarUrl)!)
                 
             } else {
@@ -241,7 +241,7 @@ class HomeViewController: GameViewController, UITableViewDelegate, UITableViewDa
             cell.userScoreLabel.text = String(match.userScore!)
             cell.delegate = self
             
-            if match.opponent.avatarUrl.contains("https://graph.facebook.com/") {
+            if match.opponent.playerType == .facebookPlayer {
                 cell.opponentImageView.af_setImage(withURL: URL(string: match.opponent.avatarUrl)!)
                 
             } else {

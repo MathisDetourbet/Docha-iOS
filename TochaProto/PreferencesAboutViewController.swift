@@ -26,7 +26,7 @@ class PreferencesAboutViewController: RootViewController, UITableViewDataSource,
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        configNavigationBarWithTitle("À propos", andFontSize: 15.0)
+        configNavigationBarWithTitle("À propos")
         heightTableViewConstraint.constant = CGFloat(titlesCell.count) * 44.0
     }
     

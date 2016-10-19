@@ -28,7 +28,7 @@ class PreferencesChangeProfilViewController: RootViewController, UITableViewDele
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        configNavigationBarWithTitle("Modifier le profil", andFontSize: 15.0)
+        configNavigationBarWithTitle("Modifier le profil")
 
         validBarButtonItem.setTitleTextAttributes([NSFontAttributeName: UIFont(name: "Montserrat-SemiBold", size: 11.0)!], for: UIControlState())
         cancelBarButtonItem.setTitleTextAttributes([NSFontAttributeName: UIFont(name: "Montserrat-SemiBold", size: 11.0)!], for: UIControlState())

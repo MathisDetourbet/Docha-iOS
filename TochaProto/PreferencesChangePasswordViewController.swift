@@ -26,7 +26,7 @@ class PreferencesChangePasswordViewController: RootViewController, UITableViewDe
         self.view.backgroundColor = UIColor.lightGrayDochaColor()
         tableView.backgroundColor = UIColor.lightGrayDochaColor()
         
-        configNavigationBarWithTitle("Modifier le mot de passe", andFontSize: 15.0)
+        configNavigationBarWithTitle("Modifier le mot de passe")
         
         validBarButtonItem.setTitleTextAttributes([NSFontAttributeName: UIFont(name: "Montserrat-SemiBold", size: 11.0)!], for: UIControlState())
         cancelBarButtonItem.setTitleTextAttributes([NSFontAttributeName: UIFont(name: "Montserrat-SemiBold", size: 11.0)!], for: UIControlState())

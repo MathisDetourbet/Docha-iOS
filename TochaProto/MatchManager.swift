@@ -12,6 +12,7 @@ class MatchManager {
     
     var matchRequest: MatchRequest?
     var roundRequest: RoundRequest?
+    var searchRequest: SearchRequest?
     
     var userSessionManager: UserSessionManager = UserSessionManager.sharedInstance
     
@@ -34,11 +35,12 @@ class MatchManager {
         let userData = userSessionManager.getUserInfosAndAvatarImage()
         let image = (userData.avatarImage ?? #imageLiteral(resourceName: "avatar_man_large")).roundCornersToCircle(withBorder: 10.0, color: UIColor.white)
         let avatarUrl = userData.user?.avatarUrl ?? "avatar_man_large"
+        let playerType: PlayerType = userSessionManager.currentSession()!.isKind(of: UserSessionFacebook.self) ? .facebookPlayer : .emailPlayer
         let userPlayer = Player(pseudo: userData.user?.pseudo ?? Player.defaultPlayer().pseudo,
                                 gender: Gender.universal,
                                 avatarUrl: avatarUrl,
                                 avatarImage: image!,
-                                isDefaultPlayer: false,
+                                playerType: playerType,
                                 level: userData.user?.levelMaxUnlocked ?? nil,
                                 dochos: userData.user?.dochos ?? 0)
         self.userPlayer = userPlayer
@@ -50,7 +52,7 @@ class MatchManager {
         if let match = self.currentMatch {
             opponentPlayer = Player(player: match.opponent)
             
-            if opponentPlayer.isDefaultPlayer! {
+            if opponentPlayer.playerType == .emailPlayer {
                 opponentPlayer.avatarImage = nil
                 self.opponentPlayer = opponentPlayer
                 completion()
@@ -92,8 +94,8 @@ class MatchManager {
         matchRequest?.getAllMatch(withAuthToken: authToken,
             success: { (matchArray) in
                 
-                success(matchArray)
                 self.matchArray = matchArray
+                success(matchArray)
                 
             }, fail: { (error) in
                 failure(error)
@@ -101,23 +103,38 @@ class MatchManager {
         )
     }
     
-    func postMatch(success: @escaping(_ match: Match) -> Void, fail failure: @escaping(_ error: Error?) -> Void) {
+    func postMatch(withOpponentPseudo opponentPseudo: String? = nil, success: @escaping(_ match: Match) -> Void, fail failure: @escaping(_ error: Error?) -> Void) {
         guard let authToken = userSessionManager.getAuthToken() else {
             failure(DochaRequestError.authTokenNotFound)
             return
         }
         
         matchRequest = MatchRequest()
-        matchRequest?.postMatch(withAuthToken: authToken,
-            success: { (match) in
-                
-                success(match)
-                self.currentMatch = match
-                
-            }, fail: { (error) in
-                failure(error)
-            }
-        )
+        
+        if let opponentPseudo = opponentPseudo {
+            matchRequest?.postMatch(withAuthToken: authToken, andOpponentPseudo: opponentPseudo,
+                success: { (match) in
+                    
+                    self.currentMatch = match
+                    success(match)
+                    
+                }, fail: { (error) in
+                    failure(error)
+                }
+            )
+            
+        } else {
+            matchRequest?.postMatch(withAuthToken: authToken,
+                success: { (match) in
+                    
+                    self.currentMatch = match
+                    success(match)
+                    
+                }, fail: { (error) in
+                    failure(error)
+                }
+            )
+        }
     }
     
     func getMatch(withMatchID matchID: Int!, success: @escaping(_ match: Match) -> Void, fail failure: @escaping(_ error: Error?) -> Void) {
@@ -129,8 +146,10 @@ class MatchManager {
         matchRequest = MatchRequest()
         matchRequest?.getMatch(withAuthToken: authToken, andMatchID: matchID,
             success: { (match) in
-                success(match)
+                
                 self.currentMatch = match
+                success(match)
+                
                 
             }, fail: { (error) in
                 failure(error)
@@ -203,6 +222,43 @@ class MatchManager {
             success: { (roundFull) in
                 self.currentRound = roundFull as RoundFull
                 success(roundFull)
+                
+            }, fail: { (error) in
+                failure(error)
+            }
+        )
+    }
+    
+    
+//MARK: Friends Requests
+    
+    func findPlayer(byPseudo pseudo: String!, success: @escaping (_ players: [Player]) -> Void, fail failure: @escaping (_ error: Error?) -> Void) {
+        guard let authToken = userSessionManager.getAuthToken() else {
+            failure(DochaRequestError.authTokenNotFound)
+            return
+        }
+        
+        searchRequest = SearchRequest()
+        searchRequest?.findPlayer(withAuthToken: authToken, byPseudo: pseudo,
+            success: { (players) in
+                success(players)
+                
+            }, fail: { (error) in
+                failure(error)
+            }
+        )
+    }
+    
+    func getFacebookFriends(success: @escaping (_ players: [Player]) -> Void, fail failure: @escaping (_ error: Error?) -> Void) {
+        guard let authToken = userSessionManager.getAuthToken() else {
+            failure(DochaRequestError.authTokenNotFound)
+            return
+        }
+        
+        searchRequest = SearchRequest()
+        searchRequest?.getFacebookFriends(withAuthToken: authToken,
+            success: { (friends) in
+                success(friends)
                 
             }, fail: { (error) in
                 failure(error)

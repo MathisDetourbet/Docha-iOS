@@ -15,17 +15,17 @@ class CustomWebViewController: PBWebViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        configNavigationBarWithTitle(titleNavBar ?? "", andFontSize: 15.0)
+        configNavigationBarWithTitle(titleNavBar ?? "")
     }
     
     override func webViewDidFinishLoad(_ webView: UIWebView) {
         super.webViewDidFinishLoad(webView)
-        configNavigationBarWithTitle(titleNavBar!, andFontSize: 15.0)
+        configNavigationBarWithTitle(titleNavBar!)
     }
     
-    func configNavigationBarWithTitle(_ title: String, andFontSize size: CGFloat) {
+    func configNavigationBarWithTitle(_ title: String, andFontSize size: CGFloat? = 17.0) {
         self.navigationItem.title = title
-        self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName:UIColor.white, NSFontAttributeName: UIFont(name: "Montserrat-ExtraBold", size: size)!]
+        self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName:UIColor.white, NSFontAttributeName: UIFont(name: "Montserrat-ExtraBold", size: size!)!]
     }
     
     override var prefersStatusBarHidden : Bool {

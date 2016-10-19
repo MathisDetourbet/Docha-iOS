@@ -10,10 +10,9 @@ import Foundation
 
 class NewGameFindFriendsViewController: GameViewController, UITableViewDataSource, UITableViewDelegate, NewGameFindFriendsTableViewCellDelegate {
     
-    var friendsList: [AnyObject]? = []
+    var friends: [Player]? = []
     
     @IBOutlet weak var tableView: UITableView!
-    @IBOutlet weak var heightTableViewConstraint: NSLayoutConstraint!
     
     
 //MARK: Life View Cycle
@@ -21,11 +20,25 @@ class NewGameFindFriendsViewController: GameViewController, UITableViewDataSourc
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        if let friendsList = self.friendsList {
-            heightTableViewConstraint.constant = CGFloat(friendsList.count) * tableView.rowHeight
-            
-        } else {
-            heightTableViewConstraint.constant = 0.0
+        buildUI()
+    }
+    
+    func buildUI() {
+        if UserSessionManager.sharedInstance.currentSession()!.isKind(of: UserSessionEmail.self) {
+            tableView.isHidden = true
+        }
+        tableView.tableFooterView = UIView()
+    }
+    
+    func getFacebookFriends() {
+        MatchManager.sharedInstance.getFacebookFriends(
+            success: { (friends) in
+                
+                self.friends = friends
+                self.tableView.reloadData()
+                
+            }) { (error) in
+                PopupManager.sharedInstance.showErrorPopup(message: Constants.PopupMessage.ErrorMessage.kErrorOccured)
         }
     }
     
@@ -33,7 +46,7 @@ class NewGameFindFriendsViewController: GameViewController, UITableViewDataSourc
 //MARK: UITableView - Data Source
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if let friendsCount = friendsList?.count {
+        if let friendsCount = friends?.count {
             return friendsCount
             
         } else {
@@ -47,7 +60,20 @@ class NewGameFindFriendsViewController: GameViewController, UITableViewDataSourc
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = self.tableView.dequeueReusableCell(withIdentifier: "idNewGameFindFriendsCell", for: indexPath) as! NewGameFindFriendsTableViewCell
-        cell.delegate = self
+        
+        if let friends = self.friends {
+            let friend = friends[indexPath.row]
+            cell.friendPseudoLabel.text = friend.pseudo
+            
+            if friend.playerType == .facebookPlayer {
+                cell.friendAvatarImageView.af_setImage(withURL: URL(string: friend.avatarUrl)!)
+                
+            } else {
+                cell.friendAvatarImageView.image = UIImage(named: "\(friend.avatarUrl)_medium")
+            }
+            
+            cell.delegate = self
+        }
         
         return cell
     }
@@ -68,7 +94,7 @@ class NewGameFindFriendsViewController: GameViewController, UITableViewDataSourc
         headerView.backgroundColor = UIColor.clear
         let sectionLabel = UILabel(frame: CGRect(x: 15.0, y: 5.0, width: 100.0, height: 28.0))
         sectionLabel.textColor = UIColor.darkBlueDochaColor()
-        if let numberOfFriends = friendsList?.count {
+        if let numberOfFriends = friends?.count {
             sectionLabel.text = "\(numberOfFriends) AMIS"
         } else {
             sectionLabel.text = "0 AMI"
@@ -77,6 +103,22 @@ class NewGameFindFriendsViewController: GameViewController, UITableViewDataSourc
         headerView.addSubview(sectionLabel)
         
         return headerView
+    }
+    
+
+//MARK: NewGameFindFriendsTableViewCell Delegate
+    
+    func challengeFriendButtonTouched(withPseudo pseudo: String!) {
+        MatchManager.sharedInstance.postMatch(withOpponentPseudo: pseudo,
+            success: { (match) in
+                
+                let newGameCategorieSelectionVC = self.storyboard?.instantiateViewController(withIdentifier: "idNewGameCategorieSelectionViewController") as! NewGameCategorieSelectionViewController
+                MatchManager.sharedInstance.currentMatch = match
+                self.navigationController?.pushViewController(newGameCategorieSelectionVC, animated: true)
+                
+        }) { (error) in
+            PopupManager.sharedInstance.showErrorPopup(message: Constants.PopupMessage.ErrorMessage.kErrorOccured)
+        }
     }
     
     
@@ -88,9 +130,5 @@ class NewGameFindFriendsViewController: GameViewController, UITableViewDataSourc
     
     @IBAction func backButtonTouched(_ sender: UIBarButtonItem) {
         _ = self.navigationController?.popViewController(animated: true)
-    }
-    
-    func challengeFriendButtonTouched() {
-        
     }
 }

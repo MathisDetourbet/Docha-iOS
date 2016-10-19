@@ -189,5 +189,10 @@ struct Constants {
             static let UrlPostMatch = "/match"
             static let UrlGetRounds = "/round"
         }
+        
+        struct UrlSearch {
+            static let UrlSearchPlayerByPseudo = "/rest-auth/find"
+            static let UrlSearchFacebookFriends = "/rest-auth/friend"
+        }
     }
 }

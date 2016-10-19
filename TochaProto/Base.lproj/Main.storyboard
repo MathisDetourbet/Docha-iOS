@@ -1944,11 +1944,8 @@
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Zhw-Jl-rY8">
                                 <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="444" id="X9y-C1-e6r"/>
-                                </constraints>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="idNewGameFindFriendsCell" rowHeight="71" id="i6M-fv-lBE" customClass="NewGameFindFriendsTableViewCell" customModule="Docha" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="idNewGameFindPlayerCell" rowHeight="71" id="i6M-fv-lBE" customClass="NewGameFindPlayerTableViewCell" customModule="Docha" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="375" height="71"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="i6M-fv-lBE" id="Wsc-0O-7hx">
@@ -1958,9 +1955,10 @@
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LON-cX-UTH">
                                                     <state key="normal" image="btn_challenge_red"/>
                                                     <connections>
-                                                        <action selector="challengeFriendButtonTouched:" destination="i6M-fv-lBE" eventType="touchUpInside" id="1CQ-V1-ypK"/>
+                                                        <action selector="challengeFriendButtonTouched:" destination="i6M-fv-lBE" eventType="touchUpInside" id="16f-KJ-76F"/>
                                                     </connections>
                                                 </button>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="avatar_man_medium" translatesAutoresizingMaskIntoConstraints="NO" id="Rs6-Zd-vg5"/>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YtS-FZ-P0o">
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="146" id="3j0-8S-zfp"/>
@@ -1969,33 +1967,21 @@
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="avatar_man_medium" translatesAutoresizingMaskIntoConstraints="NO" id="Rs6-Zd-vg5"/>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mPk-NF-iS1">
-                                                    <constraints>
-                                                        <constraint firstAttribute="width" constant="146" id="zFF-0L-woc"/>
-                                                    </constraints>
-                                                    <fontDescription key="fontDescription" name="Montserrat-Regular" family="Montserrat" pointSize="12"/>
-                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="YtS-FZ-P0o" firstAttribute="centerY" secondItem="Rs6-Zd-vg5" secondAttribute="centerY" constant="-10.5" id="8Vw-sn-jG3"/>
+                                                <constraint firstItem="YtS-FZ-P0o" firstAttribute="centerY" secondItem="Rs6-Zd-vg5" secondAttribute="centerY" id="8Vw-sn-jG3"/>
                                                 <constraint firstItem="Rs6-Zd-vg5" firstAttribute="leading" secondItem="Wsc-0O-7hx" secondAttribute="leading" constant="8" id="OOE-uA-CTR"/>
-                                                <constraint firstItem="YtS-FZ-P0o" firstAttribute="leading" secondItem="Rs6-Zd-vg5" secondAttribute="trailing" constant="10" id="POM-Gh-w8n"/>
+                                                <constraint firstItem="YtS-FZ-P0o" firstAttribute="leading" secondItem="Rs6-Zd-vg5" secondAttribute="trailing" constant="8" id="POM-Gh-w8n"/>
                                                 <constraint firstAttribute="bottom" secondItem="Rs6-Zd-vg5" secondAttribute="bottom" constant="10" id="f4H-rt-dUQ"/>
                                                 <constraint firstItem="Rs6-Zd-vg5" firstAttribute="top" secondItem="Wsc-0O-7hx" secondAttribute="top" constant="10" id="fCc-v5-O2D"/>
-                                                <constraint firstItem="mPk-NF-iS1" firstAttribute="top" secondItem="YtS-FZ-P0o" secondAttribute="bottom" constant="5" id="g82-tf-mLG"/>
-                                                <constraint firstItem="mPk-NF-iS1" firstAttribute="leading" secondItem="YtS-FZ-P0o" secondAttribute="leading" id="htI-0d-wCm"/>
                                                 <constraint firstItem="LON-cX-UTH" firstAttribute="top" secondItem="Wsc-0O-7hx" secondAttribute="top" constant="10" id="qPz-rO-b5o"/>
                                                 <constraint firstAttribute="bottom" secondItem="LON-cX-UTH" secondAttribute="bottom" constant="10" id="tIj-76-j43"/>
                                                 <constraint firstAttribute="trailing" secondItem="LON-cX-UTH" secondAttribute="trailing" constant="8" id="wlr-6k-OJ3"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <outlet property="friendAvatarImageView" destination="Rs6-Zd-vg5" id="4yr-sT-t0L"/>
-                                            <outlet property="friendNameLabel" destination="mPk-NF-iS1" id="IgF-GT-74G"/>
-                                            <outlet property="friendPseudoLabel" destination="YtS-FZ-P0o" id="ofI-W2-Jgd"/>
+                                            <outlet property="friendAvatarImageView" destination="Rs6-Zd-vg5" id="J34-Ab-6oo"/>
+                                            <outlet property="friendPseudoLabel" destination="YtS-FZ-P0o" id="1VK-av-Hj5"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -2045,6 +2031,7 @@
                             <constraint firstAttribute="trailing" secondItem="YUp-3I-9o1" secondAttribute="trailing" constant="11" id="gqW-qJ-kpW"/>
                             <constraint firstItem="Zhw-Jl-rY8" firstAttribute="top" secondItem="YUp-3I-9o1" secondAttribute="bottom" constant="15" id="lpc-wn-qKu"/>
                             <constraint firstItem="YUp-3I-9o1" firstAttribute="leading" secondItem="0ta-Kf-MLT" secondAttribute="leading" constant="12" id="mEv-7n-71D"/>
+                            <constraint firstItem="rHn-Nm-jhP" firstAttribute="top" secondItem="Zhw-Jl-rY8" secondAttribute="bottom" id="ncX-dH-qca"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Rechercher un joueur" id="n5G-VM-g7I">
@@ -2059,13 +2046,13 @@
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <nil key="simulatedBottomBarMetrics"/>
                     <connections>
-                        <outlet property="heightTableViewConstraint" destination="X9y-C1-e6r" id="SFT-dg-MYK"/>
+                        <outlet property="searchTextField" destination="GpX-Ad-OVb" id="QhE-jd-h4R"/>
                         <outlet property="tableView" destination="Zhw-Jl-rY8" id="n9m-2A-5w9"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qlt-Xj-K8D" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1698" y="1106"/>
+            <point key="canvasLocation" x="1697.5" y="1105.5"/>
         </scene>
         <!--Amis Facebook-->
         <scene sceneID="N9i-8B-eMq">
@@ -2081,9 +2068,6 @@
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="o85-QN-pty">
                                 <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="543" id="DW9-oh-41d"/>
-                                </constraints>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="idNewGameFindFriendsCell" rowHeight="71" id="UQw-EU-RP2" customClass="NewGameFindFriendsTableViewCell" customModule="Docha" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="375" height="71"/>
@@ -2156,6 +2140,7 @@
                             <constraint firstAttribute="trailing" secondItem="o85-QN-pty" secondAttribute="trailing" id="cTe-rh-cGA"/>
                             <constraint firstItem="o85-QN-pty" firstAttribute="top" secondItem="HCm-2I-68Y" secondAttribute="bottom" constant="15" id="hJx-pq-zyl"/>
                             <constraint firstItem="HCm-2I-68Y" firstAttribute="top" secondItem="84t-3p-aB8" secondAttribute="bottom" constant="15" id="oNx-hf-e9C"/>
+                            <constraint firstItem="edu-2I-mgv" firstAttribute="top" secondItem="o85-QN-pty" secondAttribute="bottom" id="pdC-bo-Tum"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Amis Facebook" id="7pR-LP-Thy">
@@ -2169,7 +2154,6 @@
                     <nil key="simulatedStatusBarMetrics"/>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <connections>
-                        <outlet property="heightTableViewConstraint" destination="DW9-oh-41d" id="3gc-vi-DPH"/>
                         <outlet property="tableView" destination="o85-QN-pty" id="LbB-GS-q7I"/>
                     </connections>
                 </viewController>
@@ -2204,7 +2188,8 @@
                                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bg_score" translatesAutoresizingMaskIntoConstraints="NO" id="9D7-OP-sOJ"/>
                                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="avatar_man_large" translatesAutoresizingMaskIntoConstraints="NO" id="Joh-36-6IY">
                                                             <constraints>
-                                                                <constraint firstAttribute="width" secondItem="Joh-36-6IY" secondAttribute="height" multiplier="1:1" id="6Od-pV-1Oc"/>
+                                                                <constraint firstAttribute="height" constant="100" id="E8t-uj-cVN"/>
+                                                                <constraint firstAttribute="width" constant="100" id="hze-SJ-Wfx"/>
                                                             </constraints>
                                                         </imageView>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9xg-Xy-015">
@@ -2230,7 +2215,8 @@
                                                         </label>
                                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="avatar_woman_large" translatesAutoresizingMaskIntoConstraints="NO" id="doX-26-N4g">
                                                             <constraints>
-                                                                <constraint firstAttribute="width" secondItem="doX-26-N4g" secondAttribute="height" multiplier="1:1" id="G84-fF-woR"/>
+                                                                <constraint firstAttribute="height" constant="100" id="ads-vs-NlW"/>
+                                                                <constraint firstAttribute="width" constant="100" id="jhb-wf-zLZ"/>
                                                             </constraints>
                                                         </imageView>
                                                     </subviews>
@@ -2261,7 +2247,6 @@
                                                 <constraint firstItem="FD4-kb-CI5" firstAttribute="leading" secondItem="Nki-4D-49r" secondAttribute="leading" constant="8" id="qRz-js-mMo"/>
                                             </constraints>
                                         </tableViewCellContentView>
-                                        <color key="backgroundColor" red="0.98823529409999999" green="0.35294117650000001" blue="0.30588235289999999" alpha="1" colorSpace="calibratedRGB"/>
                                         <connections>
                                             <outlet property="opponentAvatarImageView" destination="doX-26-N4g" id="aCN-gL-dj5"/>
                                             <outlet property="opponentNameLabel" destination="9xg-Xy-015" id="cIt-47-SAm"/>
@@ -2344,7 +2329,6 @@
                                                 <constraint firstAttribute="trailing" secondItem="oLr-rA-U0Z" secondAttribute="trailing" constant="7" id="uU7-kS-Qoa"/>
                                             </constraints>
                                         </tableViewCellContentView>
-                                        <color key="backgroundColor" red="0.0" green="1" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         <connections>
                                             <outletCollection property="opponentTimelineImageViewCollection" destination="kCh-m1-vIk" collectionClass="NSMutableArray" id="w6y-fD-KmY"/>
                                             <outletCollection property="opponentTimelineImageViewCollection" destination="vP1-Py-Ung" collectionClass="NSMutableArray" id="F9M-Y5-NAQ"/>
@@ -2401,7 +2385,6 @@
                                                 <constraint firstAttribute="trailing" secondItem="sfk-aT-jJ8" secondAttribute="trailing" constant="8" id="l9U-Of-i2O"/>
                                             </constraints>
                                         </tableViewCellContentView>
-                                        <color key="backgroundColor" red="0.0" green="1" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="idGameplayMatchRoundWaitingCell" rowHeight="71" id="fbj-98-cfZ" customClass="GameplayMatchRoundWaitingCell" customModule="Docha" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="307" width="375" height="71"/>
@@ -2465,7 +2448,6 @@
                                                 <constraint firstItem="P03-S7-bBo" firstAttribute="leading" secondItem="xUy-wI-KhQ" secondAttribute="leading" constant="7" id="k1t-VS-25S"/>
                                             </constraints>
                                         </tableViewCellContentView>
-                                        <color key="backgroundColor" red="0.0" green="1" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         <connections>
                                             <outletCollection property="userTimelineImageViewCollection" destination="aSF-7y-GvR" collectionClass="NSMutableArray" id="lH6-2g-agQ"/>
                                             <outletCollection property="userTimelineImageViewCollection" destination="qmC-QS-vMp" collectionClass="NSMutableArray" id="LEr-JB-sGr"/>
@@ -2480,7 +2462,7 @@
                             </tableView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6ln-Vy-rZY">
                                 <constraints>
-                                    <constraint firstAttribute="width" secondItem="6ln-Vy-rZY" secondAttribute="height" multiplier="19:5" id="VIi-sW-noo"/>
+                                    <constraint firstAttribute="width" secondItem="6ln-Vy-rZY" secondAttribute="height" multiplier="19:5" id="WZW-GJ-1sd"/>
                                 </constraints>
                                 <state key="normal" image="play_btn"/>
                                 <connections>
@@ -2489,7 +2471,7 @@
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" horizontalCompressionResistancePriority="749" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WlJ-0x-wO2">
                                 <constraints>
-                                    <constraint firstAttribute="width" secondItem="WlJ-0x-wO2" secondAttribute="height" multiplier="11:5" id="ziH-4K-v4d"/>
+                                    <constraint firstAttribute="width" secondItem="WlJ-0x-wO2" secondAttribute="height" multiplier="11:5" id="4Qh-D3-s4K"/>
                                 </constraints>
                                 <state key="normal" image="quit_btn"/>
                                 <connections>
@@ -2499,15 +2481,14 @@
                         </subviews>
                         <color key="backgroundColor" red="0.92156862750000001" green="0.92156862750000001" blue="0.94901960780000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstAttribute="trailing" secondItem="6ln-Vy-rZY" secondAttribute="trailing" constant="16" id="J7M-0s-1mt"/>
-                            <constraint firstItem="6ln-Vy-rZY" firstAttribute="top" secondItem="VDI-we-HvD" secondAttribute="bottom" constant="15.5" id="aVH-5i-jKZ"/>
-                            <constraint firstItem="WlJ-0x-wO2" firstAttribute="leading" secondItem="wUo-DR-QJz" secondAttribute="leading" constant="16" id="g0P-C7-Ohj"/>
-                            <constraint firstItem="w64-XD-2XC" firstAttribute="top" secondItem="WlJ-0x-wO2" secondAttribute="bottom" constant="13" id="jq8-7i-iXB"/>
-                            <constraint firstItem="w64-XD-2XC" firstAttribute="top" secondItem="6ln-Vy-rZY" secondAttribute="bottom" constant="13" id="rFQ-mY-GFs"/>
+                            <constraint firstItem="WlJ-0x-wO2" firstAttribute="top" secondItem="VDI-we-HvD" secondAttribute="bottom" constant="8" id="4c4-SE-AvF"/>
+                            <constraint firstItem="w64-XD-2XC" firstAttribute="top" secondItem="WlJ-0x-wO2" secondAttribute="bottom" constant="5" id="MSC-FG-uIc"/>
+                            <constraint firstItem="WlJ-0x-wO2" firstAttribute="leading" secondItem="wUo-DR-QJz" secondAttribute="leading" constant="10" id="ScU-Qn-HN6"/>
+                            <constraint firstAttribute="trailing" secondItem="6ln-Vy-rZY" secondAttribute="trailing" constant="10" id="byS-pS-Un2"/>
+                            <constraint firstItem="w64-XD-2XC" firstAttribute="top" secondItem="6ln-Vy-rZY" secondAttribute="bottom" constant="5" id="iDZ-fR-GnS"/>
                             <constraint firstAttribute="trailing" secondItem="VDI-we-HvD" secondAttribute="trailing" id="ssa-CM-9Wk"/>
-                            <constraint firstItem="6ln-Vy-rZY" firstAttribute="leading" secondItem="WlJ-0x-wO2" secondAttribute="trailing" constant="43" id="tTS-Fh-73f"/>
                             <constraint firstItem="VDI-we-HvD" firstAttribute="leading" secondItem="wUo-DR-QJz" secondAttribute="leading" id="tVy-E3-44K"/>
-                            <constraint firstItem="VDI-we-HvD" firstAttribute="top" secondItem="mfI-Jt-Xf6" secondAttribute="bottom" id="zbR-7N-TXl"/>
+                            <constraint firstItem="VDI-we-HvD" firstAttribute="top" secondItem="mfI-Jt-Xf6" secondAttribute="bottom" constant="15" id="zbR-7N-TXl"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Match" id="xpK-YV-aFR">

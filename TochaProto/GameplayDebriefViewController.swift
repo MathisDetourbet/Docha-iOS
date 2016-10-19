@@ -9,12 +9,6 @@
 import Foundation
 import PBWebViewController
 
-enum ResultRoundSentence: String {
-    case winner = "winner_sentence"
-    case looser = "looser_sentence"
-    case nul = "nul_sentence"
-}
-
 class GameplayDebriefViewController: GameViewController, UIPageViewControllerDataSource, UIPageViewControllerDelegate, GameplayDebriefPageContentDelegate, CounterContainerViewDelegate {
     
     var productsList: [Product]?
@@ -22,8 +16,6 @@ class GameplayDebriefViewController: GameViewController, UIPageViewControllerDat
     
     var pagesContentsViewControllerArray: [GameplayDebriefPageContentViewController] = []
     var pageViewController: UIPageViewController!
-    
-    var webViewController: PBWebViewController?
     
     @IBOutlet weak var resultRoundSentenceImageView: UIImageView!
     
@@ -43,13 +35,15 @@ class GameplayDebriefViewController: GameViewController, UIPageViewControllerDat
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        UserSessionManager.sharedInstance.getUser(success: {}) { (error) in}
+        
         buildUI()
         
         pageViewController = self.storyboard?.instantiateViewController(withIdentifier: "idDebriefPageViewController") as! UIPageViewController
         pageViewController.delegate = self
         pageViewController.dataSource = self
         
-        let pageContentVC = self.viewControllerAtIndex(0)
+        let pageContentVC = viewControllerAtIndex(0)
         pageViewController.setViewControllers([pageContentVC!], direction: .forward, animated: true, completion: nil)
         
         pageViewController.view.translatesAutoresizingMaskIntoConstraints = false
@@ -68,39 +62,8 @@ class GameplayDebriefViewController: GameViewController, UIPageViewControllerDat
     func buildUI() {
         let matchManager = MatchManager.sharedInstance
         
-        let userPlayer = matchManager.userPlayer
-        let opponentPlayer = matchManager.opponentPlayer
         
-        if let userPlayer = userPlayer {
-            userAvatarImageView.image = userPlayer.avatarImage
-            userNameLabel.text = userPlayer.pseudo
-            
-            if let level = userPlayer.level {
-                userLevelLabel.text = "Niveau \(level)"
-                
-            } else {
-                userLevelLabel.text = "?"
-            }
-        }
-        
-        if let opponentPlayer = opponentPlayer {
-            opponentNameLabel.text = opponentPlayer.pseudo
-            
-            if let opponentAvatarImage = opponentPlayer.avatarImage {
-                opponentAvatarImageView.image = opponentAvatarImage.roundCornersToCircle(withBorder: 10.0, color: UIColor.white)
-                
-            } else {
-                opponentAvatarImageView.image = UIImage(named: "\(opponentPlayer.avatarUrl)_large")?.roundCornersToCircle(withBorder: 10.0, color: UIColor.white)
-            }
-            
-            if let level = opponentPlayer.level {
-                opponentLevelLabel.text = "Niveau \(level)"
-                
-            } else {
-                opponentLevelLabel.text = "?"
-            }
-        }
-        
+        // Timeline
         var timelineImage: UIImage?
         var index = 0
         for result in userResultsArray! {
@@ -115,6 +78,92 @@ class GameplayDebriefViewController: GameViewController, UIPageViewControllerDat
             userTimelineImageViewCollection[index].image = timelineImage
             index += 1
         }
+        
+        let currentRound = MatchManager.sharedInstance.currentRound
+        
+        for index in 0..<opponentTimelineImageViewCollection.count {
+            if currentRound?.status == .waiting {
+                opponentTimelineImageViewCollection[index].image = #imageLiteral(resourceName: "waiting_icon")
+                
+            } else {
+                opponentTimelineImageViewCollection[index].image = #imageLiteral(resourceName: "red_big_icon")
+            }
+        }
+        
+        let opponentScore = currentRound?.opponentScore
+        if let opponentScore = opponentScore {
+            for index in 0..<Int(opponentScore) {
+                opponentTimelineImageViewCollection[index].image = #imageLiteral(resourceName: "perfect_big_icon")
+            }
+        }
+        
+        var userBorderColor: UIColor?
+        var opponentBorderColor: UIColor?
+        
+        // Result sentence
+        if let currentRound = currentRound {
+            switch currentRound.status {
+            case .waiting:
+                resultRoundSentenceImageView.image = #imageLiteral(resourceName: "waiting_sentence")
+                userBorderColor = UIColor.white
+                opponentBorderColor = UIColor.white
+                break
+            case .won:
+                resultRoundSentenceImageView.image = #imageLiteral(resourceName: "winner_sentence")
+                userBorderColor = UIColor.greenDochaColor()
+                opponentBorderColor = UIColor.redDochaColor()
+                break
+            case .lost:
+                resultRoundSentenceImageView.image = #imageLiteral(resourceName: "looser_sentence")
+                userBorderColor = UIColor.redDochaColor()
+                opponentBorderColor = UIColor.greenDochaColor()
+                break
+            case .tie:
+                resultRoundSentenceImageView.image = #imageLiteral(resourceName: "nul_sentence")
+                userBorderColor = UIColor.white
+                opponentBorderColor = UIColor.white
+                break
+            }
+        } else {
+            resultRoundSentenceImageView.image = #imageLiteral(resourceName: "waiting_sentence")
+        }
+
+        
+        // User infos
+        let userPlayer = matchManager.userPlayer
+        let opponentPlayer = matchManager.opponentPlayer
+        
+        if let userPlayer = userPlayer {
+            userAvatarImageView.image = userPlayer.avatarImage?.roundCornersToCircle(withBorder: 10.0, color: userBorderColor!)
+            userNameLabel.text = userPlayer.pseudo
+            
+            if let level = userPlayer.level {
+                userLevelLabel.text = "Niveau \(level)"
+                
+            } else {
+                userLevelLabel.text = "?"
+            }
+        }
+        
+        // Opponent infos
+        if let opponentPlayer = opponentPlayer {
+            opponentNameLabel.text = opponentPlayer.pseudo
+            
+            if let opponentAvatarImage = opponentPlayer.avatarImage {
+                opponentAvatarImageView.image = opponentAvatarImage.roundCornersToCircle(withBorder: 10.0, color: opponentBorderColor!)
+                
+            } else {
+                opponentAvatarImageView.image = UIImage(named: "\(opponentPlayer.avatarUrl)_large")?.roundCornersToCircle(withBorder: 10.0, color: opponentBorderColor!)
+            }
+            
+            if let level = opponentPlayer.level {
+                opponentLevelLabel.text = "Niveau \(level)"
+                
+            } else {
+                opponentLevelLabel.text = "?"
+            }
+        }
+        
     }
     
 
@@ -189,13 +238,15 @@ class GameplayDebriefViewController: GameViewController, UIPageViewControllerDat
 //MARK: Gameplay Debrief Page Content Delegate
     
     func moreDetailsButtonTouched(_ productIndex: Int) {
-        webViewController = PBWebViewController()
-        let url = URL(string: productsList![productIndex].pageUrl)
-        webViewController!.url = url
+        let url = URL(string: "https://morganegr.typeform.com/to/NbeMZ2")
+        let webViewController = storyboard?.instantiateViewController(withIdentifier: "idCustomWebViewController") as! CustomWebViewController
+        webViewController.url = url
+        webViewController.titleNavBar = "Docha a besoin de toi"
         
         let activity = UIActivity()
-        webViewController?.applicationActivities = [activity]
-        self.navigationController?.pushViewController(webViewController!, animated: true)
+        webViewController.applicationActivities = [activity]
+        webViewController.hidesBottomBarWhenPushed = true
+        self.navigationController?.pushViewController(webViewController, animated: true)
     }
     
     func shareButtonTouched() {
@@ -206,7 +257,7 @@ class GameplayDebriefViewController: GameViewController, UIPageViewControllerDat
 //MARK: @IBActions Methods
     
     @IBAction func nextButtonTouched(_ sender: UIButton) {
-        
+        self.goToHome()
     }
     
     

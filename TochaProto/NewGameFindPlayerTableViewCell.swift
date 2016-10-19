@@ -1,23 +1,18 @@
 //
-//  NewGameFindFriendsTableViewCell.swift
+//  NewGameFindPlayerTableViewCell.swift
 //  Docha
 //
-//  Created by Mathis D on 19/09/2016.
+//  Created by Mathis D on 18/10/2016.
 //  Copyright © 2016 Slymoover. All rights reserved.
 //
 
 import Foundation
 
-protocol NewGameFindFriendsTableViewCellDelegate {
-    func challengeFriendButtonTouched(withPseudo pseudo: String!)
-}
-
-class NewGameFindFriendsTableViewCell: UITableViewCell {
+class NewGameFindPlayerTableViewCell: UITableViewCell {
     
     var delegate: NewGameFindFriendsTableViewCellDelegate?
     
     @IBOutlet weak var friendPseudoLabel: UILabel!
-    @IBOutlet weak var friendNameLabel: UILabel!
     @IBOutlet weak var friendAvatarImageView: UIImageView!
     
     @IBAction func challengeFriendButtonTouched(_ sender: UIButton) {

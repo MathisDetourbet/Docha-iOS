@@ -10,10 +10,10 @@ import Foundation
 
 class NewGameFindByPseudoViewController: GameViewController, UITableViewDataSource, UITableViewDelegate, NewGameFindFriendsTableViewCellDelegate, UITextFieldDelegate {
     
-    var playersList: [AnyObject]?
+    var players: [Player]?
     
     @IBOutlet weak var tableView: UITableView!
-    @IBOutlet weak var heightTableViewConstraint: NSLayoutConstraint!
+    @IBOutlet weak var searchTextField: UITextField!
     
 //MARK: Life View Cycle
     
@@ -21,12 +21,17 @@ class NewGameFindByPseudoViewController: GameViewController, UITableViewDataSour
         super.viewDidLoad()
         
         configNavigationBarWithTitle("Rechercher un joueur")
-        
-        if let playersList = self.playersList {
-            heightTableViewConstraint.constant = CGFloat(playersList.count) * tableView.rowHeight
-            
-        } else {
-            heightTableViewConstraint.constant = 0.0
+        tableView.tableFooterView = UIView()
+    }
+    
+    func findPlayer() {
+        MatchManager.sharedInstance.findPlayer(byPseudo: searchTextField.text!,
+            success: { (players) in
+                self.players = players
+                self.tableView.reloadData()
+                
+            }) { (error) in
+                PopupManager.sharedInstance.showErrorPopup(message: Constants.PopupMessage.ErrorMessage.kErrorOccured)
         }
     }
     
@@ -34,7 +39,7 @@ class NewGameFindByPseudoViewController: GameViewController, UITableViewDataSour
 //MARK: UITable View Data Source
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if let players = self.playersList {
+        if let players = self.players {
             return players.count
             
         } else {
@@ -46,9 +51,27 @@ class NewGameFindByPseudoViewController: GameViewController, UITableViewDataSour
         return 1
     }
     
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 70.0
+    }
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "idNewGameFindFriendsCell", for: indexPath) as! NewGameFindFriendsTableViewCell
-        cell.delegate = self
+        let cell = tableView.dequeueReusableCell(withIdentifier: "idNewGameFindPlayerCell", for: indexPath) as! NewGameFindPlayerTableViewCell
+        
+        if let players = self.players {
+            let player = players[indexPath.row]
+            cell.friendPseudoLabel.text = player.pseudo
+            
+            if player.playerType == .facebookPlayer {
+                cell.friendAvatarImageView.af_setImage(withURL: URL(string: player.avatarUrl)!)
+                
+            } else {
+                cell.friendAvatarImageView.image = UIImage(named: "\(player.avatarUrl)_medium")
+            }
+            
+            cell.delegate = self
+        }
+        
         return cell
     }
     
@@ -60,15 +83,15 @@ class NewGameFindByPseudoViewController: GameViewController, UITableViewDataSour
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 25.0
+        return 28.0
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let headerView = UIView(frame: CGRect(x: 0.0, y: 0.0, width: tableView.frame.width, height: 28))
-        headerView.backgroundColor = UIColor.clear
+        headerView.backgroundColor = self.view.backgroundColor
         let sectionLabel = UILabel(frame: CGRect(x: 15.0, y: 5.0, width: 100.0, height: 28.0))
         sectionLabel.textColor = UIColor.darkBlueDochaColor()
-        if let numberOfFriends = playersList?.count {
+        if let numberOfFriends = players?.count {
             sectionLabel.text = "\(numberOfFriends) RÉSULTATS"
         } else {
             sectionLabel.text = "0 RÉSULTATS"
@@ -82,15 +105,28 @@ class NewGameFindByPseudoViewController: GameViewController, UITableViewDataSour
     
 //MARK: NewGameFindFriendsTableViewCell Delegate
     
-    func challengeFriendButtonTouched() {
-        
+    func challengeFriendButtonTouched(withPseudo pseudo: String!) {
+        MatchManager.sharedInstance.postMatch(withOpponentPseudo: pseudo,
+            success: { (match) in
+            
+                let newGameCategorieSelectionVC = self.storyboard?.instantiateViewController(withIdentifier: "idNewGameCategorieSelectionViewController") as! NewGameCategorieSelectionViewController
+                MatchManager.sharedInstance.currentMatch = match
+                self.navigationController?.pushViewController(newGameCategorieSelectionVC, animated: true)
+                
+            }) { (error) in
+                PopupManager.sharedInstance.showErrorPopup(message: Constants.PopupMessage.ErrorMessage.kErrorOccured)
+        }
     }
     
     
 //MARK: @IBActions Methods
     
     @IBAction func findButtonTouched(_ sender: UIButton) {
-        
+        if let searchText = searchTextField.text {
+            if searchText.isEmpty == false {
+                findPlayer()
+            }
+        }
     }
     
     @IBAction func goBackButtonTouched(_ sender: UIBarButtonItem) {

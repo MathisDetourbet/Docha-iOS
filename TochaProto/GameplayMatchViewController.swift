@@ -17,6 +17,7 @@ enum RoundTypeCell {
 class GameplayMatchViewController: GameViewController, UITableViewDelegate, UITableViewDataSource, RoundYourTurnCellDelegate {
     
     var match: Match?
+    var currentRound: Round?
     var sortedRounds: [(roundType: RoundTypeCell, roundData: Round)] = []
     
     @IBOutlet var tableView: UITableView!
@@ -26,14 +27,35 @@ class GameplayMatchViewController: GameViewController, UITableViewDelegate, UITa
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        tableView.tableFooterView = UIView()
+        
         self.navigationController?.isNavigationBarHidden = false
         configNavigationBarWithTitle("Match")
         
         sortRounds()
         
         if let match = match {
+            
             if match.rounds.isEmpty == false {
-                if match.rounds.last!.status == RoundStatus.waiting {
+                
+                // Get the current round
+                for round in match.rounds {
+                    if round.userScore == nil && round.opponentScore == nil {
+                        break
+                        
+                    } else {
+                        currentRound = round
+                    }
+                }
+                
+                if currentRound == nil {
+                    currentRound = match.rounds.first
+                }
+                
+                if (currentRound?.userScore == nil) && match.status == .userTurn {
+                    self.playButton.isEnabled = true
+                    
+                } else {
                     self.playButton.isEnabled = false
                 }
             }
@@ -107,12 +129,14 @@ class GameplayMatchViewController: GameViewController, UITableViewDelegate, UITa
             
             if let userPlayer = userData.user, let userAvatarImage = userData.avatarImage {
                 cell.userNameLabel.text = userPlayer.pseudo
+                cell.userNameLabel.textColor = UIColor.darkBlueDochaColor()
                 cell.userAvatarImageView.image = userAvatarImage.roundCornersToCircle(withBorder: 10.0, color: UIColor.white)
             }
             
             if let match = match {
                 let opponentPlayer = match.opponent
                 cell.opponentNameLabel.text = opponentPlayer.pseudo
+                cell.opponentNameLabel.textColor = UIColor.darkBlueDochaColor()
                 
                 if let opponentAvatarImage = opponentPlayer.avatarImage {
                     cell.opponentAvatarImageView.image = opponentAvatarImage.roundCornersToCircle(withBorder: 10.0, color: UIColor.white)
@@ -164,7 +188,11 @@ class GameplayMatchViewController: GameViewController, UITableViewDelegate, UITa
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 25.0
+        if section == 0 {
+            return 0.0
+        }
+        
+        return 35.0
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
@@ -172,14 +200,14 @@ class GameplayMatchViewController: GameViewController, UITableViewDelegate, UITa
             return nil
             
         } else {
-            print(self.view.frame)
             let headerView = UIView(frame: CGRect(x: 0.0, y: 0.0, width: tableView.frame.width, height: 35.0))
             headerView.backgroundColor = UIColor.clear
-            let sectionLabel = UILabel()
-            sectionLabel.center = CGPoint(x: tableView.center.x, y: headerView.frame.size.height/2)
+            let sectionLabel = UILabel(frame: CGRect(x: 0.0, y: 5.0, width: 70.0, height: headerView.frame.size.height))
             sectionLabel.textColor = UIColor.darkBlueDochaColor()
+            sectionLabel.font = UIFont(name: "Montserrat-ExtraBold", size: 12.0)
             sectionLabel.text = "ROUND \(section)"
-            sectionLabel.font = UIFont(name: "Montserrat-Semibold", size: 12.0)
+            sectionLabel.sizeToFit()
+            sectionLabel.center = CGPoint(x: tableView.center.x, y: headerView.frame.size.height - sectionLabel.frame.size.height/2)
             headerView.addSubview(sectionLabel)
             
             return headerView
@@ -196,16 +224,22 @@ class GameplayMatchViewController: GameViewController, UITableViewDelegate, UITa
             self.navigationController?.pushViewController(launcherVC, animated: true)
             
         } else {
-            let newGameCategorieSelectionVC = self.storyboard?.instantiateViewController(withIdentifier: "idNewGameCategorieSelectionViewController") as! NewGameCategorieSelectionViewController
-            MatchManager.sharedInstance.currentMatch = match
-            self.navigationController?.pushViewController(newGameCategorieSelectionVC, animated: true)
+            
         }
     }
     
 //MARK: @IBActions
     
     @IBAction func playButtonTouched(_ sender: UIButton) {
-        
+        if (currentRound?.category == nil) && (match?.status == .userTurn) {
+            
+            let newGameCategorieSelectionVC = self.storyboard?.instantiateViewController(withIdentifier: "idNewGameCategorieSelectionViewController") as! NewGameCategorieSelectionViewController
+            MatchManager.sharedInstance.currentMatch = match
+            self.navigationController?.pushViewController(newGameCategorieSelectionVC, animated: true)
+            
+        } else {
+            
+        }
     }
     
     @IBAction func withdrawButtonTouched(_ sender: UIButton) {
