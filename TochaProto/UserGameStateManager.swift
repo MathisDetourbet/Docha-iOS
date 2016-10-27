@@ -66,7 +66,7 @@ class UserGameStateManager {
     func getUserLevel() -> Int {
         userSession = UserSessionManager.sharedInstance.currentSession()
         if let userSession = self.userSession {
-            return userSession.levelMaxUnlocked
+            return userSession.levelMaxUnlocked!
         }
         
         return 1

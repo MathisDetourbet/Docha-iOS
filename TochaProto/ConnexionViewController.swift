@@ -132,7 +132,7 @@ class ConnexionViewController: RootViewController {
     @IBAction func facebookButtonTouched(_ sender: UIButton) {
         let fbLoginManager : FBSDKLoginManager = FBSDKLoginManager()
         
-        fbLoginManager.logIn(withReadPermissions: ["email", "public_profile", "user_friends"],
+        fbLoginManager.logIn(withReadPermissions: ["email", "public_profile", "user_friends", "user_birthday"],
                                                 from: self)
         { (result, error) -> Void in
             

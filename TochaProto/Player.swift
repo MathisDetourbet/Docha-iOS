@@ -17,35 +17,44 @@ enum PlayerType {
 
 class Player {
     var pseudo: String
+    var fullName: String?
     var gender: Gender
     var avatarUrl: String
     var avatarImage: UIImage?
     var playerType: PlayerType
-    var level: Int?
-    var dochos: Int
+    var level: Int? = 0
+    var dochos: Int = 0
+    var perfects: Int = 0
+    var isOnline: Bool = false
     
-    init(pseudo: String, gender: Gender, avatarUrl: String, avatarImage: UIImage? = nil, playerType: PlayerType, level: Int?, dochos: Int) {
+    init(pseudo: String, fullName: String?, gender: Gender, avatarUrl: String, avatarImage: UIImage? = nil, playerType: PlayerType, level: Int?, dochos: Int, perfects: Int, isOnline: Bool) {
         self.pseudo = pseudo
+        self.fullName = fullName
         self.gender = gender
         self.avatarUrl = avatarUrl
         self.avatarImage = avatarImage
         self.playerType = playerType
         self.level = level
         self.dochos = dochos
+        self.perfects = perfects
+        self.isOnline = isOnline
     }
     
     convenience init(jsonObject: JSON) {
         
         if jsonObject == nil {
             let defaultPlayer = Player.defaultPlayer()
-            self.init(pseudo: defaultPlayer.pseudo, gender: defaultPlayer.gender, avatarUrl: defaultPlayer.avatarUrl, playerType: .defaultPlayer, level: nil, dochos: 0)
+            self.init(pseudo: defaultPlayer.pseudo, fullName: defaultPlayer.fullName, gender: defaultPlayer.gender, avatarUrl: defaultPlayer.avatarUrl, playerType: .defaultPlayer, level: nil, dochos: 0, perfects: defaultPlayer.perfects, isOnline: defaultPlayer.isOnline)
             return
         }
         
         let pseudo = jsonObject[UserDataKey.kUsername].stringValue
+        let fullName = jsonObject[UserDataKey.kFullName].string
         let gender = Gender(rawValue: jsonObject[UserDataKey.kGender].stringValue) ?? .universal
         let level = jsonObject[UserDataKey.kLevelMaxUnlocked].int
         let dochos = jsonObject[UserDataKey.kDochos].intValue
+        let perfects = jsonObject[UserDataKey.kPerfectPriceCpt].intValue
+        let isOnline = jsonObject[UserDataKey.kIsOnline].boolValue
         
         var avatarUrl: String!
         var playerType: PlayerType?
@@ -56,19 +65,20 @@ class Player {
                 playerType = .facebookPlayer
                 
             } else {
+                avatarUrl = Player.getAvatarDochaPath(for: gender)
                 playerType = .emailPlayer
             }
             
         } else {
             avatarUrl = Player.getAvatarDochaPath(for: gender)
-            playerType = .defaultPlayer
+            playerType = .emailPlayer
         }
         
-        self.init(pseudo: pseudo, gender: gender, avatarUrl: avatarUrl, playerType: playerType!, level: level, dochos: dochos)
+        self.init(pseudo: pseudo, fullName: fullName, gender: gender, avatarUrl: avatarUrl, playerType: playerType!, level: level, dochos: dochos, perfects: perfects, isOnline: isOnline)
     }
     
     convenience init(player: Player) {
-        self.init(pseudo: player.pseudo, gender: player.gender, avatarUrl: player.avatarUrl, avatarImage: player.avatarImage, playerType: player.playerType, level: player.level, dochos: player.dochos)
+        self.init(pseudo: player.pseudo, fullName: player.fullName, gender: player.gender, avatarUrl: player.avatarUrl, avatarImage: player.avatarImage, playerType: player.playerType, level: player.level, dochos: player.dochos, perfects: player.perfects, isOnline: player.isOnline)
     }
     
     class func getAvatarDochaPath(for gender: Gender) -> String {
@@ -80,6 +90,6 @@ class Player {
     }
     
     class func defaultPlayer() -> Player {
-        return Player(pseudo: "Docher", gender: .universal, avatarUrl: "avatar_man", playerType: .defaultPlayer, level: nil, dochos: 0)
+        return Player(pseudo: "Docher", fullName: nil, gender: .universal, avatarUrl: "avatar_man", playerType: .defaultPlayer, level: nil, dochos: 0, perfects: 0, isOnline: false)
     }
 }

@@ -14,7 +14,7 @@ import Fabric
 import Crashlytics
 import Amplitude_iOS
 
-public var testing = true
+public var testing = false
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -23,6 +23,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        
+        registerForPushNotifications(application: application)
         
         IQKeyboardManager.sharedManager().enable = true
         
@@ -36,11 +38,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         // Amplitude Init
         Amplitude.instance().initializeApiKey("792a2eced82bad1ee03a8f0f874c70f5")
-        
-        registerForPushNotifications(application: application)
-        if let _ = launchOptions?[.remoteNotification] as? [String: AnyObject] {
-            //(window?.rootViewController as? UITabBarController)?.selectedIndex = 1
-        }
         
         UserGameStateManager.sharedInstance.authenticateLocalPlayer()
         
@@ -96,6 +93,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
         let deviceTokenString = deviceToken.reduce("", {$0 + String(format: "%02X", $1)})
+        UserSessionManager.sharedInstance.save(deviceToken: deviceTokenString)
         print("Device Token:", deviceTokenString)
     }
     

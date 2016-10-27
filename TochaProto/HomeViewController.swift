@@ -9,7 +9,6 @@
 import Foundation
 import AlamofireImage
 import Kingfisher
-import Amplitude_iOS
 import FBSDKShareKit
 import SwiftyJSON
 import SWTableViewCell
@@ -27,8 +26,8 @@ class HomeViewController: GameViewController, UITableViewDelegate, UITableViewDa
     let idsTableViewCell: [String] = ["idHomeUserTurnTableViewCell", "idHomeOpponentTurnTableViewCell", "idHomeGameFinishedTableViewCell", "idHomeFriendsTableViewCell"]
     let sectionsNames = ["TON TOUR", "SON TOUR", "TERMINÉS", "AMIS"]
     
-    let numberOfRows = [2, 1, 2, 1]
     var sortedMatch: [[Match]] = []
+    var friends: [Player] = []
     
     var isBubbleOpen: Bool = false
     
@@ -50,6 +49,7 @@ class HomeViewController: GameViewController, UITableViewDelegate, UITableViewDa
         
         loadUserInfos()
         loadAllMatch(withCompletion: nil)
+        buildUI()
         self.navigationController?.isNavigationBarHidden = true
     }
     
@@ -64,9 +64,6 @@ class HomeViewController: GameViewController, UITableViewDelegate, UITableViewDa
         checkForTutorial()
         loadUserInfos()
         buildUI()
-        
-        // Amplitude
-        Amplitude.instance().logEvent("TabNavHome")
     }
     
     func buildUI() {
@@ -95,10 +92,6 @@ class HomeViewController: GameViewController, UITableViewDelegate, UITableViewDa
             )
         }
         
-        let userLevel = UserGameStateManager.sharedInstance.getUserLevel()
-        userLevelLabel.text = "Niveau \(userLevel)"
-        userLevelBar.updateLevelBarWithWidth(CGFloat(UserGameStateManager.sharedInstance.getExperienceProgressionInPercent()))
-        
         bubbleDochosImageView.isHidden = true
         bubblePerfectsImageView.isHidden = true
     }
@@ -123,13 +116,18 @@ class HomeViewController: GameViewController, UITableViewDelegate, UITableViewDa
     
     func loadUserInfos() {
         let userData = UserSessionManager.sharedInstance.getUserInfosAndAvatarImage(withImageSize: .large)
-        userNameLabel.text = userData.user?.pseudo ?? Player.defaultPlayer().pseudo
         
-        let image = userData.avatarImage ?? #imageLiteral(resourceName: "avatar_man_large")
-        userAvatarImageView.image = image.roundCornersToCircle(withBorder: 10.0, color: UIColor.white)
-        
-        userDochosLabel.text = "\(userData.user!.dochos)"
-        userPerfectLabel.text = "\(userData.user!.perfectPriceCpt)"
+        if let user = userData.user, let avatarImage = userData.avatarImage {
+            userNameLabel.text = user.pseudo
+            
+            let image = avatarImage
+            userAvatarImageView.image = image.roundCornersToCircle(withBorder: 10.0, color: UIColor.white)
+            
+            userDochosLabel.text = "\(user.dochos)"
+            userPerfectLabel.text = "\(user.perfectPriceCpt)"
+            userLevelLabel.text = "Niveau \(user.levelMaxUnlocked!)"
+            userLevelBar.updateLevelBar(withLevelPercent: CGFloat(user.levelPercentage!))
+        }
     }
     
     func loadAllMatch(withCompletion completion: (() -> Void)?) {
@@ -167,6 +165,20 @@ class HomeViewController: GameViewController, UITableViewDelegate, UITableViewDa
         return sortedMatch
     }
     
+    func loadFriends(withCompletion completion: (() -> Void)?) {
+        
+    }
+    
+    func isSortedMatchEmpty() -> Bool {
+        for array in sortedMatch {
+            if array.isEmpty == false {
+                return false
+            }
+        }
+        
+        return true
+    }
+    
     
 //MARK: Table View Controller - Data Source Methods
     
@@ -175,6 +187,13 @@ class HomeViewController: GameViewController, UITableViewDelegate, UITableViewDa
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
+        if isSortedMatchEmpty() {
+            if UserSessionManager.sharedInstance.isFacebookUser() {
+                return 0
+                
+            }
+        }
+        
         return sortedMatch.count
     }
     
@@ -188,22 +207,38 @@ class HomeViewController: GameViewController, UITableViewDelegate, UITableViewDa
             
             // TON TOUR
             let cell = tableView.dequeueReusableCell(withIdentifier: idsTableViewCell[(indexPath as NSIndexPath).section], for: indexPath) as! HomeUserTurnTableViewCell
-            let match = sortedMatch[HomeSectionName.userTurn.rawValue][indexPath.row]
             
-            cell.opponentNameLabel.text = match.opponent.pseudo
-            cell.opponentLevelLabel.text = "Niveau 1 (fake)"
+            let match = sortedMatch[HomeSectionName.userTurn.rawValue][indexPath.row]
+            let opponent = match.opponent
+            
+            cell.opponentNameLabel.text = opponent.pseudo
             cell.opponentScoreLabel.text = String(match.opponentScore ?? 0)
             cell.userScoreLabel.text = String(match.userScore ?? 0)
-            
-            if match.opponent.playerType == .facebookPlayer {
-                cell.opponentImageView.af_setImage(withURL: URL(string: match.opponent.avatarUrl)!)
-                
-            } else {
-                cell.opponentImageView.image = UIImage(named: "\(match.opponent.avatarUrl)_medium")
-            }
-            
+            cell.match = match
             cell.delegateUserTurn = self
             cell.delegate = self
+            
+            if let level = opponent.level {
+                cell.opponentLevelLabel.text = "Niveau \(level)"
+                
+            } else {
+                cell.opponentLevelLabel.text = "Niveau ?"
+            }
+            
+            if opponent.playerType == .facebookPlayer {
+                cell.opponentImageView.kf.setImage(with: URL(string: opponent.avatarUrl)!,
+                    completionHandler: { (image, error, _, _) in
+                        if image != nil {
+                            MatchManager.sharedInstance.opponentPlayer?.avatarImage = image
+                            cell.opponentImageView.image = image!.roundCornersToCircle()
+                        }
+                    }
+                )
+                
+            } else {
+                cell.opponentImageView.image = UIImage(named: "\(opponent.avatarUrl)_medium")
+            }
+            
             cell.rightUtilityButtons = [buildDeleteButtonCell()]
             
             return cell
@@ -212,22 +247,36 @@ class HomeViewController: GameViewController, UITableViewDelegate, UITableViewDa
             
             // SON TOUR
             let cell = tableView.dequeueReusableCell(withIdentifier: idsTableViewCell[(indexPath as NSIndexPath).section], for: indexPath) as! HomeOpponentTurnTableViewCell
-            let match = sortedMatch[HomeSectionName.opponentTurn.rawValue][indexPath.row]
             
-            cell.opponentNameLabel.text = match.opponent.pseudo
-            cell.opponentLevelLabel.text = "Niveau 1 (fake)"
+            let match = sortedMatch[HomeSectionName.opponentTurn.rawValue][indexPath.row]
+            let opponent = match.opponent
+            
+            cell.opponentNameLabel.text = opponent.pseudo
             cell.opponentScoreLabel.text = String(match.opponentScore ?? 0)
             cell.userScoreLabel.text = String(match.userScore ?? 0)
             cell.delegate = self
             
-            if match.opponent.playerType == .facebookPlayer {
-                cell.opponentImageView.af_setImage(withURL: URL(string: match.opponent.avatarUrl)!)
+            if let level = opponent.level {
+                cell.opponentLevelLabel.text = "Niveau \(level)"
                 
             } else {
-                cell.opponentImageView.image = UIImage(named: "\(match.opponent.avatarUrl)_medium")
+                cell.opponentLevelLabel.text = "Niveau ?"
             }
             
-            if match.status == .opponentTurn {
+            if opponent.playerType == .facebookPlayer {
+                cell.opponentImageView.kf.setImage(with: URL(string: opponent.avatarUrl)!,
+                    completionHandler: { (image, error, _, _) in
+                        if image != nil {
+                            cell.opponentImageView.image = image!.roundCornersToCircle()
+                        }
+                    }
+                )
+                
+            } else {
+                cell.opponentImageView.image = UIImage(named: "\(opponent.avatarUrl)_medium")
+            }
+            
+            if match.status == .opponentTurn && match.opponent.playerType != .defaultPlayer {
                 cell.rightUtilityButtons = [buildDeleteButtonCell()]
             }
             
@@ -239,18 +288,31 @@ class HomeViewController: GameViewController, UITableViewDelegate, UITableViewDa
             let cell = tableView.dequeueReusableCell(withIdentifier: idsTableViewCell[(indexPath as NSIndexPath).section], for: indexPath) as! HomeGameFinishedTableViewCell
             
             let match = sortedMatch[HomeSectionName.finished.rawValue][indexPath.row]
+            let opponent = match.opponent
             
-            cell.opponentNameLabel.text = match.opponent.pseudo
-            cell.opponentLevelLabel.text = "Niveau 1 (fake)"
+            cell.opponentNameLabel.text = opponent.pseudo
             cell.opponentScoreLabel.text = String(match.opponentScore!)
             cell.userScoreLabel.text = String(match.userScore!)
             cell.delegate = self
             
-            if match.opponent.playerType == .facebookPlayer {
-                cell.opponentImageView.af_setImage(withURL: URL(string: match.opponent.avatarUrl)!)
+            if let level = opponent.level {
+                cell.opponentLevelLabel.text = "Niveau \(level)"
                 
             } else {
-                cell.opponentImageView.image = UIImage(named: "\(match.opponent.avatarUrl)_medium")
+                cell.opponentLevelLabel.text = "Niveau ?"
+            }
+            
+            if opponent.playerType == .facebookPlayer {
+                cell.opponentImageView.kf.setImage(with: URL(string: opponent.avatarUrl)!,
+                    completionHandler: { (image, error, _, _) in
+                        if image != nil {
+                            cell.opponentImageView.image = image!.roundCornersToCircle()
+                        }
+                    }
+                )
+                
+            } else {
+                cell.opponentImageView.image = UIImage(named: "\(opponent.avatarUrl)_medium")
             }
             
             cell.matchResult = match.getMatchResult()
@@ -294,7 +356,7 @@ class HomeViewController: GameViewController, UITableViewDelegate, UITableViewDa
         
         let sectionLabel = UILabel(frame: CGRect(x: 10.0, y: 5.0, width: 100.0, height: 28.0))
         sectionLabel.textColor = UIColor.darkBlueDochaColor()
-        sectionLabel.text = self.sectionsNames[section]
+        sectionLabel.text = sectionsNames[section]
         sectionLabel.font = UIFont(name: "Montserrat-Semibold", size: 12)
         headerView.addSubview(sectionLabel)
         
@@ -335,12 +397,19 @@ class HomeViewController: GameViewController, UITableViewDelegate, UITableViewDa
     
     func playButtonTouched(withMatch match: Match?) {
         if let match = match {
-            let currentRound = match.getCurrentRound()
+            let currentRound = match.rounds.last
             
-            if let category = currentRound.category {
-                let launcherVC = self.storyboard?.instantiateViewController(withIdentifier: "idGameplayLauncherViewController") as! GameplayLauncherViewController
-                launcherVC.categorySelected = category
-                self.navigationController?.pushViewController(launcherVC, animated: true)
+            if let category = currentRound?.category {
+                MatchManager.sharedInstance.loadPlayersInfos(
+                    withCompletion: {
+                        
+                        let launcherVC = self.storyboard?.instantiateViewController(withIdentifier: "idGameplayLauncherViewController") as! GameplayLauncherViewController
+                        launcherVC.categorySelected = category
+                        MatchManager.sharedInstance.currentMatch = match
+                        MatchManager.sharedInstance.opponentPlayer = match.opponent
+                        self.navigationController?.pushViewController(launcherVC, animated: true)
+                    }
+                )
                 
             } else {
                 let newGameCategorieSelectionVC = self.storyboard?.instantiateViewController(withIdentifier: "idNewGameCategorieSelectionViewController") as! NewGameCategorieSelectionViewController
@@ -350,9 +419,11 @@ class HomeViewController: GameViewController, UITableViewDelegate, UITableViewDa
         }
     }
     
+    
 //MARK: HomeFriendsCellDelegate Methods
     
     func displayAllFriendsButtonTouched() {}
+    
     
 //MARK: HomeBadgeDelegate Methods
     

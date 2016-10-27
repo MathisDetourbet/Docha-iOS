@@ -63,7 +63,13 @@ class NewGameFindByPseudoViewController: GameViewController, UITableViewDataSour
             cell.friendPseudoLabel.text = player.pseudo
             
             if player.playerType == .facebookPlayer {
-                cell.friendAvatarImageView.af_setImage(withURL: URL(string: player.avatarUrl)!)
+                cell.friendAvatarImageView.kf.setImage(with: URL(string: player.avatarUrl)!,
+                    completionHandler: { (image, error, _, _) in
+                        if image != nil {
+                            cell.friendAvatarImageView.image = image!.roundCornersToCircle()
+                        }
+                    }
+                )
                 
             } else {
                 cell.friendAvatarImageView.image = UIImage(named: "\(player.avatarUrl)_medium")
@@ -108,7 +114,7 @@ class NewGameFindByPseudoViewController: GameViewController, UITableViewDataSour
     func challengeFriendButtonTouched(withPseudo pseudo: String!) {
         MatchManager.sharedInstance.postMatch(withOpponentPseudo: pseudo,
             success: { (match) in
-            
+                
                 let newGameCategorieSelectionVC = self.storyboard?.instantiateViewController(withIdentifier: "idNewGameCategorieSelectionViewController") as! NewGameCategorieSelectionViewController
                 MatchManager.sharedInstance.currentMatch = match
                 self.navigationController?.pushViewController(newGameCategorieSelectionVC, animated: true)

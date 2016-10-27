@@ -11,7 +11,6 @@ import SwiftyJSON
 
 class UserSession: User, NSCoding {
     var authToken: String?
-    var productsIDPlayed: [Int]?
     
     override init() {
         super.init()
@@ -27,17 +26,19 @@ class UserSession: User, NSCoding {
         let categoriesPrefered = aDecoder.decodeObject(forKey: Constants.UserDefaultsKey.kUserInfosCategoryPrefered) as? [String]
         let avatar = aDecoder.decodeObject(forKey: Constants.UserDefaultsKey.kUserInfosAvatarUrl) as? String
         let levelMaxUnlocked = aDecoder.decodeInteger(forKey: Constants.UserDefaultsKey.kUserInfosLevelMaxUnlocked) as Int
+        let levelPercentage = aDecoder.decodeDouble(forKey: Constants.UserDefaultsKey.kUserInfosLevelPercentage) as Double
         let dochos = aDecoder.decodeInteger(forKey: Constants.UserDefaultsKey.kUserInfosDochos) as Int
         let experience = aDecoder.decodeInteger(forKey: Constants.UserDefaultsKey.kUserInfosExperience) as Int
         let perfectPriceCpt = aDecoder.decodeInteger(forKey: Constants.UserDefaultsKey.kUserInfosPerfectPriceCpt) as Int
+        let rank = aDecoder.decodeInteger(forKey: Constants.UserDefaultsKey.kUserInfosRank) as Int
         let authToken = aDecoder.decodeObject(forKey: Constants.UserDefaultsKey.kUserInfosAuthToken) as? String
-        let productsIDPlayed = aDecoder.decodeObject(forKey: Constants.UserDefaultsKey.kProductsIDPlayed) as? [Int]
         let badgesUnlockedIdentifiers = aDecoder.decodeObject(forKey: Constants.UserDefaultsKey.kUserInfosBadgesUnlockedIdentifiers) as? [String]
+        let notifications = aDecoder.decodeBool(forKey: Constants.UserDefaultsKey.kUserInfosNotifications) as Bool
+        let notificationTokens = aDecoder.decodeObject(forKey: Constants.UserDefaultsKey.kuserInfosNotificationTokens) as! [String]
         
-        super.init(pseudo: pseudo, lastName: lastName, firstName: firstName, email: email, gender: gender, dateBirthday: dateBirthday, categoriesPrefered: categoriesPrefered, avatar: avatar, levelMaxUnlocked: levelMaxUnlocked, dochos: dochos, experience: experience, perfectPriceCpt: perfectPriceCpt, badgesUnlockedIdentifiers: badgesUnlockedIdentifiers)
+        super.init(pseudo: pseudo, lastName: lastName, firstName: firstName, email: email, gender: Gender(rawValue: gender!), dateBirthday: dateBirthday, categoriesPrefered: categoriesPrefered ?? [], avatar: avatar, levelMaxUnlocked: levelMaxUnlocked, levelPercentage: levelPercentage, dochos: dochos, experience: experience, perfectPriceCpt: perfectPriceCpt, rank: UInt(rank), badgesUnlockedIdentifiers: badgesUnlockedIdentifiers, notifications: notifications, notificationTokens: notificationTokens)
         
         self.authToken = authToken
-        self.productsIDPlayed = productsIDPlayed
     }
     
     func encode(with aCoder: NSCoder) {
@@ -45,17 +46,20 @@ class UserSession: User, NSCoding {
         aCoder.encode(lastName, forKey: Constants.UserDefaultsKey.kUserInfosLastName)
         aCoder.encode(firstName, forKey: Constants.UserDefaultsKey.kUserInfosFirstName)
         aCoder.encode(email, forKey: Constants.UserDefaultsKey.kUserInfosEmail)
-        aCoder.encode(gender, forKey: Constants.UserDefaultsKey.kUserInfosGender)
+        aCoder.encode(gender?.rawValue, forKey: Constants.UserDefaultsKey.kUserInfosGender)
         aCoder.encode(dateBirthday, forKey: Constants.UserDefaultsKey.kUserInfosDateBirthday)
         aCoder.encode(categoriesPrefered, forKey: Constants.UserDefaultsKey.kUserInfosCategoryPrefered)
-        aCoder.encode(levelMaxUnlocked, forKey: Constants.UserDefaultsKey.kUserInfosLevelMaxUnlocked)
+        aCoder.encode(levelMaxUnlocked!, forKey: Constants.UserDefaultsKey.kUserInfosLevelMaxUnlocked)
+        aCoder.encode(levelPercentage!, forKey: Constants.UserDefaultsKey.kUserInfosLevelPercentage)
         aCoder.encode(dochos, forKey: Constants.UserDefaultsKey.kUserInfosDochos)
         aCoder.encode(experience, forKey: Constants.UserDefaultsKey.kUserInfosExperience)
         aCoder.encode(perfectPriceCpt, forKey: Constants.UserDefaultsKey.kUserInfosPerfectPriceCpt)
+        aCoder.encode(Int(rank), forKey: Constants.UserDefaultsKey.kUserInfosRank)
         aCoder.encode(avatarUrl, forKey: Constants.UserDefaultsKey.kUserInfosAvatarUrl)
         aCoder.encode(authToken, forKey: Constants.UserDefaultsKey.kUserInfosAuthToken)
-        aCoder.encode(productsIDPlayed, forKey: Constants.UserDefaultsKey.kProductsIDPlayed)
         aCoder.encode(badgesUnlockedIdentifiers, forKey: Constants.UserDefaultsKey.kUserInfosBadgesUnlockedIdentifiers)
+        aCoder.encode(notifications, forKey: Constants.UserDefaultsKey.kUserInfosNotifications)
+        aCoder.encode(notificationTokens, forKey: Constants.UserDefaultsKey.kuserInfosNotificationTokens)
     }
     
     func saveSession() {
@@ -109,7 +113,7 @@ class UserSession: User, NSCoding {
         if let firstName = self.firstName { dataUser[UserDataKey.kFirstName] = firstName as AnyObject? }
         if let email = self.email { dataUser[UserDataKey.kEmail] = email as AnyObject? }
         
-        if let gender = self.gender { dataUser[UserDataKey.kGender] = gender as AnyObject? }
+        if let gender = self.gender { dataUser[UserDataKey.kGender] = gender.rawValue as AnyObject? }
         if let dateBirthday = self.dateBirthday {
             let dateFormatter = DateFormatter()
             dateFormatter.dateFormat = "dd MMMM yyyy"
@@ -122,7 +126,11 @@ class UserSession: User, NSCoding {
         dataUser[UserDataKey.kDochos] = dochos as AnyObject?
         dataUser[UserDataKey.kExperience] = experience as AnyObject?
         dataUser[UserDataKey.kLevelMaxUnlocked] = levelMaxUnlocked as AnyObject?
+        dataUser[UserDataKey.kLevelPercentage] = levelPercentage as AnyObject?
         dataUser[UserDataKey.kPerfectPriceCpt] = perfectPriceCpt as AnyObject?
+        dataUser[UserDataKey.kRank] = rank as AnyObject?
+        dataUser[UserDataKey.kNotifications] = notifications as AnyObject?
+        dataUser[UserDataKey.kNotificationTokens] = notificationTokens as AnyObject?
         
         return dataUser
     }

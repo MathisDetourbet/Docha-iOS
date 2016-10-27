@@ -19,9 +19,19 @@ class PreferencesNormalTableViewCell: UITableViewCell {
     }
 }
 
+protocol PreferencesSwitchCellDelegate {
+    func switchValueChanged(_ value: Bool)
+}
+
 class PreferencesSwitchTableViewCell: UITableViewCell {
+    
+    var delegate: PreferencesSwitchCellDelegate?
     
     @IBOutlet weak var switchButton: UISwitch!
     @IBOutlet weak var iconImageView: UIImageView!
     @IBOutlet weak var titleLabel: UILabel!
+    
+    @IBAction func switchValueChanged(_ sender: UISwitch) {
+        self.delegate?.switchValueChanged(sender.isOn)
+    }
 }

@@ -121,4 +121,33 @@ class UserRequest: DochaRequest {
                 success()
             }
     }
+    
+    func postDeviceToken(withAuthToken authToken: String!, andData data: [String: Any]!, success: @escaping (_ user: User) -> Void, fail failure: @escaping (_ error: Error?) -> Void) {
+        
+        let urlString = Constants.UrlServer.UrlBase + Constants.UrlServer.UrlUser.UrlDeviceToken
+        debugPrint("URL POST Device Token : \(urlString)")
+        
+        let parameters: Parameters = data
+        
+        alamofireManager!.adapter = AccessTokenAdapter(accessToken: authToken)
+        alamofireManager!.request(urlString, method: .post, parameters: parameters, encoding: JSONEncoding.default)
+            .validate(statusCode: 200..<300)
+            .responseJSON { response in
+                
+                guard response.result.isSuccess else {
+                    if let data = response.data {
+                        print("Failure Response: \(String(data: data, encoding: String.Encoding.utf8))")
+                    }
+                    
+                    failure(response.result.error)
+                    return
+                }
+                
+                let jsonResponse = JSON(response.result.value)
+                let user = User()
+                user.initPropertiesWithResponseObject(jsonResponse)
+                
+                success(user)
+        }
+    }
 }

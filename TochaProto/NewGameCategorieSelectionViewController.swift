@@ -13,7 +13,7 @@ class NewGameCategorieSelectionViewController: GameViewController, UICollectionV
     var categoriesDisplayed: [Category] = []
     
     @IBOutlet weak var collectionView: UICollectionView!
-    
+    @IBOutlet weak var userDochosLabel: UILabel!
     
 //MARK: Life View Cycle
     
@@ -22,9 +22,15 @@ class NewGameCategorieSelectionViewController: GameViewController, UICollectionV
         
         buildUI()
         loadCategory(withCompletion: nil)
+        let user = UserSessionManager.sharedInstance.getUserInfosAndAvatarImage().user
+        if let user = user {
+            userDochosLabel.text = "\(user.dochos)"
+        }
     }
     
     func buildUI() {
+        self.navigationController?.isNavigationBarHidden = false
+        configNavigationBarWithTitle("Choisis ta catégorie")
         self.view.backgroundColor = UIColor.lightGrayDochaColor()
         collectionView.backgroundColor = UIColor.lightGrayDochaColor()
     }

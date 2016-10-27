@@ -14,7 +14,7 @@ class PreferencesCategoriesViewController: RootViewController, UICollectionViewD
     let CATEGORY_NUMBER = 10
     let reuseIdentifier = "idPreferencesCategoryCollectionCell"
     
-    let categoriesImagesPathArray = ["lifestyle", "high-tech", "maison_deco", "bijoux_montres", "electromenager", "art", "objets_connectes", "gastronomie_vin", "beauty", "sport"]
+    let categoriesImagesPathArray = ["lifestyle", "high_tech", "maison_deco", "bijoux_montres", "electromenager", "art", "objets_connectes", "gastronomie_vin", "beauty", "sport"]
     let categoriesNames = ["Lifestyle", "High-Tech", "Maison / déco", "Bijoux / Montres", "Électroménager", "Art", "Objets connectés", "Gastronomie", "Beauté", "Sport"]
     var categoriesImages: [UIImage]?
     var categoriesPrefered: [String]? = UserSessionManager.sharedInstance.getUserInfosAndAvatarImage().user?.categoriesPrefered

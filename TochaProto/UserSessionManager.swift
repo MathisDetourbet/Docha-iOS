@@ -56,6 +56,19 @@ class UserSessionManager {
         return UserDefaults.standard.object(forKey: Constants.UserDefaultsKey.kUserSessionObject) != nil
     }
     
+    func save(deviceToken token : String!) {
+        let userDefaults = UserDefaults.standard
+        userDefaults.set(token, forKey: Constants.UserDefaultsKey.kDeviceToken)
+        userDefaults.synchronize()
+    }
+    
+    func getDeviceToken() -> String? {
+        let userDefaults = UserDefaults.standard
+        let token = userDefaults.object(forKey: Constants.UserDefaultsKey.kDeviceToken) as? String
+        
+        return token ?? nil
+    }
+    
     func getAuthToken() -> String? {
         let currentSession = self.currentSession()
         if let currentSession = currentSession {
@@ -93,6 +106,19 @@ class UserSessionManager {
         }
         
         return (nil, nil)
+    }
+    
+    func isFacebookUser() -> Bool {
+        if let currentSession = currentSession() {
+            if currentSession.isKind(of: UserSessionFacebook.self) {
+                return true
+                
+            } else {
+                return false
+            }
+        }
+        
+        return false
     }
     
     
@@ -232,28 +258,26 @@ class UserSessionManager {
         let userSession = self.currentSession()
         if userSession!.isKind(of: UserSessionEmail.self) {
             userRequest?.getUser(withAuthToken: authToken,
-                                 success: { (user) in
-                                    
-                                    userSession!.initPropertiesFromUser(user: user)
-                                    userSession!.saveSession()
-                                    success()
-                                    
+                success: { (user) in
+                    
+                    userSession!.initPropertiesFromUser(user: user)
+                    userSession!.saveSession()
+                    success()
+                    
                 }, fail: { (error) in
-                    self.currentSession()?.deleteSession()
                     failure(error)
                 }
             )
             
         } else if userSession!.isKind(of: UserSessionFacebook.self) {
             userRequest?.getUser(withAuthToken: authToken,
-                                 success: { (user) in
-                                    
-                                    userSession!.initPropertiesFromUser(user: user)
-                                    userSession!.saveSession()
-                                    success()
-                                    
+                success: { (user) in
+                    
+                    userSession!.initPropertiesFromUser(user: user)
+                    userSession!.saveSession()
+                    success()
+                    
                 }, fail: { (error) in
-                    self.currentSession()?.deleteSession()
                     failure(error)
                 }
             )
@@ -302,6 +326,24 @@ class UserSessionManager {
                 
             }, fail: { (error) in
                 failure(error)
+            }
+        )
+    }
+    
+    func setDeviceToken(withData data: [String: Any]!, success: @escaping (_ deviceTokensList: [String]) -> Void, fail failure: ((_ error: Error?) -> Void)?) {
+        
+        guard let authToken = getAuthToken() else {
+            failure?(DochaRequestError.authTokenNotFound)
+            return
+        }
+        
+        userRequest = UserRequest()
+        userRequest?.postDeviceToken(withAuthToken: authToken, andData: data,
+            success: { (user) in
+                success(user.notificationTokens)
+                
+            }, fail: { (error) in
+                failure?(error)
             }
         )
     }

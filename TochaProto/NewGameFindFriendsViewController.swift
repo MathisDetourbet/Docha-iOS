@@ -21,6 +21,7 @@ class NewGameFindFriendsViewController: GameViewController, UITableViewDataSourc
         super.viewDidLoad()
         
         buildUI()
+        getFacebookFriends()
     }
     
     func buildUI() {
@@ -58,6 +59,10 @@ class NewGameFindFriendsViewController: GameViewController, UITableViewDataSourc
         return 1
     }
     
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 70.0
+    }
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = self.tableView.dequeueReusableCell(withIdentifier: "idNewGameFindFriendsCell", for: indexPath) as! NewGameFindFriendsTableViewCell
         
@@ -66,12 +71,17 @@ class NewGameFindFriendsViewController: GameViewController, UITableViewDataSourc
             cell.friendPseudoLabel.text = friend.pseudo
             
             if friend.playerType == .facebookPlayer {
-                cell.friendAvatarImageView.af_setImage(withURL: URL(string: friend.avatarUrl)!)
-                
-            } else {
-                cell.friendAvatarImageView.image = UIImage(named: "\(friend.avatarUrl)_medium")
+                cell.friendAvatarImageView.kf.setImage(with: URL(string: friend.avatarUrl)!,
+                    completionHandler: { (image, error, _, _) in
+                        if image != nil {
+                            cell.friendAvatarImageView.image = image!.roundCornersToCircle()
+                        }
+                    }
+                )
             }
-            
+            if let fullName = friend.fullName {
+                cell.friendNameLabel.text = fullName
+            }
             cell.delegate = self
         }
         
@@ -82,7 +92,7 @@ class NewGameFindFriendsViewController: GameViewController, UITableViewDataSourc
 //MARK: UITableView - Delegate
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: true)
+        tableView.deselectRow(at: indexPath, animated: false)
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
@@ -100,6 +110,8 @@ class NewGameFindFriendsViewController: GameViewController, UITableViewDataSourc
             sectionLabel.text = "0 AMI"
         }
         sectionLabel.font = UIFont(name: "Montserrat-Semibold", size: 12)
+        sectionLabel.sizeToFit()
+        sectionLabel.center = CGPoint(x: headerView.frame.size.width * 0.10, y: (headerView.frame.size.height - sectionLabel.frame.size.height/2) - 5.0)
         headerView.addSubview(sectionLabel)
         
         return headerView

@@ -8,6 +8,7 @@
 
 import Foundation
 import MBCircularProgressBar
+import Kingfisher
 
 enum TimelineState {
     case perfect
@@ -30,7 +31,7 @@ class GameplayMainViewController: GameViewController, KeyboardViewDelegate, Coun
     
     var userPlayer: Player!
     var opponentPlayer: Player!
-    var round: Round!
+    var round: RoundFull!
     
     var cardsViews: [CardProductView]?
     
@@ -45,7 +46,7 @@ class GameplayMainViewController: GameViewController, KeyboardViewDelegate, Coun
     var cursorCard: Int = 0
     var cursorCounter: Int = 0
     
-    let kTimePerRound: Double = 50.0
+    let kTimePerRound: Double = 30.0
     var timer: Timer?
     var timeleft: Double!
     
@@ -109,10 +110,10 @@ class GameplayMainViewController: GameViewController, KeyboardViewDelegate, Coun
             propositionsJSON.append(propositionJSON)
         }
         
-        let roundData = [RoundDataKey.kUserTime: Int(timeleft*1000), RoundDataKey.kPropositions: propositionsJSON] as [String : Any]
+        let roundData = [RoundDataKey.kUserTime: Int(kTimePerRound - timeleft)*1000, RoundDataKey.kPropositions: propositionsJSON] as [String : Any]
         let matchID = MatchManager.sharedInstance.currentMatch?.id
         MatchManager.sharedInstance.putRound(withData: roundData, ForMatchID: matchID, andRoundID: round!.id,
-            success: { (_) in
+            success: { (roundFull) in
                 
                 let debriefVC = self.storyboard?.instantiateViewController(withIdentifier: "idGameplayDebriefViewController") as! GameplayDebriefViewController
                 debriefVC.productsList = self.round?.products
@@ -120,15 +121,27 @@ class GameplayMainViewController: GameViewController, KeyboardViewDelegate, Coun
                 self.navigationController?.pushViewController(debriefVC, animated: true)
             }
         ) { (error) in
-            
+            let debriefVC = self.storyboard?.instantiateViewController(withIdentifier: "idGameplayDebriefViewController") as! GameplayDebriefViewController
+            debriefVC.productsList = self.round?.products
+            debriefVC.userResultsArray = self.userResultsArray
+            self.navigationController?.pushViewController(debriefVC, animated: true)
         }
     }
     
     func loadPlayersInfos() {
+        let userInfos = UserSessionManager.sharedInstance.getUserInfosAndAvatarImage()
+        
+        if let pseudo = userInfos.user?.pseudo, let userAvatar = userInfos.avatarImage {
+            userPseudoLabel.text = pseudo
+            userAvatarImageView.image = userAvatar.roundCornersToCircle()
+        }
+        
         if let userPlayer = self.userPlayer {
-            userAvatarImageView.image = userPlayer.avatarImage
+            userAvatarImageView.image = userPlayer.avatarImage?.roundCornersToCircle(withBorder: 10.0, color: UIColor.white)
             userPseudoLabel.text = userPlayer.pseudo
         }
+        
+        opponentPlayer = MatchManager.sharedInstance.opponentPlayer
         
         if let opponentPlayer = opponentPlayer {
             opponentPseudoLabel.text = opponentPlayer.pseudo
@@ -137,12 +150,14 @@ class GameplayMainViewController: GameViewController, KeyboardViewDelegate, Coun
                 opponentAvatarImageView.image = opponentAvatarImage.roundCornersToCircle(withBorder: 10.0, color: UIColor.white)
                 
             } else {
-                opponentAvatarImageView.image = UIImage(named: "\(opponentPlayer.avatarUrl)_large")?.roundCornersToCircle(withBorder: 10.0, color: UIColor.white)
+                opponentPlayer.avatarImage = UIImage(named: "\(opponentPlayer.avatarUrl)_large")?.roundCornersToCircle(withBorder: 10.0, color: UIColor.white)
+                opponentAvatarImageView.image = opponentPlayer.avatarImage
             }
         }
     }
     
     func prepareOpponentPropositions() {
+        opponentPropositions = round.propositions
         if let opponentPropositions = self.opponentPropositions {
             if opponentPropositions.isEmpty == false {
                 
@@ -194,8 +209,35 @@ class GameplayMainViewController: GameViewController, KeyboardViewDelegate, Coun
             cardProductView?.counterContainerView.delegate = self
             print("Real price : \(product.price)")
             
-            cardProductView?.userPinIconView.avatarImageView.image = userPlayer.avatarImage
-            cardProductView?.opponentPinIconView.avatarImageView.image = opponentPlayer.avatarImage
+            if let avatarImage = userPlayer.avatarImage {
+                cardProductView?.userPinIconView.setAvatarImage(avatarImage)
+                
+            } else {
+                cardProductView?.userPinIconView.avatarImageView.kf.setImage(with: URL(string: userPlayer.avatarUrl)!,
+                    completionHandler: { (image, error, _, _) in
+                        
+                        if error != nil {
+                            cardProductView?.userPinIconView.avatarImageView.image = image?.roundCornersToCircle()
+                            self.userPlayer.avatarImage = image
+                        }
+                    }
+                )
+            }
+            
+            if let avatarImage = opponentPlayer.avatarImage {
+                cardProductView?.opponentPinIconView.setAvatarImage(avatarImage)
+                
+            } else {
+                cardProductView?.opponentPinIconView.avatarImageView.kf.setImage(with: URL(string: opponentPlayer.avatarUrl)!,
+                    completionHandler: { (image, error, _, _) in
+                        
+                        if error != nil {
+                            cardProductView?.opponentPinIconView.avatarImageView.image = image?.roundCornersToCircle()
+                            self.opponentPlayer.avatarImage = image
+                        }
+                    }
+                )
+            }
             
             cardProductView?.frame = CGRect(x: self.view.frame.size.width, y: cardContainerView.frame.origin.y, width: cardContainerView.frame.width, height: cardContainerView.frame.height)
             
@@ -324,12 +366,12 @@ class GameplayMainViewController: GameViewController, KeyboardViewDelegate, Coun
     
     func updateTimer() {
         timeleft = timeleft! - 0.01
-        circularProgressBarView.value = CGFloat(timeleft!)
+        circularProgressBarView.value = CGFloat(abs(timeleft!))
         
         if Int(timeleft!) == 10 {
             animateTimer()
             
-        } else if Int(timeleft!) == 0 {
+        } else if timeleft! <= 0.0 {
             timeIsUp()
         }
     }
@@ -338,14 +380,16 @@ class GameplayMainViewController: GameViewController, KeyboardViewDelegate, Coun
         currentMillisecondsTime += 1
         
         if let sortedOpponentPropositions = self.sortedOpponentPropositions {
-            
-            if sortedOpponentPropositions[currentProductData!.id]!.keys.contains(currentMillisecondsTime)
-            {
-                let opponentEstimation = sortedOpponentPropositions[currentProductData!.id]![currentMillisecondsTime]
-                animateUserPinIcon(withEstimation: opponentEstimation, forPlayer: false, andCompletion: nil)
+            if let sortedProposition = sortedOpponentPropositions[currentProductData!.id] {
                 
-                if opponentEstimation == currentProductData?.price {
-                    updateTimeline(withResult: .perfect, isForUser: false)
+                if sortedProposition.keys.contains(currentMillisecondsTime)
+                {
+                    let opponentEstimation = sortedOpponentPropositions[currentProductData!.id]![currentMillisecondsTime]
+                    animateUserPinIcon(withEstimation: opponentEstimation, forPlayer: false, andCompletion: nil)
+                    
+                    if opponentEstimation == currentProductData?.price {
+                        updateTimeline(withResult: .perfect, isForUser: false)
+                    }
                 }
             }
         }
@@ -359,6 +403,7 @@ class GameplayMainViewController: GameViewController, KeyboardViewDelegate, Coun
     }
     
     func timeIsUp() {
+        keyboardView.enabledKeyboard(false)
         stopTimer()
         roundFinished()
     }
@@ -453,7 +498,7 @@ class GameplayMainViewController: GameViewController, KeyboardViewDelegate, Coun
     
     func addProposition() {
         let productID = currentProductData!.id
-        let price = currentProductData!.price
+        let price = Double(ConverterHelper.convertPriceArrayToInt(userEstimation!)) + (Double(currentCard!.counterContainerView.centsLabel.text!)! / 100)
         
         let proposition = Proposition(productID: productID, price: price, timeStamp: currentMillisecondsTime)
         userPropositions.append(proposition)
@@ -522,7 +567,11 @@ class GameplayMainViewController: GameViewController, KeyboardViewDelegate, Coun
             )
             
         } else {
-            completion?(true)
+            currentCard?.updatePinIconPosition(withErrorPercent: errorPercent, forPlayer: isForUser,
+                andCompletion: { (finished) in
+                    completion?(true)
+                }
+            )
         }
     }
     

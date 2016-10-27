@@ -22,7 +22,7 @@ class GameplayMatchRoundWaitingCell: UITableViewCell {
         }
     }
     
-    func initTimeline(withUserScore userScore: UInt?) {
+    func updateTimeline(withUserScore userScore: UInt?) {
         if let userScore = userScore {
             
             for i in 0..<userTimelineImageViewCollection.count {

@@ -27,10 +27,10 @@ class NewGameFindOpponentViewController: GameViewController, UITableViewDataSour
     let subTitlesArray = ["Défie un de tes amis", "Défie une personne au hasard", "Défie une personne grâce à son email ou son pseudo"]
     let imagesViewsArray = ["facebook_icon", "random_icon", "search_icon"]
     let tableViewRowHeight: CGFloat = 70.0
+    var quickPlayers: [Player] = []
     
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var tableView: UITableView!
-    @IBOutlet weak var heightTableViewConstraint: NSLayoutConstraint!
     
     
 //MARK: Life View Cycle
@@ -39,6 +39,7 @@ class NewGameFindOpponentViewController: GameViewController, UITableViewDataSour
         super.viewDidLoad()
         
         buildUI()
+        loadQuickPlayers(withCompletion: nil)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -49,18 +50,30 @@ class NewGameFindOpponentViewController: GameViewController, UITableViewDataSour
     
     func buildUI() {
         configNavigationBarWithTitle("Trouve un adversaire")
+        self.tableView.tableFooterView = UIView()
         self.view.backgroundColor = UIColor.lightGrayDochaColor()
         collectionView.backgroundColor = UIColor.lightGrayDochaColor()
         
         tableView.backgroundColor = UIColor.lightGrayDochaColor()
-        heightTableViewConstraint.constant = tableViewRowHeight * CGFloat(titlesArray.count)
+        //heightTableViewConstraint.constant = tableViewRowHeight * CGFloat(titlesArray.count)
+    }
+    
+    func loadQuickPlayers(withCompletion completion: (() -> Void)?) {
+        MatchManager.sharedInstance.getQuickPlayers(byOrder: "activity", andLimit: 5,
+            success: { (players) in
+                self.quickPlayers = players
+                self.collectionView.reloadData()
+                
+            }) { (error) in
+                
+        }
     }
 
     
 //MARK: UICollectionView - Data Source Methods
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 5
+        return quickPlayers.count
     }
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
@@ -69,6 +82,17 @@ class NewGameFindOpponentViewController: GameViewController, UITableViewDataSour
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "idNewGameFriendsCollectionViewCell", for: indexPath) as! NewGameFriendsCollectionViewCell
+        
+        let player = quickPlayers[indexPath.item]
+        cell.friendNameLabel.text = player.pseudo
+        cell.friendImageView.kf.setImage(with: URL(string: player.avatarUrl)!,
+            completionHandler: { (image, error, _, _) in
+                if error == nil {
+                    MatchManager.sharedInstance.opponentPlayer?.avatarImage = image
+                    cell.friendImageView.image = image!.roundCornersToCircle()
+                }
+            }
+        )
         
         return cell
     }
@@ -113,9 +137,16 @@ class NewGameFindOpponentViewController: GameViewController, UITableViewDataSour
             MatchManager.sharedInstance.postMatch(
                 success: { (match) in
                     
-                    let newGameCategorieSelectionVC = self.storyboard?.instantiateViewController(withIdentifier: "idNewGameCategorieSelectionViewController") as! NewGameCategorieSelectionViewController
-                    MatchManager.sharedInstance.currentMatch = match
-                    self.navigationController?.pushViewController(newGameCategorieSelectionVC, animated: true)
+                    if let category = match.rounds.last?.category {
+                        let launcherVC = self.storyboard?.instantiateViewController(withIdentifier: "idGameplayLauncherViewController") as! GameplayLauncherViewController
+                        launcherVC.categorySelected = category
+                        self.navigationController?.pushViewController(launcherVC, animated: true)
+                        
+                    } else {
+                        let newGameCategorieSelectionVC = self.storyboard?.instantiateViewController(withIdentifier: "idNewGameCategorieSelectionViewController") as! NewGameCategorieSelectionViewController
+                        MatchManager.sharedInstance.currentMatch = match
+                        self.navigationController?.pushViewController(newGameCategorieSelectionVC, animated: true)
+                    }
                     
             }) { (error) in
                 PopupManager.sharedInstance.showErrorPopup(message: Constants.PopupMessage.ErrorMessage.kErrorOccured)

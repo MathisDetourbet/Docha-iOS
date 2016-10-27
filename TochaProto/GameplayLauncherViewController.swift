@@ -65,7 +65,7 @@ class GameplayLauncherViewController: GameViewController, ProductImageDownloader
         opponentPlayer = matchManager.opponentPlayer
         
         if let userPlayer = self.userPlayer {
-            userImageView.image = userPlayer.avatarImage
+            userImageView.image = userPlayer.avatarImage?.roundCornersToCircle(withBorder: 10.0, color: UIColor.white)
             userNameLabel.text = userPlayer.pseudo
         }
         
@@ -73,8 +73,18 @@ class GameplayLauncherViewController: GameViewController, ProductImageDownloader
             if let opponentAvatarImage = opponentPlayer.avatarImage {
                 opponentImageView.image = opponentAvatarImage.roundCornersToCircle(withBorder: 10.0, color: UIColor.white)
                 
+            } else if opponentPlayer.playerType == .facebookPlayer {
+                opponentImageView.kf.setImage(with: URL(string: opponentPlayer.avatarUrl)!,
+                    completionHandler: { (image, error, _, _) in
+                        if image != nil {
+                            self.opponentImageView.image = image!.roundCornersToCircle()
+                            matchManager.opponentPlayer = opponentPlayer
+                        }
+                    }
+                )
+                
             } else {
-                opponentImageView.image = UIImage(named: "\(opponentPlayer.avatarUrl)_large")?.roundCornersToCircle(withBorder: 10.0, color: UIColor.white)
+                opponentImageView.image = UIImage(named: "\(opponentPlayer.avatarUrl))_large")?.roundCornersToCircle(withBorder: 10.0, color: UIColor.white)
             }
             
             opponentNameLabel.text = opponentPlayer.pseudo
@@ -87,6 +97,14 @@ class GameplayLauncherViewController: GameViewController, ProductImageDownloader
             }
         }
         self.navigationController?.isNavigationBarHidden = true
+    }
+    
+    func startTheGame(withProducts products: [Product]!) {
+        let gameplayMainVC = self.storyboard?.instantiateViewController(withIdentifier: "idGameplayMainViewController") as! GameplayMainViewController
+        gameplayMainVC.round = round as! RoundFull
+        gameplayMainVC.userPlayer = userPlayer
+        gameplayMainVC.opponentPlayer = opponentPlayer
+        self.navigationController?.pushViewController(gameplayMainVC, animated: true)
     }
     
     func startLoaderAnimation() {
@@ -109,13 +127,20 @@ class GameplayLauncherViewController: GameViewController, ProductImageDownloader
         let currentMatch = MatchManager.sharedInstance.currentMatch
         
         if let match = currentMatch {
-            if let categorySelected = categorySelected {
+            if let categorySelected = categorySelected, match.getCurrentRound().category == nil {
                 let data = [RoundDataKey.kCategory: categorySelected.slugName, RoundDataKey.kPropositions: []] as [String : Any]
                 put(round: match.rounds.last, withData: data, andMatchID: match.id)
                 
             } else {
-                get(round: match.rounds.last, withMatchID: match.id)
+                get(round: match.getCurrentRound(), withMatchID: match.id)
             }
+            
+        } else {
+            PopupManager.sharedInstance.showErrorPopup(message: Constants.PopupMessage.ErrorMessage.kErrorOccured,
+                doneActionCompletion: {
+                    self.goToHome()
+                }
+            )
         }
     }
     
@@ -148,7 +173,7 @@ class GameplayLauncherViewController: GameViewController, ProductImageDownloader
                 }
             }, fail: { (error) in
                 
-                PopupManager.sharedInstance.showErrorPopup("Oups !", message: Constants.PopupMessage.ErrorMessage.kErrorOccuredHomeRedirection, viewController: nil, completion: nil,
+                PopupManager.sharedInstance.showErrorPopup(message: Constants.PopupMessage.ErrorMessage.kErrorOccuredHomeRedirection, viewController: nil, completion: nil,
                     doneActionCompletion: {
                         self.goToHome()
                     }
@@ -160,6 +185,7 @@ class GameplayLauncherViewController: GameViewController, ProductImageDownloader
     func get(round: Round!, withMatchID matchID: Int!) {
         MatchManager.sharedInstance.getRound(ForMatchID: matchID, andRoundID: round.id,
             success: { (roundFull) in
+                
                 let roundFull = roundFull
                 self.round = roundFull
                 let products = roundFull.products
@@ -186,7 +212,7 @@ class GameplayLauncherViewController: GameViewController, ProductImageDownloader
                 }
                                                 
             }, fail: { (error) in
-                PopupManager.sharedInstance.showErrorPopup("Oups !", message: Constants.PopupMessage.ErrorMessage.kErrorOccuredHomeRedirection, viewController: nil, completion: nil,
+                PopupManager.sharedInstance.showErrorPopup(message: Constants.PopupMessage.ErrorMessage.kErrorOccuredHomeRedirection, viewController: nil, completion: nil,
                     doneActionCompletion: {
                         self.goToHome()
                     }
@@ -204,14 +230,6 @@ class GameplayLauncherViewController: GameViewController, ProductImageDownloader
     
 //MARK: Timer Methods
     
-    func startTheGameWithProducts(_ products: [Product]!) {
-        let gameplayMainVC = self.storyboard?.instantiateViewController(withIdentifier: "idGameplayMainViewController") as! GameplayMainViewController
-        gameplayMainVC.round = round
-        gameplayMainVC.userPlayer = userPlayer
-        gameplayMainVC.opponentPlayer = opponentPlayer!
-        self.navigationController?.pushViewController(gameplayMainVC, animated: true)
-    }
-    
     func initTimer() {
         timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(GameplayMainViewController.updateTimer), userInfo: nil, repeats: true)
     }
@@ -226,7 +244,7 @@ class GameplayLauncherViewController: GameViewController, ProductImageDownloader
             timeleft = timeleft - 1.0
             if timeleft <= 0 {
                 stopTimer()
-                startTheGameWithProducts(self.productsArray)
+                startTheGame(withProducts: productsArray)
                 
             } else {
                 counterImageView.image = UIImage(named: "gameplay_launching_\(Int(self.timeleft))")

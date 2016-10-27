@@ -11,7 +11,7 @@ import Amplitude_iOS
 import PBWebViewController
 import FBSDKShareKit
 
-class PreferencesViewController: GameViewController, UITableViewDelegate, UITableViewDataSource {
+class PreferencesViewController: GameViewController, UITableViewDelegate, UITableViewDataSource, PreferencesSwitchCellDelegate {
 
     var isPasswordChangeCellHidden = false
     let idNormalTableViewCell = "idNormalTableViewCell"
@@ -98,21 +98,26 @@ class PreferencesViewController: GameViewController, UITableViewDelegate, UITabl
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if cellContent[(indexPath as NSIndexPath).section][(indexPath as NSIndexPath).row]["title"] == "Notifications" {
-            let cell = tableView.dequeueReusableCell(withIdentifier: idSwitchTableViewCell, for: indexPath) as? PreferencesSwitchTableViewCell
-            let cellTitle = cellContent[1][(indexPath as NSIndexPath).row]["title"]
-            cell?.titleLabel.text = cellTitle
-            cell?.iconImageView.image = UIImage(named: self.cellContent[(indexPath as NSIndexPath).section][(indexPath as NSIndexPath).row]["iconPath"]!)
+            let cell = tableView.dequeueReusableCell(withIdentifier: idSwitchTableViewCell, for: indexPath) as! PreferencesSwitchTableViewCell
             
-            return cell!
+            let cellTitle = cellContent[1][(indexPath as NSIndexPath).row]["title"]
+            cell.titleLabel.text = cellTitle
+            cell.iconImageView.image = UIImage(named: cellContent[(indexPath as NSIndexPath).section][(indexPath as NSIndexPath).row]["iconPath"]!)
+            if let user = UserSessionManager.sharedInstance.currentSession() {
+                cell.switchButton.setOn(user.notifications, animated: true)
+            }
+            cell.delegate = self
+            
+            return cell
             
         } else {
-            let cell = tableView.dequeueReusableCell(withIdentifier: idNormalTableViewCell, for: indexPath) as? PreferencesNormalTableViewCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: idNormalTableViewCell, for: indexPath) as! PreferencesNormalTableViewCell
             let title = cellContent[(indexPath as NSIndexPath).section][(indexPath as NSIndexPath).row]["title"]
-            cell?.titleLabel.text = title
-            cell?.iconImageView.image = UIImage(named: self.cellContent[(indexPath as NSIndexPath).section][(indexPath as NSIndexPath).row]["iconPath"]!)
-            cell?.accessoryType = .disclosureIndicator
+            cell.titleLabel.text = title
+            cell.iconImageView.image = UIImage(named: cellContent[(indexPath as NSIndexPath).section][(indexPath as NSIndexPath).row]["iconPath"]!)
+            cell.accessoryType = .disclosureIndicator
             
-            return cell!
+            return cell
         }
     }
     
@@ -208,6 +213,14 @@ class PreferencesViewController: GameViewController, UITableViewDelegate, UITabl
 //    func sharerDidCancel(_ sharer: FBSDKSharing!) {
 //        
 //    }
+    
+    
+//MARK: PreferencesSwitchCellDelegate
+    
+    func switchValueChanged(_ value: Bool) {
+        let data = [UserDataKey.kNotifications: value] as [String: Any]
+        UserSessionManager.sharedInstance.updateUser(withData: data, success: {}) { (error) in }
+    }
     
     
 //MARK: @IBAction Methods

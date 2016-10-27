@@ -29,8 +29,8 @@ class GameplayMatchRoundFinishedCell: UITableViewCell {
     }
     
     
-    func initTimeline(withUserScore userScore: UInt?, andOpponentScore opponentScore: UInt?) {
-        if let userScore = userScore, let opponentScore = opponentScore {
+    func updateTimeline(withUserScore userScore: UInt?, andOpponentScore opponentScore: UInt?) {
+        if var userScore = userScore, var opponentScore = opponentScore {
             
             for i in 0..<userTimelineImageViewCollection.count {
                 userTimelineImageViewCollection[i].image = #imageLiteral(resourceName: "red_big_icon")
@@ -40,10 +40,12 @@ class GameplayMatchRoundFinishedCell: UITableViewCell {
                 opponentTimelineImageViewCollection[i].image = #imageLiteral(resourceName: "red_big_icon")
             }
             
+            userScore = userScore > 3 ? 3 : userScore
             for i in 0..<Int(userScore) {
                 userTimelineImageViewCollection[i].image = #imageLiteral(resourceName: "perfect_big_icon")
             }
             
+            opponentScore = opponentScore > 3 ? 3 : opponentScore
             for i in 0..<Int(opponentScore) {
                 opponentTimelineImageViewCollection[i].image = #imageLiteral(resourceName: "perfect_big_icon")
             }

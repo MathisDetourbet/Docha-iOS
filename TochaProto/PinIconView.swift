@@ -7,12 +7,13 @@
 //
 
 import Foundation
+import Kingfisher
 
 class PinIconView: UIView {
     
     @IBOutlet weak var avatarImageView: UIImageView!
     
     func setAvatarImage(_ image: UIImage) {
-        self.avatarImageView.image = image
+        self.avatarImageView.image = image.roundCornersToCircle(withBorder: 10.0, color: UIColor.white)
     }
 }

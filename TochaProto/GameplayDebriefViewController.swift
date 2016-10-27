@@ -96,16 +96,14 @@ class GameplayDebriefViewController: GameViewController, UIPageViewControllerDat
             }
         }
         
-        var userBorderColor: UIColor?
-        var opponentBorderColor: UIColor?
+        var userBorderColor: UIColor = UIColor.white
+        var opponentBorderColor: UIColor = UIColor.white
         
         // Result sentence
         if let currentRound = currentRound {
             switch currentRound.status {
             case .waiting:
                 resultRoundSentenceImageView.image = #imageLiteral(resourceName: "waiting_sentence")
-                userBorderColor = UIColor.white
-                opponentBorderColor = UIColor.white
                 break
             case .won:
                 resultRoundSentenceImageView.image = #imageLiteral(resourceName: "winner_sentence")
@@ -119,8 +117,6 @@ class GameplayDebriefViewController: GameViewController, UIPageViewControllerDat
                 break
             case .tie:
                 resultRoundSentenceImageView.image = #imageLiteral(resourceName: "nul_sentence")
-                userBorderColor = UIColor.white
-                opponentBorderColor = UIColor.white
                 break
             }
         } else {
@@ -133,7 +129,7 @@ class GameplayDebriefViewController: GameViewController, UIPageViewControllerDat
         let opponentPlayer = matchManager.opponentPlayer
         
         if let userPlayer = userPlayer {
-            userAvatarImageView.image = userPlayer.avatarImage?.roundCornersToCircle(withBorder: 10.0, color: userBorderColor!)
+            userAvatarImageView.image = userPlayer.avatarImage?.roundCornersToCircle(withBorder: 10.0, color: userBorderColor)
             userNameLabel.text = userPlayer.pseudo
             
             if let level = userPlayer.level {
@@ -149,10 +145,10 @@ class GameplayDebriefViewController: GameViewController, UIPageViewControllerDat
             opponentNameLabel.text = opponentPlayer.pseudo
             
             if let opponentAvatarImage = opponentPlayer.avatarImage {
-                opponentAvatarImageView.image = opponentAvatarImage.roundCornersToCircle(withBorder: 10.0, color: opponentBorderColor!)
+                opponentAvatarImageView.image = opponentAvatarImage.roundCornersToCircle(withBorder: 10.0, color: opponentBorderColor)
                 
             } else {
-                opponentAvatarImageView.image = UIImage(named: "\(opponentPlayer.avatarUrl)_large")?.roundCornersToCircle(withBorder: 10.0, color: opponentBorderColor!)
+                opponentAvatarImageView.image = UIImage(named: "\(opponentPlayer.avatarUrl)_large")?.roundCornersToCircle(withBorder: 10.0, color: opponentBorderColor)
             }
             
             if let level = opponentPlayer.level {
@@ -237,15 +233,21 @@ class GameplayDebriefViewController: GameViewController, UIPageViewControllerDat
 //MARK: Gameplay Debrief Page Content Delegate
     
     func moreDetailsButtonTouched(_ productIndex: Int) {
-        let url = URL(string: "https://morganegr.typeform.com/to/NbeMZ2")
-        let webViewController = storyboard?.instantiateViewController(withIdentifier: "idCustomWebViewController") as! CustomWebViewController
-        webViewController.url = url
-        webViewController.titleNavBar = "Docha a besoin de toi"
-        
-        let activity = UIActivity()
-        webViewController.applicationActivities = [activity]
-        webViewController.hidesBottomBarWhenPushed = true
-        self.navigationController?.pushViewController(webViewController, animated: true)
+        if let pageUrlString = productsList?[productIndex].pageUrl {
+            
+            let url = URL(string: pageUrlString)
+            let webViewController = storyboard?.instantiateViewController(withIdentifier: "idCustomWebViewController") as! CustomWebViewController
+            webViewController.url = url
+            webViewController.titleNavBar = "Fiche produit"
+            
+            let activity = UIActivity()
+            webViewController.applicationActivities = [activity]
+            webViewController.hidesBottomBarWhenPushed = true
+            self.navigationController?.pushViewController(webViewController, animated: true)
+            
+        } else {
+            PopupManager.sharedInstance.showErrorPopup(message: Constants.PopupMessage.ErrorMessage.kErrorOccured)
+        }
     }
     
     func shareButtonTouched() {

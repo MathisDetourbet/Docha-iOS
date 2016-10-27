@@ -18,10 +18,10 @@ class LevelBarView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        self.backgroundBarImageView = UIImageView(frame: frame)
-        self.backgroundBarImageView.contentMode = .scaleToFill
-        self.backgroundBarImageView?.image = UIImage(named: "progress_bar_bg")
-        self.backgroundBarImageView?.translatesAutoresizingMaskIntoConstraints = false
+        backgroundBarImageView = UIImageView(frame: frame)
+        backgroundBarImageView.contentMode = .scaleToFill
+        backgroundBarImageView?.image = UIImage(named: "progress_bar_bg")
+        backgroundBarImageView?.translatesAutoresizingMaskIntoConstraints = false
         
         self.addSubview(self.backgroundBarImageView)
         
@@ -30,18 +30,18 @@ class LevelBarView: UIView {
         self.addConstraint(NSLayoutConstraint(item: self.backgroundBarImageView, attribute: .trailing, relatedBy: .equal, toItem: self, attribute: .trailing, multiplier: 1.0, constant: 0.0))
         self.addConstraint(NSLayoutConstraint(item: self.backgroundBarImageView, attribute: .bottom, relatedBy: .equal, toItem: self, attribute: .bottom, multiplier: 1.0, constant: 0.0))
         
-        self.frontBarImageView = UIImageView(frame: CGRect.zero)
-        self.frontBarImageView.contentMode = .scaleToFill
-        self.frontBarImageView.image = UIImage(named: "progress_bar")
-        self.frontBarImageView.translatesAutoresizingMaskIntoConstraints = false
+        frontBarImageView = UIImageView(frame: CGRect.zero)
+        frontBarImageView.contentMode = .scaleToFill
+        frontBarImageView.image = UIImage(named: "progress_bar")
+        frontBarImageView.translatesAutoresizingMaskIntoConstraints = false
         
         self.addSubview(self.frontBarImageView)
         
-        self.addConstraint(NSLayoutConstraint(item: self.frontBarImageView, attribute: .top, relatedBy: .equal, toItem: self, attribute: .top, multiplier: 1.0, constant: 0.0))
-        self.addConstraint(NSLayoutConstraint(item: self.frontBarImageView, attribute: .leading, relatedBy: .equal, toItem: self, attribute: .leading, multiplier: 1.0, constant: 0.0))
-        self.addConstraint(NSLayoutConstraint(item: self.frontBarImageView, attribute: .bottom, relatedBy: .equal, toItem: self, attribute: .bottom, multiplier: 1.0, constant: 0.0))
-        self.widthFrontBarImageViewConstraint = NSLayoutConstraint(item: self.frontBarImageView, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 0.0)
-        self.addConstraint(self.widthFrontBarImageViewConstraint)
+        self.addConstraint(NSLayoutConstraint(item: frontBarImageView, attribute: .top, relatedBy: .equal, toItem: self, attribute: .top, multiplier: 1.0, constant: 0.0))
+        self.addConstraint(NSLayoutConstraint(item: frontBarImageView, attribute: .leading, relatedBy: .equal, toItem: self, attribute: .leading, multiplier: 1.0, constant: 0.0))
+        self.addConstraint(NSLayoutConstraint(item: frontBarImageView, attribute: .bottom, relatedBy: .equal, toItem: self, attribute: .bottom, multiplier: 1.0, constant: 0.0))
+        widthFrontBarImageViewConstraint = NSLayoutConstraint(item: frontBarImageView, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 0.0)
+        self.addConstraint(widthFrontBarImageViewConstraint)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -63,36 +63,38 @@ class LevelBarView: UIView {
         tapGesture.addTarget(self, action: #selector(tapLevelBar))
         self.addGestureRecognizer(tapGesture)
         
-        self.backgroundBarImageView = UIImageView(frame: frame)
-        self.backgroundBarImageView.contentMode = .scaleAspectFit
-        self.backgroundBarImageView?.image = UIImage(named: "progress_bar_bg")
-        self.backgroundBarImageView?.translatesAutoresizingMaskIntoConstraints = false
+        backgroundBarImageView = UIImageView(frame: frame)
+        backgroundBarImageView.contentMode = .scaleAspectFit
+        backgroundBarImageView?.image = UIImage(named: "progress_bar_bg")
+        backgroundBarImageView?.translatesAutoresizingMaskIntoConstraints = false
         
-        self.addSubview(self.backgroundBarImageView)
+        self.addSubview(backgroundBarImageView)
         
-        self.addConstraint(NSLayoutConstraint(item: self.backgroundBarImageView, attribute: .top, relatedBy: .equal, toItem: self, attribute: .top, multiplier: 1.0, constant: 0.0))
-        self.addConstraint(NSLayoutConstraint(item: self.backgroundBarImageView, attribute: .leading, relatedBy: .equal, toItem: self, attribute: .leading, multiplier: 1.0, constant: 0.0))
-        self.addConstraint(NSLayoutConstraint(item: self.backgroundBarImageView, attribute: .trailing, relatedBy: .equal, toItem: self, attribute: .trailing, multiplier: 1.0, constant: 0.0))
-        self.addConstraint(NSLayoutConstraint(item: self.backgroundBarImageView, attribute: .bottom, relatedBy: .equal, toItem: self, attribute: .bottom, multiplier: 1.0, constant: 0.0))
+        self.addConstraint(NSLayoutConstraint(item: backgroundBarImageView, attribute: .top, relatedBy: .equal, toItem: self, attribute: .top, multiplier: 1.0, constant: 0.0))
+        self.addConstraint(NSLayoutConstraint(item: backgroundBarImageView, attribute: .leading, relatedBy: .equal, toItem: self, attribute: .leading, multiplier: 1.0, constant: 0.0))
+        self.addConstraint(NSLayoutConstraint(item: backgroundBarImageView, attribute: .trailing, relatedBy: .equal, toItem: self, attribute: .trailing, multiplier: 1.0, constant: 0.0))
+        self.addConstraint(NSLayoutConstraint(item: backgroundBarImageView, attribute: .bottom, relatedBy: .equal, toItem: self, attribute: .bottom, multiplier: 1.0, constant: 0.0))
         
-        self.frontBarImageView = UIImageView(frame: CGRect.zero)
-        self.frontBarImageView.contentMode = .scaleToFill
-        self.frontBarImageView.image = UIImage(named: "progress_bar")
-        self.frontBarImageView.translatesAutoresizingMaskIntoConstraints = false
+        frontBarImageView = UIImageView(frame: CGRect.zero)
+        frontBarImageView.contentMode = .scaleToFill
+        frontBarImageView.image = UIImage(named: "progress_bar")
+        frontBarImageView.translatesAutoresizingMaskIntoConstraints = false
         
-        self.addSubview(self.frontBarImageView)
+        self.addSubview(frontBarImageView)
         
-        self.addConstraint(NSLayoutConstraint(item: self.frontBarImageView, attribute: .top, relatedBy: .equal, toItem: self, attribute: .top, multiplier: 1.0, constant: 1.0))
-        self.addConstraint(NSLayoutConstraint(item: self.frontBarImageView, attribute: .leading, relatedBy: .equal, toItem: self, attribute: .leading, multiplier: 1.0, constant: 2.0))
-        self.widthFrontBarImageViewConstraint = NSLayoutConstraint(item: self.frontBarImageView, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 0.0)
-        self.addConstraint(self.widthFrontBarImageViewConstraint)
+        self.addConstraint(NSLayoutConstraint(item: frontBarImageView, attribute: .top, relatedBy: .equal, toItem: self, attribute: .top, multiplier: 1.0, constant: 1.0))
+        self.addConstraint(NSLayoutConstraint(item: frontBarImageView, attribute: .leading, relatedBy: .equal, toItem: self, attribute: .leading, multiplier: 1.0, constant: 2.0))
+        widthFrontBarImageViewConstraint = NSLayoutConstraint(item: frontBarImageView, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 0.0)
+        self.addConstraint(widthFrontBarImageViewConstraint)
     }
     
-    func updateLevelBarWithWidth(_ width: CGFloat) {
+    func updateLevelBar(withLevelPercent levelPercent: CGFloat) {
         self.layoutIfNeeded()
-        UIView.animate(withDuration: 2.0, animations: {
-            self.widthFrontBarImageViewConstraint.constant = (width / 100) * self.backgroundBarImageView.frame.width
-        }) 
+        UIView.animate(withDuration: 2.0,
+            animations: {
+                self.widthFrontBarImageViewConstraint.constant = levelPercent * self.backgroundBarImageView.frame.width
+            }
+        )
         self.layoutIfNeeded()
     }
     

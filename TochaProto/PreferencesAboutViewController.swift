@@ -21,13 +21,14 @@ class PreferencesAboutViewController: RootViewController, UITableViewDataSource,
     var webViewController: CustomWebViewController?
     
     @IBOutlet weak var tableView: UITableView!
-    @IBOutlet weak var heightTableViewConstraint: NSLayoutConstraint!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        tableView.tableFooterView = UIView()
+        tableView.backgroundColor = UIColor.clear
+        
         configNavigationBarWithTitle("À propos")
-        heightTableViewConstraint.constant = CGFloat(titlesCell.count) * 44.0
     }
     
     @IBAction func backButtonTouched(_ sender: UIBarButtonItem) {

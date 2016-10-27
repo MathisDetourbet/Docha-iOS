@@ -115,7 +115,7 @@ class InscriptionIdentifiantsViewController: RootViewController, UITextFieldDele
         
         let fbLoginManager : FBSDKLoginManager = FBSDKLoginManager()
         
-        fbLoginManager.logIn(withReadPermissions: ["email", "public_profile", "user_friends"], from: self)
+        fbLoginManager.logIn(withReadPermissions: ["email", "public_profile", "user_friends", "user_birthday"], from: self)
         { (result, error) -> Void in
             
             if error != nil {

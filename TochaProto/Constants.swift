@@ -12,6 +12,7 @@ struct UserDataKey {
     static let kUsername = "username"
     static let kLastName = "last_name"
     static let kFirstName = "first_name"
+    static let kFullName = "fullname"
     static let kEmail = "email"
     static let kPassword = "password"
     static let kPassword1 = "password1"
@@ -26,12 +27,18 @@ struct UserDataKey {
     static let kDochos = "dochos"
     static let kExperience = "xp"
     static let kLevelMaxUnlocked = "level"
+    static let kLevelPercentage = "level_percentage"
     static let kPerfectPriceCpt = "perfects"
+    static let kRank = "rank"
+    static let kNotifications = "notifications"
+    static let kNotificationTokens = "notification_tokens"
+    static let kIsOnline = "is_online"
     
     static let kFacebookToken = "access_token"
+    static let kDeviceToken = "token"
     
     static let kAuthToken = "key"
-    static let kSessionID = "session_id"
+    
     static let kBadgesUnlockedIdentifiers = "badges_unlocked_identifiers"
 }
 
@@ -40,7 +47,7 @@ struct MatchDataKey {
     static let kRounds = "rounds"
     static let kMaxRounds = "max_rounds"
     static let kStatus = "status"
-    static let kOpponent = "user"
+    static let kOpponent = "opponent"
     static let kUserScore = "user_score"
     static let kOpponentScore = "opponent_score"
 }
@@ -101,10 +108,14 @@ struct Constants {
         static let kUserInfosCategorySlugName = "userInfosCategorySlugName"
         static let kUserInfosCategoryPrefered = "userInfosCategoryPrefered"
         static let kUserInfosLevelMaxUnlocked = "userInfosLevelMaxUnlocked"
+        static let kUserInfosLevelPercentage = "userInfosLevelPercentage"
         static let kUserInfosDochos = "userInfosDochos"
         static let kUserInfosExperience = "userInfosExperience"
         static let kUserInfosPerfectPriceCpt = "userInfosPerfectPriceCpt"
+        static let kUserInfosRank = "userInfosRank"
         static let kUserInfosAvatarUrl = "userInfosAvatarUrl"
+        static let kUserInfosNotifications = "userInfosNotifications"
+        static let kuserInfosNotificationTokens = "userInfosNotificationTokens"
         
         static let kUserInfosAuthToken = "userInfosAuthToken"
         
@@ -113,6 +124,8 @@ struct Constants {
         static let kUserInfosAvatarImage = "userInfosAvatarImage"
         static let kProductsIDPlayed = "userInfosProductsIDPlayed"
         static let kUserInfosBadgesUnlockedIdentifiers = "userInfosBadgesUnlockedIdentifiers"
+        
+        static let kDeviceToken = "userInfosDeviceToken"
     }
     
     struct DataRecordsKey {
@@ -136,7 +149,7 @@ struct Constants {
     struct PopupMessage {
         struct ErrorMessage {
             static let kErrorOccured = "Une erreur est survenue. Essaie à nouveau maintenant ou un peu plus tard."
-            static let kErrorNoInternetConnection = "Une erreur est survenue. Essaie de te connecter à nouveau."
+            static let kErrorNoInternetConnection = "Une erreur est survenue. Tu n'es peut être pas connecter à internet. Essaie de te connecter à nouveau."
             static let kErrorOccuredHomeRedirection = "Une erreur est survenue... Tu seras redirigé vers le menu principal."
             
             static let kErrorRegistrationPasswordMinimumCharacters = "Vérifie que ton mot de passe possède au minimum 6 caractères."
@@ -161,11 +174,12 @@ struct Constants {
     
     struct UrlServer {
         
-        static let UrlBase = testing ? "http://127.0.0.1:8005" : "https://docha.nextmap.io"
+        static let UrlBase = testing ? "http://127.0.0.1:8005" : "https://docha.nextmap.io"//10.96.21.10 // 127.0.0.1
         
         struct UrlUser {
             static let UrlUser = "/rest-auth/user/"
             static let UrlChangePassword = "/rest-auth/password/change/"
+            static let UrlDeviceToken = "/rest-auth/token"
         }
         
         struct UrlCategory {
@@ -193,6 +207,7 @@ struct Constants {
         struct UrlSearch {
             static let UrlSearchPlayerByPseudo = "/rest-auth/find"
             static let UrlSearchFacebookFriends = "/rest-auth/friend"
+            static let UrlRankingGeneral = "/rest-auth/rank"
         }
     }
 }

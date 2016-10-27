@@ -33,17 +33,25 @@ class MatchManager {
         
         // User Player
         let userData = userSessionManager.getUserInfosAndAvatarImage()
-        let image = userData.avatarImage ?? #imageLiteral(resourceName: "avatar_man_large")
-        let avatarUrl = userData.user?.avatarUrl ?? "avatar_man_large"
-        let playerType: PlayerType = userSessionManager.currentSession()!.isKind(of: UserSessionFacebook.self) ? .facebookPlayer : .emailPlayer
-        let userPlayer = Player(pseudo: userData.user?.pseudo ?? Player.defaultPlayer().pseudo,
-                                gender: Gender.universal,
-                                avatarUrl: avatarUrl,
-                                avatarImage: image,
-                                playerType: playerType,
-                                level: userData.user?.levelMaxUnlocked ?? nil,
-                                dochos: userData.user?.dochos ?? 0)
-        self.userPlayer = userPlayer
+        
+        if let user = userData.user, let avatarImage = userData.avatarImage {
+            let image = avatarImage
+            let avatarUrl = user.avatarUrl ?? "avatar_man_large"
+            let playerType: PlayerType = userSessionManager.currentSession()!.isKind(of: UserSessionFacebook.self) ? .facebookPlayer : .emailPlayer
+            
+            let userPlayer = Player(pseudo: user.pseudo ?? Player.defaultPlayer().pseudo,
+                                    fullName: "\(user.firstName) \(user.lastName)",
+                                    gender: user.gender ?? Gender.universal,
+                                    avatarUrl: avatarUrl,
+                                    avatarImage: image,
+                                    playerType: playerType,
+                                    level: user.levelMaxUnlocked ?? nil,
+                                    dochos: user.dochos,
+                                    perfects: user.perfectPriceCpt,
+                                    isOnline: true)
+            
+            self.userPlayer = userPlayer
+        }
         
         
         // Opponent Player
@@ -64,6 +72,7 @@ class MatchManager {
                         if error != nil {
                             debugPrint(error)
                             completion()
+                            return
                         }
                         
                         opponentPlayer.avatarImage = image
@@ -116,6 +125,7 @@ class MatchManager {
                 success: { (match) in
                     
                     self.currentMatch = match
+                    self.opponentPlayer = match.opponent
                     success(match)
                     
                 }, fail: { (error) in
@@ -128,6 +138,7 @@ class MatchManager {
                 success: { (match) in
                     
                     self.currentMatch = match
+                    self.opponentPlayer = match.opponent
                     success(match)
                     
                 }, fail: { (error) in
@@ -148,6 +159,7 @@ class MatchManager {
             success: { (match) in
                 
                 self.currentMatch = match
+                self.opponentPlayer = match.opponent
                 success(match)
                 
                 
@@ -203,6 +215,8 @@ class MatchManager {
         roundRequest = RoundRequest()
         roundRequest?.getRound(withAuthToken: authToken, ForMatchID: matchID, andRoundID: roundID,
             success: { (roundFull) in
+                
+                self.currentRound = roundFull as RoundFull
                 success(roundFull)
                 
             }, fail: { (error) in
@@ -220,6 +234,7 @@ class MatchManager {
         roundRequest = RoundRequest()
         roundRequest?.putRound(withAuthToken: authToken, withData: data, ForMatchID: matchID, andRoundID: roundID,
             success: { (roundFull) in
+                
                 self.currentRound = roundFull as RoundFull
                 success(roundFull)
                 
@@ -230,7 +245,7 @@ class MatchManager {
     }
     
     
-//MARK: Friends Requests
+//MARK: Search Friends Requests
     
     func findPlayer(byPseudo pseudo: String!, success: @escaping (_ players: [Player]) -> Void, fail failure: @escaping (_ error: Error?) -> Void) {
         guard let authToken = userSessionManager.getAuthToken() else {
@@ -240,6 +255,23 @@ class MatchManager {
         
         searchRequest = SearchRequest()
         searchRequest?.findPlayer(withAuthToken: authToken, byPseudo: pseudo,
+            success: { (players) in
+                success(players)
+                
+            }, fail: { (error) in
+                failure(error)
+            }
+        )
+    }
+    
+    func getQuickPlayers(byOrder order: String!, andLimit limit: UInt!, success: @escaping (_ players: [Player]) -> Void, fail failure: @escaping (_ error: Error?) -> Void) {
+        guard let authToken = userSessionManager.getAuthToken() else {
+            failure(DochaRequestError.authTokenNotFound)
+            return
+        }
+        
+        searchRequest = SearchRequest()
+        searchRequest?.getQuickPlayers(withAuthToken: authToken, byOrder: order, andLimit: limit,
             success: { (players) in
                 success(players)
                 
@@ -259,6 +291,26 @@ class MatchManager {
         searchRequest?.getFacebookFriends(withAuthToken: authToken,
             success: { (friends) in
                 success(friends)
+                
+            }, fail: { (error) in
+                failure(error)
+            }
+        )
+    }
+    
+    
+// MARK: Ranking Requests
+    
+    func getGeneralRanking(success: @escaping (_ players: [Player]) -> Void, fail failure: @escaping (_ error: Error?) -> Void) {
+        guard let authToken = userSessionManager.getAuthToken() else {
+            failure(DochaRequestError.authTokenNotFound)
+            return
+        }
+        
+        searchRequest = SearchRequest()
+        searchRequest?.getGeneralRanking(withAuthToken: authToken,
+            success: { (players) in
+                success(players)
                 
             }, fail: { (error) in
                 failure(error)

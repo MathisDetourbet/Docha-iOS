@@ -31,6 +31,8 @@
 		6740FD901D460C6C00BEA047 /* DoubleHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6740FD8F1D460C6C00BEA047 /* DoubleHelper.swift */; };
 		67475E971DB67ACC0005677C /* SearchRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67475E961DB67ACC0005677C /* SearchRequest.swift */; };
 		67475E9A1DB68AB60005677C /* NewGameFindPlayerTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67475E991DB68AB60005677C /* NewGameFindPlayerTableViewCell.swift */; };
+		674C60A61DBE9B4D00809D98 /* GameplayRewardsDochosViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 674C60A51DBE9B4D00809D98 /* GameplayRewardsDochosViewController.swift */; };
+		674C60A81DBF392A00809D98 /* GameplayRewardsLevelUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 674C60A71DBF392A00809D98 /* GameplayRewardsLevelUpViewController.swift */; };
 		6750B0FD1D46285000AA33E2 /* DochaRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6750B0FC1D46285000AA33E2 /* DochaRequest.swift */; };
 		6750B1011D46483100AA33E2 /* CustomWebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6750B1001D46483100AA33E2 /* CustomWebViewController.swift */; };
 		6752037D1D782DFA00BF76B1 /* HomeGameTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6752037C1D782DFA00BF76B1 /* HomeGameTableViewCell.swift */; };
@@ -221,6 +223,8 @@
 		67475E961DB67ACC0005677C /* SearchRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchRequest.swift; sourceTree = "<group>"; };
 		67475E991DB68AB60005677C /* NewGameFindPlayerTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewGameFindPlayerTableViewCell.swift; sourceTree = "<group>"; };
 		67475E9D1DB76BC70005677C /* Docha.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Docha.entitlements; sourceTree = SOURCE_ROOT; };
+		674C60A51DBE9B4D00809D98 /* GameplayRewardsDochosViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameplayRewardsDochosViewController.swift; sourceTree = "<group>"; };
+		674C60A71DBF392A00809D98 /* GameplayRewardsLevelUpViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameplayRewardsLevelUpViewController.swift; sourceTree = "<group>"; };
 		6750B0FC1D46285000AA33E2 /* DochaRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DochaRequest.swift; sourceTree = "<group>"; };
 		6750B1001D46483100AA33E2 /* CustomWebViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomWebViewController.swift; sourceTree = "<group>"; };
 		6752037C1D782DFA00BF76B1 /* HomeGameTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeGameTableViewCell.swift; sourceTree = "<group>"; };
@@ -575,6 +579,8 @@
 		67475E9C1DB751310005677C /* Rewards */ = {
 			isa = PBXGroup;
 			children = (
+				674C60A51DBE9B4D00809D98 /* GameplayRewardsDochosViewController.swift */,
+				674C60A71DBF392A00809D98 /* GameplayRewardsLevelUpViewController.swift */,
 			);
 			name = Rewards;
 			sourceTree = "<group>";
@@ -983,8 +989,8 @@
 			children = (
 				67DD961A1D78B586007598E0 /* NewGameFindOpponentViewController.swift */,
 				67EFFDD81D901007003EE8E5 /* FindFacebookFriend */,
-				67EFFDD91D90101A003EE8E5 /* CategorySelection */,
 				6758DFFA1D958B6700CAFEF2 /* FindPlayer */,
+				67EFFDD91D90101A003EE8E5 /* CategorySelection */,
 			);
 			name = NewGame;
 			sourceTree = "<group>";
@@ -1568,6 +1574,7 @@
 				6775CE431C494BB700550041 /* JDFlipImageView.m in Sources */,
 				67EFFDD71D901000003EE8E5 /* NewGameFindFriendsViewController.swift in Sources */,
 				678B63461C9B5C0C00797516 /* User.swift in Sources */,
+				674C60A81DBF392A00809D98 /* GameplayRewardsLevelUpViewController.swift in Sources */,
 				67C18F261DAAF9B8008DD94B /* RoundRequest.swift in Sources */,
 				67EFFDE81D907AC4003EE8E5 /* TutorialView.swift in Sources */,
 				67DD961B1D78B586007598E0 /* NewGameFindOpponentViewController.swift in Sources */,
@@ -1609,6 +1616,7 @@
 				6752037D1D782DFA00BF76B1 /* HomeGameTableViewCell.swift in Sources */,
 				67FDCDC91D7ECEA800FC1264 /* GameplayMainViewController.swift in Sources */,
 				677EDF5B1D044AD000192C9D /* LxTabBarController.swift in Sources */,
+				674C60A61DBE9B4D00809D98 /* GameplayRewardsDochosViewController.swift in Sources */,
 				679598F21D8C316D009AC9CA /* ConverterHelper.swift in Sources */,
 				676744251DABC2D9007B6ABC /* Proposition.swift in Sources */,
 				67B90ED11D880BED0009F32C /* GameplayDebriefPageContentViewController.swift in Sources */,
