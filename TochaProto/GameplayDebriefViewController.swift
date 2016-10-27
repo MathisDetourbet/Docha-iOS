@@ -11,7 +11,7 @@ import Foundation
 class GameplayDebriefViewController: GameViewController, UIPageViewControllerDataSource, UIPageViewControllerDelegate, GameplayDebriefPageContentDelegate, CounterContainerViewDelegate {
     
     var productsList: [Product]?
-    var userResultsArray: [TimelineState]?
+    var userResultsArray: [TimelineState] = [.wrong, .wrong, .wrong]
     
     var pagesContentsViewControllerArray: [GameplayDebriefPageContentViewController] = []
     var pageViewController: UIPageViewController!
@@ -60,104 +60,109 @@ class GameplayDebriefViewController: GameViewController, UIPageViewControllerDat
     
     func buildUI() {
         let matchManager = MatchManager.sharedInstance
+        let currentRound = matchManager.currentRound as? RoundFull
         
-        // Timeline
-        var timelineImage: UIImage?
-        var index = 0
-        for result in userResultsArray! {
-            
-            if result == .perfect {
-                timelineImage = #imageLiteral(resourceName: "perfect_big_icon")
-                
-            } else if result == .wrong {
-                timelineImage = #imageLiteral(resourceName: "red_big_icon")
-            }
-            
-            userTimelineImageViewCollection[index].image = timelineImage
-            index += 1
-        }
-        
-        let currentRound = MatchManager.sharedInstance.currentRound
-        
-        for index in 0..<opponentTimelineImageViewCollection.count {
-            if currentRound?.status == .waiting {
-                opponentTimelineImageViewCollection[index].image = #imageLiteral(resourceName: "waiting_icon")
-                
-            } else {
-                opponentTimelineImageViewCollection[index].image = #imageLiteral(resourceName: "red_big_icon")
-            }
-        }
-        
-        let opponentScore = currentRound?.opponentScore
-        if let opponentScore = opponentScore {
-            for index in 0..<Int(opponentScore) {
-                opponentTimelineImageViewCollection[index].image = #imageLiteral(resourceName: "perfect_big_icon")
-            }
-        }
-        
-        var userBorderColor: UIColor = UIColor.white
-        var opponentBorderColor: UIColor = UIColor.white
-        
-        // Result sentence
         if let currentRound = currentRound {
-            switch currentRound.status {
-            case .waiting:
-                resultRoundSentenceImageView.image = #imageLiteral(resourceName: "waiting_sentence")
-                break
-            case .won:
-                resultRoundSentenceImageView.image = #imageLiteral(resourceName: "winner_sentence")
-                userBorderColor = UIColor.greenDochaColor()
-                opponentBorderColor = UIColor.redDochaColor()
-                break
-            case .lost:
-                resultRoundSentenceImageView.image = #imageLiteral(resourceName: "looser_sentence")
-                userBorderColor = UIColor.redDochaColor()
-                opponentBorderColor = UIColor.greenDochaColor()
-                break
-            case .tie:
-                resultRoundSentenceImageView.image = #imageLiteral(resourceName: "nul_sentence")
-                break
-            }
-        } else {
-            resultRoundSentenceImageView.image = #imageLiteral(resourceName: "waiting_sentence")
-        }
-
-        
-        // User infos
-        let userPlayer = matchManager.userPlayer
-        let opponentPlayer = matchManager.opponentPlayer
-        
-        if let userPlayer = userPlayer {
-            userAvatarImageView.image = userPlayer.avatarImage?.roundCornersToCircle(withBorder: 10.0, color: userBorderColor)
-            userNameLabel.text = userPlayer.pseudo
             
-            if let level = userPlayer.level {
-                userLevelLabel.text = "Niveau \(level)"
-                
-            } else {
-                userLevelLabel.text = "?"
-            }
-        }
-        
-        // Opponent infos
-        if let opponentPlayer = opponentPlayer {
-            opponentNameLabel.text = opponentPlayer.pseudo
+            // Timeline
+            var timelineImage: UIImage?
+            var index = 0
             
-            if let opponentAvatarImage = opponentPlayer.avatarImage {
-                opponentAvatarImageView.image = opponentAvatarImage.roundCornersToCircle(withBorder: 10.0, color: opponentBorderColor)
-                
-            } else {
-                opponentAvatarImageView.image = UIImage(named: "\(opponentPlayer.avatarUrl)_large")?.roundCornersToCircle(withBorder: 10.0, color: opponentBorderColor)
+            var numberOfPerfectsFound = Int(currentRound.userScore!)
+            numberOfPerfectsFound = numberOfPerfectsFound > 3 ? 3 : numberOfPerfectsFound
+            
+            for index in 0..<numberOfPerfectsFound {
+                userResultsArray[index] = .perfect
             }
             
-            if let level = opponentPlayer.level {
-                opponentLevelLabel.text = "Niveau \(level)"
+            for result in userResultsArray {
                 
-            } else {
-                opponentLevelLabel.text = "?"
+                if result == .perfect {
+                    timelineImage = #imageLiteral(resourceName: "perfect_big_icon")
+                    
+                } else if result == .wrong {
+                    timelineImage = #imageLiteral(resourceName: "red_big_icon")
+                }
+                
+                userTimelineImageViewCollection[index].image = timelineImage
+                index += 1
+            }
+            
+            for index in 0..<opponentTimelineImageViewCollection.count {
+                if currentRound.status == .waiting {
+                    opponentTimelineImageViewCollection[index].image = #imageLiteral(resourceName: "waiting_icon")
+                    
+                } else {
+                    opponentTimelineImageViewCollection[index].image = #imageLiteral(resourceName: "red_big_icon")
+                }
+            }
+            
+            let opponentScore = currentRound.opponentScore
+            if let opponentScore = opponentScore {
+                for index in 0..<Int(opponentScore) {
+                    opponentTimelineImageViewCollection[index].image = #imageLiteral(resourceName: "perfect_big_icon")
+                }
+            }
+            
+            var userBorderColor: UIColor = UIColor.white
+            var opponentBorderColor: UIColor = UIColor.white
+            
+            // Result sentence
+                switch currentRound.status {
+                case .waiting:
+                    resultRoundSentenceImageView.image = #imageLiteral(resourceName: "waiting_sentence")
+                    break
+                case .won:
+                    resultRoundSentenceImageView.image = #imageLiteral(resourceName: "winner_sentence")
+                    userBorderColor = UIColor.greenDochaColor()
+                    opponentBorderColor = UIColor.redDochaColor()
+                    break
+                case .lost:
+                    resultRoundSentenceImageView.image = #imageLiteral(resourceName: "looser_sentence")
+                    userBorderColor = UIColor.redDochaColor()
+                    opponentBorderColor = UIColor.greenDochaColor()
+                    break
+                case .tie:
+                    resultRoundSentenceImageView.image = #imageLiteral(resourceName: "nul_sentence")
+                    break
+                }
+            
+            
+            // User infos
+            let userPlayer = matchManager.userPlayer
+            let opponentPlayer = matchManager.opponentPlayer
+            
+            if let userPlayer = userPlayer {
+                userAvatarImageView.image = userPlayer.avatarImage?.roundCornersToCircle(withBorder: 10.0, color: userBorderColor)
+                userNameLabel.text = userPlayer.pseudo
+                
+                if let level = userPlayer.level {
+                    userLevelLabel.text = "Niveau \(level)"
+                    
+                } else {
+                    userLevelLabel.text = "?"
+                }
+            }
+            
+            // Opponent infos
+            if let opponentPlayer = opponentPlayer {
+                opponentNameLabel.text = opponentPlayer.pseudo
+                
+                if let opponentAvatarImage = opponentPlayer.avatarImage {
+                    opponentAvatarImageView.image = opponentAvatarImage.roundCornersToCircle(withBorder: 10.0, color: opponentBorderColor)
+                    
+                } else {
+                    opponentAvatarImageView.image = UIImage(named: "\(opponentPlayer.avatarUrl)_large")?.roundCornersToCircle(withBorder: 10.0, color: opponentBorderColor)
+                }
+                
+                if let level = opponentPlayer.level {
+                    opponentLevelLabel.text = "Niveau \(level)"
+                    
+                } else {
+                    opponentLevelLabel.text = "?"
+                }
             }
         }
-        
     }
     
 
@@ -216,6 +221,8 @@ class GameplayDebriefViewController: GameViewController, UIPageViewControllerDat
             pageContentViewController.productBrandLabel.text = product.brand
             pageContentViewController.delegate = self
             pageContentViewController.pageIndex = index
+            let centsString = ConverterHelper.convertPriceToArrayOfInt(product.price).centsString
+            pageContentViewController.counterContainerView.centsLabel.text = product.centsString
             pageContentViewController.counterContainerView.numberOfCounterDisplayed = ConverterHelper.convertPriceToArrayOfInt(product.price).priceArray.count
             pageContentViewController.counterContainerView.delegate = self
             pageContentViewController.counterContainerView.layoutSubviews()
