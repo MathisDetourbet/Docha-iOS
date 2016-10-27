@@ -61,7 +61,6 @@ class GameplayDebriefViewController: GameViewController, UIPageViewControllerDat
     func buildUI() {
         let matchManager = MatchManager.sharedInstance
         
-        
         // Timeline
         var timelineImage: UIImage?
         var index = 0

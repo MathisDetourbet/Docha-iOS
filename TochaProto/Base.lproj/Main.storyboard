@@ -444,12 +444,12 @@
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="background_scoring" translatesAutoresizingMaskIntoConstraints="NO" id="vFU-kv-iGs"/>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="dochos_icon" translatesAutoresizingMaskIntoConstraints="NO" id="lr7-OC-HjN"/>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="perfects_icon" translatesAutoresizingMaskIntoConstraints="NO" id="Oq6-d1-otn"/>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="100" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZNa-bP-3U2">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="100" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZNa-bP-3U2" customClass="SACountingLabel" customModule="SACountingLabel">
                                 <fontDescription key="fontDescription" name="Montserrat-SemiBold" family="Montserrat" pointSize="15"/>
                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="5" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RFo-K7-MF3">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="5" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RFo-K7-MF3" customClass="SACountingLabel" customModule="SACountingLabel">
                                 <fontDescription key="fontDescription" name="Montserrat-SemiBold" family="Montserrat" pointSize="15"/>
                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
@@ -549,11 +549,11 @@
                         <outlet property="bubblePerfectsImageView" destination="hm4-Kx-7EK" id="jnM-ab-kch"/>
                         <outlet property="tableView" destination="b91-v8-JcW" id="PBM-QB-Nao"/>
                         <outlet property="userAvatarImageView" destination="c9l-Ug-fCQ" id="beJ-c8-OOj"/>
-                        <outlet property="userDochosLabel" destination="ZNa-bP-3U2" id="SLV-mz-MRj"/>
+                        <outlet property="userDochosLabel" destination="ZNa-bP-3U2" id="vMq-Ps-FhL"/>
                         <outlet property="userLevelBar" destination="Nd9-cC-Ji2" id="ywP-HR-zXF"/>
                         <outlet property="userLevelLabel" destination="TSk-An-EHe" id="kZ0-hD-VJ6"/>
                         <outlet property="userNameLabel" destination="DRl-OW-9dn" id="gfM-ba-azf"/>
-                        <outlet property="userPerfectLabel" destination="RFo-K7-MF3" id="yM7-ao-FWE"/>
+                        <outlet property="userPerfectLabel" destination="RFo-K7-MF3" id="c1l-eO-p0n"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="J4h-e8-MCg" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -784,7 +784,7 @@
                                     <constraint firstItem="DLI-8X-67t" firstAttribute="centerY" secondItem="EaB-5H-oKq" secondAttribute="centerY" id="Rug-yK-4A9"/>
                                 </constraints>
                             </view>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="100" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="q12-tR-pNc">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="100" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="q12-tR-pNc" customClass="SACountingLabel" customModule="SACountingLabel">
                                 <fontDescription key="fontDescription" name="Montserrat-Regular" family="Montserrat" pointSize="15"/>
                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
@@ -819,7 +819,7 @@
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <connections>
                         <outlet property="collectionView" destination="DLI-8X-67t" id="VTb-TT-e1o"/>
-                        <outlet property="userDochosLabel" destination="q12-tR-pNc" id="9SV-7Y-T9N"/>
+                        <outlet property="userDochosLabel" destination="q12-tR-pNc" id="4Rh-mn-rrf"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="E8k-kF-WCM" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1927,7 +1927,7 @@
                     <connections>
                         <outlet property="segmentControl" destination="I2l-LL-uZJ" id="SKy-zW-bzW"/>
                         <outlet property="tableView" destination="633-vb-EZJ" id="vey-xx-K0k"/>
-                        <outlet property="userDochosLabel" destination="0mr-FI-JKM" id="tZP-BL-fbP"/>
+                        <outlet property="userPerfectsLabel" destination="0mr-FI-JKM" id="cBe-TN-Tlg"/>
                         <outlet property="userRankingLabel" destination="5Ud-8u-dXy" id="fRu-CZ-Ga9"/>
                     </connections>
                 </viewController>

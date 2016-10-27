@@ -46,7 +46,7 @@ class GameplayMainViewController: GameViewController, KeyboardViewDelegate, Coun
     var cursorCard: Int = 0
     var cursorCounter: Int = 0
     
-    let kTimePerRound: Double = 30.0
+    let kTimePerRound: Double = 60.0
     var timer: Timer?
     var timeleft: Double!
     

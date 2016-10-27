@@ -13,6 +13,7 @@ import FBSDKShareKit
 import SwiftyJSON
 import SWTableViewCell
 import PullToRefresh
+import SACountingLabel
 
 enum HomeSectionName: Int {
     case userTurn = 0
@@ -34,8 +35,8 @@ class HomeViewController: GameViewController, UITableViewDelegate, UITableViewDa
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var userAvatarImageView: UIImageView!
     @IBOutlet weak var userNameLabel: UILabel!
-    @IBOutlet weak var userDochosLabel: UILabel!
-    @IBOutlet weak var userPerfectLabel: UILabel!
+    @IBOutlet weak var userDochosLabel: SACountingLabel!
+    @IBOutlet weak var userPerfectLabel: SACountingLabel!
     @IBOutlet weak var userLevelBar: LevelBarView!
     @IBOutlet weak var userLevelLabel: UILabel!
     @IBOutlet weak var bubbleDochosImageView: UIImageView!
@@ -48,9 +49,10 @@ class HomeViewController: GameViewController, UITableViewDelegate, UITableViewDa
         super.viewDidLoad()
         
         loadUserInfos()
-        loadAllMatch(withCompletion: nil)
         buildUI()
         self.navigationController?.isNavigationBarHidden = true
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(HomeViewController.refreshHome), name: .UIApplicationWillEnterForeground, object: nil)
     }
     
     deinit {
@@ -62,8 +64,7 @@ class HomeViewController: GameViewController, UITableViewDelegate, UITableViewDa
         self.navigationController?.isNavigationBarHidden = true
         
         checkForTutorial()
-        loadUserInfos()
-        buildUI()
+        loadAllMatch(withCompletion: nil)
     }
     
     func buildUI() {
@@ -123,11 +124,20 @@ class HomeViewController: GameViewController, UITableViewDelegate, UITableViewDa
             let image = avatarImage
             userAvatarImageView.image = image.roundCornersToCircle(withBorder: 10.0, color: UIColor.white)
             
-            userDochosLabel.text = "\(user.dochos)"
-            userPerfectLabel.text = "\(user.perfectPriceCpt)"
-            userLevelLabel.text = "Niveau \(user.levelMaxUnlocked!)"
-            userLevelBar.updateLevelBar(withLevelPercent: CGFloat(user.levelPercentage!))
+            let dochos = Float(user.dochos)
+            let perfectPrice = Float(user.perfectPriceCpt)
+            let level = user.levelMaxUnlocked!
+            let levelPercentage = CGFloat(user.levelPercentage!)
+            userDochosLabel.countFrom(0.0, to: dochos, withDuration: 1.0, andAnimationType: .easeInOut, andCountingType: .int)
+            userPerfectLabel.countFrom(0.0, to: perfectPrice, withDuration: 1.0, andAnimationType: .easeInOut, andCountingType: .int)
+            userLevelLabel.text = "Niveau \(level)"
+            userLevelBar.updateLevelBar(withLevelPercent: levelPercentage)
         }
+    }
+    
+    func refreshHome() {
+        loadAllMatch {}
+        loadUserInfos()
     }
     
     func loadAllMatch(withCompletion completion: (() -> Void)?) {
@@ -136,11 +146,17 @@ class HomeViewController: GameViewController, UITableViewDelegate, UITableViewDa
                 
                 self.sortedMatch = self.sortMatchArray(matchArray: allMatch)
                 self.tableView.reloadData()
-                completion?()
+                
+                if let completion = completion {
+                    completion()
+                }
                 
             }) { (error) in
                 PopupManager.sharedInstance.showErrorPopup(message: Constants.PopupMessage.ErrorMessage.kErrorNoInternetConnection)
-                completion?()
+                
+                if let completion = completion {
+                    completion()
+                }
         }
     }
     
@@ -153,9 +169,11 @@ class HomeViewController: GameViewController, UITableViewDelegate, UITableViewDa
             case .userTurn:
                 sortedMatch[HomeSectionName.userTurn.rawValue].append(match)
                 break
+                
             case .opponentTurn, .waiting:
                 sortedMatch[HomeSectionName.opponentTurn.rawValue].append(match)
                 break
+                
             case .won, .lost, .tie:
                 sortedMatch[HomeSectionName.finished.rawValue].append(match)
                 break

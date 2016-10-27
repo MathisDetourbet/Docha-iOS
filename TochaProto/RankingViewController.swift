@@ -19,7 +19,7 @@ class RankingViewController: GameViewController, UITableViewDataSource, UITableV
     @IBOutlet weak var tableView: UITableView!
     
     @IBOutlet weak var userRankingLabel: UILabel!
-    @IBOutlet weak var userDochosLabel: UILabel!
+    @IBOutlet weak var userPerfectsLabel: UILabel!
     @IBOutlet weak var segmentControl: UISegmentedControl!
     
 //MARK: Life View Cycle
@@ -42,9 +42,13 @@ class RankingViewController: GameViewController, UITableViewDataSource, UITableV
         self.view.backgroundColor = UIColor.lightGrayDochaColor()
         tableView.tableFooterView = UIView()
         
+        let font = UIFont.systemFont(ofSize: 15.0)
+        segmentControl.setTitleTextAttributes([NSFontAttributeName: font], for: .normal)
+        
         let refresher = PullToRefresh()
         tableView.addPullToRefresh(refresher) {
             if self.segmentControl.selectedSegmentIndex == 0 {
+                self.friendsList = []
                 self.loadFriendsRankingData(
                     withCompletion: {
                         self.tableView.endRefreshing(at: Position.top)
@@ -52,6 +56,7 @@ class RankingViewController: GameViewController, UITableViewDataSource, UITableV
                 )
                 
             } else {
+                self.generalList = []
                 self.loadGeneralRankingData(
                     withCompletion: {
                         self.tableView.endRefreshing(at: Position.top)
@@ -66,24 +71,29 @@ class RankingViewController: GameViewController, UITableViewDataSource, UITableV
         
         if let user = user {
             userRankingLabel.text = String(user.rank)
-            userDochosLabel.text = String(user.perfectPriceCpt)
+            userPerfectsLabel.text = String(user.perfectPriceCpt)
         }
     }
     
     func loadFriendsRankingData(withCompletion completion: (() -> Void)?) {
-        MatchManager.sharedInstance.getFacebookFriends(
-            success: { (friends) in
-                
-                self.friendsList = friends
-                self.currentList = self.friendsList
-                self.tableView.reloadData()
-                completion?()
-                
+        if friendsList.isEmpty {
+            MatchManager.sharedInstance.getFacebookFriends(
+                success: { (friends) in
+                    
+                    self.friendsList = friends
+                    self.currentList = self.friendsList
+                    self.tableView.reloadData()
+                    completion?()
+                    
             }) { (error) in
                 PopupManager.sharedInstance.showErrorPopup(message: Constants.PopupMessage.ErrorMessage.kErrorOccured, viewController: self, doneActionCompletion: {
-                        completion?()
+                    completion?()
                     }
                 )
+            }
+        } else {
+            currentList = friendsList
+            completion?()
         }
     }
     
@@ -105,6 +115,7 @@ class RankingViewController: GameViewController, UITableViewDataSource, UITableV
             }
         } else {
             currentList = generalList
+            completion?()
         }
     }
     

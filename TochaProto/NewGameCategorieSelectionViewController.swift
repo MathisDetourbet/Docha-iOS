@@ -7,13 +7,14 @@
 //
 
 import Foundation
+import SACountingLabel
 
 class NewGameCategorieSelectionViewController: GameViewController, UICollectionViewDataSource, UICollectionViewDelegate {
     
     var categoriesDisplayed: [Category] = []
     
     @IBOutlet weak var collectionView: UICollectionView!
-    @IBOutlet weak var userDochosLabel: UILabel!
+    @IBOutlet weak var userDochosLabel: SACountingLabel!
     
 //MARK: Life View Cycle
     
@@ -22,10 +23,6 @@ class NewGameCategorieSelectionViewController: GameViewController, UICollectionV
         
         buildUI()
         loadCategory(withCompletion: nil)
-        let user = UserSessionManager.sharedInstance.getUserInfosAndAvatarImage().user
-        if let user = user {
-            userDochosLabel.text = "\(user.dochos)"
-        }
     }
     
     func buildUI() {
@@ -33,6 +30,12 @@ class NewGameCategorieSelectionViewController: GameViewController, UICollectionV
         configNavigationBarWithTitle("Choisis ta catégorie")
         self.view.backgroundColor = UIColor.lightGrayDochaColor()
         collectionView.backgroundColor = UIColor.lightGrayDochaColor()
+        
+        let user = UserSessionManager.sharedInstance.getUserInfosAndAvatarImage().user
+        if let user = user {
+            let dochos = Float(user.dochos)
+            userDochosLabel.countFrom(0.0, to: dochos, withDuration: 1.0, andAnimationType: .easeInOut, andCountingType: .int)
+        }
     }
     
     func loadCategory(withCompletion completion: (() -> Void)?) {
