@@ -222,14 +222,13 @@ class GameplayDebriefViewController: GameViewController, UIPageViewControllerDat
             pageContentViewController.delegate = self
             pageContentViewController.pageIndex = index
             let centsString = ConverterHelper.convertPriceToArrayOfInt(product.price).centsString
-            pageContentViewController.counterContainerView.centsLabel.text = product.centsString
+            pageContentViewController.counterContainerView.centsLabel.text = centsString
             pageContentViewController.counterContainerView.numberOfCounterDisplayed = ConverterHelper.convertPriceToArrayOfInt(product.price).priceArray.count
             pageContentViewController.counterContainerView.delegate = self
             pageContentViewController.counterContainerView.layoutSubviews()
-            
             pageContentViewController.counterContainerView.initCountersViews()
             
-            self.pagesContentsViewControllerArray.insert(pageContentViewController, at: index)
+            pagesContentsViewControllerArray.insert(pageContentViewController, at: index)
             
             return pageContentViewController
         }
