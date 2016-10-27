@@ -71,7 +71,6 @@ class UserSession: User, NSCoding {
     
     func deleteSession() {
         UserDefaults.standard.removeObject(forKey: Constants.UserDefaultsKey.kUserSessionObject)
-        UserDefaults.standard.removeObject(forKey: Constants.UserDefaultsKey.kUserHasFinishedTutorial)
         UserDefaults.standard.synchronize()
     }
     
