@@ -40,7 +40,6 @@ class GameplayMainViewController: GameViewController, KeyboardViewDelegate, Coun
     var currentCard: CardProductView?
     
     var userEstimation: [Int]?
-    var userResultsArray: [TimelineState] = []
     var opponentResultArray: [TimelineState] = []
     
     var cursorCard: Int = 0
@@ -99,11 +98,7 @@ class GameplayMainViewController: GameViewController, KeyboardViewDelegate, Coun
     }
     
     func roundFinished() {
-        if cursorCard < cardsViews!.count-1 {
-            for _ in cursorCard..<cardsViews!.count {
-                userResultsArray.append(.wrong)
-            }
-        }
+        
         var propositionsJSON: [[String: Any]] = []
         for proposition in userPropositions {
             let propositionJSON = proposition.generateJSONObject()
@@ -117,13 +112,11 @@ class GameplayMainViewController: GameViewController, KeyboardViewDelegate, Coun
                 
                 let debriefVC = self.storyboard?.instantiateViewController(withIdentifier: "idGameplayDebriefViewController") as! GameplayDebriefViewController
                 debriefVC.productsList = self.round?.products
-                debriefVC.userResultsArray = self.userResultsArray
                 self.navigationController?.pushViewController(debriefVC, animated: true)
             }
         ) { (error) in
             let debriefVC = self.storyboard?.instantiateViewController(withIdentifier: "idGameplayDebriefViewController") as! GameplayDebriefViewController
             debriefVC.productsList = self.round?.products
-            debriefVC.userResultsArray = self.userResultsArray
             self.navigationController?.pushViewController(debriefVC, animated: true)
         }
     }
@@ -430,10 +423,6 @@ class GameplayMainViewController: GameViewController, KeyboardViewDelegate, Coun
         if isForUser {
             if let timelineImageName = timelineImageName {
                 userTimelineImageViewCollection[cursorCard].image = UIImage(named: timelineImageName)
-            }
-            
-            if result == .perfect || result == .wrong {
-                userResultsArray.append(result)
             }
             
         } else {

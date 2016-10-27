@@ -91,6 +91,7 @@ class RankingViewController: GameViewController, UITableViewDataSource, UITableV
                     }
                 )
             }
+            
         } else {
             currentList = friendsList
             completion?()

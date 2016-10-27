@@ -1354,44 +1354,58 @@
                                     </imageView>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="avatar_woman_large" translatesAutoresizingMaskIntoConstraints="NO" id="vx6-0f-WZm">
                                         <constraints>
-                                            <constraint firstAttribute="width" secondItem="vx6-0f-WZm" secondAttribute="height" multiplier="1:1" id="YdE-Lw-tUr"/>
+                                            <constraint firstAttribute="width" secondItem="vx6-0f-WZm" secondAttribute="height" multiplier="1:1" constant="-1" id="YdE-Lw-tUr"/>
                                         </constraints>
                                     </imageView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="46&quot;6" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IS4-85-ajQ">
+                                        <fontDescription key="fontDescription" name="Montserrat-ExtraBold" family="Montserrat" pointSize="17"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Temps écoulé" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="z5D-RI-Xgu">
+                                        <fontDescription key="fontDescription" name="Montserrat-ExtraBold" family="Montserrat" pointSize="17"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                 </subviews>
                                 <color key="backgroundColor" red="0.28235294119999998" green="0.64705882349999999" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstItem="vx6-0f-WZm" firstAttribute="leading" secondItem="FVz-eU-Nqa" secondAttribute="trailing" constant="8" id="2jc-Dr-8dU"/>
                                     <constraint firstItem="6IR-vE-ndn" firstAttribute="centerY" secondItem="1bi-fA-f9C" secondAttribute="centerY" id="32N-hO-VjL"/>
-                                    <constraint firstItem="bIS-Gs-Xfb" firstAttribute="top" secondItem="rF3-59-0VP" secondAttribute="bottom" constant="26" id="7Fg-HQ-tVM"/>
+                                    <constraint firstItem="bIS-Gs-Xfb" firstAttribute="top" secondItem="rF3-59-0VP" secondAttribute="bottom" constant="15" id="7Fg-HQ-tVM"/>
                                     <constraint firstItem="LnG-Ym-tBi" firstAttribute="centerX" secondItem="yc3-e8-PkU" secondAttribute="centerX" id="7Ln-ah-OH5"/>
-                                    <constraint firstAttribute="bottom" secondItem="1bi-fA-f9C" secondAttribute="bottom" constant="19" id="9Dq-z5-atC"/>
+                                    <constraint firstAttribute="bottom" secondItem="1bi-fA-f9C" secondAttribute="bottom" constant="30" id="9Dq-z5-atC"/>
                                     <constraint firstItem="6IR-vE-ndn" firstAttribute="leading" secondItem="jvU-Oh-np8" secondAttribute="trailing" constant="4" id="BMK-lC-UYy"/>
                                     <constraint firstItem="AMc-dj-dNN" firstAttribute="leading" secondItem="MRh-Ti-Aax" secondAttribute="leading" id="CXk-0e-Gwc"/>
                                     <constraint firstItem="b53-Na-1Ms" firstAttribute="leading" secondItem="XoT-fe-7dL" secondAttribute="trailing" constant="4" id="ECp-85-K9Y"/>
                                     <constraint firstItem="b53-Na-1Ms" firstAttribute="centerY" secondItem="I3Q-va-LQf" secondAttribute="centerY" id="Foy-Er-LQP"/>
-                                    <constraint firstAttribute="bottom" secondItem="I3Q-va-LQf" secondAttribute="bottom" constant="19" id="JcN-HA-bz1"/>
+                                    <constraint firstItem="IS4-85-ajQ" firstAttribute="centerX" secondItem="XoT-fe-7dL" secondAttribute="centerX" id="GJ3-Yl-XyD"/>
+                                    <constraint firstAttribute="bottom" secondItem="I3Q-va-LQf" secondAttribute="bottom" constant="30" id="JcN-HA-bz1"/>
+                                    <constraint firstItem="z5D-RI-Xgu" firstAttribute="top" secondItem="1bi-fA-f9C" secondAttribute="bottom" constant="5" id="OKM-FH-Tp9"/>
                                     <constraint firstItem="QGo-rh-y0c" firstAttribute="trailing" secondItem="FVz-eU-Nqa" secondAttribute="trailing" id="Oao-eH-i6v"/>
                                     <constraint firstItem="QGo-rh-y0c" firstAttribute="top" secondItem="FVz-eU-Nqa" secondAttribute="bottom" id="PzL-3e-5bk"/>
+                                    <constraint firstItem="z5D-RI-Xgu" firstAttribute="centerX" secondItem="6IR-vE-ndn" secondAttribute="centerX" id="Sp0-0E-eY2"/>
                                     <constraint firstItem="MRh-Ti-Aax" firstAttribute="centerY" secondItem="bIS-Gs-Xfb" secondAttribute="centerY" constant="-11" id="UUF-F1-FHy"/>
                                     <constraint firstAttribute="trailing" secondItem="Kpn-4P-Axm" secondAttribute="trailing" id="VS2-c7-yDh"/>
                                     <constraint firstItem="jvU-Oh-np8" firstAttribute="centerY" secondItem="1bi-fA-f9C" secondAttribute="centerY" id="VYJ-ws-ZQt"/>
                                     <constraint firstItem="LnG-Ym-tBi" firstAttribute="top" secondItem="yc3-e8-PkU" secondAttribute="top" constant="6" id="WTb-G6-2aJ"/>
+                                    <constraint firstItem="IS4-85-ajQ" firstAttribute="top" secondItem="XoT-fe-7dL" secondAttribute="bottom" constant="5" id="Wp9-fQ-ckc"/>
                                     <constraint firstItem="AMc-dj-dNN" firstAttribute="top" secondItem="MRh-Ti-Aax" secondAttribute="bottom" id="ZVm-ro-qTn"/>
                                     <constraint firstItem="Kpn-4P-Axm" firstAttribute="top" secondItem="yc3-e8-PkU" secondAttribute="top" id="Zwv-lm-Gbh"/>
                                     <constraint firstItem="FVz-eU-Nqa" firstAttribute="centerY" secondItem="vx6-0f-WZm" secondAttribute="centerY" constant="-11" id="aFz-7e-aGt"/>
                                     <constraint firstItem="XoT-fe-7dL" firstAttribute="centerY" secondItem="I3Q-va-LQf" secondAttribute="centerY" id="aqJ-8r-Euo"/>
                                     <constraint firstItem="rF3-59-0VP" firstAttribute="top" secondItem="LnG-Ym-tBi" secondAttribute="bottom" constant="22" id="eMg-Bi-zIo"/>
                                     <constraint firstItem="Kpn-4P-Axm" firstAttribute="leading" secondItem="yc3-e8-PkU" secondAttribute="leading" id="ewd-Z6-m7f"/>
-                                    <constraint firstAttribute="trailing" secondItem="vx6-0f-WZm" secondAttribute="trailing" constant="6" id="f54-yK-KPS"/>
-                                    <constraint firstItem="vx6-0f-WZm" firstAttribute="top" secondItem="rF3-59-0VP" secondAttribute="bottom" constant="26" id="g3v-U2-ejC"/>
+                                    <constraint firstAttribute="trailing" secondItem="vx6-0f-WZm" secondAttribute="trailing" constant="8" id="f54-yK-KPS"/>
+                                    <constraint firstItem="vx6-0f-WZm" firstAttribute="top" secondItem="rF3-59-0VP" secondAttribute="bottom" constant="15" id="g3v-U2-ejC"/>
                                     <constraint firstAttribute="bottom" secondItem="Kpn-4P-Axm" secondAttribute="bottom" id="hdC-nK-0ER"/>
-                                    <constraint firstItem="I3Q-va-LQf" firstAttribute="leading" secondItem="yc3-e8-PkU" secondAttribute="leading" constant="8" id="jH3-AX-IqM"/>
+                                    <constraint firstItem="I3Q-va-LQf" firstAttribute="leading" secondItem="yc3-e8-PkU" secondAttribute="leading" constant="6" id="jH3-AX-IqM"/>
                                     <constraint firstItem="I3Q-va-LQf" firstAttribute="top" secondItem="bIS-Gs-Xfb" secondAttribute="bottom" constant="12" id="lQJ-Wf-UcP"/>
-                                    <constraint firstAttribute="trailing" secondItem="1bi-fA-f9C" secondAttribute="trailing" constant="8" id="nqc-ZG-990"/>
+                                    <constraint firstAttribute="trailing" secondItem="1bi-fA-f9C" secondAttribute="trailing" constant="10" id="nqc-ZG-990"/>
                                     <constraint firstItem="1bi-fA-f9C" firstAttribute="top" secondItem="vx6-0f-WZm" secondAttribute="bottom" constant="12" id="pA9-Cl-Bjm"/>
                                     <constraint firstItem="XoT-fe-7dL" firstAttribute="leading" secondItem="I3Q-va-LQf" secondAttribute="trailing" constant="4" id="rkW-HP-tCY"/>
                                     <constraint firstItem="MRh-Ti-Aax" firstAttribute="leading" secondItem="bIS-Gs-Xfb" secondAttribute="trailing" constant="6" id="rxX-RI-aoT"/>
-                                    <constraint firstItem="bIS-Gs-Xfb" firstAttribute="leading" secondItem="yc3-e8-PkU" secondAttribute="leading" constant="6" id="ut7-Kj-ikT"/>
+                                    <constraint firstItem="bIS-Gs-Xfb" firstAttribute="leading" secondItem="yc3-e8-PkU" secondAttribute="leading" constant="4" id="ut7-Kj-ikT"/>
                                     <constraint firstItem="1bi-fA-f9C" firstAttribute="leading" secondItem="6IR-vE-ndn" secondAttribute="trailing" constant="4" id="uzq-lU-rkz"/>
                                     <constraint firstAttribute="width" secondItem="yc3-e8-PkU" secondAttribute="height" multiplier="64:47" id="ve7-Qt-4uJ"/>
                                     <constraint firstItem="rF3-59-0VP" firstAttribute="centerX" secondItem="yc3-e8-PkU" secondAttribute="centerX" id="x6D-JG-9nW"/>
@@ -1447,11 +1461,13 @@
                         <outlet property="opponentAvatarImageView" destination="vx6-0f-WZm" id="CLO-Nh-Dpi"/>
                         <outlet property="opponentLevelLabel" destination="QGo-rh-y0c" id="mqI-ku-BBM"/>
                         <outlet property="opponentNameLabel" destination="FVz-eU-Nqa" id="BlL-c1-xqt"/>
+                        <outlet property="opponentTimeLabel" destination="z5D-RI-Xgu" id="Zqt-Ef-Woi"/>
                         <outlet property="pageControl" destination="2B0-oy-xFP" id="wgj-SE-Qci"/>
                         <outlet property="resultRoundSentenceImageView" destination="rF3-59-0VP" id="LBt-fS-uKI"/>
                         <outlet property="userAvatarImageView" destination="bIS-Gs-Xfb" id="WfB-5R-5J4"/>
                         <outlet property="userLevelLabel" destination="AMc-dj-dNN" id="tAg-qI-Ygc"/>
                         <outlet property="userNameLabel" destination="MRh-Ti-Aax" id="DPm-pM-KL2"/>
+                        <outlet property="userTimeLabel" destination="IS4-85-ajQ" id="k3q-dv-W9l"/>
                         <outletCollection property="userTimelineImageViewCollection" destination="I3Q-va-LQf" collectionClass="NSMutableArray" id="604-7h-4s3"/>
                         <outletCollection property="userTimelineImageViewCollection" destination="XoT-fe-7dL" collectionClass="NSMutableArray" id="RAC-Ob-eZ2"/>
                         <outletCollection property="userTimelineImageViewCollection" destination="b53-Na-1Ms" collectionClass="NSMutableArray" id="KDa-mn-QMc"/>
@@ -3666,7 +3682,7 @@
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" translucent="NO" prompted="NO"/>
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <size key="freeformSize" width="375" height="667"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" translucent="NO" backIndicatorImage="return" backIndicatorTransitionMaskImage="return" id="KIr-iK-EDu">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" backIndicatorImage="return" backIndicatorTransitionMaskImage="return" id="KIr-iK-EDu">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -4021,7 +4037,7 @@
                     <nil key="simulatedBottomBarMetrics"/>
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <size key="freeformSize" width="375" height="667"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="lCG-SE-5y6">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="lCG-SE-5y6">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="barTintColor" red="0.28235294119999998" green="0.64705882349999999" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -4044,7 +4060,7 @@
                     <nil key="simulatedBottomBarMetrics"/>
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <size key="freeformSize" width="375" height="667"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="P1I-A6-KVU">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="P1I-A6-KVU">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="barTintColor" red="0.28235294119999998" green="0.64705882349999999" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -4630,7 +4646,7 @@
                     <nil key="simulatedBottomBarMetrics"/>
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <size key="freeformSize" width="375" height="667"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="NwR-ux-pek">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="NwR-ux-pek">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="barTintColor" red="0.28235294119999998" green="0.64705882349999999" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

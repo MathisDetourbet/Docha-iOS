@@ -21,11 +21,13 @@ class GameplayDebriefViewController: GameViewController, UIPageViewControllerDat
     @IBOutlet weak var userAvatarImageView: UIImageView!
     @IBOutlet weak var userNameLabel: UILabel!
     @IBOutlet weak var userLevelLabel: UILabel!
+    @IBOutlet weak var userTimeLabel: UILabel!
     @IBOutlet var userTimelineImageViewCollection: [UIImageView]!
     
     @IBOutlet weak var opponentAvatarImageView: UIImageView!
     @IBOutlet weak var opponentNameLabel: UILabel!
     @IBOutlet weak var opponentLevelLabel: UILabel!
+    @IBOutlet weak var opponentTimeLabel: UILabel!
     @IBOutlet var opponentTimelineImageViewCollection: [UIImageView]!
     
     @IBOutlet weak var pageControl: UIPageControl!
@@ -68,10 +70,11 @@ class GameplayDebriefViewController: GameViewController, UIPageViewControllerDat
             var timelineImage: UIImage?
             var index = 0
             
-            var numberOfPerfectsFound = Int(currentRound.userScore!)
-            numberOfPerfectsFound = numberOfPerfectsFound > 3 ? 3 : numberOfPerfectsFound
+            var userScore = Int(currentRound.userScore ?? 0)
+            let scoreMax = currentRound.products.count
+            userScore = userScore > scoreMax ? scoreMax : userScore
             
-            for index in 0..<numberOfPerfectsFound {
+            for index in 0..<userScore {
                 userResultsArray[index] = .perfect
             }
             
@@ -97,36 +100,38 @@ class GameplayDebriefViewController: GameViewController, UIPageViewControllerDat
                 }
             }
             
-            let opponentScore = currentRound.opponentScore
-            if let opponentScore = opponentScore {
-                for index in 0..<Int(opponentScore) {
-                    opponentTimelineImageViewCollection[index].image = #imageLiteral(resourceName: "perfect_big_icon")
-                }
+            var opponentScore = Int(currentRound.opponentScore ?? 0)
+            opponentScore = opponentScore > scoreMax ? scoreMax : opponentScore
+            
+            for index in 0..<opponentScore {
+                opponentTimelineImageViewCollection[index].image = #imageLiteral(resourceName: "perfect_big_icon")
             }
             
             var userBorderColor: UIColor = UIColor.white
             var opponentBorderColor: UIColor = UIColor.white
             
             // Result sentence
-                switch currentRound.status {
-                case .waiting:
-                    resultRoundSentenceImageView.image = #imageLiteral(resourceName: "waiting_sentence")
-                    break
-                case .won:
-                    resultRoundSentenceImageView.image = #imageLiteral(resourceName: "winner_sentence")
-                    userBorderColor = UIColor.greenDochaColor()
-                    opponentBorderColor = UIColor.redDochaColor()
-                    break
-                case .lost:
-                    resultRoundSentenceImageView.image = #imageLiteral(resourceName: "looser_sentence")
-                    userBorderColor = UIColor.redDochaColor()
-                    opponentBorderColor = UIColor.greenDochaColor()
-                    break
-                case .tie:
-                    resultRoundSentenceImageView.image = #imageLiteral(resourceName: "nul_sentence")
-                    break
-                }
-            
+            switch currentRound.status {
+            case .waiting:
+                resultRoundSentenceImageView.image = #imageLiteral(resourceName: "waiting_sentence")
+                break
+                
+            case .won:
+                resultRoundSentenceImageView.image = #imageLiteral(resourceName: "winner_sentence")
+                userBorderColor = UIColor.greenDochaColor()
+                opponentBorderColor = UIColor.redDochaColor()
+                break
+                
+            case .lost:
+                resultRoundSentenceImageView.image = #imageLiteral(resourceName: "looser_sentence")
+                userBorderColor = UIColor.redDochaColor()
+                opponentBorderColor = UIColor.greenDochaColor()
+                break
+                
+            case .tie:
+                resultRoundSentenceImageView.image = #imageLiteral(resourceName: "nul_sentence")
+                break
+            }
             
             // User infos
             let userPlayer = matchManager.userPlayer
@@ -161,6 +166,29 @@ class GameplayDebriefViewController: GameViewController, UIPageViewControllerDat
                 } else {
                     opponentLevelLabel.text = "?"
                 }
+            }
+            
+            userScore = Int(currentRound.userScore ?? 0)
+            opponentScore = Int(currentRound.opponentScore ?? 0)
+            
+            if userScore > scoreMax {
+                if let userTime = currentRound.userTime {
+                    let seconds = Int(userTime/1000)
+                    let milliseconds = (Int(Int(userTime) - (seconds * 1000))) / 1000
+                    userTimeLabel.text = "\(seconds)\"\(milliseconds)"
+                    opponentTimeLabel.text = "Temps écoulé"
+                }
+            } else if opponentScore > scoreMax {
+                if let opponentTime = currentRound.opponentTime {
+                    let seconds = Int(opponentTime/1000)
+                    let milliseconds = (Int(Int(opponentTime) - (seconds * 1000))) / 1000
+                    opponentTimeLabel.text = "\(seconds)\"\(milliseconds)"
+                    userTimeLabel.text = "Temps écoulé"
+                }
+                
+            } else {
+                userTimeLabel.text = nil
+                opponentTimeLabel.text = nil
             }
         }
     }
