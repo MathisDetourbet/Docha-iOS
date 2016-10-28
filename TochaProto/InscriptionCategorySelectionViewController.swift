@@ -17,7 +17,7 @@ class InscriptionCategorySelectionViewController: RootViewController, UICollecti
     let categoriesNames = ["Lifestyle", "High-Tech", "Maison / déco", "Bijoux / Montres", "Électroménager", "Art", "Objets connectés", "Gastronomie", "Beauté", "Sport"]
     var categoriesList: [Category]?
     var categoriesImages: [UIImage]?
-    var categoryPrefered: [String]?
+    var categoryPrefered: [String] = []
     var comeFromConnexionVC: Bool = false
     
     @IBOutlet weak var backButton: UIBarButtonItem!
@@ -32,7 +32,6 @@ class InscriptionCategorySelectionViewController: RootViewController, UICollecti
         
         collectionView.backgroundColor = UIColor.clear
         collectionView.backgroundView = nil
-        categoryPrefered = []
         
         configNavigationBarWithTitle("Choisis tes catégories préférées")
         loadCategories()
@@ -87,7 +86,7 @@ class InscriptionCategorySelectionViewController: RootViewController, UICollecti
             cell.categoryName = category.slugName
             cell.categoryNameLabel.text = category.name
             cell.categoryImageView.image = category.image
-            cell.imageSelected = false
+            cell.imageSelected = categoryPrefered.contains(category.slugName) ? true : false
         }
         
         return cell
@@ -100,9 +99,9 @@ class InscriptionCategorySelectionViewController: RootViewController, UICollecti
         let cellSelected = collectionView.cellForItem(at: indexPath) as! InscriptionCategoryCollectionViewCell
         if cellSelected.imageSelected {
             cellSelected.imageSelected = false
-            categoryPrefered?.removeObject(cellSelected.categoryName)
+            categoryPrefered.removeObject(cellSelected.categoryName)
             
-            if categoryPrefered!.isEmpty {
+            if categoryPrefered.isEmpty {
                 UIView.animate(withDuration: 0.3,
                     animations: {
                         self.footerValidateView.alpha = 0.0
@@ -114,7 +113,7 @@ class InscriptionCategorySelectionViewController: RootViewController, UICollecti
         } else {
             cellSelected.imageSelected = true
             
-            if categoryPrefered!.isEmpty {
+            if categoryPrefered.isEmpty {
                 UIView.animate(withDuration: 0.3,
                     animations: {
                         self.footerValidateView.alpha = 1.0
@@ -123,7 +122,7 @@ class InscriptionCategorySelectionViewController: RootViewController, UICollecti
                 )
             }
             
-            categoryPrefered?.append(cellSelected.categoryName)
+            categoryPrefered.append(cellSelected.categoryName)
         }
     }
   
@@ -135,7 +134,7 @@ class InscriptionCategorySelectionViewController: RootViewController, UICollecti
             
             PopupManager.sharedInstance.showLoadingPopup(message: nil,
                 completion: {
-                    let data = [UserDataKey.kCategoryPrefered: self.categoryPrefered!]
+                    let data = [UserDataKey.kCategoryPrefered: self.categoryPrefered]
                     
                     UserSessionManager.sharedInstance.updateUser(withData: data,
                         success: {
