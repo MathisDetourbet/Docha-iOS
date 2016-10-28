@@ -24,9 +24,11 @@ class InscriptionCategorySelectionViewController: RootViewController, UICollecti
     @IBOutlet weak var infoButton: UIBarButtonItem!
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var footerValidateView: UIView!
+    @IBOutlet weak var heightCollectionViewConstraint: NSLayoutConstraint!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         self.navigationController!.setNavigationBarHidden(false, animated: false)
         footerValidateView.alpha = 0.0
         
@@ -67,6 +69,26 @@ class InscriptionCategorySelectionViewController: RootViewController, UICollecti
                 self.collectionView.reloadData()
             }
     }
+    
+    func showFooterView(whithCompletion completion: (() -> Void)?) {
+        UIView.animate(withDuration: 0.3,
+            animations: {
+                self.heightCollectionViewConstraint.constant -= self.footerValidateView.frame.size.height
+                self.footerValidateView.alpha = 1.0
+                self.view.layoutIfNeeded()
+            }
+        )
+    }
+    
+    func hideFooterView(withCompletion completion: (() -> Void)?) {
+        UIView.animate(withDuration: 0.3,
+            animations: {
+                self.heightCollectionViewConstraint.constant += self.footerValidateView.frame.size.height
+                self.footerValidateView.alpha = 0.0
+                self.view.layoutIfNeeded()
+            }
+        )
+    }
 
     
 //MARK: Collection View Data Source Methods
@@ -102,24 +124,14 @@ class InscriptionCategorySelectionViewController: RootViewController, UICollecti
             categoryPrefered.removeObject(cellSelected.categoryName)
             
             if categoryPrefered.isEmpty {
-                UIView.animate(withDuration: 0.3,
-                    animations: {
-                        self.footerValidateView.alpha = 0.0
-                        self.view.layoutIfNeeded()
-                    }
-                )
+                hideFooterView(withCompletion: nil)
             }
             
         } else {
             cellSelected.imageSelected = true
             
             if categoryPrefered.isEmpty {
-                UIView.animate(withDuration: 0.3,
-                    animations: {
-                        self.footerValidateView.alpha = 1.0
-                        self.view.layoutIfNeeded()
-                    }
-                )
+                showFooterView(whithCompletion: nil)
             }
             
             categoryPrefered.append(cellSelected.categoryName)

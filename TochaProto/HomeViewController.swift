@@ -144,6 +144,7 @@ class HomeViewController: GameViewController, UITableViewDelegate, UITableViewDa
             userDochosLabel.countFrom(0.0, to: dochos, withDuration: 1.0, andAnimationType: .easeInOut, andCountingType: .int)
             userPerfectLabel.countFrom(0.0, to: perfectPrice, withDuration: 1.0, andAnimationType: .easeInOut, andCountingType: .int)
             userLevelLabel.text = "Niveau \(level)"
+            self.view.layoutIfNeeded()
             userLevelBar.updateLevelBar(withLevelPercent: levelPercentage)
         }
     }

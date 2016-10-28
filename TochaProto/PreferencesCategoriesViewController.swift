@@ -23,7 +23,6 @@ class PreferencesCategoriesViewController: RootViewController, UICollectionViewD
     @IBOutlet weak var backButton: UIBarButtonItem!
     @IBOutlet weak var infoButton: UIBarButtonItem!
     @IBOutlet weak var collectionView: UICollectionView!
-    @IBOutlet weak var footerValidateView: UIView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,7 +31,6 @@ class PreferencesCategoriesViewController: RootViewController, UICollectionViewD
         Amplitude.instance().logEvent("Preferences category selection opened")
         
         self.navigationController!.setNavigationBarHidden(false, animated: false)
-        footerValidateView.alpha = 0.0
         
         collectionView.backgroundColor = UIColor.clear
         collectionView.backgroundView = nil
