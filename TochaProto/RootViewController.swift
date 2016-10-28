@@ -35,4 +35,12 @@ class RootViewController: UIViewController {
         let homeViewController = self.storyboard?.instantiateViewController(withIdentifier: "idHomeNavController") as! UINavigationController
         NavSchemeManager.sharedInstance.changeRootViewController(homeViewController)
     }
+    
+    func goToMatch(_ match: Match) {
+        let homeViewController = self.storyboard?.instantiateViewController(withIdentifier: "idHomeNavController") as! UINavigationController
+        NavSchemeManager.sharedInstance.changeRootViewController(homeViewController)
+        let matchVC = homeViewController.storyboard?.instantiateViewController(withIdentifier: "idGameplayMatchViewController") as! GameplayMatchViewController
+        matchVC.match = match
+        homeViewController.pushViewController(matchVC, animated: true)
+    }
 }

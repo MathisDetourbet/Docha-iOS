@@ -1,27 +1,22 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11201" systemVersion="16A323" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" colorMatched="YES">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view contentMode="scaleToFill" id="wlk-B6-HwU" customClass="TutorialView" customModule="Docha" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="background_tuto_2" translatesAutoresizingMaskIntoConstraints="NO" id="1Ta-IJ-9U7">
-                    <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
-                </imageView>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="background_tuto_2" translatesAutoresizingMaskIntoConstraints="NO" id="1Ta-IJ-9U7"/>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Xtx-gC-gLe">
-                    <rect key="frame" x="12" y="118" width="300" height="145"/>
                     <subviews>
-                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="pop_up_tuto_2" translatesAutoresizingMaskIntoConstraints="NO" id="rhu-mu-ihR">
-                            <rect key="frame" x="0.0" y="0.0" width="300" height="145"/>
-                        </imageView>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="pop_up_tuto_2" translatesAutoresizingMaskIntoConstraints="NO" id="rhu-mu-ihR"/>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Pxr-AG-bSr">
-                            <rect key="frame" x="70" y="80" width="160" height="50"/>
                             <state key="normal" image="btn_next"/>
                             <connections>
                                 <action selector="nextButtonTouched:" destination="wlk-B6-HwU" eventType="touchUpInside" id="jPu-Ga-RQJ"/>
@@ -40,7 +35,7 @@
                     </constraints>
                 </view>
             </subviews>
-            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstItem="Xtx-gC-gLe" firstAttribute="leading" secondItem="wlk-B6-HwU" secondAttribute="leading" constant="12" id="3jC-gl-4iP"/>
                 <constraint firstItem="1Ta-IJ-9U7" firstAttribute="top" secondItem="wlk-B6-HwU" secondAttribute="top" id="Esa-t6-SdE"/>
@@ -61,4 +56,9 @@
         <image name="btn_next" width="160" height="50"/>
         <image name="pop_up_tuto_2" width="300" height="145"/>
     </resources>
+    <simulatedMetricsContainer key="defaultSimulatedMetrics">
+        <simulatedStatusBarMetrics key="statusBar"/>
+        <simulatedOrientationMetrics key="orientation"/>
+        <simulatedScreenMetrics key="destination" type="retina4_7.fullscreen"/>
+    </simulatedMetricsContainer>
 </document>

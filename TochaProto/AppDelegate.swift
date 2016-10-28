@@ -94,7 +94,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
         let deviceTokenString = deviceToken.reduce("", {$0 + String(format: "%02X", $1)})
         UserSessionManager.sharedInstance.save(deviceToken: deviceTokenString)
-        print("Device Token:", deviceTokenString)
     }
     
     func registerForPushNotifications(application: UIApplication) {

@@ -34,9 +34,9 @@ class UserSession: User, NSCoding {
         let authToken = aDecoder.decodeObject(forKey: Constants.UserDefaultsKey.kUserInfosAuthToken) as? String
         let badgesUnlockedIdentifiers = aDecoder.decodeObject(forKey: Constants.UserDefaultsKey.kUserInfosBadgesUnlockedIdentifiers) as? [String]
         let notifications = aDecoder.decodeBool(forKey: Constants.UserDefaultsKey.kUserInfosNotifications) as Bool
-        let notificationTokens = aDecoder.decodeObject(forKey: Constants.UserDefaultsKey.kuserInfosNotificationTokens) as! [String]
+        let notificationTokens = aDecoder.decodeObject(forKey: Constants.UserDefaultsKey.kuserInfosNotificationTokens) as? [String]
         
-        super.init(pseudo: pseudo, lastName: lastName, firstName: firstName, email: email, gender: Gender(rawValue: gender!), dateBirthday: dateBirthday, categoriesPrefered: categoriesPrefered ?? [], avatar: avatar, levelMaxUnlocked: levelMaxUnlocked, levelPercentage: levelPercentage, dochos: dochos, experience: experience, perfectPriceCpt: perfectPriceCpt, rank: UInt(rank), badgesUnlockedIdentifiers: badgesUnlockedIdentifiers, notifications: notifications, notificationTokens: notificationTokens)
+        super.init(pseudo: pseudo, lastName: lastName, firstName: firstName, email: email, gender: Gender(rawValue: gender!), dateBirthday: dateBirthday, categoriesPrefered: categoriesPrefered ?? [], avatar: avatar, levelMaxUnlocked: levelMaxUnlocked, levelPercentage: levelPercentage, dochos: dochos, experience: experience, perfectPriceCpt: perfectPriceCpt, rank: UInt(rank), badgesUnlockedIdentifiers: badgesUnlockedIdentifiers, notifications: notifications, notificationTokens: notificationTokens ?? [])
         
         self.authToken = authToken
     }

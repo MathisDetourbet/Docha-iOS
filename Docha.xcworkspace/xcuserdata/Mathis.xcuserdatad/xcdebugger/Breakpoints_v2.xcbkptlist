@@ -11,5 +11,53 @@
             continueAfterRunningActions = "No">
          </BreakpointContent>
       </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "TochaProto/GameplayDebriefViewController.swift"
+            timestampString = "499295696.993438"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "317"
+            endingLineNumber = "317"
+            landmarkName = "nextButtonTouched(_:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Docha.GameplayDebriefViewController.nextButtonTouched (__ObjC.UIButton) -&gt; ()"
+                  moduleName = "Docha"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/Mathis/Documents/GEM/LaTV/Appli/docha-ios/TochaProto/GameplayDebriefViewController.swift"
+                  timestampString = "499353865.198526"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "317"
+                  endingLineNumber = "317"
+                  offsetFromSymbolStart = "240">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Docha.GameplayDebriefViewController.nextButtonTouched (__ObjC.UIButton) -&gt; ()"
+                  moduleName = "Docha"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/Mathis/Documents/GEM/LaTV/Appli/docha-ios/TochaProto/GameplayDebriefViewController.swift"
+                  timestampString = "499353865.200538"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "317"
+                  endingLineNumber = "317"
+                  offsetFromSymbolStart = "292">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
    </Breakpoints>
 </Bucket>

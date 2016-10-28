@@ -189,7 +189,7 @@ class GameplayMatchViewController: GameViewController, UITableViewDelegate, UITa
                 
             case .beginningOrFinishedCell:
                 let cell = tableView.dequeueReusableCell(withIdentifier: "idGameplayMatchRoundFinishedCell", for: indexPath) as! GameplayMatchRoundFinishedCell
-                if (round.roundData.userScore != nil) && (round.roundData.opponentScore != nil) {
+                if (round.roundData.userScore != nil) && (round.roundData.opponentScore != nil) && (round.roundData.category != nil) {
                     cell.updateTimeline(withUserScore: round.roundData.userScore, andOpponentScore: round.roundData.opponentScore)
                 }
                 

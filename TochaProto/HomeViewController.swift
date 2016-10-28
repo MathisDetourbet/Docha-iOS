@@ -15,20 +15,34 @@ import SWTableViewCell
 import PullToRefresh
 import SACountingLabel
 
-enum HomeSectionName: Int {
+enum HomeSectionName: Int, CustomStringConvertible {
     case userTurn = 0
     case opponentTurn = 1
     case finished = 2
     case friends = 3
+    
+    var description: String {
+        switch self {
+        case .userTurn:
+            return "TON TOUR"
+        case .opponentTurn:
+            return "SON TOUR"
+        case .finished:
+            return "TERMINÉS"
+        case .friends:
+            return "AMIS"
+        }
+    }
 }
 
 class HomeViewController: GameViewController, UITableViewDelegate, UITableViewDataSource, HomeUserTurnCellDelegate, HomeFriendsCellDelegate, SWTableViewCellDelegate {
     
-    let idsTableViewCell: [String] = ["idHomeUserTurnTableViewCell", "idHomeOpponentTurnTableViewCell", "idHomeGameFinishedTableViewCell", "idHomeFriendsTableViewCell"]
-    let sectionsNames = ["TON TOUR", "SON TOUR", "TERMINÉS", "AMIS"]
-    
-    var sortedMatch: [[Match]] = []
-    var friends: [Player] = []
+    let idsTableViewCell: [HomeSectionName : String] = [.userTurn : "idHomeUserTurnTableViewCell",
+                                                        .opponentTurn :"idHomeOpponentTurnTableViewCell",
+                                                        .finished : "idHomeGameFinishedTableViewCell",
+                                                        .friends : "idHomeFriendsTableViewCell"]
+    var data: [HomeSectionName: [Any]] = [:]
+    var sortedDataKeys: [HomeSectionName] = []
     
     var isBubbleOpen: Bool = false
     
@@ -48,7 +62,6 @@ class HomeViewController: GameViewController, UITableViewDelegate, UITableViewDa
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        loadUserInfos()
         buildUI()
         self.navigationController?.isNavigationBarHidden = true
         
@@ -64,7 +77,7 @@ class HomeViewController: GameViewController, UITableViewDelegate, UITableViewDa
         self.navigationController?.isNavigationBarHidden = true
         
         checkForTutorial()
-        loadAllMatch(withCompletion: nil)
+        refreshHome()
     }
     
     func buildUI() {
@@ -86,7 +99,7 @@ class HomeViewController: GameViewController, UITableViewDelegate, UITableViewDa
         
         let refresher = PullToRefresh()
         tableView.addPullToRefresh(refresher) { 
-            self.loadAllMatch(
+            self.loadAllData(
                 withCompletion: {
                     self.tableView.endRefreshing(at: Position.top)
                 }
@@ -136,20 +149,28 @@ class HomeViewController: GameViewController, UITableViewDelegate, UITableViewDa
     }
     
     func refreshHome() {
-        loadAllMatch {}
         loadUserInfos()
+        loadAllData {
+            self.sortedDataKeys = Array(self.data.keys)
+            self.sortedDataKeys.sort(by: { (first, second) -> Bool in
+                first.rawValue < second.rawValue
+            })
+            self.tableView.reloadData()
+        }
     }
     
-    func loadAllMatch(withCompletion completion: (() -> Void)?) {
+    func loadAllData(withCompletion completion: (() -> Void)?) {
         MatchManager.sharedInstance.getAllMatch(
             success: { (allMatch) in
                 
-                self.sortedMatch = self.sortMatchArray(matchArray: allMatch)
-                self.tableView.reloadData()
-                
-                if let completion = completion {
-                    completion()
-                }
+                self.sortMatchArray(matchArray: allMatch)
+                self.loadFriends(
+                    withCompletion: {
+                        if let completion = completion {
+                            completion()
+                        }
+                    }
+                )
                 
             }) { (error) in
                 PopupManager.sharedInstance.showErrorPopup(message: Constants.PopupMessage.ErrorMessage.kErrorNoInternetConnection)
@@ -160,73 +181,91 @@ class HomeViewController: GameViewController, UITableViewDelegate, UITableViewDa
         }
     }
     
-    func sortMatchArray(matchArray: [Match]) -> [[Match]] {
-        var sortedMatch: [[Match]] = [[], [], [], []]
+    func loadFriends(withCompletion completion: (() -> Void)?) {
+        if UserSessionManager.sharedInstance.isFacebookUser() {
+            MatchManager.sharedInstance.getFacebookFriends(
+                success: { (friends) in
+                    
+                    self.data[HomeSectionName.friends] = friends
+                    if let completion = completion {
+                        completion()
+                    }
+                }
+            ) { (error) in
+                if let completion = completion {
+                    completion()
+                }
+            }
+        }
+    }
+    
+    func sortMatchArray(matchArray: [Match]){
+        let keys = data.keys
+        for key in keys {
+            if key != .friends {
+                data[key]?.removeAll()
+            }
+        }
         
         for match in matchArray {
             
             switch match.status {
             case .userTurn:
-                sortedMatch[HomeSectionName.userTurn.rawValue].append(match)
+                if data[HomeSectionName.userTurn] == nil {
+                    data[HomeSectionName.userTurn] = []
+                }
+                data[HomeSectionName.userTurn]!.append(match)
                 break
                 
             case .opponentTurn, .waiting:
-                sortedMatch[HomeSectionName.opponentTurn.rawValue].append(match)
+                if data[HomeSectionName.opponentTurn] == nil {
+                    data[HomeSectionName.opponentTurn] = []
+                }
+                data[HomeSectionName.opponentTurn]!.append(match)
                 break
                 
             case .won, .lost, .tie:
-                sortedMatch[HomeSectionName.finished.rawValue].append(match)
+                if data[HomeSectionName.finished] == nil {
+                    data[HomeSectionName.finished] = []
+                }
+                data[HomeSectionName.finished]!.append(match)
                 break
             }
         }
-        
-        return sortedMatch
-    }
-    
-    func loadFriends(withCompletion completion: (() -> Void)?) {
-        
-    }
-    
-    func isSortedMatchEmpty() -> Bool {
-        for array in sortedMatch {
-            if array.isEmpty == false {
-                return false
-            }
-        }
-        
-        return true
     }
     
     
 //MARK: Table View Controller - Data Source Methods
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return sortedMatch[section].count
-    }
-    
-    func numberOfSections(in tableView: UITableView) -> Int {
-        if isSortedMatchEmpty() {
-            if UserSessionManager.sharedInstance.isFacebookUser() {
-                return 0
-                
+        if sortedDataKeys[section] == HomeSectionName.friends {
+            return 1
+            
+        } else {
+            let sectionValue = sortedDataKeys[section]
+            if let array = data[sectionValue] {
+                return array.count
             }
         }
         
-        return sortedMatch.count
+        return 0
+    }
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return data.count
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return sectionsNames[section]
+        return sortedDataKeys[section].description
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
-        if (indexPath as NSIndexPath).section == HomeSectionName.userTurn.rawValue {
+        if sortedDataKeys[indexPath.section] == HomeSectionName.userTurn {
             
             // TON TOUR
-            let cell = tableView.dequeueReusableCell(withIdentifier: idsTableViewCell[(indexPath as NSIndexPath).section], for: indexPath) as! HomeUserTurnTableViewCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: idsTableViewCell[.userTurn]!, for: indexPath) as! HomeUserTurnTableViewCell
             
-            let match = sortedMatch[HomeSectionName.userTurn.rawValue][indexPath.row]
+            let match = data[.userTurn]?[indexPath.row] as! Match
             let opponent = match.opponent
             
             cell.opponentNameLabel.text = opponent.pseudo
@@ -261,12 +300,12 @@ class HomeViewController: GameViewController, UITableViewDelegate, UITableViewDa
             
             return cell
             
-        } else if (indexPath as NSIndexPath).section == HomeSectionName.opponentTurn.rawValue {
+        } else if sortedDataKeys[indexPath.section] == HomeSectionName.opponentTurn {
             
             // SON TOUR
-            let cell = tableView.dequeueReusableCell(withIdentifier: idsTableViewCell[(indexPath as NSIndexPath).section], for: indexPath) as! HomeOpponentTurnTableViewCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: idsTableViewCell[.opponentTurn]!, for: indexPath) as! HomeOpponentTurnTableViewCell
             
-            let match = sortedMatch[HomeSectionName.opponentTurn.rawValue][indexPath.row]
+            let match = data[.opponentTurn]?[indexPath.row] as! Match
             let opponent = match.opponent
             
             cell.opponentNameLabel.text = opponent.pseudo
@@ -300,12 +339,12 @@ class HomeViewController: GameViewController, UITableViewDelegate, UITableViewDa
             
             return cell
             
-        } else if (indexPath as NSIndexPath).section == HomeSectionName.finished.rawValue {
+        } else if sortedDataKeys[indexPath.section] == HomeSectionName.finished {
             
             // TERMINES
-            let cell = tableView.dequeueReusableCell(withIdentifier: idsTableViewCell[(indexPath as NSIndexPath).section], for: indexPath) as! HomeGameFinishedTableViewCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: idsTableViewCell[.finished]!, for: indexPath) as! HomeGameFinishedTableViewCell
             
-            let match = sortedMatch[HomeSectionName.finished.rawValue][indexPath.row]
+            let match = data[.finished]?[indexPath.row] as! Match
             let opponent = match.opponent
             
             cell.opponentNameLabel.text = opponent.pseudo
@@ -341,8 +380,10 @@ class HomeViewController: GameViewController, UITableViewDelegate, UITableViewDa
         } else {
             
             // AMIS
-            let cell = tableView.dequeueReusableCell(withIdentifier: idsTableViewCell[(indexPath as NSIndexPath).section], for: indexPath) as! HomeFriendsTableViewCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: idsTableViewCell[.friends]!, for: indexPath) as! HomeFriendsTableViewCell
             cell.delegate = self
+            cell.friends = data[HomeSectionName.friends] as! [Player]
+            cell.collectionView.reloadData()
             
             return cell
         }
@@ -356,7 +397,8 @@ class HomeViewController: GameViewController, UITableViewDelegate, UITableViewDa
             
             
         } else {
-            let matchData = sortedMatch[indexPath.section][indexPath.row]
+            let sectionType = HomeSectionName.init(rawValue: indexPath.section)
+            let matchData = data[sectionType!]?[indexPath.row] as! Match
             let matchVC = self.storyboard?.instantiateViewController(withIdentifier: "idGameplayMatchViewController") as! GameplayMatchViewController
             MatchManager.sharedInstance.currentMatch = matchData
             matchVC.match = matchData
@@ -374,7 +416,7 @@ class HomeViewController: GameViewController, UITableViewDelegate, UITableViewDa
         
         let sectionLabel = UILabel(frame: CGRect(x: 10.0, y: 5.0, width: 100.0, height: 28.0))
         sectionLabel.textColor = UIColor.darkBlueDochaColor()
-        sectionLabel.text = sectionsNames[section]
+        sectionLabel.text = sortedDataKeys[section].description
         sectionLabel.font = UIFont(name: "Montserrat-Semibold", size: 12)
         headerView.addSubview(sectionLabel)
         
@@ -388,11 +430,12 @@ class HomeViewController: GameViewController, UITableViewDelegate, UITableViewDa
         let indexPath = tableView.indexPath(for: cell)
         
         if let indexPath = indexPath {
-            let match = sortedMatch[indexPath.section][indexPath.row]
+            let sectionType = HomeSectionName.init(rawValue: indexPath.section)
+            let match = data[sectionType!]?[indexPath.row] as! Match
             MatchManager.sharedInstance.deleteMatch(ForMatchID: match.id, andRoundID: match.rounds.last?.id,
                 success: {
-                    
-                    self.sortedMatch[indexPath.section].remove(at: indexPath.row)
+                    let sectionType = HomeSectionName.init(rawValue: indexPath.section)
+                    self.data[sectionType!]?.remove(at: indexPath.row)
                     self.tableView.deleteRows(at: [indexPath], with: .fade)
                     
                 }, fail: { (error) in
@@ -450,12 +493,16 @@ class HomeViewController: GameViewController, UITableViewDelegate, UITableViewDa
         self.navigationController?.pushViewController(badgesVC, animated: true)
     }
     
-    func inviteFacebookFriendsCellTouched() {
-        PopupManager.sharedInstance.showInfosPopup("Info", message: "Encore un peu de patience, cette fonctionnalité sera prochainement disponible. 😉", completion: nil)
+    func challengeFacebookFriendsCellTouched(withFriend friend: Player) {
+        
+    }
+    
+//    func inviteFacebookFriendsCellTouched() {
+//        PopupManager.sharedInstance.showInfosPopup("Info", message: "Encore un peu de patience, cette fonctionnalité sera prochainement disponible. 😉", completion: nil)
 //        let content = FBSDKAppInviteContent()
 //        content.appLinkURL = NSURL(string: "https://itunes.apple.com/fr/app/docha/id722842223?mt=8")
 //        FBSDKAppInviteDialog.showFromViewController(self, withContent: content, delegate: self)
-    }
+//    }
     
 //    func appInviteDialog(_ appInviteDialog: FBSDKAppInviteDialog!, didCompleteWithResults results: [AnyHashable: Any]!) {
 //        PopupManager.sharedInstance.showSuccessPopup("Succès", message: "Tes amis ont bien été invités.", completion: nil)
