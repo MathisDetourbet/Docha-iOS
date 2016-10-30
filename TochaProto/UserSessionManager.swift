@@ -386,4 +386,28 @@ class UserSessionManager {
             }
         )
     }
+    
+    func renewCategories(forMatchID matchID: Int!, andRoundID roundID: Int!, success: @escaping (_ categories: [Category]) -> Void, fail failure: @escaping (_ error: Error?) -> Void) {
+        guard let authToken = getAuthToken() else {
+            failure(DochaRequestError.authTokenNotFound)
+            return
+        }
+        
+        categoryRequest = CategoryRequest()
+        categoryRequest?.postRenewCategories(withAuthtoken: authToken, forMatchID: matchID, andRoundID: roundID,
+            success: { (categories) in
+                self.getUser(
+                    success: {
+                        success(categories)
+                        
+                    }, fail: { (error) in
+                        failure(error)
+                    }
+                )
+                
+            }, fail: { (error) in
+                failure(error)
+            }
+        )
+    }
 }

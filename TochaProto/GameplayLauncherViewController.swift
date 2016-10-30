@@ -127,9 +127,11 @@ class GameplayLauncherViewController: GameViewController, ProductImageDownloader
         let currentMatch = MatchManager.sharedInstance.currentMatch
         
         if let match = currentMatch {
-            if let categorySelected = categorySelected, match.getCurrentRound().category == nil {
-                let data = [RoundDataKey.kCategory: categorySelected.slugName, RoundDataKey.kPropositions: []] as [String : Any]
-                put(round: match.rounds.last, withData: data, andMatchID: match.id)
+            if let categorySelected = categorySelected, let currentRound = match.getCurrentRound() {
+                if currentRound.category == nil {
+                    let data = [RoundDataKey.kCategory: categorySelected.slugName, RoundDataKey.kPropositions: []] as [String : Any]
+                    put(round: match.rounds.last, withData: data, andMatchID: match.id)
+                }
                 
             } else {
                 get(round: match.getCurrentRound(), withMatchID: match.id)

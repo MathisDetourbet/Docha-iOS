@@ -70,7 +70,7 @@ class MatchManager {
                 ImageDownloader.default.downloadImage(with: url!, options: [], progressBlock: nil,
                     completionHandler: { (image, error, _, _) in
                         if error != nil {
-                            debugPrint(error)
+                            debugPrint(error as! Error)
                             completion()
                             return
                         }

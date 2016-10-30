@@ -35,6 +35,7 @@ class GameplayMatchViewController: GameViewController, UITableViewDelegate, UITa
             if let match = self.match {
                 self.loadMatch(withMatchID: match.id,
                     andCompletion: {
+                        self.sortRounds()
                         self.tableView.endRefreshing(at: Position.top)
                     }
                 )
@@ -57,17 +58,26 @@ class GameplayMatchViewController: GameViewController, UITableViewDelegate, UITa
             
             if match.rounds.isEmpty == false {
                 
-                currentRound = match.getCurrentRound()
-                
-                if (currentRound?.userScore == nil) && match.status == .userTurn {
-                    playButton.isEnabled = true
+                if let currentRound = match.getCurrentRound() {
+                    
+                    if (currentRound.userScore == nil) && (match.status == .userTurn) {
+                        playButton.isEnabled = true
+                        
+                    } else {
+                        playButton.isEnabled = false
+                    }
+                    
+                    if match.status == .waiting {
+                        withdrawButton.isEnabled = false
+                    }
                     
                 } else {
-                    playButton.isEnabled = false
-                }
-                
-                if match.status == .waiting {
-                    withdrawButton.isEnabled = false
+                    if match.status == .userTurn {
+                        playButton.isEnabled = true
+                        
+                    } else {
+                        playButton.isEnabled = false
+                    }
                 }
             }
         }
@@ -272,7 +282,6 @@ class GameplayMatchViewController: GameViewController, UITableViewDelegate, UITa
 //MARK: @IBActions
     
     @IBAction func playButtonTouched(_ sender: UIButton) {
-        
         if (currentRound?.category == nil) && (match?.status == .userTurn) {
             let newGameCategorieSelectionVC = self.storyboard?.instantiateViewController(withIdentifier: "idNewGameCategorieSelectionViewController") as! NewGameCategorieSelectionViewController
             MatchManager.sharedInstance.currentMatch = match

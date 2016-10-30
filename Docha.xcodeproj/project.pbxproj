@@ -1288,7 +1288,7 @@
 			attributes = {
 				CLASSPREFIX = "";
 				LastSwiftUpdateCheck = 0730;
-				LastUpgradeCheck = 0800;
+				LastUpgradeCheck = 0810;
 				ORGANIZATIONNAME = Slymoover;
 				TargetAttributes = {
 					6701D96F1C108A2100F87043 = {

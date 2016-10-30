@@ -14,7 +14,7 @@ class CategoryRequest: DochaRequest {
     
     func getAllCategories(withAuthToken authToken: String!, success: @escaping (_ categoriesArray: [Category]) -> Void, fail failure: @escaping (_ error: Error?) -> Void) {
         
-        let urlString = Constants.UrlServer.UrlBase + Constants.UrlServer.UrlCategory.UrlAllCategory
+        let urlString = Constants.UrlServer.UrlBase + Constants.UrlServer.UrlCategory.UrlAllCategories
         debugPrint("URL GET All Category : \(urlString)")
         
         alamofireManager!.adapter = AccessTokenAdapter(accessToken: authToken)
@@ -65,17 +65,50 @@ class CategoryRequest: DochaRequest {
                 }
                 
                 let jsonResponse = JSON(response.result.value)
-                let name = jsonResponse[CategoryDataKey.kName].string
-                let slugName = jsonResponse[CategoryDataKey.kSlugName].string
+                let category = Category(jsonObject: jsonResponse)
                 
-                if let name = name, let slugName = slugName {
-                    let category = Category(name: name, slugName: slugName)
+                if let category = category {
                     success(category)
                     
                 } else {
                     failure(DochaRequestError.categoryNotFound)
                 }
             }
+    }
+    
+    func postRenewCategories(withAuthtoken authToken: String!, forMatchID matchID: Int!, andRoundID roundID: Int!, success: @escaping (_ categories: [Category]) -> Void, fail failure: @escaping (_ error: Error?) -> Void) {
+        
+        let urlString = Constants.UrlServer.UrlBase + "/match/" + "\(matchID!)" + "/round/" + "\(roundID!)" + Constants.UrlServer.UrlCategory.UrlRenewCategies
+        debugPrint("URL POST Renew Category : \(urlString)")
+        
+        alamofireManager!.adapter = AccessTokenAdapter(accessToken: authToken)
+        alamofireManager!.request(urlString, method: .post, encoding: JSONEncoding.default)
+            .validate(statusCode: 200..<300)
+            .responseJSON { response in
+                
+                guard response.result.isSuccess else {
+                    failure(response.result.error)
+                    return
+                }
+                
+                let jsonResponse = JSON(response.result.value)
+                var categoriesList: [Category] = []
+                
+                for categoryJson in jsonResponse[RoundDataKey.kProposedCategories].arrayValue {
+                    let category = Category(jsonObject: categoryJson)
+                    
+                    if let category = category {
+                        categoriesList.append(category)
+                    }
+                }
+                
+                if categoriesList.isEmpty {
+                    failure(DochaRequestError.categoryNotFound)
+                    
+                } else {
+                    success(categoriesList)
+                }
+        }
     }
     
 }

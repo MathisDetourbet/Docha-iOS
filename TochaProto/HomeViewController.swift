@@ -76,8 +76,12 @@ class HomeViewController: GameViewController, UITableViewDelegate, UITableViewDa
         super.viewWillAppear(animated)
         self.navigationController?.isNavigationBarHidden = true
         
-        checkForTutorial()
         refreshHome()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        checkForTutorial()
     }
     
     func buildUI() {
@@ -252,6 +256,10 @@ class HomeViewController: GameViewController, UITableViewDelegate, UITableViewDa
         return 0
     }
     
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 75.0
+    }
+    
     func numberOfSections(in tableView: UITableView) -> Int {
         return data.count
     }
@@ -275,6 +283,7 @@ class HomeViewController: GameViewController, UITableViewDelegate, UITableViewDa
             cell.match = match
             cell.delegateUserTurn = self
             cell.delegate = self
+            cell.indexPath = indexPath
             
             if let level = opponent.level {
                 cell.opponentLevelLabel.text = "Niveau \(level)"
@@ -398,8 +407,8 @@ class HomeViewController: GameViewController, UITableViewDelegate, UITableViewDa
             
             
         } else {
-            let sectionType = HomeSectionName.init(rawValue: indexPath.section)
-            let matchData = data[sectionType!]?[indexPath.row] as! Match
+            let sectionType = sortedDataKeys[indexPath.section]
+            let matchData = data[sectionType]?[indexPath.row] as! Match
             let matchVC = self.storyboard?.instantiateViewController(withIdentifier: "idGameplayMatchViewController") as! GameplayMatchViewController
             MatchManager.sharedInstance.currentMatch = matchData
             matchVC.match = matchData
@@ -431,12 +440,15 @@ class HomeViewController: GameViewController, UITableViewDelegate, UITableViewDa
         let indexPath = tableView.indexPath(for: cell)
         
         if let indexPath = indexPath {
-            let sectionType = HomeSectionName.init(rawValue: indexPath.section)
-            let match = data[sectionType!]?[indexPath.row] as! Match
+            let sectionType = sortedDataKeys[indexPath.section]
+            let match = data[sectionType]?[indexPath.row] as! Match
             MatchManager.sharedInstance.deleteMatch(ForMatchID: match.id, andRoundID: match.rounds.last?.id,
                 success: {
-                    let sectionType = HomeSectionName.init(rawValue: indexPath.section)
-                    self.data[sectionType!]?.remove(at: indexPath.row)
+                    let sectionType = self.sortedDataKeys[indexPath.section]
+                    self.data[sectionType]?.remove(at: indexPath.row)
+                    if self.data[sectionType]!.isEmpty {
+                        self.data.removeValue(forKey: sectionType)
+                    }
                     self.tableView.deleteRows(at: [indexPath], with: .fade)
                     
                 }, fail: { (error) in
@@ -456,6 +468,15 @@ class HomeViewController: GameViewController, UITableViewDelegate, UITableViewDa
     
     
 //MARK: HomeUserTurnCellDelegate Methods
+    
+    func playButtonTouched(withIndexPath indexPath: IndexPath) {
+        let sectionType = sortedDataKeys[indexPath.section]
+        let matchData = data[sectionType]?[indexPath.row] as! Match
+        let matchVC = self.storyboard?.instantiateViewController(withIdentifier: "idGameplayMatchViewController") as! GameplayMatchViewController
+        MatchManager.sharedInstance.currentMatch = matchData
+        matchVC.match = matchData
+        self.navigationController?.pushViewController(matchVC, animated: true)
+    }
     
     func playButtonTouched(withMatch match: Match?) {
         if let match = match {

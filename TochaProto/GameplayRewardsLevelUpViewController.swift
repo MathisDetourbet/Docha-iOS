@@ -11,15 +11,27 @@ import SACountingLabel
 
 class GameplayRewardsLevelUpViewController: GameViewController {
     
+    var newUserLevel: Int!
+    
     @IBOutlet weak var levelLabel: UILabel!
     @IBOutlet weak var dochosLabel: SACountingLabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        dochosLabel.isHidden = true
+        levelLabel.text = "Niveau \(newUserLevel!)"
     }
     
     
     @IBAction func nextButtonTouched(_ sender: UIButton) {
-        self.goToHome()
+        let match = MatchManager.sharedInstance.currentMatch
+        
+        if let match = match {
+            goToMatch(match)
+            
+        } else {
+            goToHome()
+        }
     }
 }

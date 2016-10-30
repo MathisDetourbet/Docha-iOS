@@ -15,6 +15,7 @@ class NewGameCategorieSelectionViewController: GameViewController, UICollectionV
     
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var userDochosLabel: SACountingLabel!
+    @IBOutlet weak var renewCategoriesButton: UIButton!
     
 //MARK: Life View Cycle
     
@@ -26,8 +27,8 @@ class NewGameCategorieSelectionViewController: GameViewController, UICollectionV
     }
     
     func buildUI() {
-        self.navigationController?.isNavigationBarHidden = false
         configNavigationBarWithTitle("Choisis ta catégorie")
+        self.navigationController?.isNavigationBarHidden = false
         self.view.backgroundColor = UIColor.lightGrayDochaColor()
         collectionView.backgroundColor = UIColor.lightGrayDochaColor()
         
@@ -35,6 +36,7 @@ class NewGameCategorieSelectionViewController: GameViewController, UICollectionV
         if let user = user {
             let dochos = Float(user.dochos)
             userDochosLabel.countFrom(0.0, to: dochos, withDuration: 1.0, andAnimationType: .easeInOut, andCountingType: .int)
+            renewCategoriesButton.isEnabled = Int(dochos) <= 10 ? false : true
         }
     }
     
@@ -109,7 +111,25 @@ class NewGameCategorieSelectionViewController: GameViewController, UICollectionV
 //MARK: @IBActions Methods
     
     @IBAction func changeCategorieButtonTouched(_ sender: UIButton) {
-        
+        if let userDochos = UserSessionManager.sharedInstance.currentSession()?.dochos {
+            if userDochos >= 10 {
+                let match = MatchManager.sharedInstance.currentMatch
+                let round = MatchManager.sharedInstance.currentRound
+                
+                UserSessionManager.sharedInstance.renewCategories(forMatchID: match?.id, andRoundID: round?.id,
+                    success: { (categories) in
+                        self.categoriesDisplayed = categories
+                        
+                        let newUserDochos = UserSessionManager.sharedInstance.currentSession()?.dochos
+                        self.userDochosLabel.countFrom(Float(userDochos), to: Float(newUserDochos!), withDuration: 1.0, andAnimationType: .easeInOut, andCountingType: .int)
+                        self.collectionView.reloadData()
+                                                                    
+                    }, fail: {(error) in
+                        PopupManager.sharedInstance.showErrorPopup(message: Constants.PopupMessage.ErrorMessage.kErrorOccured)
+                    }
+                )
+            }
+        }
     }
     
     @IBAction func backButtonTouched(_ sender: UIBarButtonItem) {

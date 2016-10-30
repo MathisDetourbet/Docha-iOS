@@ -183,8 +183,9 @@ struct Constants {
         }
         
         struct UrlCategory {
-            static let UrlAllCategory = "/category"
+            static let UrlAllCategories = "/category"
             static let UrlGetCategory = "/category"
+            static let UrlRenewCategies = "/renew"
         }
         
         struct UrlRegister {

@@ -72,22 +72,18 @@ class Match {
         }
     }
     
-    func getCurrentRound() -> Round {
-        var currentRound: Round?
+    func getCurrentRound() -> Round? {
+        let lastRound = rounds.last!
         
-        for round in rounds {
-            if round.userScore == nil && round.opponentScore == nil {
-                break
-                
-            } else {
-                currentRound = round
-            }
+        if rounds.count == maxRounds {
+            return lastRound
         }
         
-        if currentRound == nil {
-            currentRound = rounds.first
+        if (lastRound.userScore != nil) && (lastRound.opponentScore != nil) {
+            return nil
+            
+        } else {
+            return lastRound
         }
-        
-        return currentRound!
     }
 }

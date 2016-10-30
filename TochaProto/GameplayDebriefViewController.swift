@@ -12,6 +12,8 @@ class GameplayDebriefViewController: GameViewController, UIPageViewControllerDat
     
     var productsList: [Product]?
     var userResultsArray: [TimelineState] = [.wrong, .wrong, .wrong]
+    var oldUser: User?
+    var newUser: User?
     
     var pagesContentsViewControllerArray: [GameplayDebriefPageContentViewController] = []
     var pageViewController: UIPageViewController!
@@ -36,7 +38,7 @@ class GameplayDebriefViewController: GameViewController, UIPageViewControllerDat
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        UserSessionManager.sharedInstance.getUser(success: {}) { (error) in}
+        oldUser = UserSessionManager.sharedInstance.getUserInfosAndAvatarImage().user
         
         buildUI()
         
@@ -58,6 +60,23 @@ class GameplayDebriefViewController: GameViewController, UIPageViewControllerDat
         pageViewController.didMove(toParentViewController: self)
         let priceArray = ConverterHelper.convertPriceToArrayOfInt(productsList!.first!.price).priceArray
         pageContentVC!.counterContainerView.updateCountersViewsWithPrice(priceArray)
+        
+        loadNewUserInfos()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.navigationController?.setNavigationBarHidden(true, animated: true)
+    }
+    
+    func loadNewUserInfos() {
+        UserSessionManager.sharedInstance.getUser(
+            success: {
+                self.newUser = UserSessionManager.sharedInstance.getUserInfosAndAvatarImage().user
+                
+            }) { (error) in
+                self.newUser = nil
+        }
     }
     
     func buildUI() {
@@ -272,6 +291,7 @@ class GameplayDebriefViewController: GameViewController, UIPageViewControllerDat
             let webViewController = storyboard?.instantiateViewController(withIdentifier: "idCustomWebViewController") as! CustomWebViewController
             webViewController.url = url
             webViewController.titleNavBar = "Fiche produit"
+            webViewController.configNavigationBarWithTitle("Fiche produit")
             
             let activity = UIActivity()
             webViewController.applicationActivities = [activity]
@@ -291,7 +311,38 @@ class GameplayDebriefViewController: GameViewController, UIPageViewControllerDat
 //MARK: @IBActions Methods
     
     @IBAction func nextButtonTouched(_ sender: UIButton) {
-        self.goToHome()
+        let currentRound = MatchManager.sharedInstance.currentRound as? RoundFull
+        
+        if let currentRound = currentRound {
+            if let oldUser = self.oldUser, let newUser = self.newUser {
+                if currentRound.status == .won {
+                    let levelUp = oldUser.levelMaxUnlocked! < newUser.levelMaxUnlocked! ? true : false
+                    let dochosWon = newUser.dochos - oldUser.dochos
+                    
+                    let rewardsDochosVC = self.storyboard?.instantiateViewController(withIdentifier: "idGameplayRewardsDochosViewController") as! GameplayRewardsDochosViewController
+                    rewardsDochosVC.dochosWon = dochosWon
+                    rewardsDochosVC.showLevelUpVC = levelUp
+                    self.navigationController?.pushViewController(rewardsDochosVC, animated: true)
+                    
+                    return
+                    
+                } else if oldUser.levelMaxUnlocked! < newUser.levelMaxUnlocked! {
+                    let rewardsLevelUpVC = self.storyboard?.instantiateViewController(withIdentifier: "idGameplayRewardsLevelUpViewController") as! GameplayRewardsLevelUpViewController
+                    rewardsLevelUpVC.newUserLevel = newUser.levelMaxUnlocked!
+                    self.navigationController?.pushViewController(rewardsLevelUpVC, animated: true)
+                    
+                    return
+                }
+            }
+        }
+        
+        let match = MatchManager.sharedInstance.currentMatch
+        if let match = match {
+            goToMatch(match)
+            
+        } else {
+            goToHome()
+        }
     }
     
     
