@@ -37,10 +37,9 @@ class InscriptionCategorySelectionViewController: RootViewController, UICollecti
         
         configNavigationBarWithTitle("Choisis tes catégories préférées")
         loadCategories()
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
+        
+        heightCollectionViewConstraint.constant = self.view.frame.size.height - self.navigationController!.navigationBar.frame.size.height
+        self.view.layoutSubviews()
     }
     
     func loadCategories() {
