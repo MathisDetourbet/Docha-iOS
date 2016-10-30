@@ -19,6 +19,7 @@ class NewGameFindFriendsTableViewCell: UITableViewCell {
     @IBOutlet weak var friendPseudoLabel: UILabel!
     @IBOutlet weak var friendNameLabel: UILabel!
     @IBOutlet weak var friendAvatarImageView: UIImageView!
+    @IBOutlet weak var friendOnlineIndicatorImageView: UIImageView!
     
     @IBAction func challengeFriendButtonTouched(_ sender: UIButton) {
         self.delegate?.challengeFriendButtonTouched(withPseudo: friendPseudoLabel.text!)

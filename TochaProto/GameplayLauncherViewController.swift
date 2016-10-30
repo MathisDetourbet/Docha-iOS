@@ -24,10 +24,10 @@ class GameplayLauncherViewController: GameViewController, ProductImageDownloader
     var productsReady: Bool = false {
         didSet {
             if productsReady {
-                self.counterImageView.stopAnimating()
-                self.counterImageView.animationImages = nil
-                self.counterImageView.image = UIImage(named: "gameplay_launching_3")
-                self.loaderTitleLabel.isHidden = true
+                counterImageView.stopAnimating()
+                counterImageView.animationImages = nil
+                counterImageView.image = UIImage(named: "gameplay_launching_3")
+                loaderTitleLabel.isHidden = true
             }
         }
     }
@@ -214,7 +214,7 @@ class GameplayLauncherViewController: GameViewController, ProductImageDownloader
                 }
                                                 
             }, fail: { (error) in
-                PopupManager.sharedInstance.showErrorPopup(message: Constants.PopupMessage.ErrorMessage.kErrorOccuredHomeRedirection, viewController: nil, completion: nil,
+                PopupManager.sharedInstance.showErrorPopup(message: Constants.PopupMessage.ErrorMessage.kErrorOccuredHomeRedirection,
                     doneActionCompletion: {
                         self.goToHome()
                     }

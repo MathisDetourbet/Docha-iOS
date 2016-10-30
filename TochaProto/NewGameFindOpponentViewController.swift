@@ -19,6 +19,7 @@ class NewGameFriendsCollectionViewCell: UICollectionViewCell {
     
     @IBOutlet weak var friendImageView: UIImageView!
     @IBOutlet weak var friendNameLabel: UILabel!
+    @IBOutlet weak var friendOnlineIndicatorImageView: UIImageView!
 }
 
 class NewGameFindOpponentViewController: GameViewController, UITableViewDataSource, UITableViewDelegate, UICollectionViewDataSource, UICollectionViewDelegate {
@@ -93,6 +94,7 @@ class NewGameFindOpponentViewController: GameViewController, UITableViewDataSour
                 }
             }
         )
+        cell.friendOnlineIndicatorImageView.isHidden = !player.isOnline
         
         return cell
     }

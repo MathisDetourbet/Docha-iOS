@@ -83,6 +83,7 @@ class NewGameFindFriendsViewController: GameViewController, UITableViewDataSourc
                 cell.friendNameLabel.text = fullName
             }
             cell.delegate = self
+            cell.friendOnlineIndicatorImageView.isHidden = !friend.isOnline
         }
         
         return cell

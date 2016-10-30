@@ -75,6 +75,7 @@ class NewGameFindByPseudoViewController: GameViewController, UITableViewDataSour
                 cell.friendAvatarImageView.image = UIImage(named: "\(player.avatarUrl)_medium")
             }
             
+            cell.friendOnlineIndicatorImageView.isHidden = !player.isOnline
             cell.delegate = self
         }
         
