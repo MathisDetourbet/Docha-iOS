@@ -157,7 +157,8 @@ class GameplayDebriefViewController: GameViewController, UIPageViewControllerDat
             let opponentPlayer = matchManager.opponentPlayer
             
             if let userPlayer = userPlayer {
-                userAvatarImageView.image = userPlayer.avatarImage?.roundCornersToCircle(withBorder: 10.0, color: userBorderColor)
+                userAvatarImageView.image = userPlayer.avatarImage
+                userAvatarImageView.applyCircle(withBorderColor: userBorderColor)
                 userNameLabel.text = userPlayer.pseudo
                 
                 if let level = userPlayer.level {
@@ -173,10 +174,12 @@ class GameplayDebriefViewController: GameViewController, UIPageViewControllerDat
                 opponentNameLabel.text = opponentPlayer.pseudo
                 
                 if let opponentAvatarImage = opponentPlayer.avatarImage {
-                    opponentAvatarImageView.image = opponentAvatarImage.roundCornersToCircle(withBorder: 10.0, color: opponentBorderColor)
+                    opponentAvatarImageView.image = opponentAvatarImage
+                    opponentAvatarImageView.applyCircle(withBorderColor: opponentBorderColor)
                     
                 } else {
-                    opponentAvatarImageView.image = UIImage(named: "\(opponentPlayer.avatarUrl)_large")?.roundCornersToCircle(withBorder: 10.0, color: opponentBorderColor)
+                    opponentAvatarImageView.image = UIImage(named: "\(opponentPlayer.avatarUrl)_large")
+                    opponentAvatarImageView.applyCircle(withBorderColor: opponentBorderColor)
                 }
                 
                 if let level = opponentPlayer.level {

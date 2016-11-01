@@ -9,7 +9,9 @@
 import Foundation
 
 enum AvatarDochaSize: String {
-    case small = "small", medium = "medium", large = "large"
+    case small = "small"
+    case medium = "medium"
+    case large = "large"
 }
 
 class UserSessionEmail: UserSession {
@@ -31,6 +33,12 @@ class UserSessionEmail: UserSession {
             return UIImage(named: "\(avatarUrl)_\(size))")
             
         } else {
+            if let gender = self.gender {
+                if gender == .female {
+                    return UIImage(named: "avatar_woman_\(size)")
+                }
+            }
+            
             return UIImage(named: "avatar_man_\(size)")
         }
     }

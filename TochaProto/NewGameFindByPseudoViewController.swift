@@ -61,19 +61,12 @@ class NewGameFindByPseudoViewController: GameViewController, UITableViewDataSour
         if let players = self.players {
             let player = players[indexPath.row]
             cell.friendPseudoLabel.text = player.pseudo
-            
-            if player.playerType == .facebookPlayer {
-                cell.friendAvatarImageView.kf.setImage(with: URL(string: player.avatarUrl)!,
-                    completionHandler: { (image, error, _, _) in
-                        if image != nil {
-                            cell.friendAvatarImageView.image = image!.roundCornersToCircle()
-                        }
-                    }
-                )
-                
-            } else {
-                cell.friendAvatarImageView.image = UIImage(named: "\(player.avatarUrl)_medium")
-            }
+            player.getAvatarImage(for: .medium,
+                completionHandler: { (image) in
+                    cell.friendAvatarImageView.image = image
+                    cell.friendAvatarImageView.applyCircle()
+                }
+            )
             
             cell.friendOnlineIndicatorImageView.isHidden = !player.isOnline
             cell.delegate = self

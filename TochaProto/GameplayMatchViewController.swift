@@ -84,6 +84,8 @@ class GameplayMatchViewController: GameViewController, UITableViewDelegate, UITa
     }
     
     func sortRounds() {
+        sortedRounds = []
+        
         if let match = self.match {
             var index = 0
             for round in match.rounds {
@@ -163,29 +165,23 @@ class GameplayMatchViewController: GameViewController, UITableViewDelegate, UITa
             
             let userData = UserSessionManager.sharedInstance.getUserInfosAndAvatarImage(withImageSize: .large)
             
-            if let userPlayer = userData.user, let userAvatarImage = userData.avatarImage {
-                cell.userNameLabel.text = userPlayer.pseudo
+            if let user = userData.user, let userAvatarImage = userData.avatarImage {
+                cell.userNameLabel.text = user.pseudo
                 cell.userNameLabel.textColor = UIColor.darkBlueDochaColor()
-                cell.userAvatarImageView.image = userAvatarImage.roundCornersToCircle(withBorder: 10.0, color: UIColor.white)
+                cell.userAvatarImageView.image = userAvatarImage
+                cell.userAvatarImageView.applyCircle(withBorderColor: UIColor.white)
             }
             
             if let match = match {
                 let opponentPlayer = match.opponent
                 cell.opponentNameLabel.text = opponentPlayer.pseudo
                 cell.opponentNameLabel.textColor = UIColor.darkBlueDochaColor()
-                
-                if opponentPlayer.playerType == .facebookPlayer {
-                    cell.opponentAvatarImageView.kf.setImage(with: URL(string: opponentPlayer.avatarUrl)!,
-                        completionHandler: { (image, error, _, _) in
-                            if image != nil {
-                                cell.opponentAvatarImageView.image = image!.roundCornersToCircle()
-                            }
-                        }
-                    )
-                    
-                } else {
-                    cell.opponentAvatarImageView.image = UIImage(named: "\(opponentPlayer.avatarUrl)_large")
-                }
+                opponentPlayer.getAvatarImage(for: .large,
+                    completionHandler: { (image) in
+                        cell.opponentAvatarImageView.image = image
+                        cell.opponentAvatarImageView.applyCircle(withBorderColor: UIColor.white)
+                    }
+                )
                                 
                 cell.scoreLabel.text = "\(match.userScore ?? 0) : \(match.opponentScore ?? 0)"
             }

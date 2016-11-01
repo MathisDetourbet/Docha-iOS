@@ -57,18 +57,15 @@ class Match {
     }
     
     func getMatchResult() -> MatchResult? {
-        guard let userScore = self.userScore, let opponentScore = self.opponentScore else {
+        switch status {
+        case .lost:
+            return .lost
+        case .tie:
+            return .tie
+        case .won:
+            return .won
+        default:
             return nil
-        }
-        
-        if userScore > opponentScore {
-            return MatchResult.won
-            
-        } else if userScore < opponentScore {
-            return MatchResult.lost
-            
-        } else {
-            return MatchResult.tie
         }
     }
     

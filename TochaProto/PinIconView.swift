@@ -14,6 +14,7 @@ class PinIconView: UIView {
     @IBOutlet weak var avatarImageView: UIImageView!
     
     func setAvatarImage(_ image: UIImage) {
-        self.avatarImageView.image = image.roundCornersToCircle(withBorder: 10.0, color: UIColor.white)
+        avatarImageView.image = image
+        avatarImageView.applyCircle(withBorderColor: UIColor.white)
     }
 }

@@ -54,11 +54,10 @@ class HomeFriendsTableViewCell: UITableViewCell, UICollectionViewDelegate, UICol
         
         let friend = friends[indexPath.row]
         cell.friendNameLabel.text = friend.pseudo
-        cell.friendAvatarImageView.kf.setImage(with: URL(string: friend.avatarUrl)!,
-            completionHandler: { (image, error, _, _) in
-                if error == nil {
-                    cell.friendAvatarImageView.image = image!.roundCornersToCircle()
-                }
+        friend.getAvatarImage(for: .medium,
+            completionHandler: { (image) in
+                cell.friendAvatarImageView.image = image
+                cell.friendAvatarImageView.applyCircle()
             }
         )
         

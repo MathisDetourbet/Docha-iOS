@@ -139,19 +139,12 @@ class RankingViewController: GameViewController, UITableViewDataSource, UITableV
         cell.rankLabel.text = "#" + String(indexPath.row+1)
         cell.userDochosLabel.text = String(player.perfects)
         
-        if player.playerType == .facebookPlayer {
-            cell.userImageView.kf.setImage(with: URL(string: player.avatarUrl)!,
-                completionHandler: { (image, error, _, _) in
-                    
-                    if image != nil {
-                        cell.userImageView.image = image!.roundCornersToCircle()
-                    }
-                }
-            )
-            
-        } else {
-            cell.userImageView.image = UIImage(named: player.avatarUrl + "_medium")
-        }
+        player.getAvatarImage(for: .medium,
+            completionHandler: { (image) in
+                cell.userImageView.image = image
+                cell.userImageView.applyCircle()
+            }
+        )
         
         if (indexPath as NSIndexPath).row == 0 {
             cell.rankImageView.isHidden = false

@@ -65,27 +65,19 @@ class GameplayLauncherViewController: GameViewController, ProductImageDownloader
         opponentPlayer = matchManager.opponentPlayer
         
         if let userPlayer = self.userPlayer {
-            userImageView.image = userPlayer.avatarImage?.roundCornersToCircle(withBorder: 10.0, color: UIColor.white)
+            userImageView.image = userPlayer.avatarImage
+            userImageView.applyCircle(withBorderColor: UIColor.white)
             userNameLabel.text = userPlayer.pseudo
+            userLevelLabel.text = "Niveau \(userPlayer.level!)"
         }
         
         if let opponentPlayer = self.opponentPlayer {
-            if let opponentAvatarImage = opponentPlayer.avatarImage {
-                opponentImageView.image = opponentAvatarImage.roundCornersToCircle(withBorder: 10.0, color: UIColor.white)
-                
-            } else if opponentPlayer.playerType == .facebookPlayer {
-                opponentImageView.kf.setImage(with: URL(string: opponentPlayer.avatarUrl)!,
-                    completionHandler: { (image, error, _, _) in
-                        if image != nil {
-                            self.opponentImageView.image = image!.roundCornersToCircle()
-                            matchManager.opponentPlayer = opponentPlayer
-                        }
-                    }
-                )
-                
-            } else {
-                opponentImageView.image = UIImage(named: "\(opponentPlayer.avatarUrl))_large")?.roundCornersToCircle(withBorder: 10.0, color: UIColor.white)
-            }
+            opponentPlayer.getAvatarImage(for: .large,
+                completionHandler: { (image) in
+                    self.opponentImageView.image = image
+                    self.opponentImageView.applyCircle(withBorderColor: UIColor.white)
+                }
+            )
             
             opponentNameLabel.text = opponentPlayer.pseudo
             

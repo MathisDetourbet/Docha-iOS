@@ -69,16 +69,13 @@ class NewGameFindFriendsViewController: GameViewController, UITableViewDataSourc
         if let friends = self.friends {
             let friend = friends[indexPath.row]
             cell.friendPseudoLabel.text = friend.pseudo
+            friend.getAvatarImage(for: .medium,
+                completionHandler: { (image) in
+                    cell.friendAvatarImageView.image = image
+                    cell.friendAvatarImageView.applyCircle()
+                }
+            )
             
-            if friend.playerType == .facebookPlayer {
-                cell.friendAvatarImageView.kf.setImage(with: URL(string: friend.avatarUrl)!,
-                    completionHandler: { (image, error, _, _) in
-                        if image != nil {
-                            cell.friendAvatarImageView.image = image!.roundCornersToCircle()
-                        }
-                    }
-                )
-            }
             if let fullName = friend.fullName {
                 cell.friendNameLabel.text = fullName
             }

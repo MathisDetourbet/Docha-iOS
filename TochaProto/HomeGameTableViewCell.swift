@@ -51,19 +51,21 @@ class HomeGameFinishedTableViewCell: HomeGameTableViewCell {
     
     var matchResult: MatchResult? {
         didSet {
-            gameResultLabel.text = matchResult!.rawValue
-            switch matchResult! {
-            case .won:
-                gameResultLabel.textColor = UIColor.greenDochaColor()
-                break
-            case .lost:
-                gameResultLabel.textColor = UIColor.redDochaColor()
-                break
-            case .tie:
-                gameResultLabel.textColor = UIColor.darkBlueDochaColor()
-                break
+            if let matchResult = matchResult {
+                gameResultLabel.text = matchResult.rawValue
+                
+                switch matchResult {
+                case .won:
+                    gameResultLabel.textColor = UIColor.greenDochaColor()
+                    break
+                case .lost:
+                    gameResultLabel.textColor = UIColor.redDochaColor()
+                    break
+                case .tie:
+                    gameResultLabel.textColor = UIColor.darkBlueDochaColor()
+                    break
+                }
             }
-            
         }
     }
     

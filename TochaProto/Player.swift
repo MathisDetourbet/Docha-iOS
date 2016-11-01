@@ -8,6 +8,7 @@
 
 import Foundation
 import SwiftyJSON
+import Kingfisher
 
 enum PlayerType {
     case defaultPlayer
@@ -79,6 +80,33 @@ class Player {
     
     convenience init(player: Player) {
         self.init(pseudo: player.pseudo, fullName: player.fullName, gender: player.gender, avatarUrl: player.avatarUrl, avatarImage: player.avatarImage, playerType: player.playerType, level: player.level, dochos: player.dochos, perfects: player.perfects, isOnline: player.isOnline)
+    }
+    
+    func getAvatarImage(for size: AvatarDochaSize = .medium, completionHandler completion: @escaping (_ image: UIImage) -> Void) {
+        if let avatarImage = avatarImage {
+            completion(avatarImage)
+            
+        } else {
+            if playerType == .defaultPlayer || playerType == .emailPlayer {
+                let avatarPath = Player.getAvatarDochaPath(for: gender)
+                completion(UIImage(named: "\(avatarPath)_\(size.rawValue)")!)
+                
+            } else {
+                let url = URL(string: avatarUrl)
+                ImageDownloader.default.downloadImage(with: url!, options: [], progressBlock: nil,
+                    completionHandler: { (image, error, _, _) in
+                        
+                        if error != nil {
+                            debugPrint(error as! Error)
+                            let avatarPath = Player.getAvatarDochaPath(for: self.gender)
+                            completion(UIImage(named: "\(avatarPath)_\(size.rawValue)")!)
+                        }
+                        
+                        completion(image!)
+                    }
+                )
+            }
+        }
     }
     
     class func getAvatarDochaPath(for gender: Gender) -> String {

@@ -236,7 +236,14 @@ class MatchManager {
             success: { (roundFull) in
                 
                 self.currentRound = roundFull as RoundFull
-                success(roundFull)
+                self.getMatch(withMatchID: matchID,
+                    success: { (_) in
+                        success(roundFull)
+                        
+                    }, fail: { (error) in
+                        failure(error)
+                    }
+                )
                 
             }, fail: { (error) in
                 failure(error)

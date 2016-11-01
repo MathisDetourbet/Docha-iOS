@@ -39,7 +39,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Amplitude Init
         Amplitude.instance().initializeApiKey("792a2eced82bad1ee03a8f0f874c70f5")
         
-        UserGameStateManager.sharedInstance.authenticateLocalPlayer()
+        //UserGameStateManager.sharedInstance.authenticateLocalPlayer()
         
         return true
     }

@@ -124,28 +124,22 @@ class GameplayMainViewController: GameViewController, KeyboardViewDelegate, Coun
     func loadPlayersInfos() {
         let userInfos = UserSessionManager.sharedInstance.getUserInfosAndAvatarImage()
         
-        if let pseudo = userInfos.user?.pseudo, let userAvatar = userInfos.avatarImage {
+        if let pseudo = userInfos.user?.pseudo, let userAvatarImage = userInfos.avatarImage {
             userPseudoLabel.text = pseudo
-            userAvatarImageView.image = userAvatar.roundCornersToCircle()
-        }
-        
-        if let userPlayer = self.userPlayer {
-            userAvatarImageView.image = userPlayer.avatarImage?.roundCornersToCircle(withBorder: 10.0, color: UIColor.white)
-            userPseudoLabel.text = userPlayer.pseudo
+            userAvatarImageView.image = userAvatarImage
+            userAvatarImageView.applyCircle(withBorderColor: UIColor.white)
         }
         
         opponentPlayer = MatchManager.sharedInstance.opponentPlayer
         
         if let opponentPlayer = opponentPlayer {
             opponentPseudoLabel.text = opponentPlayer.pseudo
-            
-            if let opponentAvatarImage = opponentPlayer.avatarImage {
-                opponentAvatarImageView.image = opponentAvatarImage.roundCornersToCircle(withBorder: 10.0, color: UIColor.white)
-                
-            } else {
-                opponentPlayer.avatarImage = UIImage(named: "\(opponentPlayer.avatarUrl)_large")?.roundCornersToCircle(withBorder: 10.0, color: UIColor.white)
-                opponentAvatarImageView.image = opponentPlayer.avatarImage
-            }
+            opponentPlayer.getAvatarImage(for: .medium,
+                completionHandler: { (image) in
+                    self.opponentAvatarImageView.image = image
+                    self.opponentAvatarImageView.applyCircle(withBorderColor: UIColor.white)
+                }
+            )
         }
     }
     
@@ -202,35 +196,17 @@ class GameplayMainViewController: GameViewController, KeyboardViewDelegate, Coun
             cardProductView?.counterContainerView.delegate = self
             print("Real price : \(product.price)")
             
-            if let avatarImage = userPlayer.avatarImage {
-                cardProductView?.userPinIconView.setAvatarImage(avatarImage)
-                
-            } else {
-                cardProductView?.userPinIconView.avatarImageView.kf.setImage(with: URL(string: userPlayer.avatarUrl)!,
-                    completionHandler: { (image, error, _, _) in
-                        
-                        if error != nil {
-                            cardProductView?.userPinIconView.avatarImageView.image = image?.roundCornersToCircle()
-                            self.userPlayer.avatarImage = image
-                        }
-                    }
-                )
-            }
+            userPlayer.getAvatarImage(for: .small,
+                completionHandler: { (image) in
+                    cardProductView?.userPinIconView.setAvatarImage(image)
+                }
+            )
             
-            if let avatarImage = opponentPlayer.avatarImage {
-                cardProductView?.opponentPinIconView.setAvatarImage(avatarImage)
-                
-            } else {
-                cardProductView?.opponentPinIconView.avatarImageView.kf.setImage(with: URL(string: opponentPlayer.avatarUrl)!,
-                    completionHandler: { (image, error, _, _) in
-                        
-                        if error != nil {
-                            cardProductView?.opponentPinIconView.avatarImageView.image = image?.roundCornersToCircle()
-                            self.opponentPlayer.avatarImage = image
-                        }
-                    }
-                )
-            }
+            opponentPlayer.getAvatarImage(for: .small,
+                completionHandler: { (image) in
+                    cardProductView?.opponentPinIconView.setAvatarImage(image)
+                }
+            )
             
             cardProductView?.frame = CGRect(x: self.view.frame.size.width, y: cardContainerView.frame.origin.y, width: cardContainerView.frame.width, height: cardContainerView.frame.height)
             

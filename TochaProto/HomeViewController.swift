@@ -139,7 +139,8 @@ class HomeViewController: GameViewController, UITableViewDelegate, UITableViewDa
             userNameLabel.text = user.pseudo
             
             let image = avatarImage
-            userAvatarImageView.image = image.roundCornersToCircle(withBorder: 10.0, color: UIColor.white)
+            userAvatarImageView.image = image
+            userAvatarImageView.applyCircle(withBorderColor: UIColor.white)
             
             let dochos = Float(user.dochos)
             let perfectPrice = Float(user.perfectPriceCpt)
@@ -275,9 +276,9 @@ class HomeViewController: GameViewController, UITableViewDelegate, UITableViewDa
             let cell = tableView.dequeueReusableCell(withIdentifier: idsTableViewCell[.userTurn]!, for: indexPath) as! HomeUserTurnTableViewCell
             
             let match = data[.userTurn]?[indexPath.row] as! Match
-            let opponent = match.opponent
+            let opponentPlayer = match.opponent
             
-            cell.opponentNameLabel.text = opponent.pseudo
+            cell.opponentNameLabel.text = opponentPlayer.pseudo
             cell.opponentScoreLabel.text = String(match.opponentScore ?? 0)
             cell.userScoreLabel.text = String(match.userScore ?? 0)
             cell.match = match
@@ -285,26 +286,19 @@ class HomeViewController: GameViewController, UITableViewDelegate, UITableViewDa
             cell.delegate = self
             cell.indexPath = indexPath
             
-            if let level = opponent.level {
+            if let level = opponentPlayer.level {
                 cell.opponentLevelLabel.text = "Niveau \(level)"
                 
             } else {
                 cell.opponentLevelLabel.text = "Niveau ?"
             }
             
-            if opponent.playerType == .facebookPlayer {
-                cell.opponentImageView.kf.setImage(with: URL(string: opponent.avatarUrl)!,
-                    completionHandler: { (image, error, _, _) in
-                        if image != nil {
-                            MatchManager.sharedInstance.opponentPlayer?.avatarImage = image
-                            cell.opponentImageView.image = image!.roundCornersToCircle()
-                        }
-                    }
-                )
-                
-            } else {
-                cell.opponentImageView.image = UIImage(named: "\(opponent.avatarUrl)_medium")
-            }
+            opponentPlayer.getAvatarImage(for: .medium,
+                completionHandler: { (image) in
+                    cell.opponentImageView.image = image
+                    cell.opponentImageView.applyCircle()
+                }
+            )
             
             cell.rightUtilityButtons = [buildDeleteButtonCell()]
             
@@ -316,32 +310,26 @@ class HomeViewController: GameViewController, UITableViewDelegate, UITableViewDa
             let cell = tableView.dequeueReusableCell(withIdentifier: idsTableViewCell[.opponentTurn]!, for: indexPath) as! HomeOpponentTurnTableViewCell
             
             let match = data[.opponentTurn]?[indexPath.row] as! Match
-            let opponent = match.opponent
+            let opponentPlayer = match.opponent
             
-            cell.opponentNameLabel.text = opponent.pseudo
+            cell.opponentNameLabel.text = opponentPlayer.pseudo
             cell.opponentScoreLabel.text = String(match.opponentScore ?? 0)
             cell.userScoreLabel.text = String(match.userScore ?? 0)
             cell.delegate = self
             
-            if let level = opponent.level {
+            if let level = opponentPlayer.level {
                 cell.opponentLevelLabel.text = "Niveau \(level)"
                 
             } else {
                 cell.opponentLevelLabel.text = "Niveau ?"
             }
             
-            if opponent.playerType == .facebookPlayer {
-                cell.opponentImageView.kf.setImage(with: URL(string: opponent.avatarUrl)!,
-                    completionHandler: { (image, error, _, _) in
-                        if image != nil {
-                            cell.opponentImageView.image = image!.roundCornersToCircle()
-                        }
-                    }
-                )
-                
-            } else {
-                cell.opponentImageView.image = UIImage(named: "\(opponent.avatarUrl)_medium")
-            }
+            opponentPlayer.getAvatarImage(for: .medium,
+                completionHandler: { (image) in
+                    cell.opponentImageView.image = image
+                    cell.opponentImageView.applyCircle()
+                }
+            )
             
             if match.status == .opponentTurn && match.opponent.playerType != .defaultPlayer {
                 cell.rightUtilityButtons = [buildDeleteButtonCell()]
@@ -355,32 +343,26 @@ class HomeViewController: GameViewController, UITableViewDelegate, UITableViewDa
             let cell = tableView.dequeueReusableCell(withIdentifier: idsTableViewCell[.finished]!, for: indexPath) as! HomeGameFinishedTableViewCell
             
             let match = data[.finished]?[indexPath.row] as! Match
-            let opponent = match.opponent
+            let opponentPlayer = match.opponent
             
-            cell.opponentNameLabel.text = opponent.pseudo
+            cell.opponentNameLabel.text = opponentPlayer.pseudo
             cell.opponentScoreLabel.text = String(match.opponentScore!)
             cell.userScoreLabel.text = String(match.userScore!)
             cell.delegate = self
             
-            if let level = opponent.level {
+            if let level = opponentPlayer.level {
                 cell.opponentLevelLabel.text = "Niveau \(level)"
                 
             } else {
                 cell.opponentLevelLabel.text = "Niveau ?"
             }
             
-            if opponent.playerType == .facebookPlayer {
-                cell.opponentImageView.kf.setImage(with: URL(string: opponent.avatarUrl)!,
-                    completionHandler: { (image, error, _, _) in
-                        if image != nil {
-                            cell.opponentImageView.image = image!.roundCornersToCircle()
-                        }
-                    }
-                )
-                
-            } else {
-                cell.opponentImageView.image = UIImage(named: "\(opponent.avatarUrl)_medium")
-            }
+            opponentPlayer.getAvatarImage(for: .medium,
+                completionHandler: { (image) in
+                    cell.opponentImageView.image = image
+                    cell.opponentImageView.applyCircle()
+                }
+            )
             
             cell.matchResult = match.getMatchResult()
             cell.rightUtilityButtons = [buildDeleteButtonCell()]

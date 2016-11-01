@@ -86,12 +86,10 @@ class NewGameFindOpponentViewController: GameViewController, UITableViewDataSour
         
         let player = quickPlayers[indexPath.item]
         cell.friendNameLabel.text = player.pseudo
-        cell.friendImageView.kf.setImage(with: URL(string: player.avatarUrl)!,
-            completionHandler: { (image, error, _, _) in
-                if error == nil {
-                    MatchManager.sharedInstance.opponentPlayer?.avatarImage = image
-                    cell.friendImageView.image = image!.roundCornersToCircle()
-                }
+        player.getAvatarImage(for: .large,
+            completionHandler: { (image) in
+                cell.friendImageView.image = image
+                cell.friendImageView.applyCircle()
             }
         )
         cell.friendOnlineIndicatorImageView.isHidden = !player.isOnline
