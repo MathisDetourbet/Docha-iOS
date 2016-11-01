@@ -28,7 +28,7 @@ class GameplayRewardsLevelUpViewController: GameViewController {
         let match = MatchManager.sharedInstance.currentMatch
         
         if let match = match {
-            goToMatch(match)
+            goToMatch(match, animated: true)
             
         } else {
             goToHome()

@@ -31,7 +31,7 @@ class UserRequest: DochaRequest {
                     return
                 }
                 
-                let jsonResponse = JSON(response.result.value)
+                let jsonResponse = JSON(response.result.value as Any)
                 let user = User()
                 user.initPropertiesWithResponseObject(jsonResponse)
                 
@@ -60,7 +60,7 @@ class UserRequest: DochaRequest {
                     return
                 }
                 
-                let jsonResponse = JSON(response.result.value)
+                let jsonResponse = JSON(response.result.value as Any)
                 let user = User()
                 user.initPropertiesWithResponseObject(jsonResponse)
                 
@@ -89,7 +89,7 @@ class UserRequest: DochaRequest {
                     return
                 }
                 
-                let jsonResponse = JSON(response.result.value)
+                let jsonResponse = JSON(response.result.value as Any)
                 let user = User()
                 user.initPropertiesWithResponseObject(jsonResponse)
                 
@@ -143,7 +143,7 @@ class UserRequest: DochaRequest {
                     return
                 }
                 
-                let jsonResponse = JSON(response.result.value)
+                let jsonResponse = JSON(response.result.value as Any)
                 let user = User()
                 user.initPropertiesWithResponseObject(jsonResponse)
                 

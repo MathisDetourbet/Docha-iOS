@@ -90,6 +90,36 @@ class MatchManager {
         }
     }
     
+    func hasAlreadyMatch(with player: Player) -> Bool {
+        let pseudo = player.pseudo
+        let notFinishedMatchStatus: [MatchStatus] = [.userTurn, .opponentTurn, .waiting]
+        
+        if let allMatch = matchArray {
+            for match in allMatch {
+                if match.opponent.pseudo == pseudo && notFinishedMatchStatus.contains(match.status) {
+                    return true
+                }
+            }
+        }
+        
+        return false
+    }
+    
+    func getMatch(for player: Player) -> Match? {
+        let pseudo = player.pseudo
+        let notFinishedMatchStatus: [MatchStatus] = [.userTurn, .opponentTurn, .waiting]
+        
+        if let allMatch = matchArray {
+            for match in allMatch {
+                if match.opponent.pseudo == pseudo && notFinishedMatchStatus.contains(match.status) {
+                    return match
+                }
+            }
+        }
+        
+        return nil
+    }
+    
     
 //MARK: Match Requests
 	

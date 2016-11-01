@@ -489,16 +489,30 @@ class HomeViewController: GameViewController, UITableViewDelegate, UITableViewDa
     
     func displayAllFriendsButtonTouched() {}
     
-    
-//MARK: HomeBadgeDelegate Methods
-    
-    func showAllBadges() {
-        let badgesVC = self.storyboard?.instantiateViewController(withIdentifier: "idBadgeViewController") as! BadgesViewController
-        self.navigationController?.pushViewController(badgesVC, animated: true)
-    }
-    
     func challengeFacebookFriendsCellTouched(withFriend friend: Player) {
+        let matchManager = MatchManager.sharedInstance
         
+        if matchManager.hasAlreadyMatch(with: friend) {
+            let match = matchManager.getMatch(for: friend)
+            
+            if let match = match {
+                let matchVC = self.storyboard?.instantiateViewController(withIdentifier: "idGameplayMatchViewController") as! GameplayMatchViewController
+                matchVC.match = match
+                self.navigationController?.pushViewController(matchVC, animated: true)
+            }
+            
+        } else {
+            matchManager.postMatch(withOpponentPseudo: friend.pseudo,
+                success: { (match) in
+                    
+                    let newGameCategorieSelectionVC = self.storyboard?.instantiateViewController(withIdentifier: "idNewGameCategorieSelectionViewController") as! NewGameCategorieSelectionViewController
+                    MatchManager.sharedInstance.currentMatch = match
+                    self.navigationController?.pushViewController(newGameCategorieSelectionVC, animated: true)
+                    
+            }) { (error) in
+                PopupManager.sharedInstance.showErrorPopup(message: Constants.PopupMessage.ErrorMessage.kErrorOccured)
+            }
+        }
     }
     
 //    func inviteFacebookFriendsCellTouched() {

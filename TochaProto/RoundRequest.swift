@@ -31,7 +31,7 @@ class RoundRequest: DochaRequest {
                     return
                 }
                 
-                let jsonResponse = JSON(response.result.value)
+                let jsonResponse = JSON(response.result.value as Any)
                 var roundsFull: [RoundFull] = []
                 
                 for roundJSON in jsonResponse.array! {
@@ -62,7 +62,7 @@ class RoundRequest: DochaRequest {
                     return
                 }
                 
-                let jsonResponse = JSON(response.result.value)
+                let jsonResponse = JSON(response.result.value as Any)
                 let roundFull = RoundFull(jsonObject: jsonResponse)
                 
                 success(roundFull)
@@ -88,7 +88,7 @@ class RoundRequest: DochaRequest {
                     return
                 }
                 
-                let jsonResponse = JSON(response.result.value)
+                let jsonResponse = JSON(response.result.value as Any)
                 let roundFull = RoundFull(jsonObject: jsonResponse)
                 
                 success(roundFull)
@@ -116,7 +116,7 @@ class RoundRequest: DochaRequest {
                     return
                 }
                 
-                let jsonResponse = JSON(response.result.value)
+                let jsonResponse = JSON(response.result.value as Any)
                 let roundFull = RoundFull(jsonObject: jsonResponse)
                 
                 success(roundFull)

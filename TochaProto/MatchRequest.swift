@@ -31,7 +31,7 @@ class MatchRequest: DochaRequest {
                     return
                 }
                 
-                let jsonResponse = JSON(response.result.value)
+                let jsonResponse = JSON(response.result.value as Any)
                 
                 var matchArray: [Match] = []
                 for matchJSON in jsonResponse.array! {
@@ -62,7 +62,7 @@ class MatchRequest: DochaRequest {
                     return
                 }
                 
-                let jsonResponse = JSON(response.result.value)
+                let jsonResponse = JSON(response.result.value as Any)
                 let match = Match(jsonObject: jsonResponse)
                 success(match)
         }
@@ -89,7 +89,7 @@ class MatchRequest: DochaRequest {
                     return
                 }
                 
-                let jsonResponse = JSON(response.result.value)
+                let jsonResponse = JSON(response.result.value as Any)
                 let match = Match(jsonObject: jsonResponse)
                 success(match)
         }
@@ -114,7 +114,7 @@ class MatchRequest: DochaRequest {
                     return
                 }
                 
-                let jsonResponse = JSON(response.result.value)
+                let jsonResponse = JSON(response.result.value as Any)
                 let match = Match(jsonObject: jsonResponse)
                 success(match)
         }

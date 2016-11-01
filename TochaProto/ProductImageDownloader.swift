@@ -31,7 +31,7 @@ class ProductImageDownloader {
                     completionHandler: { (image, error, _, _) in
                         
                         if error != nil {
-                            debugPrint(error)
+                            debugPrint(error as Any)
                             failure(error)
                             return
                         }

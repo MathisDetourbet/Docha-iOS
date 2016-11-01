@@ -56,7 +56,6 @@ class NewGameFindOpponentViewController: GameViewController, UITableViewDataSour
         collectionView.backgroundColor = UIColor.lightGrayDochaColor()
         
         tableView.backgroundColor = UIColor.lightGrayDochaColor()
-        //heightTableViewConstraint.constant = tableViewRowHeight * CGFloat(titlesArray.count)
     }
     
     func loadQuickPlayers(withCompletion completion: (() -> Void)?) {
@@ -102,14 +101,26 @@ class NewGameFindOpponentViewController: GameViewController, UITableViewDataSour
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let player = quickPlayers[indexPath.row]
-        MatchManager.sharedInstance.postMatch(withOpponentPseudo: player.pseudo,
-            success: { (match) in
-                let newGameCategorieSelectionVC = self.storyboard?.instantiateViewController(withIdentifier: "idNewGameCategorieSelectionViewController") as! NewGameCategorieSelectionViewController
-                MatchManager.sharedInstance.currentMatch = match
-                self.navigationController?.pushViewController(newGameCategorieSelectionVC, animated: true)
-                
-        }) { (error) in
-            PopupManager.sharedInstance.showErrorPopup(message: Constants.PopupMessage.ErrorMessage.kErrorOccured)
+        
+        let matchManager = MatchManager.sharedInstance
+        
+        if matchManager.hasAlreadyMatch(with: player) {
+            let match = matchManager.getMatch(for: player)
+            
+            if let match = match {
+                self.goToMatch(match, animated: false)
+            }
+            
+        } else {
+            matchManager.postMatch(withOpponentPseudo: player.pseudo,
+                success: { (match) in
+                    let newGameCategorieSelectionVC = self.storyboard?.instantiateViewController(withIdentifier: "idNewGameCategorieSelectionViewController") as! NewGameCategorieSelectionViewController
+                    MatchManager.sharedInstance.currentMatch = match
+                    self.navigationController?.pushViewController(newGameCategorieSelectionVC, animated: true)
+                    
+            }) { (error) in
+                PopupManager.sharedInstance.showErrorPopup(message: Constants.PopupMessage.ErrorMessage.kErrorOccured)
+            }
         }
         
         collectionView.deselectItem(at: indexPath, animated: true)

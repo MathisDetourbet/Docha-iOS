@@ -106,15 +106,28 @@ class NewGameFindByPseudoViewController: GameViewController, UITableViewDataSour
 //MARK: NewGameFindFriendsTableViewCell Delegate
     
     func challengeFriendButtonTouched(withPseudo pseudo: String!) {
-        MatchManager.sharedInstance.postMatch(withOpponentPseudo: pseudo,
-            success: { (match) in
-                
-                let newGameCategorieSelectionVC = self.storyboard?.instantiateViewController(withIdentifier: "idNewGameCategorieSelectionViewController") as! NewGameCategorieSelectionViewController
-                MatchManager.sharedInstance.currentMatch = match
-                self.navigationController?.pushViewController(newGameCategorieSelectionVC, animated: true)
-                
+        let matchManager = MatchManager.sharedInstance
+        let player = Player.defaultPlayer()
+        player.pseudo = pseudo
+        
+        if matchManager.hasAlreadyMatch(with: player) {
+            let match = matchManager.getMatch(for: player)
+            
+            if let match = match {
+                self.goToMatch(match, animated: false)
+            }
+            
+        } else {
+            matchManager.postMatch(withOpponentPseudo: player.pseudo,
+                success: { (match) in
+                    
+                    let newGameCategorieSelectionVC = self.storyboard?.instantiateViewController(withIdentifier: "idNewGameCategorieSelectionViewController") as! NewGameCategorieSelectionViewController
+                    MatchManager.sharedInstance.currentMatch = match
+                    self.navigationController?.pushViewController(newGameCategorieSelectionVC, animated: true)
+                    
             }) { (error) in
                 PopupManager.sharedInstance.showErrorPopup(message: Constants.PopupMessage.ErrorMessage.kErrorOccured)
+            }
         }
     }
     

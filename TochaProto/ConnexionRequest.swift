@@ -23,7 +23,7 @@ class ConnexionRequest: DochaRequest {
         alamofireManager!.request(urlString, method: .post, parameters: parameters, encoding: JSONEncoding.default)
             .validate(statusCode: 200..<300)
             .responseJSON { response in
-                let jsonResponse = JSON(response.result.value)
+                let jsonResponse = JSON(response.result.value as Any)
                 let authToken = jsonResponse[UserDataKey.kAuthToken].string
                 
                 guard response.result.isSuccess, let _ = authToken else {
@@ -49,7 +49,7 @@ class ConnexionRequest: DochaRequest {
         alamofireManager!.request(urlString, method: .post, parameters: parameters, encoding: JSONEncoding.default)
             .validate(statusCode: 200..<300)
             .responseJSON { response in
-                let jsonResponse = JSON(response.result.value)
+                let jsonResponse = JSON(response.result.value as Any)
                 let authToken = jsonResponse[UserDataKey.kAuthToken].string
                 
                 guard response.result.isSuccess, let _ = authToken  else {

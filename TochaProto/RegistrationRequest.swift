@@ -34,7 +34,7 @@ class RegistrationRequest: DochaRequest {
                     return
                 }
                 
-                let jsonResponse = JSON(response.result.value)
+                let jsonResponse = JSON(response.result.value as Any)
                 
                 let authToken = jsonResponse["key"].stringValue
                 debugPrint(authToken)

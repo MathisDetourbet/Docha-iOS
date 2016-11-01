@@ -593,13 +593,13 @@
 			name = Cells;
 			sourceTree = "<group>";
 		};
-		6758DFFA1D958B6700CAFEF2 /* FindPlayer */ = {
+		6758DFFA1D958B6700CAFEF2 /* FindPseudoPlayer */ = {
 			isa = PBXGroup;
 			children = (
 				6758DFFB1D958BB300CAFEF2 /* NewGameFindByPseudoViewController.swift */,
 				67475E9B1DB68ADB0005677C /* Cell */,
 			);
-			name = FindPlayer;
+			name = FindPseudoPlayer;
 			sourceTree = "<group>";
 		};
 		6767441E1DABA29E007B6ABC /* WebViewController */ = {
@@ -989,7 +989,7 @@
 			children = (
 				67DD961A1D78B586007598E0 /* NewGameFindOpponentViewController.swift */,
 				67EFFDD81D901007003EE8E5 /* FindFacebookFriend */,
-				6758DFFA1D958B6700CAFEF2 /* FindPlayer */,
+				6758DFFA1D958B6700CAFEF2 /* FindPseudoPlayer */,
 				67EFFDD91D90101A003EE8E5 /* CategorySelection */,
 			);
 			name = NewGame;

@@ -27,7 +27,7 @@ class CategoryRequest: DochaRequest {
                     return
                 }
                 
-                let jsonResponse = JSON(response.result.value)
+                let jsonResponse = JSON(response.result.value as Any)
                 var categoriesList: [Category] = []
                 
                 for (_ ,subJson):(String, JSON) in jsonResponse {
@@ -64,7 +64,7 @@ class CategoryRequest: DochaRequest {
                     return
                 }
                 
-                let jsonResponse = JSON(response.result.value)
+                let jsonResponse = JSON(response.result.value as Any)
                 let category = Category(jsonObject: jsonResponse)
                 
                 if let category = category {
@@ -91,7 +91,7 @@ class CategoryRequest: DochaRequest {
                     return
                 }
                 
-                let jsonResponse = JSON(response.result.value)
+                let jsonResponse = JSON(response.result.value as Any)
                 var categoriesList: [Category] = []
                 
                 for categoryJson in jsonResponse[RoundDataKey.kProposedCategories].arrayValue {

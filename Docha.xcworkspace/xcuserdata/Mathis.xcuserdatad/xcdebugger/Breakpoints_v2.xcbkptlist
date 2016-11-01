@@ -18,45 +18,13 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TochaProto/GameplayDebriefViewController.swift"
-            timestampString = "499715555.945214"
+            timestampString = "499728789.701019"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "320"
-            endingLineNumber = "320"
+            startingLineNumber = "318"
+            endingLineNumber = "318"
             landmarkName = "nextButtonTouched(_:)"
             landmarkType = "7">
-            <Locations>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "Docha.GameplayDebriefViewController.nextButtonTouched (__ObjC.UIButton) -&gt; ()"
-                  moduleName = "Docha"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/Mathis/Documents/GEM/LaTV/Appli/docha-ios/TochaProto/GameplayDebriefViewController.swift"
-                  timestampString = "499718072.297568"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "320"
-                  endingLineNumber = "320"
-                  offsetFromSymbolStart = "240">
-               </Location>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "Docha.GameplayDebriefViewController.nextButtonTouched (__ObjC.UIButton) -&gt; ()"
-                  moduleName = "Docha"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/Mathis/Documents/GEM/LaTV/Appli/docha-ios/TochaProto/GameplayDebriefViewController.swift"
-                  timestampString = "499718072.300273"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "320"
-                  endingLineNumber = "320"
-                  offsetFromSymbolStart = "292">
-               </Location>
-            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

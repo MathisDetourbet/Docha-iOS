@@ -33,7 +33,7 @@ class SearchRequest: DochaRequest {
                     return
                 }
                 
-                let jsonResponse = JSON(response.result.value)
+                let jsonResponse = JSON(response.result.value as Any)
                 var players: [Player] = []
                 
                 for playerJSON in jsonResponse.arrayValue {
@@ -70,7 +70,7 @@ class SearchRequest: DochaRequest {
                     return
                 }
                 
-                let jsonResponse = JSON(response.result.value)
+                let jsonResponse = JSON(response.result.value as Any)
                 var players: [Player] = []
                 
                 for playerJSON in jsonResponse.arrayValue {
@@ -101,7 +101,7 @@ class SearchRequest: DochaRequest {
                     return
                 }
                 
-                let jsonResponse = JSON(response.result.value)
+                let jsonResponse = JSON(response.result.value as Any)
                 var friends: [Player] = []
                 
                 for friendJSON in jsonResponse.arrayValue {
@@ -135,7 +135,7 @@ class SearchRequest: DochaRequest {
                     return
                 }
                 
-                let jsonResponse = JSON(response.result.value)
+                let jsonResponse = JSON(response.result.value as Any)
                 var players: [Player] = []
                 
                 for playerJson in jsonResponse.arrayValue {
