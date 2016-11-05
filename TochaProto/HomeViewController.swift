@@ -65,7 +65,7 @@ class HomeViewController: GameViewController, UITableViewDelegate, UITableViewDa
         buildUI()
         self.navigationController?.isNavigationBarHidden = true
         
-        NotificationCenter.default.addObserver(self, selector: #selector(HomeViewController.refreshHome), name: .UIApplicationWillEnterForeground, object: nil)
+        //NotificationCenter.default.addObserver(self, selector: #selector(HomeViewController.refreshHome), name: .UIApplicationWillEnterForeground, object: nil)
     }
     
     deinit {
@@ -87,7 +87,7 @@ class HomeViewController: GameViewController, UITableViewDelegate, UITableViewDa
     func buildUI() {
         self.view.backgroundColor = UIColor.lightGrayDochaColor()
         
-        let headerView = UIView(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: 90.0))
+        let headerView = UIView(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: 90))
         
         let newGameButton = UIButton(type: .custom)
         newGameButton.setImage(#imageLiteral(resourceName: "btn_newgame"), for: UIControlState())
