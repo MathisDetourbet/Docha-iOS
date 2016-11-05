@@ -166,6 +166,13 @@ struct Constants {
             static let kErrorChangePasswordNewPwdNotEqual = "Les nouveaux mots de passe sont différents."
             static let kErrorChangePasswordBadOldPwd = "Ce n'est pas le bon ancien mot de passe."
             
+            static let kErrorFBFriendsInvite = "Aucun amis n'a pu être invité..."
+            
+        }
+        
+        struct SuccessMessage {
+            static let kSuccessFBFriendsInvite = "Tes amis Facebook ont bien été invités !"
+            static let kSuccessFBSharing = "Ton post a bien été partagé sur Facebook !"
         }
         
         struct InfosMessage {

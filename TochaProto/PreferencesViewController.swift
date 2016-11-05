@@ -11,7 +11,7 @@ import Amplitude_iOS
 import PBWebViewController
 import FBSDKShareKit
 
-class PreferencesViewController: GameViewController, UITableViewDelegate, UITableViewDataSource, PreferencesSwitchCellDelegate {
+class PreferencesViewController: GameViewController, UITableViewDelegate, UITableViewDataSource, PreferencesSwitchCellDelegate, FBSDKGameRequestDialogDelegate {
 
     var isPasswordChangeCellHidden = false
     let idNormalTableViewCell = "idNormalTableViewCell"
@@ -200,21 +200,6 @@ class PreferencesViewController: GameViewController, UITableViewDelegate, UITabl
     }
     
     
-//MARK: FBSDKSharingDelegate
-    
-//    func sharer(_ sharer: FBSDKSharing!, didCompleteWithResults results: [AnyHashable: Any]!) {
-//        
-//    }
-//    
-//    func sharer(_ sharer: FBSDKSharing!, didFailWithError error: NSError!) {
-//        
-//    }
-//    
-//    func sharerDidCancel(_ sharer: FBSDKSharing!) {
-//        
-//    }
-    
-    
 //MARK: PreferencesSwitchCellDelegate
     
     func switchValueChanged(_ value: Bool) {
@@ -229,15 +214,14 @@ class PreferencesViewController: GameViewController, UITableViewDelegate, UITabl
         // Amplitude
         Amplitude.instance().logEvent("ClickInviteFriends")
         
-        // Facebook Sharing
-        let content = FBSDKShareLinkContent()
-        content.contentURL = URL(string: "http://www.docha.fr")
-        let shareDialog = FBSDKShareDialog()
-        shareDialog.fromViewController = self
-        shareDialog.shareContent = content
-        shareDialog.mode = .shareSheet
-        shareDialog.show()
+        let gameRequestContent = FBSDKGameRequestContent()
+        gameRequestContent.message = "Un super message super long"
+        gameRequestContent.title = "Un titre"
+        
+        FBSDKGameRequestDialog.show(with: gameRequestContent, delegate: self)
     }
+    
+    
     @IBAction func doneButtonTouched(_ sender: UIBarButtonItem) {
         self.dismiss(animated: true, completion: nil)
     }
@@ -250,4 +234,20 @@ class PreferencesViewController: GameViewController, UITableViewDelegate, UITabl
         let connexionViewController = self.storyboard?.instantiateViewController(withIdentifier: "idStarterNavController")
         NavSchemeManager.sharedInstance.changeRootViewController(connexionViewController!)
     }
+    
+    
+//MARK: FBSDKGameRequestDialog Delegate Methods
+    
+    func gameRequestDialog(_ gameRequestDialog: FBSDKGameRequestDialog!, didCompleteWithResults results: [AnyHashable : Any]!) {
+        PopupManager.sharedInstance.showSuccessPopup(message: Constants.PopupMessage.SuccessMessage.kSuccessFBFriendsInvite)
+    }
+    
+    func gameRequestDialog(_ gameRequestDialog: FBSDKGameRequestDialog!, didFailWithError error: Error!) {
+        PopupManager.sharedInstance.showErrorPopup(message: Constants.PopupMessage.ErrorMessage.kErrorFBFriendsInvite +  " " + Constants.PopupMessage.ErrorMessage.kErrorOccured)
+    }
+    
+    func gameRequestDialogDidCancel(_ gameRequestDialog: FBSDKGameRequestDialog!) {
+        
+    }
+
 }

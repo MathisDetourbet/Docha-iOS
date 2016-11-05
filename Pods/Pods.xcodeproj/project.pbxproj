@@ -2452,37 +2452,37 @@
 				LastUpgradeCheck = 0700;
 				TargetAttributes = {
 					02E4CAE60FE4FB9A668F8B99F86111A8 = {
-						LastSwiftMigration = 0800;
+						LastSwiftMigration = 0810;
 					};
 					0D3C78D4F0C694F9331CC0E7C2585B3A = {
-						LastSwiftMigration = 0800;
+						LastSwiftMigration = 0810;
 					};
 					1520003FEBEC114D6C84F832AFEDB994 = {
-						LastSwiftMigration = 0800;
+						LastSwiftMigration = 0810;
 					};
 					1DE93A359FA21F91DFBE81309E851A4A = {
-						LastSwiftMigration = 0800;
+						LastSwiftMigration = 0810;
 					};
 					21C461B0CAD90DE64B07A5D212C5F829 = {
-						LastSwiftMigration = 0800;
+						LastSwiftMigration = 0810;
 					};
 					333E47F1004946B94926B19979768D18 = {
-						LastSwiftMigration = 0800;
+						LastSwiftMigration = 0810;
 					};
 					33826901B7283AFF48C8EA859F77555F = {
-						LastSwiftMigration = 0800;
+						LastSwiftMigration = 0810;
 					};
 					446A949B95E6C7C9DFF594EC5C6E5314 = {
-						LastSwiftMigration = 0800;
+						LastSwiftMigration = 0810;
 					};
 					4D7AFD8C5FA34351CB7ADC90191C8FE6 = {
-						LastSwiftMigration = 0800;
+						LastSwiftMigration = 0810;
 					};
 					79C040AFDDCE1BCBF6D8B5EB0B85887F = {
-						LastSwiftMigration = 0800;
+						LastSwiftMigration = 0810;
 					};
 					C88C2087B4BFC374FFC174F5E5F6C57C = {
-						LastSwiftMigration = 0800;
+						LastSwiftMigration = 0810;
 					};
 				};
 			};

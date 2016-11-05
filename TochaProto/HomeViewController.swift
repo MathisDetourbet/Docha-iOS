@@ -35,7 +35,7 @@ enum HomeSectionName: Int, CustomStringConvertible {
     }
 }
 
-class HomeViewController: GameViewController, UITableViewDelegate, UITableViewDataSource, HomeUserTurnCellDelegate, HomeFriendsCellDelegate, SWTableViewCellDelegate {
+class HomeViewController: GameViewController, UITableViewDelegate, UITableViewDataSource, HomeUserTurnCellDelegate, HomeFriendsCellDelegate, SWTableViewCellDelegate, FBSDKSharingDelegate {
     
     let idsTableViewCell: [HomeSectionName : String] = [.userTurn : "idHomeUserTurnTableViewCell",
                                                         .opponentTurn :"idHomeOpponentTurnTableViewCell",
@@ -453,6 +453,14 @@ class HomeViewController: GameViewController, UITableViewDelegate, UITableViewDa
             )
         }
     }
+    
+    func buildDeleteButtonCell() -> UIButton! {
+        let deleteButton = UIButton(type: .custom)
+        deleteButton.backgroundColor = UIColor.redDochaColor()
+        deleteButton.setImage(UIImage(named: "bin_icon"), for: UIControlState())
+        
+        return deleteButton
+    }
 
     
 //MARK: HomePlayCellDelegate Methods
@@ -608,7 +616,14 @@ class HomeViewController: GameViewController, UITableViewDelegate, UITableViewDa
     }
     
     @IBAction func sharingButtonTouched(_ sender: UIButton) {
-        
+        // Facebook Sharing
+        let content = FBSDKShareLinkContent()
+        content.contentURL = URL(string: "http://www.docha.fr")
+        let shareDialog = FBSDKShareDialog()
+        shareDialog.fromViewController = self
+        shareDialog.shareContent = content
+        shareDialog.mode = .shareSheet
+        shareDialog.show()
     }
     
     @IBAction func bubblePerfectsButtonTouched(_ sender: UIButton) {
@@ -619,19 +634,18 @@ class HomeViewController: GameViewController, UITableViewDelegate, UITableViewDa
         toggleBubble(true)
     }
     
-//MARK: Push Segue Methods
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "idPushGameplaySegue" {
-            self.hidesBottomBarWhenPushed = true
-        }
+//MARK: FBSDKSharingDelegate
+    
+    func sharer(_ sharer: FBSDKSharing!, didCompleteWithResults results: [AnyHashable: Any]!) {
+        PopupManager.sharedInstance.showSuccessPopup(message: Constants.PopupMessage.SuccessMessage.kSuccessFBSharing)
     }
     
-    func buildDeleteButtonCell() -> UIButton! {
-        let deleteButton = UIButton(type: .custom)
-        deleteButton.backgroundColor = UIColor.redDochaColor()
-        deleteButton.setImage(UIImage(named: "bin_icon"), for: UIControlState())
+    func sharer(_ sharer: FBSDKSharing!, didFailWithError error: Error!) {
+        PopupManager.sharedInstance.showErrorPopup(message: Constants.PopupMessage.ErrorMessage.kErrorFBFriendsInvite +  " " + Constants.PopupMessage.ErrorMessage.kErrorOccured)
+    }
+    
+    func sharerDidCancel(_ sharer: FBSDKSharing!) {
         
-        return deleteButton
     }
 }

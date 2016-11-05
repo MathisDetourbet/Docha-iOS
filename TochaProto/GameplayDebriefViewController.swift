@@ -7,8 +7,9 @@
 //
 
 import Foundation
+import FBSDKShareKit
 
-class GameplayDebriefViewController: GameViewController, UIPageViewControllerDataSource, UIPageViewControllerDelegate, GameplayDebriefPageContentDelegate, CounterContainerViewDelegate {
+class GameplayDebriefViewController: GameViewController, UIPageViewControllerDataSource, UIPageViewControllerDelegate, GameplayDebriefPageContentDelegate, CounterContainerViewDelegate, FBSDKSharingDelegate {
     
     var productsList: [Product]?
     var userResultsArray: [TimelineState] = [.wrong, .wrong, .wrong]
@@ -305,6 +306,28 @@ class GameplayDebriefViewController: GameViewController, UIPageViewControllerDat
     }
     
     func shareButtonTouched() {
+        // Facebook Sharing
+        let content = FBSDKShareLinkContent()
+        content.contentURL = URL(string: "http://www.docha.fr")
+        let shareDialog = FBSDKShareDialog()
+        shareDialog.fromViewController = self
+        shareDialog.shareContent = content
+        shareDialog.mode = .shareSheet
+        shareDialog.show()
+    }
+    
+
+//MARK: FBSDKSharingDelegate
+    
+    func sharer(_ sharer: FBSDKSharing!, didCompleteWithResults results: [AnyHashable: Any]!) {
+        PopupManager.sharedInstance.showSuccessPopup(message: Constants.PopupMessage.SuccessMessage.kSuccessFBSharing)
+    }
+    
+    func sharer(_ sharer: FBSDKSharing!, didFailWithError error: Error!) {
+        PopupManager.sharedInstance.showErrorPopup(message: Constants.PopupMessage.ErrorMessage.kErrorFBFriendsInvite +  " " + Constants.PopupMessage.ErrorMessage.kErrorOccured)
+    }
+    
+    func sharerDidCancel(_ sharer: FBSDKSharing!) {
         
     }
     
