@@ -1296,6 +1296,9 @@
 						DevelopmentTeam = YNPZ79497Y;
 						LastSwiftMigration = 0800;
 						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
 							com.apple.GameCenter = {
 								enabled = 1;
 							};
