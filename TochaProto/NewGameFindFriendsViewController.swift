@@ -32,15 +32,16 @@ class NewGameFindFriendsViewController: GameViewController, UITableViewDataSourc
     }
     
     func getFacebookFriends() {
-        MatchManager.sharedInstance.getFacebookFriends(
+        MatchManager.sharedInstance.getQuickPlayers(byOrder: "activity", andLimit: 50,
             success: { (friends) in
                 
                 self.friends = friends
                 self.tableView.reloadData()
                 
-            }) { (error) in
+            }, fail: { (error) in
                 PopupManager.sharedInstance.showErrorPopup(message: Constants.PopupMessage.ErrorMessage.kErrorOccured)
-        }
+            }
+        )
     }
     
     
@@ -69,10 +70,13 @@ class NewGameFindFriendsViewController: GameViewController, UITableViewDataSourc
         if let friends = self.friends {
             let friend = friends[indexPath.row]
             cell.friendPseudoLabel.text = friend.pseudo
+            
             friend.getAvatarImage(for: .medium,
                 completionHandler: { (image) in
+                    
                     cell.friendAvatarImageView.image = image
-                    cell.friendAvatarImageView.applyCircle()
+                    cell.friendAvatarImageView.applyCircle(withBorderColor: UIColor.lightGrayDochaColor())
+                    friends[indexPath.row].avatarImage = image
                 }
             )
             
@@ -134,9 +138,13 @@ class NewGameFindFriendsViewController: GameViewController, UITableViewDataSourc
             matchManager.postMatch(withOpponentPseudo: player.pseudo,
                 success: { (match) in
                     
-                    let newGameCategorieSelectionVC = self.storyboard?.instantiateViewController(withIdentifier: "idNewGameCategorieSelectionViewController") as! NewGameCategorieSelectionViewController
-                    MatchManager.sharedInstance.currentMatch = match
-                    self.navigationController?.pushViewController(newGameCategorieSelectionVC, animated: true)
+                    MatchManager.sharedInstance.loadPlayersInfos(
+                        withCompletion: {
+                            
+                            let newGameCategorieSelectionVC = self.storyboard?.instantiateViewController(withIdentifier: "idNewGameCategorieSelectionViewController") as! NewGameCategorieSelectionViewController
+                            self.navigationController?.pushViewController(newGameCategorieSelectionVC, animated: true)
+                        }
+                    )
                     
             }) { (error) in
                 PopupManager.sharedInstance.showErrorPopup(message: Constants.PopupMessage.ErrorMessage.kErrorOccured)

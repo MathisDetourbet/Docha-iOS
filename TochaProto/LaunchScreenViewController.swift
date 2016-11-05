@@ -60,7 +60,6 @@ class LaunchScreenViewController: UIViewController {
                 self.signInFinished = true
             }
         ) { (error) in
-            UserSessionManager.sharedInstance.logout()
             self.signInFinished = true
         }
     }

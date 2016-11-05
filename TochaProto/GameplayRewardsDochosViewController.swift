@@ -12,7 +12,7 @@ import SACountingLabel
 class GameplayRewardsDochosViewController: GameViewController {
     
     var dochosWon: Int = 0
-    var showLevelUpVC: Bool = false
+    var newLevel: Int?
     
     @IBOutlet weak var dochosLabel: SACountingLabel!
     
@@ -24,8 +24,9 @@ class GameplayRewardsDochosViewController: GameViewController {
     }
     
     @IBAction func nextButtonTouched(_ sender: UIButton) {
-        if showLevelUpVC {
+        if let newLevel = newLevel {
             let rewardsLevelUpVC = self.storyboard?.instantiateViewController(withIdentifier: "idGameplayRewardsLevelUpViewController") as! GameplayRewardsLevelUpViewController
+            rewardsLevelUpVC.newUserLevel = newLevel
             self.navigationController?.pushViewController(rewardsLevelUpVC, animated: true)
             
         } else {

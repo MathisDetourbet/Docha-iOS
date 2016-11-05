@@ -14,7 +14,7 @@ extension UIImageView {
         layer.masksToBounds = false
         
         if let borderColor = borderColor {
-            layer.borderWidth = 1
+            layer.borderWidth = 2
             layer.borderColor = borderColor.cgColor
         }
         

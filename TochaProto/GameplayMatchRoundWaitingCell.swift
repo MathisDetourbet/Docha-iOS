@@ -11,6 +11,7 @@ import Foundation
 class GameplayMatchRoundWaitingCell: UITableViewCell {
     
     @IBOutlet var userTimelineImageViewCollection: [UIImageView]!
+    @IBOutlet weak var categoryImageView: UIImageView!
     
     override func awakeFromNib() {
         super.awakeFromNib()

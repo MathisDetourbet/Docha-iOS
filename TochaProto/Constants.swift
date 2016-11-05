@@ -65,6 +65,8 @@ struct RoundDataKey {
     static let kUserTime = "user_time"
     static let kOpponentScore = "opponent_score"
     static let kOpponentTime = "opponent_time"
+    static let kUserPlayed = "user_played"
+    static let kOpponentPlayed = "opponent_played"
 }
 
 struct ProductDataKey {

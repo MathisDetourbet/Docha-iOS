@@ -10,9 +10,13 @@ import Foundation
 
 class GameplayMatchRoundFinishedCell: UITableViewCell {
     
-    
     @IBOutlet var userTimelineImageViewCollection: [UIImageView]!
+    @IBOutlet weak var userTimeBonusLabel: UILabel!
+    
     @IBOutlet var opponentTimelineImageViewCollection: [UIImageView]!
+    @IBOutlet weak var opponentTimeBonusLabel: UILabel!
+    
+    @IBOutlet weak var categoryImageView: UIImageView!
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -40,12 +44,20 @@ class GameplayMatchRoundFinishedCell: UITableViewCell {
                 opponentTimelineImageViewCollection[i].image = #imageLiteral(resourceName: "red_big_icon")
             }
             
-            userScore = userScore > 3 ? 3 : userScore
+            if userScore > 3 {
+                userScore = 3
+                userTimeBonusLabel.isHidden = false
+                opponentTimeBonusLabel.isHidden = true
+            }
             for i in 0..<Int(userScore) {
                 userTimelineImageViewCollection[i].image = #imageLiteral(resourceName: "perfect_big_icon")
             }
             
-            opponentScore = opponentScore > 3 ? 3 : opponentScore
+            if opponentScore > 3 {
+                opponentScore = 3
+                userTimeBonusLabel.isHidden = true
+                opponentTimeBonusLabel.isHidden = false
+            }
             for i in 0..<Int(opponentScore) {
                 opponentTimelineImageViewCollection[i].image = #imageLiteral(resourceName: "perfect_big_icon")
             }

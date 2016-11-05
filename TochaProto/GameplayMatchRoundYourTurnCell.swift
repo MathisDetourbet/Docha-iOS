@@ -15,6 +15,7 @@ protocol RoundYourTurnCellDelegate {
 class GameplayMatchRoundYourTurnCell: UITableViewCell {
     
     var delegate: RoundYourTurnCellDelegate?
+    @IBOutlet weak var categoryImageView: UIImageView!
     
     override func awakeFromNib() {
         super.awakeFromNib()

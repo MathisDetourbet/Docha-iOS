@@ -85,11 +85,14 @@ class Player {
     func getAvatarImage(for size: AvatarDochaSize = .medium, completionHandler completion: @escaping (_ image: UIImage) -> Void) {
         if let avatarImage = avatarImage {
             completion(avatarImage)
+            return
             
         } else {
             if playerType == .defaultPlayer || playerType == .emailPlayer {
                 let avatarPath = Player.getAvatarDochaPath(for: gender)
                 completion(UIImage(named: "\(avatarPath)_\(size.rawValue)")!)
+                
+                return
                 
             } else {
                 let url = URL(string: avatarUrl)
@@ -100,9 +103,12 @@ class Player {
                             debugPrint(error as! Error)
                             let avatarPath = Player.getAvatarDochaPath(for: self.gender)
                             completion(UIImage(named: "\(avatarPath)_\(size.rawValue)")!)
+                            
+                            return
                         }
                         
                         completion(image!)
+                        return
                     }
                 )
             }

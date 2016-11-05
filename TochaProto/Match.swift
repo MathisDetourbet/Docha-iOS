@@ -76,7 +76,7 @@ class Match {
             return lastRound
         }
         
-        if (lastRound.userScore != nil) && (lastRound.opponentScore != nil) {
+        if (lastRound.userPlayed == true) && (lastRound.opponentPlayed == true) {
             return nil
             
         } else {

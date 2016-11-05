@@ -142,7 +142,8 @@ class RankingViewController: GameViewController, UITableViewDataSource, UITableV
         player.getAvatarImage(for: .medium,
             completionHandler: { (image) in
                 cell.userImageView.image = image
-                cell.userImageView.applyCircle()
+                cell.userImageView.applyCircle(withBorderColor: UIColor.lightGrayDochaColor())
+                self.currentList[indexPath.row].avatarImage = image
             }
         )
         

@@ -17,6 +17,7 @@ class HomeFriendCollectionViewCell: UICollectionViewCell {
     
     @IBOutlet weak var friendAvatarImageView: UIImageView!
     @IBOutlet weak var friendNameLabel: UILabel!
+    @IBOutlet weak var friendOnlineIndicatorImageView: UIImageView!
 }
 
 class HomeFriendsTableViewCell: UITableViewCell, UICollectionViewDelegate, UICollectionViewDataSource {
@@ -57,9 +58,10 @@ class HomeFriendsTableViewCell: UITableViewCell, UICollectionViewDelegate, UICol
         friend.getAvatarImage(for: .medium,
             completionHandler: { (image) in
                 cell.friendAvatarImageView.image = image
-                cell.friendAvatarImageView.applyCircle()
+                cell.friendAvatarImageView.applyCircle(withBorderColor: UIColor.lightGrayDochaColor())
             }
         )
+        cell.friendOnlineIndicatorImageView.isHidden = friend.isOnline ? false : true
         
         return cell
     }

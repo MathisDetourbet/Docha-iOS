@@ -21,6 +21,7 @@ class PreferencesAboutViewController: RootViewController, UITableViewDataSource,
     var webViewController: CustomWebViewController?
     
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var scrollView: UIScrollView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,6 +30,12 @@ class PreferencesAboutViewController: RootViewController, UITableViewDataSource,
         tableView.backgroundColor = UIColor.clear
         
         configNavigationBarWithTitle("À propos")
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
+        //scrollView.contentSize.height = tableView.frame.origin.y + tableView.frame.size.height + 50
     }
     
     @IBAction func backButtonTouched(_ sender: UIBarButtonItem) {

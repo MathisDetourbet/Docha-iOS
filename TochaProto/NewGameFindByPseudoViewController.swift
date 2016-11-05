@@ -61,10 +61,13 @@ class NewGameFindByPseudoViewController: GameViewController, UITableViewDataSour
         if let players = self.players {
             let player = players[indexPath.row]
             cell.friendPseudoLabel.text = player.pseudo
+            
             player.getAvatarImage(for: .medium,
                 completionHandler: { (image) in
+                    
                     cell.friendAvatarImageView.image = image
-                    cell.friendAvatarImageView.applyCircle()
+                    cell.friendAvatarImageView.applyCircle(withBorderColor: UIColor.lightGrayDochaColor())
+                    players[indexPath.row].avatarImage = image
                 }
             )
             
@@ -121,9 +124,13 @@ class NewGameFindByPseudoViewController: GameViewController, UITableViewDataSour
             matchManager.postMatch(withOpponentPseudo: player.pseudo,
                 success: { (match) in
                     
-                    let newGameCategorieSelectionVC = self.storyboard?.instantiateViewController(withIdentifier: "idNewGameCategorieSelectionViewController") as! NewGameCategorieSelectionViewController
-                    MatchManager.sharedInstance.currentMatch = match
-                    self.navigationController?.pushViewController(newGameCategorieSelectionVC, animated: true)
+                    MatchManager.sharedInstance.loadPlayersInfos(
+                        withCompletion: {
+                            
+                            let newGameCategorieSelectionVC = self.storyboard?.instantiateViewController(withIdentifier: "idNewGameCategorieSelectionViewController") as! NewGameCategorieSelectionViewController
+                            self.navigationController?.pushViewController(newGameCategorieSelectionVC, animated: true)
+                        }
+                    )
                     
             }) { (error) in
                 PopupManager.sharedInstance.showErrorPopup(message: Constants.PopupMessage.ErrorMessage.kErrorOccured)

@@ -23,6 +23,7 @@ class HomeGameTableViewCell: SWTableViewCell {
     @IBOutlet weak var opponentScoreLabel: UILabel!
     @IBOutlet weak var userScoreLabel: UILabel!
     @IBOutlet weak var rightContainerView: UIView!
+    @IBOutlet weak var isOnlineIndicatorImageView: UIImageView!
 }
 
 protocol HomeUserTurnCellDelegate {

@@ -12,9 +12,7 @@ import Kingfisher
 
 class GameplayLauncherViewController: GameViewController, ProductImageDownloaderDelegate {
     
-    var userPlayer: Player?
-    var opponentPlayer: Player?
-    var round: Round?
+    var round: RoundFull?
     
     var productsArray: [Product]?
     let categoryImagesNames = ["art_picture_icon", "ball_icon", "burger_icon", "chair_icon", "drone_icon", "machine_icon", "palet_icon", "ring_icon", "screen_icon", "velo_icon"]
@@ -45,6 +43,7 @@ class GameplayLauncherViewController: GameViewController, ProductImageDownloader
     
     @IBOutlet weak var loaderTitleLabel: UILabel!
     @IBOutlet weak var counterImageView: UIImageView!
+    @IBOutlet weak var categorieNameLabel: UILabel!
     
     
 //MARK: Life View Cycle
@@ -59,23 +58,22 @@ class GameplayLauncherViewController: GameViewController, ProductImageDownloader
     }
     
     func buildUI() {
-        let matchManager = MatchManager.sharedInstance
+        let userPlayer = MatchManager.sharedInstance.userPlayer
+        let opponentPlayer = MatchManager.sharedInstance.opponentPlayer
         
-        userPlayer = matchManager.userPlayer
-        opponentPlayer = matchManager.opponentPlayer
-        
-        if let userPlayer = self.userPlayer {
+        if let userPlayer = userPlayer {
             userImageView.image = userPlayer.avatarImage
             userImageView.applyCircle(withBorderColor: UIColor.white)
             userNameLabel.text = userPlayer.pseudo
             userLevelLabel.text = "Niveau \(userPlayer.level!)"
         }
         
-        if let opponentPlayer = self.opponentPlayer {
+        if let opponentPlayer = opponentPlayer {
             opponentPlayer.getAvatarImage(for: .large,
                 completionHandler: { (image) in
                     self.opponentImageView.image = image
                     self.opponentImageView.applyCircle(withBorderColor: UIColor.white)
+                    MatchManager.sharedInstance.opponentPlayer?.avatarImage = image
                 }
             )
             
@@ -89,14 +87,36 @@ class GameplayLauncherViewController: GameViewController, ProductImageDownloader
             }
         }
         self.navigationController?.isNavigationBarHidden = true
+        
+        if let category = categorySelected {
+            categorieNameLabel.text = category.name
+            
+        } else {
+            let currentMatch = MatchManager.sharedInstance.currentMatch
+            let currentRound = currentMatch?.rounds.last
+            
+            if let categorieName = currentRound?.category?.name {
+                categorieNameLabel.text = categorieName
+                
+            } else {
+                categorieNameLabel.text = nil
+            }
+        }
     }
     
     func startTheGame(withProducts products: [Product]!) {
-        let gameplayMainVC = self.storyboard?.instantiateViewController(withIdentifier: "idGameplayMainViewController") as! GameplayMainViewController
-        gameplayMainVC.round = round as! RoundFull
-        gameplayMainVC.userPlayer = userPlayer
-        gameplayMainVC.opponentPlayer = opponentPlayer
-        self.navigationController?.pushViewController(gameplayMainVC, animated: true)
+        if let round = self.round {
+            let gameplayMainVC = self.storyboard?.instantiateViewController(withIdentifier: "idGameplayMainViewController") as! GameplayMainViewController
+            gameplayMainVC.round = round
+            self.navigationController?.pushViewController(gameplayMainVC, animated: true)
+            
+        } else {
+            PopupManager.sharedInstance.showErrorPopup(message: Constants.PopupMessage.ErrorMessage.kErrorOccured,
+                doneActionCompletion: {
+                    self.goToHome()
+                }
+            )
+        }
     }
     
     func startLoaderAnimation() {
@@ -117,16 +137,15 @@ class GameplayLauncherViewController: GameViewController, ProductImageDownloader
     
     func loadProducts() {
         let currentMatch = MatchManager.sharedInstance.currentMatch
+        let currentRound = currentMatch?.rounds.last
         
-        if let match = currentMatch {
-            if let categorySelected = categorySelected, let currentRound = match.getCurrentRound() {
-                if currentRound.category == nil {
-                    let data = [RoundDataKey.kCategory: categorySelected.slugName, RoundDataKey.kPropositions: []] as [String : Any]
-                    put(round: match.rounds.last, withData: data, andMatchID: match.id)
-                }
+        if let currentMatch = currentMatch, let currentRound = currentRound {
+            if let categorySelected = categorySelected {
+                let data = [RoundDataKey.kCategory: categorySelected.slugName, RoundDataKey.kPropositions: []] as [String : Any]
+                put(round: currentRound, withData: data, andMatchID: currentMatch.id)
                 
             } else {
-                get(round: match.getCurrentRound(), withMatchID: match.id)
+                get(round: currentRound, withMatchID: currentMatch.id)
             }
             
         } else {
@@ -136,6 +155,29 @@ class GameplayLauncherViewController: GameViewController, ProductImageDownloader
                 }
             )
         }
+        /*
+        if let match = currentMatch {
+            if let categorySelected = categorySelected, let currentRound = match.rounds.last {
+                if currentRound.category == nil {
+                    let data = [RoundDataKey.kCategory: categorySelected.slugName, RoundDataKey.kPropositions: []] as [String : Any]
+                    put(round: match.rounds.last, withData: data, andMatchID: match.id)
+                    
+                } else {
+                    get(round: match.rounds.last, withMatchID: match.id)
+                }
+                
+            } else {
+                get(round: match.rounds.last, withMatchID: match.id)
+            }
+            
+        } else {
+            PopupManager.sharedInstance.showErrorPopup(message: Constants.PopupMessage.ErrorMessage.kErrorOccured,
+                doneActionCompletion: {
+                    self.goToHome()
+                }
+            )
+        }
+ */
     }
     
     func put(round: Round!, withData data: [String: Any]!, andMatchID matchID: Int!) {
@@ -149,6 +191,7 @@ class GameplayLauncherViewController: GameViewController, ProductImageDownloader
                     let productDownloader = ProductImageDownloader()
                     productDownloader.productsDelegate = self
                     productDownloader.downloadImages(withProducts: products,
+                                                     
                         fail: { (error) in
                             PopupManager.sharedInstance.showErrorPopup(message: Constants.PopupMessage.ErrorMessage.kErrorOccured,
                                 doneActionCompletion: {
@@ -241,7 +284,7 @@ class GameplayLauncherViewController: GameViewController, ProductImageDownloader
                 startTheGame(withProducts: productsArray)
                 
             } else {
-                counterImageView.image = UIImage(named: "gameplay_launching_\(Int(self.timeleft))")
+                counterImageView.image = UIImage(named: "gameplay_launching_\(Int(timeleft))")
             }
         }
     }

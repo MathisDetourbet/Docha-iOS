@@ -15,6 +15,6 @@ class PinIconView: UIView {
     
     func setAvatarImage(_ image: UIImage) {
         avatarImageView.image = image
-        avatarImageView.applyCircle(withBorderColor: UIColor.white)
+        avatarImageView.applyCircle()
     }
 }

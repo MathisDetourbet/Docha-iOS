@@ -14,8 +14,6 @@ class MatchManager {
     var roundRequest: RoundRequest?
     var searchRequest: SearchRequest?
     
-    var userSessionManager: UserSessionManager = UserSessionManager.sharedInstance
-    
     var currentMatch: Match?
     var currentRound: Round?
     var userPlayer: Player?
@@ -32,12 +30,12 @@ class MatchManager {
     func loadPlayersInfos(withCompletion completion: @escaping() -> Void) {
         
         // User Player
-        let userData = userSessionManager.getUserInfosAndAvatarImage()
+        let userData = UserSessionManager.sharedInstance.getUserInfosAndAvatarImage()
         
         if let user = userData.user, let avatarImage = userData.avatarImage {
             let image = avatarImage
             let avatarUrl = user.avatarUrl ?? "avatar_man_large"
-            let playerType: PlayerType = userSessionManager.currentSession()!.isKind(of: UserSessionFacebook.self) ? .facebookPlayer : .emailPlayer
+            let playerType: PlayerType = UserSessionManager.sharedInstance.currentSession()!.isKind(of: UserSessionFacebook.self) ? .facebookPlayer : .emailPlayer
             
             let userPlayer = Player(pseudo: user.pseudo ?? Player.defaultPlayer().pseudo,
                                     fullName: "\(user.firstName) \(user.lastName)",
@@ -120,11 +118,22 @@ class MatchManager {
         return nil
     }
     
+    func getCurrentRound(in rounds: [Round]) -> Round? {
+        for round in rounds {
+            if round.userPlayed != round.opponentPlayed {
+                self.currentRound = round
+                return round
+            }
+        }
+        
+        return nil
+    }
+    
     
 //MARK: Match Requests
 	
     func getAllMatch(success: @escaping (_ matchArray: [Match]) -> Void, fail failure: @escaping (_ error: Error?) -> Void) {
-        guard let authToken = userSessionManager.getAuthToken() else {
+        guard let authToken = UserSessionManager.sharedInstance.getAuthToken() else {
             failure(DochaRequestError.authTokenNotFound)
             return
         }
@@ -143,7 +152,7 @@ class MatchManager {
     }
     
     func postMatch(withOpponentPseudo opponentPseudo: String? = nil, success: @escaping(_ match: Match) -> Void, fail failure: @escaping(_ error: Error?) -> Void) {
-        guard let authToken = userSessionManager.getAuthToken() else {
+        guard let authToken = UserSessionManager.sharedInstance.getAuthToken() else {
             failure(DochaRequestError.authTokenNotFound)
             return
         }
@@ -179,7 +188,7 @@ class MatchManager {
     }
     
     func getMatch(withMatchID matchID: Int!, success: @escaping(_ match: Match) -> Void, fail failure: @escaping(_ error: Error?) -> Void) {
-        guard let authToken = userSessionManager.getAuthToken() else {
+        guard let authToken = UserSessionManager.sharedInstance.getAuthToken() else {
             failure(DochaRequestError.authTokenNotFound)
             return
         }
@@ -200,7 +209,7 @@ class MatchManager {
     }
     
     func deleteMatch(ForMatchID matchID: Int!, andRoundID roundID: Int!, success: @escaping() -> Void, fail failure: @escaping (_ error: Error?) -> Void) {
-        guard let authToken = userSessionManager.getAuthToken() else {
+        guard let authToken = UserSessionManager.sharedInstance.getAuthToken() else {
             failure(DochaRequestError.authTokenNotFound)
             return
         }
@@ -220,7 +229,7 @@ class MatchManager {
 //MARK: Round Requests
     
     func getAllRounds(withMatchID matchID: Int!, success: @escaping (_ roundsFull: [RoundFull]) -> Void, fail failure: @escaping (_ error: Error?) -> Void) {
-        guard let authToken = userSessionManager.getAuthToken() else {
+        guard let authToken = UserSessionManager.sharedInstance.getAuthToken() else {
             failure(DochaRequestError.authTokenNotFound)
             return
         }
@@ -237,7 +246,7 @@ class MatchManager {
     }
     
     func getRound(ForMatchID matchID: Int!, andRoundID roundID: Int!, success: @escaping (_ roundFull: RoundFull) -> Void, fail failure: @escaping (_ error: Error?) -> Void) {
-        guard let authToken = userSessionManager.getAuthToken() else {
+        guard let authToken = UserSessionManager.sharedInstance.getAuthToken() else {
             failure(DochaRequestError.authTokenNotFound)
             return
         }
@@ -256,7 +265,7 @@ class MatchManager {
     }
     
     func putRound(withData data: [String: Any]!, ForMatchID matchID: Int!, andRoundID roundID: Int!, success: @escaping (_ roundFull: RoundFull) -> Void, fail failure: @escaping (_ error: Error?) -> Void) {
-        guard let authToken = userSessionManager.getAuthToken() else {
+        guard let authToken = UserSessionManager.sharedInstance.getAuthToken() else {
             failure(DochaRequestError.authTokenNotFound)
             return
         }
@@ -285,7 +294,7 @@ class MatchManager {
 //MARK: Search Friends Requests
     
     func findPlayer(byPseudo pseudo: String!, success: @escaping (_ players: [Player]) -> Void, fail failure: @escaping (_ error: Error?) -> Void) {
-        guard let authToken = userSessionManager.getAuthToken() else {
+        guard let authToken = UserSessionManager.sharedInstance.getAuthToken() else {
             failure(DochaRequestError.authTokenNotFound)
             return
         }
@@ -302,7 +311,7 @@ class MatchManager {
     }
     
     func getQuickPlayers(byOrder order: String!, andLimit limit: UInt!, success: @escaping (_ players: [Player]) -> Void, fail failure: @escaping (_ error: Error?) -> Void) {
-        guard let authToken = userSessionManager.getAuthToken() else {
+        guard let authToken = UserSessionManager.sharedInstance.getAuthToken() else {
             failure(DochaRequestError.authTokenNotFound)
             return
         }
@@ -319,7 +328,7 @@ class MatchManager {
     }
     
     func getFacebookFriends(success: @escaping (_ players: [Player]) -> Void, fail failure: @escaping (_ error: Error?) -> Void) {
-        guard let authToken = userSessionManager.getAuthToken() else {
+        guard let authToken = UserSessionManager.sharedInstance.getAuthToken() else {
             failure(DochaRequestError.authTokenNotFound)
             return
         }
@@ -339,7 +348,7 @@ class MatchManager {
 // MARK: Ranking Requests
     
     func getGeneralRanking(success: @escaping (_ players: [Player]) -> Void, fail failure: @escaping (_ error: Error?) -> Void) {
-        guard let authToken = userSessionManager.getAuthToken() else {
+        guard let authToken = UserSessionManager.sharedInstance.getAuthToken() else {
             failure(DochaRequestError.authTokenNotFound)
             return
         }

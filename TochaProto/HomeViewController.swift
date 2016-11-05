@@ -76,7 +76,7 @@ class HomeViewController: GameViewController, UITableViewDelegate, UITableViewDa
         super.viewWillAppear(animated)
         self.navigationController?.isNavigationBarHidden = true
         
-        refreshHome()
+        refreshHome(withCompletion: nil)
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -102,8 +102,8 @@ class HomeViewController: GameViewController, UITableViewDelegate, UITableViewDa
         tableView.backgroundColor = UIColor.lightGrayDochaColor()
         
         let refresher = PullToRefresh()
-        tableView.addPullToRefresh(refresher) { 
-            self.loadAllData(
+        tableView.addPullToRefresh(refresher) {
+            self.refreshHome(
                 withCompletion: {
                     self.tableView.endRefreshing(at: Position.top)
                 }
@@ -154,7 +154,7 @@ class HomeViewController: GameViewController, UITableViewDelegate, UITableViewDa
         }
     }
     
-    func refreshHome() {
+    func refreshHome(withCompletion completion: (() -> Void)?) {
         loadUserInfos()
         loadAllData {
             self.sortedDataKeys = Array(self.data.keys)
@@ -162,6 +162,7 @@ class HomeViewController: GameViewController, UITableViewDelegate, UITableViewDa
                 first.rawValue < second.rawValue
             })
             self.tableView.reloadData()
+            completion?()
         }
     }
     
@@ -189,19 +190,23 @@ class HomeViewController: GameViewController, UITableViewDelegate, UITableViewDa
     
     func loadFriends(withCompletion completion: (() -> Void)?) {
         if UserSessionManager.sharedInstance.isFacebookUser() {
-            MatchManager.sharedInstance.getFacebookFriends(
+            MatchManager.sharedInstance.getQuickPlayers(byOrder: "activity", andLimit: 10,
                 success: { (friends) in
                     
                     self.data[HomeSectionName.friends] = friends
                     if let completion = completion {
                         completion()
                     }
+                    
+                }, fail: { (error) in
+                    if let completion = completion {
+                        completion()
+                    }
                 }
-            ) { (error) in
-                if let completion = completion {
-                    completion()
-                }
-            }
+            )
+            
+        } else {
+            completion?()
         }
     }
     
@@ -285,6 +290,7 @@ class HomeViewController: GameViewController, UITableViewDelegate, UITableViewDa
             cell.delegateUserTurn = self
             cell.delegate = self
             cell.indexPath = indexPath
+            cell.isOnlineIndicatorImageView.isHidden = opponentPlayer.isOnline ? false : true
             
             if let level = opponentPlayer.level {
                 cell.opponentLevelLabel.text = "Niveau \(level)"
@@ -316,6 +322,7 @@ class HomeViewController: GameViewController, UITableViewDelegate, UITableViewDa
             cell.opponentScoreLabel.text = String(match.opponentScore ?? 0)
             cell.userScoreLabel.text = String(match.userScore ?? 0)
             cell.delegate = self
+            cell.isOnlineIndicatorImageView.isHidden = opponentPlayer.isOnline ? false : true
             
             if let level = opponentPlayer.level {
                 cell.opponentLevelLabel.text = "Niveau \(level)"
@@ -349,6 +356,7 @@ class HomeViewController: GameViewController, UITableViewDelegate, UITableViewDa
             cell.opponentScoreLabel.text = String(match.opponentScore!)
             cell.userScoreLabel.text = String(match.userScore!)
             cell.delegate = self
+            cell.isOnlineIndicatorImageView.isHidden = opponentPlayer.isOnline ? false : true
             
             if let level = opponentPlayer.level {
                 cell.opponentLevelLabel.text = "Niveau \(level)"
@@ -424,14 +432,20 @@ class HomeViewController: GameViewController, UITableViewDelegate, UITableViewDa
         if let indexPath = indexPath {
             let sectionType = sortedDataKeys[indexPath.section]
             let match = data[sectionType]?[indexPath.row] as! Match
+            
             MatchManager.sharedInstance.deleteMatch(ForMatchID: match.id, andRoundID: match.rounds.last?.id,
                 success: {
+                    
                     let sectionType = self.sortedDataKeys[indexPath.section]
                     self.data[sectionType]?.remove(at: indexPath.row)
+                    
                     if self.data[sectionType]!.isEmpty {
                         self.data.removeValue(forKey: sectionType)
                     }
+                    
+                    self.tableView.beginUpdates()
                     self.tableView.deleteRows(at: [indexPath], with: .fade)
+                    self.tableView.endUpdates()
                     
                 }, fail: { (error) in
                     PopupManager.sharedInstance.showErrorPopup(message: Constants.PopupMessage.ErrorMessage.kErrorOccured)
@@ -505,9 +519,13 @@ class HomeViewController: GameViewController, UITableViewDelegate, UITableViewDa
             matchManager.postMatch(withOpponentPseudo: friend.pseudo,
                 success: { (match) in
                     
-                    let newGameCategorieSelectionVC = self.storyboard?.instantiateViewController(withIdentifier: "idNewGameCategorieSelectionViewController") as! NewGameCategorieSelectionViewController
-                    MatchManager.sharedInstance.currentMatch = match
-                    self.navigationController?.pushViewController(newGameCategorieSelectionVC, animated: true)
+                    MatchManager.sharedInstance.loadPlayersInfos(
+                        withCompletion: {
+                            
+                            let newGameCategorieSelectionVC = self.storyboard?.instantiateViewController(withIdentifier: "idNewGameCategorieSelectionViewController") as! NewGameCategorieSelectionViewController
+                            self.navigationController?.pushViewController(newGameCategorieSelectionVC, animated: true)
+                        }
+                    )
                     
             }) { (error) in
                 PopupManager.sharedInstance.showErrorPopup(message: Constants.PopupMessage.ErrorMessage.kErrorOccured)

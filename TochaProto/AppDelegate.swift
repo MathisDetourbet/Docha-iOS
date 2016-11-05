@@ -39,6 +39,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Amplitude Init
         Amplitude.instance().initializeApiKey("792a2eced82bad1ee03a8f0f874c70f5")
         
+        print("token : \(UserSessionManager.sharedInstance.currentSession()?.authToken)")
+        
         //UserGameStateManager.sharedInstance.authenticateLocalPlayer()
         
         return true

@@ -88,7 +88,7 @@ class NewGameFindOpponentViewController: GameViewController, UITableViewDataSour
         player.getAvatarImage(for: .large,
             completionHandler: { (image) in
                 cell.friendImageView.image = image
-                cell.friendImageView.applyCircle()
+                cell.friendImageView.applyCircle(withBorderColor: UIColor.lightGrayDochaColor())
             }
         )
         cell.friendOnlineIndicatorImageView.isHidden = !player.isOnline
@@ -114,9 +114,13 @@ class NewGameFindOpponentViewController: GameViewController, UITableViewDataSour
         } else {
             matchManager.postMatch(withOpponentPseudo: player.pseudo,
                 success: { (match) in
-                    let newGameCategorieSelectionVC = self.storyboard?.instantiateViewController(withIdentifier: "idNewGameCategorieSelectionViewController") as! NewGameCategorieSelectionViewController
-                    MatchManager.sharedInstance.currentMatch = match
-                    self.navigationController?.pushViewController(newGameCategorieSelectionVC, animated: true)
+                    MatchManager.sharedInstance.loadPlayersInfos(
+                        withCompletion: {
+                            
+                            let newGameCategorieSelectionVC = self.storyboard?.instantiateViewController(withIdentifier: "idNewGameCategorieSelectionViewController") as! NewGameCategorieSelectionViewController
+                            self.navigationController?.pushViewController(newGameCategorieSelectionVC, animated: true)
+                        }
+                    )
                     
             }) { (error) in
                 PopupManager.sharedInstance.showErrorPopup(message: Constants.PopupMessage.ErrorMessage.kErrorOccured)
@@ -159,16 +163,19 @@ class NewGameFindOpponentViewController: GameViewController, UITableViewDataSour
             MatchManager.sharedInstance.postMatch(
                 success: { (match) in
                     
-                    if let category = match.rounds.last?.category {
-                        let launcherVC = self.storyboard?.instantiateViewController(withIdentifier: "idGameplayLauncherViewController") as! GameplayLauncherViewController
-                        launcherVC.categorySelected = category
-                        self.navigationController?.pushViewController(launcherVC, animated: true)
-                        
-                    } else {
-                        let newGameCategorieSelectionVC = self.storyboard?.instantiateViewController(withIdentifier: "idNewGameCategorieSelectionViewController") as! NewGameCategorieSelectionViewController
-                        MatchManager.sharedInstance.currentMatch = match
-                        self.navigationController?.pushViewController(newGameCategorieSelectionVC, animated: true)
-                    }
+                    MatchManager.sharedInstance.loadPlayersInfos(
+                        withCompletion: {
+                            
+                            if let _ = match.rounds.last?.category {
+                                let launcherVC = self.storyboard?.instantiateViewController(withIdentifier: "idGameplayLauncherViewController") as! GameplayLauncherViewController
+                                self.navigationController?.pushViewController(launcherVC, animated: true)
+                                
+                            } else {
+                                let newGameCategorieSelectionVC = self.storyboard?.instantiateViewController(withIdentifier: "idNewGameCategorieSelectionViewController") as! NewGameCategorieSelectionViewController
+                                self.navigationController?.pushViewController(newGameCategorieSelectionVC, animated: true)
+                            }
+                        }
+                    )
                     
             }) { (error) in
                 PopupManager.sharedInstance.showErrorPopup(message: Constants.PopupMessage.ErrorMessage.kErrorOccured)

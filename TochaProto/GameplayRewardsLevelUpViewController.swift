@@ -11,7 +11,7 @@ import SACountingLabel
 
 class GameplayRewardsLevelUpViewController: GameViewController {
     
-    var newUserLevel: Int!
+    var newUserLevel: Int?
     
     @IBOutlet weak var levelLabel: UILabel!
     @IBOutlet weak var dochosLabel: SACountingLabel!
@@ -20,7 +20,15 @@ class GameplayRewardsLevelUpViewController: GameViewController {
         super.viewDidLoad()
         
         dochosLabel.isHidden = true
-        levelLabel.text = "Niveau \(newUserLevel!)"
+        if let newUserLevel = newUserLevel {
+            levelLabel.text = "Niveau \(newUserLevel)"
+            
+        } else if let newUserLevel = UserSessionManager.sharedInstance.currentSession()?.levelMaxUnlocked {
+            levelLabel.text = "Niveau \(newUserLevel)"
+            
+        } else {
+            levelLabel.text = nil
+        }
     }
     
     

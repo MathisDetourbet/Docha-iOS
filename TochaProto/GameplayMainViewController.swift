@@ -29,8 +29,8 @@ enum MessageType: String {
 
 class GameplayMainViewController: GameViewController, KeyboardViewDelegate, CounterContainerViewDelegate {
     
-    var userPlayer: Player!
-    var opponentPlayer: Player!
+    var userPlayer: Player?
+    var opponentPlayer: Player?
     var round: RoundFull!
     
     var cardsViews: [CardProductView]?
@@ -130,6 +130,7 @@ class GameplayMainViewController: GameViewController, KeyboardViewDelegate, Coun
             userAvatarImageView.applyCircle(withBorderColor: UIColor.white)
         }
         
+        userPlayer = MatchManager.sharedInstance.userPlayer
         opponentPlayer = MatchManager.sharedInstance.opponentPlayer
         
         if let opponentPlayer = opponentPlayer {
@@ -196,13 +197,13 @@ class GameplayMainViewController: GameViewController, KeyboardViewDelegate, Coun
             cardProductView?.counterContainerView.delegate = self
             print("Real price : \(product.price)")
             
-            userPlayer.getAvatarImage(for: .small,
+            userPlayer?.getAvatarImage(for: .small,
                 completionHandler: { (image) in
                     cardProductView?.userPinIconView.setAvatarImage(image)
                 }
             )
             
-            opponentPlayer.getAvatarImage(for: .small,
+            opponentPlayer?.getAvatarImage(for: .small,
                 completionHandler: { (image) in
                     cardProductView?.opponentPinIconView.setAvatarImage(image)
                 }
@@ -266,6 +267,14 @@ class GameplayMainViewController: GameViewController, KeyboardViewDelegate, Coun
             cardContainerView.addConstraint(NSLayoutConstraint(item: nextCard, attribute: .height, relatedBy: .equal, toItem: cardContainerView, attribute: .height, multiplier: 1.0, constant: 0.0))
             cardContainerView.addConstraint(NSLayoutConstraint(item: nextCard, attribute: .width, relatedBy: .equal, toItem: cardContainerView, attribute: .width, multiplier: 1.0, constant: 0.0))
             
+            // Initialize/Update current product data
+            currentCard = nextCard
+            currentPriceArray = ConverterHelper.convertPriceToArrayOfInt(round.products[cursorCard].price).priceArray
+            userEstimation = Array(repeating: -1, count: (currentPriceArray?.count)!)
+            currentProductData = round.products[cursorCard]
+            
+            completion?(true)
+            
         } else {
             nextCard.translatesAutoresizingMaskIntoConstraints = false
             nextCard.frame = cardContainerView.frame
@@ -289,20 +298,20 @@ class GameplayMainViewController: GameViewController, KeyboardViewDelegate, Coun
                     
                 }, completion: { (_) in
                     self.currentMillisecondsTime = 0
+                    
+                    self.cardCenterXConstraint = centerXNextCard
+                    self.cursorCard += 1
+                    
+                    // Initialize/Update current product data
+                    self.currentCard = nextCard
+                    self.currentPriceArray = ConverterHelper.convertPriceToArrayOfInt(self.round.products[self.cursorCard].price).priceArray
+                    self.userEstimation = Array(repeating: -1, count: (self.currentPriceArray?.count)!)
+                    self.currentProductData = self.round.products[self.cursorCard]
+                    
+                    completion?(true)
                 }
             )
-            
-            cardCenterXConstraint = centerXNextCard
-            cursorCard += 1
         }
-        
-        // Initialize/Update current product data
-        currentCard = nextCard
-        currentPriceArray = ConverterHelper.convertPriceToArrayOfInt(round.products[cursorCard].price).priceArray
-        userEstimation = Array(repeating: -1, count: (currentPriceArray?.count)!)
-        currentProductData = round.products[cursorCard]
-        
-        completion?(true)
     }
     
     
@@ -432,7 +441,8 @@ class GameplayMainViewController: GameViewController, KeyboardViewDelegate, Coun
         cursorCounter += 1
         
         if cursorCounter == currentPriceArray?.count {
-            keyboardView.enableValidButton(true)
+            //keyboardView.enableValidButton(true)
+            validatePricing()
         }
     }
     
