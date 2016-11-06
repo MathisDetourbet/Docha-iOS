@@ -10,7 +10,6 @@ target 'Docha' do
     pod 'SnapKit', '>= 3.0.0'
     pod 'CNPPopupController'
     pod 'Alamofire', '~> 4.0'
-    pod 'AlamofireImage', '~> 3.0'
     pod 'TextFieldEffects'
     pod 'PageMenu'
     pod 'IQKeyboardManagerSwift'

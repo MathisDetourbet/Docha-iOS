@@ -7,6 +7,8 @@
 //
 
 import UIKit
+// FIXME: comparison operators with optionals were removed from the Swift Standard Libary.
+// Consider refactoring the code to use the non-optional operators.
 fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
   switch (lhs, rhs) {
   case let (l?, r?):
@@ -18,6 +20,8 @@ fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
   }
 }
 
+// FIXME: comparison operators with optionals were removed from the Swift Standard Libary.
+// Consider refactoring the code to use the non-optional operators.
 fileprivate func <= <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
   switch (lhs, rhs) {
   case let (l?, r?):
@@ -161,7 +165,7 @@ open class PullToRefresh: NSObject {
     }
     
     fileprivate func addScrollViewObserving() {
-        guard let scrollView = scrollView , !isObserving else {
+        guard let scrollView = scrollView, !isObserving else {
             return
         }
         
@@ -173,7 +177,7 @@ open class PullToRefresh: NSObject {
     }
     
     fileprivate func removeScrollViewObserving() {
-        guard let scrollView = scrollView , isObserving else {
+        guard let scrollView = scrollView, isObserving else {
             return
         }
         

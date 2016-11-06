@@ -155,29 +155,6 @@ class GameplayLauncherViewController: GameViewController, ProductImageDownloader
                 }
             )
         }
-        /*
-        if let match = currentMatch {
-            if let categorySelected = categorySelected, let currentRound = match.rounds.last {
-                if currentRound.category == nil {
-                    let data = [RoundDataKey.kCategory: categorySelected.slugName, RoundDataKey.kPropositions: []] as [String : Any]
-                    put(round: match.rounds.last, withData: data, andMatchID: match.id)
-                    
-                } else {
-                    get(round: match.rounds.last, withMatchID: match.id)
-                }
-                
-            } else {
-                get(round: match.rounds.last, withMatchID: match.id)
-            }
-            
-        } else {
-            PopupManager.sharedInstance.showErrorPopup(message: Constants.PopupMessage.ErrorMessage.kErrorOccured,
-                doneActionCompletion: {
-                    self.goToHome()
-                }
-            )
-        }
- */
     }
     
     func put(round: Round!, withData data: [String: Any]!, andMatchID matchID: Int!) {

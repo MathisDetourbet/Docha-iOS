@@ -7,6 +7,7 @@
 //
 
 import Alamofire
+import Kingfisher
 
 class UserSessionManager {
 	
@@ -79,12 +80,14 @@ class UserSessionManager {
     }
     
     func downloadAndSaveAvatarImage(withAvatarUrl avatarUrl: String!) {
-        Alamofire.request(avatarUrl)
-            .responseImage { response in
-                if let image = response.result.value {
+        if let url = URL(string: avatarUrl) {
+            ImageDownloader.default.downloadImage(with: url, options: [], progressBlock: nil) {
+                (image, error, url, data) in
+                if let image = image {
                     self.currentSession()?.saveUserAvatarImage(image)
                 }
             }
+        }
     }
     
     func getUserInfosAndAvatarImage(withImageSize imageSize: AvatarDochaSize = .medium) -> (user: User?, avatarImage: UIImage?) {

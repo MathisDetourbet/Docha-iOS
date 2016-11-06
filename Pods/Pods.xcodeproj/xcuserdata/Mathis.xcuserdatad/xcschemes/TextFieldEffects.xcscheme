@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "4D7AFD8C5FA34351CB7ADC90191C8FE6"
+               BlueprintIdentifier = "51D04A463A61FE7A0FBDD9F73E1645EA"
                BuildableName = "TextFieldEffects.framework"
                BlueprintName = "TextFieldEffects"
                ReferencedContainer = "container:Pods.xcodeproj">
@@ -45,7 +45,7 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "4D7AFD8C5FA34351CB7ADC90191C8FE6"
+            BlueprintIdentifier = "51D04A463A61FE7A0FBDD9F73E1645EA"
             BuildableName = "TextFieldEffects.framework"
             BlueprintName = "TextFieldEffects"
             ReferencedContainer = "container:Pods.xcodeproj">
