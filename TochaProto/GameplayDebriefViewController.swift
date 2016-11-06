@@ -340,7 +340,6 @@ class GameplayDebriefViewController: GameViewController, UIPageViewControllerDat
         if let currentRound = currentRound {
             if let oldUser = self.oldUser, let newUser = self.newUser {
                 if currentRound.status == .won {
-                    //let levelUp = oldUser.levelMaxUnlocked! < newUser.levelMaxUnlocked! ? true : false
                     let dochosWon = newUser.dochos - oldUser.dochos
                     
                     let rewardsDochosVC = self.storyboard?.instantiateViewController(withIdentifier: "idGameplayRewardsDochosViewController") as! GameplayRewardsDochosViewController

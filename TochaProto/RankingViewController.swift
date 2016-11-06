@@ -161,6 +161,7 @@ class RankingViewController: GameViewController, UITableViewDataSource, UITableV
             
         } else {
             cell.rankImageView.isHidden = true
+            cell.rankLabel.textColor = UIColor.darkBlueDochaColor()
         }
         
         return cell
