@@ -137,6 +137,7 @@ class RankingViewController: GameViewController, UITableViewDataSource, UITableV
         let player = currentList[indexPath.row]
         cell.userNameLabel.text = player.pseudo
         cell.rankLabel.text = "#" + String(indexPath.row+1)
+        cell.rankLabel.textColor = UIColor.white
         cell.userDochosLabel.text = String(player.perfects)
         
         player.getAvatarImage(for: .medium,
