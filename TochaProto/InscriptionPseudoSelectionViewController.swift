@@ -37,10 +37,9 @@ class InscriptionPseudoSelectionViewController: RootViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        submitButton.isEnabled = false
         let pseudoPlaceHolder = UserSessionManager.sharedInstance.currentSession()?.pseudo
         if let pseudoPlaceHolder = pseudoPlaceHolder {
-            pseudoTextField.placeholder = "Entre ton pseudo. Exemple : " + pseudoPlaceHolder
+            pseudoTextField.placeholder = "Exemple : " + pseudoPlaceHolder
         }
     }
     
@@ -51,16 +50,22 @@ class InscriptionPseudoSelectionViewController: RootViewController {
         if sender.text?.characters.count > 2 && sender.text?.characters.count < 128 {
             sender.borderActiveColor = UIColor.blue
             sender.borderInactiveColor = UIColor.blueDochaColor()
-            submitButton.isEnabled = true
             
         } else {
             sender.borderActiveColor = UIColor.redDochaColor()
             sender.borderInactiveColor = UIColor.redDochaColor()
-            submitButton.isEnabled = false
         }
     }
     
     @IBAction func submitButtonTouched(_ sender: UIButton) {
+        guard let text = pseudoTextField.text else {
+            self.goToHome()
+            return
+        }
+        if text.isEmpty {
+            self.goToHome()
+            return
+        }
         PopupManager.sharedInstance.showLoadingPopup("Connexion...", message: "Création d'un nouveau Docher en cours.",
             completion: {
                 
@@ -72,7 +77,6 @@ class InscriptionPseudoSelectionViewController: RootViewController {
                             
                             PopupManager.sharedInstance.dismissPopup(true,
                                 completion: {
-                                    
                                     self.goToHome()
                                 }
                             )
