@@ -135,6 +135,7 @@ class GameplayMainViewController: GameViewController, KeyboardViewDelegate, Coun
         
         if let opponentPlayer = opponentPlayer {
             opponentPseudoLabel.text = opponentPlayer.pseudo
+            
             opponentPlayer.getAvatarImage(for: .medium,
                 completionHandler: { (image) in
                     self.opponentAvatarImageView.image = image
@@ -206,6 +207,7 @@ class GameplayMainViewController: GameViewController, KeyboardViewDelegate, Coun
             opponentPlayer?.getAvatarImage(for: .small,
                 completionHandler: { (image) in
                     cardProductView?.opponentPinIconView.setAvatarImage(image)
+                    cardProductView?.opponentPinIconView.alpha = 0.7
                 }
             )
             
@@ -239,12 +241,11 @@ class GameplayMainViewController: GameViewController, KeyboardViewDelegate, Coun
             let nextCard = cardsViews![cursorCard + 1]
             
             moveToNextCard(nextCard, AndMovePreviousCard: currentCard,
-                           completion: { (_) in
-                            self.cursorCounter = 0
-                            self.keyboardView.enabledKeyboard(true)
-                            self.keyboardView.reset()
-                            //self.currentCard?.counterContainerView.resetCountersViews()
-                            self.updateTimeline(withResult: .current, isForUser: true)
+                completion: { (_) in
+                    self.cursorCounter = 0
+                    self.keyboardView.enabledKeyboard(true)
+                    self.keyboardView.reset()
+                    self.updateTimeline(withResult: .current, isForUser: true)
                 }
             )
             
@@ -292,7 +293,7 @@ class GameplayMainViewController: GameViewController, KeyboardViewDelegate, Coun
                 initialSpringVelocity: 10.0,
                 options: .allowUserInteraction,
                 animations: {
-                    self.cardCenterXConstraint?.constant = -CGFloat(self.view.frame.width)
+                    self.cardCenterXConstraint?.constant = -CGFloat(self.view.frame.width) - 50.0
                     centerXNextCard.constant = 0.0
                     self.view.layoutIfNeeded()
                     

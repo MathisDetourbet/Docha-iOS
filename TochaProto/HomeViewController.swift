@@ -7,7 +7,7 @@
 //
 
 import Foundation
-import AlamofireImage
+//import AlamofireImage
 import Kingfisher
 import FBSDKShareKit
 import SwiftyJSON

@@ -29,9 +29,16 @@ platform :ios do
 
   desc "Submit a new Beta Build to Apple TestFlight"
   desc "This will also make sure the profile is up to date"
+
+  lane :testscript do
+  	gym(scheme: "Docha", 
+  		workspace: "Docha.xcworkspace",
+      	include_bitcode: true)
+  end
+
   lane :beta do
     # match(type: "appstore") # more information: https://codesigning.guide
-    gym(scheme: "Docha") # Build your app - more options available
+    gym(scheme: "Docha", workspace: "Docha.xcworkspace") # Build your app - more options available
     pilot
 
     # sh "your_script.sh"
@@ -42,7 +49,7 @@ platform :ios do
   lane :appstore do
     # match(type: "appstore")
     # snapshot
-    gym(scheme: "Docha") # Build your app - more options available
+    gym(scheme: "Docha", workspace: "Docha.xcworkspace") # Build your app
     deliver(force: true)
     # frameit
   end
@@ -50,11 +57,11 @@ platform :ios do
   # You can define as many lanes as you want
 
   after_all do |lane|
-    # This block is called, only if the executed lane was successful
+    #This block is called, only if the executed lane was successful
 
-    # slack(
-    #   message: "Successfully deployed new App Update."
-    # )
+    slack(
+      message: "Successfully deployed new App Update."
+    )
   end
 
   error do |lane, exception|

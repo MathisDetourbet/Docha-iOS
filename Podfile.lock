@@ -15,8 +15,6 @@ PODS:
   - AFNetworking/UIKit (3.1.0):
     - AFNetworking/NSURLSession
   - Alamofire (4.0.1)
-  - AlamofireImage (3.1.0):
-    - Alamofire (~> 4.0)
   - Amplitude-iOS (3.7.1)
   - CNPPopupController (0.3.3)
   - Crashlytics (3.8.3):
@@ -38,7 +36,6 @@ PODS:
 DEPENDENCIES:
   - AFNetworking (~> 3.0)
   - Alamofire (~> 4.0)
-  - AlamofireImage (~> 3.0)
   - Amplitude-iOS (~> 3.7.0)
   - CNPPopupController
   - Crashlytics
@@ -59,7 +56,6 @@ DEPENDENCIES:
 SPEC CHECKSUMS:
   AFNetworking: 5e0e199f73d8626b11e79750991f5d173d1f8b67
   Alamofire: 7682d43245de14874acd142ec137b144aa1dd335
-  AlamofireImage: bb8c8351c51cb1633bb6be69b6dbbaff37ce65b7
   Amplitude-iOS: 4c49e5b00ebe5bf3800f219aaba8a55cf667c6c9
   CNPPopupController: 59b06290762f68beab5fb0bbfa87eb4dcbefb7de
   Crashlytics: 2b6dbe138a42395577cfa73dfa1aa7248cadf39e
@@ -77,6 +73,6 @@ SPEC CHECKSUMS:
   SWTableViewCell: 2a94aadc9d47b2b611fa064566bf57948b95b579
   TextFieldEffects: ef594746f17997c813e07633f8ae5acaf9b04f27
 
-PODFILE CHECKSUM: a2f12be10329018fcdcb427cbf7ea71c3392e3f3
+PODFILE CHECKSUM: 718dcd8d3a496f755b7eec2e333e368a94ddc775
 
 COCOAPODS: 1.0.1
