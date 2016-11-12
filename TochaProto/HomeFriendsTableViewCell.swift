@@ -11,6 +11,7 @@ import Foundation
 protocol HomeFriendsCellDelegate {
     func displayAllFriendsButtonTouched()
     func challengeFacebookFriendsCellTouched(withFriend friend: Player)
+    func inviteFBFriendsButtonTouched()
 }
 
 class HomeFriendCollectionViewCell: UICollectionViewCell {
@@ -30,6 +31,7 @@ class HomeFriendsTableViewCell: UITableViewCell, UICollectionViewDelegate, UICol
     var delegate: HomeFriendsCellDelegate?
     
     @IBOutlet weak var collectionView: UICollectionView!
+    @IBOutlet weak var inviteFBFriendsButton: UIButton!
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -43,6 +45,13 @@ class HomeFriendsTableViewCell: UITableViewCell, UICollectionViewDelegate, UICol
 //MARK: Collection View Data Source Methods
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        if friends.isEmpty {
+            inviteFBFriendsButton.isHidden = false
+        } else {
+            
+            inviteFBFriendsButton.isHidden = true
+        }
+        
         return friends.count
     }
     
@@ -75,6 +84,10 @@ class HomeFriendsTableViewCell: UITableViewCell, UICollectionViewDelegate, UICol
     
     
 //MARK: @IBActions
+    
+    @IBAction func inviteFBFriendsButtonTouched(_ sender: UIButton) {
+        self.delegate?.inviteFBFriendsButtonTouched()
+    }
     
     @IBAction func showAllFriendsButtonTouched(_ sender: UIButton) {
         self.delegate?.displayAllFriendsButtonTouched()

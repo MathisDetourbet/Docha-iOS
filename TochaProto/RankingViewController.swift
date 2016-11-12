@@ -9,8 +9,9 @@
 import Foundation
 import Kingfisher
 import PullToRefresh
+import FBSDKShareKit
 
-class RankingViewController: GameViewController, UITableViewDataSource, UITableViewDelegate {
+class RankingViewController: GameViewController, UITableViewDataSource, UITableViewDelegate, FBSDKSharingDelegate {
     
     var friendsList: [Player] = []
     var generalList: [Player] = []
@@ -21,6 +22,8 @@ class RankingViewController: GameViewController, UITableViewDataSource, UITableV
     @IBOutlet weak var userRankingLabel: UILabel!
     @IBOutlet weak var userPerfectsLabel: UILabel!
     @IBOutlet weak var segmentControl: UISegmentedControl!
+    @IBOutlet weak var sharingBarButtonItem: UIBarButtonItem!
+    @IBOutlet weak var doneBarButtonItem: UIBarButtonItem!
     
 //MARK: Life View Cycle
     
@@ -39,6 +42,15 @@ class RankingViewController: GameViewController, UITableViewDataSource, UITableV
     
     func buildUI() {
         configNavigationBarWithTitle("Classements")
+        
+        if UserSessionManager.sharedInstance.isFacebookUser() == false {
+            sharingBarButtonItem.isEnabled = false
+        }
+        
+        if let font = UIFont(name: "Montserrat-SemiBold", size: 15) {
+            doneBarButtonItem.setTitleTextAttributes([NSFontAttributeName: font], for: .normal)
+        }
+        
         self.view.backgroundColor = UIColor.lightGrayDochaColor()
         tableView.tableFooterView = UIView()
         
@@ -180,11 +192,29 @@ class RankingViewController: GameViewController, UITableViewDataSource, UITableV
     }
     
     
+//MARK: FBSDKSharingDelegate
+    
+    func sharer(_ sharer: FBSDKSharing!, didCompleteWithResults results: [AnyHashable: Any]!) {
+        PopupManager.sharedInstance.showSuccessPopup(message: Constants.PopupMessage.SuccessMessage.kSuccessFBSharing, viewController: self)
+    }
+    
+    func sharer(_ sharer: FBSDKSharing!, didFailWithError error: Error!) {
+        PopupManager.sharedInstance.showErrorPopup(message: Constants.PopupMessage.ErrorMessage.kErrorFBFriendsInvite +  " " + Constants.PopupMessage.ErrorMessage.kErrorOccured, viewController: self)
+    }
+    
+    func sharerDidCancel(_ sharer: FBSDKSharing!) {
+        
+    }
+    
+    
 //MARK: @IBActions
     
     @IBAction func didChangeValueSegmentControl(_ sender: UISegmentedControl) {
         (segmentControl.selectedSegmentIndex == 0) ? loadFriendsRankingData(withCompletion: nil) : loadGeneralRankingData(withCompletion: nil)
-        tableView.reloadData()
+        let range = NSMakeRange(0, tableView.numberOfSections)
+        let sections = NSIndexSet(indexesIn: range)
+        self.tableView.reloadSections(sections as IndexSet, with: segmentControl.selectedSegmentIndex == 0 ? .right : .left)
+        //tableView.reloadData()
     }
     
     @IBAction func doneButtonTouched(_ sender: UIBarButtonItem) {
@@ -192,6 +222,25 @@ class RankingViewController: GameViewController, UITableViewDataSource, UITableV
     }
     
     @IBAction func shareButtonTouched(_ sender: UIBarButtonItem) {
+        let rank = UserSessionManager.sharedInstance.currentSession()?.rank
+        var contentString = "Viens voir mon classement Docha !"
+
+        if let rank = rank {
+            var rankSuffix = "ème"
+            if rank == 1 {
+                rankSuffix = "er"
+            }
+            contentString = "Je suis \(rank)\(rankSuffix) au classement Docha ! 😎 Viens me défier !"
+        }
         
+        // Facebook Sharing
+        let content = FBSDKShareLinkContent()
+        content.contentURL = URL(string: kAppStoreDochaURL)
+        content.quote = contentString
+        let shareDialog = FBSDKShareDialog()
+        shareDialog.fromViewController = self
+        shareDialog.shareContent = content
+        shareDialog.mode = .shareSheet
+        shareDialog.show()
     }
 }

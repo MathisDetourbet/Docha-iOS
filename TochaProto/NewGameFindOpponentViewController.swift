@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import FBSDKShareKit
 
 class NewGameFindOpponentTableViewCell: UITableViewCell {
     
@@ -22,7 +23,7 @@ class NewGameFriendsCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var friendOnlineIndicatorImageView: UIImageView!
 }
 
-class NewGameFindOpponentViewController: GameViewController, UITableViewDataSource, UITableViewDelegate, UICollectionViewDataSource, UICollectionViewDelegate {
+class NewGameFindOpponentViewController: GameViewController, UITableViewDataSource, UITableViewDelegate, UICollectionViewDataSource, UICollectionViewDelegate, FBSDKGameRequestDialogDelegate {
     
     let titlesArray = ["Amis Facebook", "Aléatoire", "Rechercher un joueur"]
     let subTitlesArray = ["Défie un de tes amis", "Défie une personne au hasard", "Défie une personne grâce à son email ou son pseudo"]
@@ -32,6 +33,7 @@ class NewGameFindOpponentViewController: GameViewController, UITableViewDataSour
     
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var inviteFBFriendsButton: UIButton!
     
     
 //MARK: Life View Cycle
@@ -65,7 +67,6 @@ class NewGameFindOpponentViewController: GameViewController, UITableViewDataSour
                 self.collectionView.reloadData()
                 
             }) { (error) in
-                
         }
     }
 
@@ -73,6 +74,13 @@ class NewGameFindOpponentViewController: GameViewController, UITableViewDataSour
 //MARK: UICollectionView - Data Source Methods
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        if quickPlayers.isEmpty {
+            inviteFBFriendsButton.isHidden = false
+            
+        } else {
+            inviteFBFriendsButton.isHidden = true
+        }
+        
         return quickPlayers.count
     }
     
@@ -88,7 +96,7 @@ class NewGameFindOpponentViewController: GameViewController, UITableViewDataSour
         player.getAvatarImage(for: .large,
             completionHandler: { (image) in
                 cell.friendImageView.image = image
-                cell.friendImageView.applyCircle(withBorderColor: UIColor.lightGrayDochaColor())
+                cell.friendImageView.applyCircle(withBorderColor: UIColor.white)
             }
         )
         cell.friendOnlineIndicatorImageView.isHidden = !player.isOnline
@@ -193,7 +201,33 @@ class NewGameFindOpponentViewController: GameViewController, UITableViewDataSour
     }
     
     
+//MARK: @IBAction Methods
+    
+    @IBAction func inviteFBFriendsButtonTouched(_ sender: UIButton) {
+        let gameRequestContent = FBSDKGameRequestContent()
+        gameRequestContent.message = "Viens me défier sur Docha ! Télécharge l'application sur ce lien : http://www.docha.fr"
+        gameRequestContent.title = "Invite tes amis"
+        
+        FBSDKGameRequestDialog.show(with: gameRequestContent, delegate: self)
+    }
+    
+    
     @IBAction func backTouched(_ sender: UIBarButtonItem) {
         _ = self.navigationController?.popViewController(animated: true)
+    }
+    
+    
+//MARK: FBSDKGameRequestDialog Delegate Methods
+    
+    func gameRequestDialog(_ gameRequestDialog: FBSDKGameRequestDialog!, didCompleteWithResults results: [AnyHashable : Any]!) {
+        PopupManager.sharedInstance.showSuccessPopup(message: Constants.PopupMessage.SuccessMessage.kSuccessFBFriendsInvite)
+    }
+    
+    func gameRequestDialog(_ gameRequestDialog: FBSDKGameRequestDialog!, didFailWithError error: Error!) {
+        PopupManager.sharedInstance.showErrorPopup(message: Constants.PopupMessage.ErrorMessage.kErrorFBFriendsInvite +  " " + Constants.PopupMessage.ErrorMessage.kErrorOccured)
+    }
+    
+    func gameRequestDialogDidCancel(_ gameRequestDialog: FBSDKGameRequestDialog!) {
+        
     }
 }

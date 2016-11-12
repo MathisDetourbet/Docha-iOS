@@ -174,7 +174,7 @@ class GameplayDebriefViewController: GameViewController, UIPageViewControllerDat
             if let opponentPlayer = opponentPlayer {
                 opponentNameLabel.text = opponentPlayer.pseudo
                 
-                opponentPlayer.getAvatarImage(for: .large,
+                opponentPlayer.getAvatarImage(for: .medium,
                     completionHandler: { (image) in
                         self.opponentAvatarImageView.image = image
                         self.opponentAvatarImageView.applyCircle(withBorderColor: opponentBorderColor)
@@ -193,6 +193,7 @@ class GameplayDebriefViewController: GameViewController, UIPageViewControllerDat
             opponentScore = Int(currentRound.opponentScore ?? 0)
             
             if userScore > scoreMax {
+                // You won
                 if let userTime = currentRound.userTime {
                     let seconds = Int(userTime/1000)
                     let milliseconds = (Int(Int(userTime) - (seconds * 1000))) / 1000
@@ -200,11 +201,21 @@ class GameplayDebriefViewController: GameViewController, UIPageViewControllerDat
                     opponentTimeLabel.text = "Temps écoulé"
                 }
             } else if opponentScore > scoreMax {
+                // You loose
                 if let opponentTime = currentRound.opponentTime {
                     let seconds = Int(opponentTime/1000)
                     let milliseconds = (Int(Int(opponentTime) - (seconds * 1000))) / 1000
                     opponentTimeLabel.text = "\(seconds)\"\(milliseconds)"
                     userTimeLabel.text = "Temps écoulé"
+                }
+                
+            } else if userScore == opponentScore {
+                // Tie
+                if let userTime = currentRound.userTime {
+                    let seconds = Int(userTime/1000)
+                    let milliseconds = (Int(Int(userTime) - (seconds * 1000))) / 1000
+                    userTimeLabel.text = "\(seconds)\"\(milliseconds)"
+                    opponentTimeLabel.text = userTimeLabel.text
                 }
                 
             } else {
@@ -271,11 +282,15 @@ class GameplayDebriefViewController: GameViewController, UIPageViewControllerDat
             pageContentViewController.delegate = self
             pageContentViewController.pageIndex = index
             let centsString = ConverterHelper.convertPriceToArrayOfInt(product.price).centsString
-            pageContentViewController.counterContainerView.centsLabel.text = centsString
+            pageContentViewController.counterContainerView.centsLabel.text = centsString + " €"
             pageContentViewController.counterContainerView.numberOfCounterDisplayed = ConverterHelper.convertPriceToArrayOfInt(product.price).priceArray.count
             pageContentViewController.counterContainerView.delegate = self
             pageContentViewController.counterContainerView.layoutSubviews()
             pageContentViewController.counterContainerView.initCountersViews()
+            
+            if UserSessionManager.sharedInstance.isFacebookUser() == false {
+                pageContentViewController.sharingButton.isHidden = false
+            }
             
             pagesContentsViewControllerArray.insert(pageContentViewController, at: index)
             
@@ -286,8 +301,8 @@ class GameplayDebriefViewController: GameViewController, UIPageViewControllerDat
     
 //MARK: Gameplay Debrief Page Content Delegate
     
-    func moreDetailsButtonTouched(_ productIndex: Int) {
-        if let pageUrlString = productsList?[productIndex].pageUrl {
+    func moreDetailsButtonTouched() {
+        if let pageUrlString = productsList?[pageControl.currentPage].pageUrl {
             
             let url = URL(string: pageUrlString)
             let webViewController = storyboard?.instantiateViewController(withIdentifier: "idCustomWebViewController") as! CustomWebViewController
@@ -304,11 +319,15 @@ class GameplayDebriefViewController: GameViewController, UIPageViewControllerDat
             PopupManager.sharedInstance.showErrorPopup(message: Constants.PopupMessage.ErrorMessage.kErrorOccured)
         }
     }
-    
     func shareButtonTouched() {
         // Facebook Sharing
+        let product = productsList?[pageControl.currentPage]
+        let quote = "Je viens de découvrir ce produit sur Docha ! : \(product?.model ?? "")"
+        
         let content = FBSDKShareLinkContent()
-        content.contentURL = URL(string: "http://www.docha.fr")
+        content.contentURL = URL(string: product?.pageUrl ?? kAppStoreDochaURL)
+        content.quote = quote
+        
         let shareDialog = FBSDKShareDialog()
         shareDialog.fromViewController = self
         shareDialog.shareContent = content
@@ -372,7 +391,13 @@ class GameplayDebriefViewController: GameViewController, UIPageViewControllerDat
 //MARK: CounterContainerView Delegate Methods
     
     func infosButtonTouched() {
-        let currentProductData = self.productsList![pageControl.currentPage]
-        PopupManager.sharedInstance.showInfosPopup("Informations prix", message: "Le prix de ce produit a été relevé le [DATE].\n Images et copyright appartiennent à \((currentProductData.brand))", viewController: self, completion: nil, doneActionCompletion: nil)
+        let product = productsList?[pageControl.currentPage]
+        
+        if let product = product {
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "dd/MM/yyyy"
+            let dateString = dateFormatter.string(from: product.lastUpdatedDate)
+            PopupManager.sharedInstance.showInfosPopup("Informations prix", message: "Le prix de ce produit a été relevé le \(dateString).\n Images et copyright appartiennent à \((product.brand))", viewController: self, completion: nil, doneActionCompletion: nil)
+        }
     }
 }

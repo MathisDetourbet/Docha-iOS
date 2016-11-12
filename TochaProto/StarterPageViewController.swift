@@ -89,7 +89,7 @@ class StarterPageViewController: RootViewController, UIPageViewControllerDataSou
         if timer != nil {
             return
         }
-        timer = Timer.scheduledTimer(timeInterval: 3.0, target: self, selector: #selector(StarterPageViewController.updateTimer), userInfo: nil, repeats: true)
+        timer = Timer.scheduledTimer(timeInterval: 5.0, target: self, selector: #selector(StarterPageViewController.updateTimer), userInfo: nil, repeats: true)
     }
     
     func stopTimer() {

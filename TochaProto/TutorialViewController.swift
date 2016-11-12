@@ -18,7 +18,7 @@ class TutorialViewController: RootViewController, TutorialViewDelegate {
         super.viewDidLoad()
         
         self.navigationController?.setNavigationBarHidden(true, animated: false)
-        self.nextButtonTouched()
+        nextButtonTouched()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -47,12 +47,32 @@ class TutorialViewController: RootViewController, TutorialViewDelegate {
                 
                 self.currentTutorialView = currentTutorialView
                 
+                let skipButton = UIButton(type: .custom)
+                skipButton.setTitle("Passer", for: .normal)
+                skipButton.setTitleColor(UIColor.white, for: .normal)
+                let normalAttributedTitle = NSAttributedString(string: "  Passer  ", attributes: [NSForegroundColorAttributeName : UIColor.white, NSFontAttributeName: UIFont(name: "Montserrat-SemiBold", size: 15) ?? UIFont()])
+                skipButton.setAttributedTitle(normalAttributedTitle, for: .normal)
+                skipButton.titleLabel?.textColor = UIColor.white
+                skipButton.addTarget(self, action: #selector(TutorialViewController.skipButtonTouched), for: .touchUpInside)
+                skipButton.layer.borderColor = UIColor.white.cgColor
+                skipButton.layer.borderWidth = 1
+                skipButton.layer.cornerRadius = 10
+                skipButton.translatesAutoresizingMaskIntoConstraints = false
+                self.view.addSubview(skipButton)
+                
+                self.view.addConstraint(NSLayoutConstraint(item: skipButton, attribute: .trailing, relatedBy: .equal, toItem: currentTutorialView, attribute: .trailing, multiplier: 1.0, constant: -10.0))
+                self.view.addConstraint(NSLayoutConstraint(item: skipButton, attribute: .top, relatedBy: .equal, toItem: currentTutorialView, attribute: .top, multiplier: 1.0, constant: 10.0))
+                
             } else {
-                print("NEXT METHOD : ERROR loading nib tutorial !")
+                print("ERROR loading nib tutorial !")
                 self.dismiss(animated: true, completion: nil)
             }
             
             currentIndex += 1
         }
+    }
+    
+    func skipButtonTouched() {
+        self.dismiss(animated: true, completion: nil)
     }
 }

@@ -8,6 +8,7 @@
 
 import Alamofire
 import Kingfisher
+import Crashlytics
 
 class UserSessionManager {
 	
@@ -137,6 +138,9 @@ class UserSessionManager {
                 self.userRequest = UserRequest()
                 self.userRequest?.getUser(withAuthToken: authToken,
                     success: { (user) in
+                        
+                        Answers.logSignUp(withMethod: "sign_up_by_email", success: true, customAttributes: nil)
+                        
                         let userSessionEmail = UserSessionEmail()
                         userSessionEmail.initPropertiesFromUser(user: user)
                         userSessionEmail.authToken = authToken
@@ -145,6 +149,8 @@ class UserSessionManager {
                         success()
                         
                     }, fail: { (error) in
+                        
+                        Answers.logSignUp(withMethod: "signup_by_email", success: false, customAttributes: nil)
                         failure(error)
                     }
                 )
@@ -159,12 +165,18 @@ class UserSessionManager {
 // MARK: User Connection Requests
     
     func signIn(_ success: @escaping () -> Void, fail failure: @escaping (_ error: Error?) -> Void) {
+        
         getUser(
             success: {
+                
+                Answers.logLogin(withMethod: "sign_in", success: true, customAttributes: nil)
+                
                 success()
             }
             
         ) { (error) in
+            
+            Answers.logLogin(withMethod: "sign_in", success: false, customAttributes: nil)
             failure(error)
         }
     }
@@ -180,6 +192,8 @@ class UserSessionManager {
                 self.userRequest?.getUser(withAuthToken: authToken,
                     success: { (user) in
                         
+                        Answers.logLogin(withMethod: "sign_in_by_email", success: true, customAttributes: nil)
+                        
                         let userSessionEmail = UserSessionEmail()
                         userSessionEmail.initPropertiesFromUser(user: user)
                         userSessionEmail.authToken = authToken
@@ -188,6 +202,8 @@ class UserSessionManager {
                         success()
                         
                     }, fail: { (error) in
+                        
+                        Answers.logLogin(withMethod: "sign_in_by_email", success: false, customAttributes: nil)
                         failure(error)
                     }
                 )
@@ -207,6 +223,8 @@ class UserSessionManager {
                 self.userRequest = UserRequest()
                 self.userRequest?.getUser(withAuthToken: authToken,
                     success: { (user) in
+                        
+                        Answers.logLogin(withMethod: "sign_in_by_facebook", success: true, customAttributes: nil)
                         
                         let userSessionFacebook = UserSessionFacebook()
                         userSessionFacebook.initPropertiesFromUser(user: user)

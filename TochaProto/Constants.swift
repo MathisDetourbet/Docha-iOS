@@ -8,6 +8,8 @@
 
 import Foundation
 
+let kAppStoreDochaURL = "http://www.docha.fr"
+
 struct UserDataKey {
     static let kUsername = "username"
     static let kLastName = "last_name"
@@ -78,6 +80,7 @@ struct ProductDataKey {
     static let kimageUrl = "image_url"
     static let kPageUrl = "page_url"
     static let kGender = "gender"
+    static let kLastUpdatedDate = "last_updated_at"
 }
 
 struct PropositionDataKey {
@@ -177,13 +180,20 @@ struct Constants {
         
         struct InfosMessage {
             static let kInfosCategoryHelp = "Nous souhaitons vous proposer au maximum des produits qui vous correspondent."
-            static let kUserProfilUpdating = "Mise à jour de ton profil Docha..."
+            static let kInfosUserProfilUpdating = "Mise à jour de ton profil Docha..."
+            static let kInfosNotificationOff = "En désactivant les notifications, tu pourras plus savoir quand ton adversaire a fini de jouer et que c'est à ton tour."
+        }
+        
+        struct LoadingMessage {
+            static let kLoadingJustAMoment = "Juste un instant..."
         }
     }
     
     struct UrlServer {
         
-        static let UrlBase = testing ? "http://127.0.0.1:8005" : "https://docha.nextmap.io"//10.96.21.10 // 127.0.0.1
+        static let UrlBase = testing ? "https://docha.nextmap.io" : "https://api-v1.docha.fr"
+        //10.96.21.10 // 127.0.0.1
+        //http://127.0.0.1:8005
         
         struct UrlUser {
             static let UrlUser = "/rest-auth/user/"

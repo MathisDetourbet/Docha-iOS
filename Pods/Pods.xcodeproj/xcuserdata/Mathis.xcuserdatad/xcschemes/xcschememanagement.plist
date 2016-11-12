@@ -2,24 +2,117 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>SchemeUserState</key>
+	<dict>
+		<key>AFNetworking.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>Alamofire.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>Amplitude-iOS.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>CNPPopupController.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>IQKeyboardManagerSwift.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>Kingfisher.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>MBCircularProgressBar-MBCircularProgressBar.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>MBCircularProgressBar.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>PBWebViewController.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>PageMenu.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>Pods-Docha.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>Pods-DochaTests.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>Pods-DochaUITests.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>PullToRefresher.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>RSKImageCropper.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>SACountingLabel-SACountingLabel.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>SACountingLabel.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>SWTableViewCell.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>SnapKit.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>SwiftyJSON.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>TextFieldEffects.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>02E4CAE60FE4FB9A668F8B99F86111A8</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
 		<key>0ACFACC96CD1B9C8E8E2AE8DCDB626EC</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>0D3C78D4F0C694F9331CC0E7C2585B3A</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>127BBB3AC17CC4146030E7B35CB97C9D</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -30,11 +123,6 @@
 			<true/>
 		</dict>
 		<key>18F041A991E764B5A854C75D9271B331</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>1B5FE2B89F24B648E5FC1351AFFAF424</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -64,32 +152,12 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>333E47F1004946B94926B19979768D18</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>33826901B7283AFF48C8EA859F77555F</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
 		<key>3531B479070289B57A89327C743C87AC</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
 		<key>3F9391BC9DFA3FC5C152A9320EAA31DE</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>446A949B95E6C7C9DFF594EC5C6E5314</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>4D7AFD8C5FA34351CB7ADC90191C8FE6</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -124,17 +192,7 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>C072392A97972F1BC1E61866993EE3AC</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
 		<key>C5DA01BEF996DCDFDFA5A6FE1553B20E</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>C88C2087B4BFC374FFC174F5E5F6C57C</key>
 		<dict>
 			<key>primary</key>
 			<true/>

@@ -26,6 +26,7 @@ class PreferencesViewController: GameViewController, UITableViewDelegate, UITabl
                                             ["title" :"Donne nous ton avis !","iconPath": "mail_icon"]]]
     
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var doneBarButtonItem: UIBarButtonItem!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -56,6 +57,10 @@ class PreferencesViewController: GameViewController, UITableViewDelegate, UITabl
     
     func buildUI() {
         self.view.backgroundColor = UIColor.lightGrayDochaColor()
+        
+        if let font = UIFont(name: "Montserrat-SemiBold", size: 15) {
+            doneBarButtonItem.setTitleTextAttributes([NSFontAttributeName: font], for: .normal)
+        }
         
         let footerView = UIView(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: 123))
         
@@ -203,6 +208,10 @@ class PreferencesViewController: GameViewController, UITableViewDelegate, UITabl
 //MARK: PreferencesSwitchCellDelegate
     
     func switchValueChanged(_ value: Bool) {
+        if value == false {
+            PopupManager.sharedInstance.showInfosPopup(message: Constants.PopupMessage.InfosMessage.kInfosNotificationOff, viewController: self)
+        }
+        
         let data = [UserDataKey.kNotifications: value] as [String: Any]
         UserSessionManager.sharedInstance.updateUser(withData: data, success: {}) { (error) in }
     }

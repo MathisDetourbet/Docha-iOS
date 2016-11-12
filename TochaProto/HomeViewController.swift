@@ -7,7 +7,6 @@
 //
 
 import Foundation
-//import AlamofireImage
 import Kingfisher
 import FBSDKShareKit
 import SwiftyJSON
@@ -35,7 +34,7 @@ enum HomeSectionName: Int, CustomStringConvertible {
     }
 }
 
-class HomeViewController: GameViewController, UITableViewDelegate, UITableViewDataSource, HomeUserTurnCellDelegate, HomeFriendsCellDelegate, SWTableViewCellDelegate, FBSDKSharingDelegate {
+class HomeViewController: GameViewController, UITableViewDelegate, UITableViewDataSource, HomeUserTurnCellDelegate, HomeFriendsCellDelegate, SWTableViewCellDelegate, FBSDKSharingDelegate, FBSDKGameRequestDialogDelegate {
     
     let idsTableViewCell: [HomeSectionName : String] = [.userTurn : "idHomeUserTurnTableViewCell",
                                                         .opponentTurn :"idHomeOpponentTurnTableViewCell",
@@ -47,15 +46,18 @@ class HomeViewController: GameViewController, UITableViewDelegate, UITableViewDa
     var isBubbleOpen: Bool = false
     
     @IBOutlet weak var tableView: UITableView!
+    
     @IBOutlet weak var userAvatarImageView: UIImageView!
     @IBOutlet weak var userNameLabel: UILabel!
     @IBOutlet weak var userDochosLabel: SACountingLabel!
     @IBOutlet weak var userPerfectLabel: SACountingLabel!
     @IBOutlet weak var userLevelBar: LevelBarView!
     @IBOutlet weak var userLevelLabel: UILabel!
+    
     @IBOutlet weak var bubbleDochosImageView: UIImageView!
     @IBOutlet weak var bubblePerfectsImageView: UIImageView!
     
+    @IBOutlet weak var sharingButton: UIButton!
     
 //MARK: View Life Cycle
     
@@ -86,6 +88,10 @@ class HomeViewController: GameViewController, UITableViewDelegate, UITableViewDa
     
     func buildUI() {
         self.view.backgroundColor = UIColor.lightGrayDochaColor()
+        
+        if UserSessionManager.sharedInstance.isFacebookUser() == false {
+            sharingButton.isHidden = false
+        }
         
         let headerView = UIView(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: 90))
         
@@ -210,7 +216,7 @@ class HomeViewController: GameViewController, UITableViewDelegate, UITableViewDa
         }
     }
     
-    func sortMatchArray(matchArray: [Match]){
+    func sortMatchArray(matchArray: [Match]) {
         let keys = data.keys
         for key in keys {
             if key != .friends {
@@ -302,7 +308,7 @@ class HomeViewController: GameViewController, UITableViewDelegate, UITableViewDa
             opponentPlayer.getAvatarImage(for: .medium,
                 completionHandler: { (image) in
                     cell.opponentImageView.image = image
-                    cell.opponentImageView.applyCircle()
+                    cell.opponentImageView.applyCircle(withBorderColor: UIColor.lightGrayDochaColor())
                 }
             )
             
@@ -334,7 +340,7 @@ class HomeViewController: GameViewController, UITableViewDelegate, UITableViewDa
             opponentPlayer.getAvatarImage(for: .medium,
                 completionHandler: { (image) in
                     cell.opponentImageView.image = image
-                    cell.opponentImageView.applyCircle()
+                    cell.opponentImageView.applyCircle(withBorderColor: UIColor.lightGrayDochaColor())
                 }
             )
             
@@ -368,7 +374,7 @@ class HomeViewController: GameViewController, UITableViewDelegate, UITableViewDa
             opponentPlayer.getAvatarImage(for: .medium,
                 completionHandler: { (image) in
                     cell.opponentImageView.image = image
-                    cell.opponentImageView.applyCircle()
+                    cell.opponentImageView.applyCircle(withBorderColor: UIColor.lightGrayDochaColor())
                 }
             )
             
@@ -439,12 +445,14 @@ class HomeViewController: GameViewController, UITableViewDelegate, UITableViewDa
                     let sectionType = self.sortedDataKeys[indexPath.section]
                     self.data[sectionType]?.remove(at: indexPath.row)
                     
+                    self.tableView.beginUpdates()
+                    
                     if self.data[sectionType]!.isEmpty {
                         self.data.removeValue(forKey: sectionType)
                     }
-                    
-                    self.tableView.beginUpdates()
-                    self.tableView.deleteRows(at: [indexPath], with: .fade)
+                    let indexSet = NSMutableIndexSet()
+                    indexSet.add(indexPath.section)
+                    self.tableView.deleteSections(indexSet as IndexSet, with: .fade)
                     self.tableView.endUpdates()
                     
                 }, fail: { (error) in
@@ -519,6 +527,7 @@ class HomeViewController: GameViewController, UITableViewDelegate, UITableViewDa
             
             if let match = match {
                 let matchVC = self.storyboard?.instantiateViewController(withIdentifier: "idGameplayMatchViewController") as! GameplayMatchViewController
+                MatchManager.sharedInstance.currentMatch = match
                 matchVC.match = match
                 self.navigationController?.pushViewController(matchVC, animated: true)
             }
@@ -541,20 +550,13 @@ class HomeViewController: GameViewController, UITableViewDelegate, UITableViewDa
         }
     }
     
-//    func inviteFacebookFriendsCellTouched() {
-//        PopupManager.sharedInstance.showInfosPopup("Info", message: "Encore un peu de patience, cette fonctionnalité sera prochainement disponible. 😉", completion: nil)
-//        let content = FBSDKAppInviteContent()
-//        content.appLinkURL = NSURL(string: "https://itunes.apple.com/fr/app/docha/id722842223?mt=8")
-//        FBSDKAppInviteDialog.showFromViewController(self, withContent: content, delegate: self)
-//    }
-    
-//    func appInviteDialog(_ appInviteDialog: FBSDKAppInviteDialog!, didCompleteWithResults results: [AnyHashable: Any]!) {
-//        PopupManager.sharedInstance.showSuccessPopup("Succès", message: "Tes amis ont bien été invités.", completion: nil)
-//    }
-//    
-//    func appInviteDialog(_ appInviteDialog: FBSDKAppInviteDialog!, didFailWithError error: NSError!) {
-//        PopupManager.sharedInstance.showInfosPopup("Oups !", message: "Encore un peu de patience, cette foncitonnalité sera bientôt disponible !", completion: nil)
-//    }
+    func inviteFBFriendsButtonTouched() {
+        let gameRequestContent = FBSDKGameRequestContent()
+        gameRequestContent.message = "Viens me défier sur Docha ! Télécharge l'application sur ce lien : http://www.docha.fr"
+        gameRequestContent.title = "Invite tes amis"
+        
+        FBSDKGameRequestDialog.show(with: gameRequestContent, delegate: self)
+    }
     
     
 //MARK: Bubbles Events Methods
@@ -616,9 +618,17 @@ class HomeViewController: GameViewController, UITableViewDelegate, UITableViewDa
     }
     
     @IBAction func sharingButtonTouched(_ sender: UIButton) {
+        let pseudo = UserSessionManager.sharedInstance.currentSession()?.pseudo
+        var contentString = "Rejoins-moi sur Docha et défie moi.\n http://www.docha.fr"
+        
+        if let pseudo = pseudo {
+            contentString = "Rejoins-moi sur Docha et défie moi. Mon pseudo est : \(pseudo)."
+        }
+        
         // Facebook Sharing
         let content = FBSDKShareLinkContent()
-        content.contentURL = URL(string: "http://www.docha.fr")
+        content.contentURL = URL(string: kAppStoreDochaURL)
+        content.quote = contentString
         let shareDialog = FBSDKShareDialog()
         shareDialog.fromViewController = self
         shareDialog.shareContent = content
@@ -646,6 +656,21 @@ class HomeViewController: GameViewController, UITableViewDelegate, UITableViewDa
     }
     
     func sharerDidCancel(_ sharer: FBSDKSharing!) {
+        
+    }
+    
+    
+//MARK: FBSDKGameRequestDialog Delegate Methods
+    
+    func gameRequestDialog(_ gameRequestDialog: FBSDKGameRequestDialog!, didCompleteWithResults results: [AnyHashable : Any]!) {
+        PopupManager.sharedInstance.showSuccessPopup(message: Constants.PopupMessage.SuccessMessage.kSuccessFBFriendsInvite)
+    }
+    
+    func gameRequestDialog(_ gameRequestDialog: FBSDKGameRequestDialog!, didFailWithError error: Error!) {
+        PopupManager.sharedInstance.showErrorPopup(message: Constants.PopupMessage.ErrorMessage.kErrorFBFriendsInvite +  " " + Constants.PopupMessage.ErrorMessage.kErrorOccured)
+    }
+    
+    func gameRequestDialogDidCancel(_ gameRequestDialog: FBSDKGameRequestDialog!) {
         
     }
 }

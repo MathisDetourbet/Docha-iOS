@@ -150,7 +150,7 @@ class PreferencesCategoriesViewController: RootViewController, UICollectionViewD
                 _ = self.navigationController?.popViewController(animated: true)
                 
             } else {
-                PopupManager.sharedInstance.showLoadingPopup(message: Constants.PopupMessage.InfosMessage.kUserProfilUpdating, viewController: self, completion: {
+                PopupManager.sharedInstance.showLoadingPopup(message: Constants.PopupMessage.InfosMessage.kInfosUserProfilUpdating, viewController: self, completion: {
                     let data = [UserDataKey.kCategoryPrefered: categoriesPrefered]
                     self.saveCategorieFavorite(withdData: data,
                         {

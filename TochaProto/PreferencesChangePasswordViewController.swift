@@ -138,7 +138,7 @@ class PreferencesChangePasswordViewController: RootViewController, UITableViewDe
             )
             
         } else {
-            PopupManager.sharedInstance.showLoadingPopup(message: Constants.PopupMessage.InfosMessage.kUserProfilUpdating, viewController: self,
+            PopupManager.sharedInstance.showLoadingPopup(message: Constants.PopupMessage.InfosMessage.kInfosUserProfilUpdating, viewController: self,
                 completion: {
                     UserSessionManager.sharedInstance.changeUserPassword(withData: self.data,
                         success: {

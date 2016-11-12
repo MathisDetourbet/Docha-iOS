@@ -210,19 +210,11 @@ class InscriptionIdentifiantsViewController: RootViewController, UITextFieldDele
                 )
                 
             } else {
-                PopupManager.sharedInstance.dismissPopup(true,
-                    completion: {
-                        PopupManager.sharedInstance.showErrorPopup(message: Constants.PopupMessage.ErrorMessage.kErrorRegistrationPasswordMinimumCharacters)
-                    }
-                )
+                PopupManager.sharedInstance.showErrorPopup(message: Constants.PopupMessage.ErrorMessage.kErrorRegistrationPasswordMinimumCharacters)
             }
             
         } else {
-            PopupManager.sharedInstance.dismissPopup(true,
-                completion: {
-                    PopupManager.sharedInstance.showErrorPopup(message: Constants.PopupMessage.ErrorMessage.kErrorRegistrationEmailNotValid)
-                }
-            )
+            PopupManager.sharedInstance.showErrorPopup(message: Constants.PopupMessage.ErrorMessage.kErrorRegistrationEmailNotValid)
         }
     }
     

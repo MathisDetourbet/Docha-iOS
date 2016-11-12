@@ -135,6 +135,9 @@ class GameplayMatchViewController: GameViewController, UITableViewDelegate, UITa
         for round in sortedRounds {
             if round.roundData.userPlayed != round.roundData.opponentPlayed {
                 return round.roundData
+                
+            } else if match?.status == .userTurn && round.roundData.userPlayed == false {
+                return round.roundData
             }
         }
         
@@ -285,18 +288,36 @@ class GameplayMatchViewController: GameViewController, UITableViewDelegate, UITa
 //MARK: Cells Delegate
     
     func yourTurnButtonTouched() {
+        if (UIApplication.shared.delegate as! AppDelegate).hasLowNetworkConnection() {
+            PopupManager.sharedInstance.showLoadingPopup(message: Constants.PopupMessage.LoadingMessage.kLoadingJustAMoment,
+                completion: {
+                    self.startTheGame()
+                }
+            )
+            
+        } else {
+            startTheGame()
+        }
+    }
+    
+    private func startTheGame() {
         MatchManager.sharedInstance.loadPlayersInfos {
             let currentRound = self.getCurrentRound()
             
-            if currentRound?.category == nil && self.match?.status == .userTurn {
-                let newGameCategorieSelectionVC = self.storyboard?.instantiateViewController(withIdentifier: "idNewGameCategorieSelectionViewController") as! NewGameCategorieSelectionViewController
-                MatchManager.sharedInstance.currentMatch = self.match
-                self.navigationController?.pushViewController(newGameCategorieSelectionVC, animated: true)
-                
-            } else {
-                let launcherVC = self.storyboard?.instantiateViewController(withIdentifier: "idGameplayLauncherViewController") as! GameplayLauncherViewController
-                self.navigationController?.pushViewController(launcherVC, animated: true)
-            }
+            PopupManager.sharedInstance.dismissPopup(true,
+                completion: {
+                    
+                    if currentRound?.category == nil && self.match?.status == .userTurn {
+                        let newGameCategorieSelectionVC = self.storyboard?.instantiateViewController(withIdentifier: "idNewGameCategorieSelectionViewController") as! NewGameCategorieSelectionViewController
+                        MatchManager.sharedInstance.currentMatch = self.match
+                        self.navigationController?.pushViewController(newGameCategorieSelectionVC, animated: true)
+                        
+                    } else {
+                        let launcherVC = self.storyboard?.instantiateViewController(withIdentifier: "idGameplayLauncherViewController") as! GameplayLauncherViewController
+                        self.navigationController?.pushViewController(launcherVC, animated: true)
+                    }
+                }
+            )
         }
     }
     
@@ -304,19 +325,7 @@ class GameplayMatchViewController: GameViewController, UITableViewDelegate, UITa
 //MARK: @IBActions
     
     @IBAction func playButtonTouched(_ sender: UIButton) {
-        MatchManager.sharedInstance.loadPlayersInfos { 
-            let currentRound = self.getCurrentRound()
-            
-            if currentRound?.category == nil && self.match?.status == .userTurn {
-                let newGameCategorieSelectionVC = self.storyboard?.instantiateViewController(withIdentifier: "idNewGameCategorieSelectionViewController") as! NewGameCategorieSelectionViewController
-                MatchManager.sharedInstance.currentMatch = self.match
-                self.navigationController?.pushViewController(newGameCategorieSelectionVC, animated: true)
-                
-            } else {
-                let launcherVC = self.storyboard?.instantiateViewController(withIdentifier: "idGameplayLauncherViewController") as! GameplayLauncherViewController
-                self.navigationController?.pushViewController(launcherVC, animated: true)
-            }
-        }
+        yourTurnButtonTouched()
     }
     
     @IBAction func withdrawButtonTouched(_ sender: UIButton) {

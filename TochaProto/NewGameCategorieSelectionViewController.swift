@@ -88,23 +88,32 @@ class NewGameCategorieSelectionViewController: GameViewController, UICollectionV
 //MARK: UICollectionView - Delegate Methods
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        PopupManager.sharedInstance.showLoadingPopup(message: "Un instant...")
-        {
-            MatchManager.sharedInstance.loadPlayersInfos(
-                withCompletion: {
-                    
-                    PopupManager.sharedInstance.dismissPopup(true,
-                        completion: {
-                            
-                            let categorySelected = self.categoriesDisplayed[indexPath.item]
-                            let launcherVC = self.storyboard?.instantiateViewController(withIdentifier: "idGameplayLauncherViewController") as! GameplayLauncherViewController
-                            launcherVC.categorySelected = categorySelected
-                            self.navigationController?.pushViewController(launcherVC, animated: true)
-                        }
-                    )
+        if (UIApplication.shared.delegate as! AppDelegate).hasLowNetworkConnection() {
+            PopupManager.sharedInstance.showLoadingPopup(message: Constants.PopupMessage.LoadingMessage.kLoadingJustAMoment,
+                completion: {
+                    self.startTheGame(withCategoryIndexPath: indexPath)
                 }
             )
+        } else {
+            startTheGame(withCategoryIndexPath: indexPath)
         }
+    }
+    
+    private func startTheGame(withCategoryIndexPath indexPath: IndexPath) {
+        MatchManager.sharedInstance.loadPlayersInfos(
+            withCompletion: {
+                
+                PopupManager.sharedInstance.dismissPopup(true,
+                    completion: {
+                        
+                        let categorySelected = self.categoriesDisplayed[indexPath.item]
+                        let launcherVC = self.storyboard?.instantiateViewController(withIdentifier: "idGameplayLauncherViewController") as! GameplayLauncherViewController
+                        launcherVC.categorySelected = categorySelected
+                        self.navigationController?.pushViewController(launcherVC, animated: true)
+                    }
+                )
+            }
+        )
     }
     
     

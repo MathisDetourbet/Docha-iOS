@@ -23,8 +23,9 @@ class Product {
     let imageUrl: String
     var image: UIImage?
     let pageUrl: String
+    let lastUpdatedDate: Date
     
-    init(id: Int, model: String, brand: String, price: Double, imageUrl: String, image: UIImage?, pageUrl: String) {
+    init(id: Int, model: String, brand: String, price: Double, imageUrl: String, image: UIImage?, pageUrl: String, lastUpdatedDate: Date) {
         self.id = id
         self.model = model
         self.price = price
@@ -32,6 +33,7 @@ class Product {
         self.image = image
         self.pageUrl = pageUrl
         self.brand = brand
+        self.lastUpdatedDate = lastUpdatedDate
     }
     
     convenience init(jsonObject: JSON) {
@@ -42,6 +44,11 @@ class Product {
         let pageUrl = jsonObject[ProductDataKey.kPageUrl].stringValue
         let imageUrl = jsonObject[ProductDataKey.kimageUrl].stringValue
         
-        self.init(id: id, model: model, brand: brand, price: price!, imageUrl: imageUrl, image: nil, pageUrl: pageUrl)
+        let lastUpdatedDateString = jsonObject[ProductDataKey.kLastUpdatedDate].stringValue
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
+        let lastUpdatedDate = dateFormatter.date(from: lastUpdatedDateString)
+        
+        self.init(id: id, model: model, brand: brand, price: price!, imageUrl: imageUrl, image: nil, pageUrl: pageUrl, lastUpdatedDate: lastUpdatedDate ?? Date())
     }
 }

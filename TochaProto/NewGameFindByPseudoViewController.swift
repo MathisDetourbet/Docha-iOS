@@ -121,20 +121,32 @@ class NewGameFindByPseudoViewController: GameViewController, UITableViewDataSour
             }
             
         } else {
-            matchManager.postMatch(withOpponentPseudo: player.pseudo,
-                success: { (match) in
-                    
-                    MatchManager.sharedInstance.loadPlayersInfos(
-                        withCompletion: {
-                            
-                            let newGameCategorieSelectionVC = self.storyboard?.instantiateViewController(withIdentifier: "idNewGameCategorieSelectionViewController") as! NewGameCategorieSelectionViewController
-                            self.navigationController?.pushViewController(newGameCategorieSelectionVC, animated: true)
-                        }
-                    )
-                    
+            if (UIApplication.shared.delegate as! AppDelegate).hasLowNetworkConnection() {
+                PopupManager.sharedInstance.showLoadingPopup(message: Constants.PopupMessage.LoadingMessage.kLoadingJustAMoment,
+                    completion: {
+                        self.goToCategorieSelection(withPlayer: player)
+                    }
+                )
+            } else {
+                goToCategorieSelection(withPlayer: player)
+            }
+        }
+    }
+    
+    private func goToCategorieSelection(withPlayer player: Player) {
+        MatchManager.sharedInstance.postMatch(withOpponentPseudo: player.pseudo,
+            success: { (match) in
+                
+                MatchManager.sharedInstance.loadPlayersInfos(
+                    withCompletion: {
+                        
+                        let newGameCategorieSelectionVC = self.storyboard?.instantiateViewController(withIdentifier: "idNewGameCategorieSelectionViewController") as! NewGameCategorieSelectionViewController
+                        self.navigationController?.pushViewController(newGameCategorieSelectionVC, animated: true)
+                    }
+                )
+                
             }) { (error) in
                 PopupManager.sharedInstance.showErrorPopup(message: Constants.PopupMessage.ErrorMessage.kErrorOccured)
-            }
         }
     }
     

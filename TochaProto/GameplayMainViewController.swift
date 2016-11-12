@@ -92,7 +92,14 @@ class GameplayMainViewController: GameViewController, KeyboardViewDelegate, Coun
     }
     
     func startTheRound() {
-        moveToNextCard(cardsViews?.first, AndMovePreviousCard: nil, completion: nil)
+        moveToNextCard(cardsViews?.first, AndMovePreviousCard: nil,
+            completion: { (finished) in
+                if finished {
+                    self.view.layoutIfNeeded()
+                    self.displayMessage(.go, completion: nil)
+                }
+            }
+        )
         updateTimeline(withResult: .current, isForUser: true)
         updateTimeline(withResult: .current, isForUser: false)
     }
@@ -251,6 +258,7 @@ class GameplayMainViewController: GameViewController, KeyboardViewDelegate, Coun
             
         } else {
             // Game Finished !
+            displayMessage(.great, completion: nil)
             stopTimer()
             roundFinished()
         }
@@ -385,6 +393,7 @@ class GameplayMainViewController: GameViewController, KeyboardViewDelegate, Coun
         keyboardView.enabledKeyboard(false)
         stopTimer()
         roundFinished()
+        displayMessage(.timeIsUp, completion: nil)
     }
     
     func animateTimer() {

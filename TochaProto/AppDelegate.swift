@@ -13,6 +13,7 @@ import SwiftyJSON
 import Fabric
 import Crashlytics
 import Amplitude_iOS
+import CoreTelephony
 
 public var testing = false
 
@@ -28,10 +29,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         IQKeyboardManager.sharedManager().enable = true
         
+        // Init managers
         initManagers()
+        
+        // Reachability
+        launchNetworkManager()
         
         // Crashlytics
         Fabric.with([Crashlytics.self])
+        
+        // Answers
+        Fabric.with([Answers.self])
                 
         // Facebook SDK
         FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
@@ -41,7 +49,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         print("token : \(UserSessionManager.sharedInstance.currentSession()?.authToken)")
         
-        //UserGameStateManager.sharedInstance.authenticateLocalPlayer()
+        UserGameStateManager.sharedInstance.authenticateLocalPlayer()
         
         return true
     }
@@ -143,6 +151,40 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         _ = ProductManager.sharedInstance
         
         _ = NavSchemeManager.sharedInstance
+    }
+    
+    func launchNetworkManager() {
+        NotificationCenter.default.addObserver(self, selector: #selector(AppDelegate.networkStatusChanged(_:)), name: NSNotification.Name(rawValue: ReachabilityStatusChangedNotification), object: nil)
+        Reach().monitorReachabilityChanges()
+    }
+    
+    func networkStatusChanged(_ notification: Notification) {
+        let userInfo = (notification as NSNotification).userInfo
+        print(userInfo as Any)
+        let status = Reach().connectionStatus()
+        
+        switch status {
+        case .offline, .unknown:
+            if PopupManager.sharedInstance.isDisplayingNetworkPopup() {
+                PopupManager.sharedInstance.showLoadingPopup("Aucune connexion internet", message: "Nous essayons de rétablir ta connexion internet...", completion: nil)
+            }
+            break
+        case .online(.wwan), .online(.wiFi):
+            if PopupManager.sharedInstance.isDisplayingPopup {
+                PopupManager.sharedInstance.dismissPopup(true, completion: nil)
+            }
+            break
+        }
+    }
+    
+    public func hasLowNetworkConnection() -> Bool {
+        let telInfo = CTTelephonyNetworkInfo()
+        
+        if telInfo.currentRadioAccessTechnology != CTRadioAccessTechnologyLTE {
+            return true
+        }
+        
+        return false
     }
 }
 

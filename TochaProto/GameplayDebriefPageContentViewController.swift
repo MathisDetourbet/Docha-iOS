@@ -9,7 +9,7 @@
 import Foundation
 
 protocol GameplayDebriefPageContentDelegate {
-    func moreDetailsButtonTouched(_ productIndex: Int)
+    func moreDetailsButtonTouched()
     func shareButtonTouched()
 }
 
@@ -22,6 +22,7 @@ class GameplayDebriefPageContentViewController: UIViewController {
     @IBOutlet weak var productImageView: UIImageView!
     @IBOutlet weak var productNameLabel: UILabel!
     @IBOutlet weak var productBrandLabel: UILabel!
+    @IBOutlet weak var sharingButton: UIButton!
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -40,6 +41,6 @@ class GameplayDebriefPageContentViewController: UIViewController {
     }
     
     @IBAction func moreDetailsButtonTouched(_ sender: UIButton) {
-        self.delegate?.moreDetailsButtonTouched(pageIndex!)
+        self.delegate?.moreDetailsButtonTouched()
     }
 }
