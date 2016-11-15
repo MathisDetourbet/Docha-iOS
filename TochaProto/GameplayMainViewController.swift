@@ -82,6 +82,10 @@ class GameplayMainViewController: GameViewController, KeyboardViewDelegate, Coun
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        if DeviceType.IS_IPHONE_4_OR_LESS {
+            initKeyboardForiPhone4S()
+        }
+        
         keyboardView.delegate = self
         
         loadPlayersInfos()
@@ -502,7 +506,7 @@ class GameplayMainViewController: GameViewController, KeyboardViewDelegate, Coun
         currentCard?.addConstraint(NSLayoutConstraint(item: messageImageView!, attribute: .centerX, relatedBy: .equal, toItem: currentCard, attribute: .centerX, multiplier: 1.0, constant: 0.0))
         currentCard?.addConstraint(NSLayoutConstraint(item: messageImageView!, attribute: .centerY, relatedBy: .equal, toItem: currentCard, attribute: .centerY, multiplier: 1.0, constant: 0.0))
         
-        UIView.animate(withDuration: 1.0,
+        UIView.animate(withDuration: 1.5,
             animations: {
                 
                 messageImageView!.alpha = 0.0
@@ -600,6 +604,18 @@ class GameplayMainViewController: GameViewController, KeyboardViewDelegate, Coun
                     return -100.0
                 }
             }
+        }
+    }
+    
+    func initKeyboardForiPhone4S() {
+        keyboardView.removeFromSuperview()
+        
+        let keyboard4S = KeyboardView.loadFromNibNamed("Keyboard4SView") as? KeyboardView
+        if let keyboard4S = keyboard4S {
+            keyboard4S.translatesAutoresizingMaskIntoConstraints = false
+            self.view.addSubview(keyboard4S)
+            keyboard4S.addConstraints(keyboardView.constraints)
+            keyboardView = keyboard4S
         }
     }
 }

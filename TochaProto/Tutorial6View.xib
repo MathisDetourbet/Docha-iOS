@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11201" systemVersion="16A323" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11542" systemVersion="16B2555" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11524"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -12,11 +15,17 @@
             <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="background_tuto_6" translatesAutoresizingMaskIntoConstraints="NO" id="Ah6-n8-uZt"/>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="background_tuto_6" translatesAutoresizingMaskIntoConstraints="NO" id="Ah6-n8-uZt">
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                </imageView>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Nbc-EN-mXq">
+                    <rect key="frame" x="10" y="248" width="355" height="171.5"/>
                     <subviews>
-                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="pop_up_tuto_6" translatesAutoresizingMaskIntoConstraints="NO" id="quT-cl-yXv"/>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="pop_up_tuto_6" translatesAutoresizingMaskIntoConstraints="NO" id="quT-cl-yXv">
+                            <rect key="frame" x="0.0" y="0.5" width="355" height="171.5"/>
+                        </imageView>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9Bh-LA-hQj">
+                            <rect key="frame" x="70" y="107" width="215" height="50"/>
                             <state key="normal" image="btn_next"/>
                             <connections>
                                 <action selector="nextButtonTouched:" destination="789-KW-5bX" eventType="touchUpInside" id="Ib1-rx-zYg"/>
@@ -37,10 +46,10 @@
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
-                <constraint firstItem="Nbc-EN-mXq" firstAttribute="top" secondItem="789-KW-5bX" secondAttribute="top" constant="264" id="51n-i5-PEv"/>
                 <constraint firstItem="Nbc-EN-mXq" firstAttribute="leading" secondItem="789-KW-5bX" secondAttribute="leading" constant="10" id="BQ6-ed-Hf7"/>
                 <constraint firstAttribute="trailing" secondItem="Nbc-EN-mXq" secondAttribute="trailing" constant="10" id="KMY-6j-1MH"/>
                 <constraint firstAttribute="bottom" secondItem="Ah6-n8-uZt" secondAttribute="bottom" id="Tnh-JL-ahb"/>
+                <constraint firstItem="Nbc-EN-mXq" firstAttribute="centerY" secondItem="789-KW-5bX" secondAttribute="centerY" id="cJo-f3-Fyt"/>
                 <constraint firstItem="Ah6-n8-uZt" firstAttribute="top" secondItem="789-KW-5bX" secondAttribute="top" id="cWF-E7-tbf"/>
                 <constraint firstAttribute="trailing" secondItem="Ah6-n8-uZt" secondAttribute="trailing" id="elY-0D-GTV"/>
                 <constraint firstItem="Ah6-n8-uZt" firstAttribute="leading" secondItem="789-KW-5bX" secondAttribute="leading" id="iyk-xX-iCW"/>

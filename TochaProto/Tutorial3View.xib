@@ -19,7 +19,7 @@
                     <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                 </imageView>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="b2e-9g-3sb">
-                    <rect key="frame" x="10" y="450.5" width="355" height="171.5"/>
+                    <rect key="frame" x="10" y="460.5" width="355" height="171.5"/>
                     <subviews>
                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="pop_up_tuto_3" translatesAutoresizingMaskIntoConstraints="NO" id="81y-wc-DLd">
                             <rect key="frame" x="0.0" y="0.0" width="355" height="171.5"/>
@@ -50,7 +50,7 @@
                 <constraint firstItem="Mmt-uB-mEE" firstAttribute="top" secondItem="xRH-MG-ljN" secondAttribute="top" id="Mev-05-0H8"/>
                 <constraint firstItem="b2e-9g-3sb" firstAttribute="leading" secondItem="xRH-MG-ljN" secondAttribute="leading" constant="10" id="Pin-rB-WuA"/>
                 <constraint firstAttribute="trailing" secondItem="Mmt-uB-mEE" secondAttribute="trailing" id="YIf-VE-UUp"/>
-                <constraint firstAttribute="bottom" secondItem="b2e-9g-3sb" secondAttribute="bottom" constant="45" id="ifX-wq-LTx"/>
+                <constraint firstAttribute="bottom" secondItem="b2e-9g-3sb" secondAttribute="bottom" constant="35" id="ifX-wq-LTx"/>
                 <constraint firstAttribute="bottom" secondItem="Mmt-uB-mEE" secondAttribute="bottom" id="jc3-94-6ya"/>
                 <constraint firstAttribute="trailing" secondItem="b2e-9g-3sb" secondAttribute="trailing" constant="10" id="maW-7l-JD0"/>
             </constraints>

@@ -260,21 +260,29 @@ class PopupManager {
     func dismissPopup(_ animated: Bool, completion: (() -> Void)?) {
         if isDisplayingPopup {
             dismissBackgroundView()
-            popupViewController?.dismiss(animated: true, completion: nil)
-            isDisplayingPopup = false
-            
-            if popupWaitingArray != nil || popupWaitingArray?.isEmpty == false {
-                PopupManager.sharedInstance.launchNextWaitingPopup()
-                
-            } else {
-                DispatchQueue.main.async {
-                    self.backgroundView?.removeFromSuperview()
+            popupViewController?.dismiss(animated: true,
+                completion: {
+                    self.isDisplayingPopup = false
+                    
+                    if self.popupWaitingArray != nil || self.popupWaitingArray?.isEmpty == false {
+                        PopupManager.sharedInstance.launchNextWaitingPopup()
+                        
+                    } else {
+                        DispatchQueue.main.async {
+                            self.backgroundView?.removeFromSuperview()
+                        }
+                    }
+                    
+                    if let completion = completion {
+                        completion()
+                    }
                 }
+            )
+            
+        } else {
+            if let completion = completion {
+                completion()
             }
-        }
-        
-        if let completion = completion {
-            completion()
         }
     }
     

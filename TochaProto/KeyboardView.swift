@@ -19,8 +19,6 @@ class KeyboardView: UIView {
     
     var delegate: KeyboardViewDelegate?
     
-    @IBOutlet weak var counterContainerView: CounterContainerView!
-    
     @IBOutlet var padButtons: [UIButton]!
     @IBOutlet weak var eraseButton: UIButton!
     @IBOutlet weak var validButton: UIButton!

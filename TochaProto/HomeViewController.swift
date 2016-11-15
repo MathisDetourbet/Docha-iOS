@@ -449,10 +449,15 @@ class HomeViewController: GameViewController, UITableViewDelegate, UITableViewDa
                     
                     if self.data[sectionType]!.isEmpty {
                         self.data.removeValue(forKey: sectionType)
+                        
+                        let indexSet = NSMutableIndexSet()
+                        indexSet.add(indexPath.section)
+                        self.tableView.deleteSections(indexSet as IndexSet, with: .fade)
+                        
+                    } else {
+                        self.tableView.deleteRows(at: [indexPath], with: .fade)
                     }
-                    let indexSet = NSMutableIndexSet()
-                    indexSet.add(indexPath.section)
-                    self.tableView.deleteSections(indexSet as IndexSet, with: .fade)
+                    
                     self.tableView.endUpdates()
                     
                 }, fail: { (error) in

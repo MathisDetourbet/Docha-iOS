@@ -22,6 +22,11 @@ class StarterPageContentViewController: RootViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        if DeviceType.IS_IPHONE_4_OR_LESS {
+            titleLabel.alpha = 0.0
+            subtitleLabel.alpha = 0.0
+        }
     }
     
     override func viewDidDisappear(_ animated: Bool) {
