@@ -170,7 +170,6 @@ class UserSessionManager {
             success: {
                 
                 Answers.logLogin(withMethod: "sign_in", success: true, customAttributes: nil)
-                
                 success()
             }
             

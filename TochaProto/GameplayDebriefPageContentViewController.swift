@@ -26,14 +26,14 @@ class GameplayDebriefPageContentViewController: UIViewController {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        
-        productImageView.layer.cornerRadius = 18.0
-        productImageView.layer.masksToBounds = false
-        productImageView.clipsToBounds = true
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
+        
+        productImageView.layer.cornerRadius = 18.0
+        productImageView.layer.masksToBounds = false
+        productImageView.clipsToBounds = true
     }
     
     @IBAction func shareButtonTouched(_ sender: UIButton) {

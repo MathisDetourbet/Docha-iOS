@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11542" systemVersion="16B2555" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina3_5" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11524"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" userLabel="KeyboardView4S" customClass="KeyboardView" customModule="Docha" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="134"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lRh-Lk-VtN" userLabel="0">
+                    <rect key="frame" x="245" y="1" width="75" height="42"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <state key="normal" image="btn_keypad_0_iphone4S"/>
+                    <connections>
+                        <action selector="clickOnPad:" destination="iN0-l3-epB" eventType="touchUpInside" id="lcB-sg-rhd"/>
+                    </connections>
+                </button>
+                <button opaque="NO" tag="1" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lzg-4C-Toe" userLabel="1">
+                    <rect key="frame" x="4" y="1" width="75" height="42"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <state key="normal" image="btn_keypad_1_iphone4S"/>
+                    <connections>
+                        <action selector="clickOnPad:" destination="iN0-l3-epB" eventType="touchUpInside" id="bAT-cj-dh7"/>
+                    </connections>
+                </button>
+                <button opaque="NO" tag="2" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Kaq-qD-HlX" userLabel="2">
+                    <rect key="frame" x="83" y="1" width="75" height="42"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <state key="normal" image="btn_keypad_2_iphone4S"/>
+                    <connections>
+                        <action selector="clickOnPad:" destination="iN0-l3-epB" eventType="touchUpInside" id="aMU-he-KQ1"/>
+                    </connections>
+                </button>
+                <button opaque="NO" tag="3" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5HN-So-Yaz" userLabel="3">
+                    <rect key="frame" x="162" y="1" width="75" height="42"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <state key="normal" image="btn_keypad_3_iphone4S"/>
+                    <connections>
+                        <action selector="clickOnPad:" destination="iN0-l3-epB" eventType="touchUpInside" id="vKr-pB-bbQ"/>
+                    </connections>
+                </button>
+                <button opaque="NO" tag="4" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6zZ-31-9Id" userLabel="4">
+                    <rect key="frame" x="4" y="45" width="75" height="42"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <state key="normal" image="btn_keypad_4_iphone4S"/>
+                    <connections>
+                        <action selector="clickOnPad:" destination="iN0-l3-epB" eventType="touchUpInside" id="yQt-Nw-6oP"/>
+                    </connections>
+                </button>
+                <button opaque="NO" tag="5" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Zhd-K7-1Cq" userLabel="5">
+                    <rect key="frame" x="83" y="45" width="75" height="42"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <state key="normal" image="btn_keypad_5_iphone4S"/>
+                    <connections>
+                        <action selector="clickOnPad:" destination="iN0-l3-epB" eventType="touchUpInside" id="J7I-CF-ln1"/>
+                    </connections>
+                </button>
+                <button opaque="NO" tag="6" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SzG-9j-emA" userLabel="6">
+                    <rect key="frame" x="162" y="45" width="75" height="42"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <state key="normal" image="btn_keypad_6_iphone4S"/>
+                    <connections>
+                        <action selector="clickOnPad:" destination="iN0-l3-epB" eventType="touchUpInside" id="ynj-ZK-DH9"/>
+                    </connections>
+                </button>
+                <button opaque="NO" tag="7" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gT6-Pc-gSa" userLabel="7">
+                    <rect key="frame" x="4" y="89" width="75" height="42"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <state key="normal" image="btn_keypad_7_iphone4S"/>
+                    <connections>
+                        <action selector="clickOnPad:" destination="iN0-l3-epB" eventType="touchUpInside" id="ftc-6n-1DX"/>
+                    </connections>
+                </button>
+                <button opaque="NO" tag="8" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jUK-Ev-f6h" userLabel="8">
+                    <rect key="frame" x="83" y="89" width="75" height="42"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <state key="normal" image="btn_keypad_8_iphone4S"/>
+                    <connections>
+                        <action selector="clickOnPad:" destination="iN0-l3-epB" eventType="touchUpInside" id="02j-t4-cdr"/>
+                    </connections>
+                </button>
+                <button opaque="NO" tag="9" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Kt1-ny-CFD" userLabel="9">
+                    <rect key="frame" x="162" y="89" width="75" height="42"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <state key="normal" image="btn_keypad_9_iphone4S"/>
+                    <connections>
+                        <action selector="clickOnPad:" destination="iN0-l3-epB" eventType="touchUpInside" id="zQB-Pe-r11"/>
+                    </connections>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3vA-VG-Gf4">
+                    <rect key="frame" x="245" y="46" width="75" height="86"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <state key="normal" image="btn_keypad_erase_iphone4S"/>
+                    <connections>
+                        <action selector="eraseAllCounters:" destination="iN0-l3-epB" eventType="touchUpInside" id="6Kh-Jw-5Ey"/>
+                    </connections>
+                </button>
+            </subviews>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <nil key="simulatedStatusBarMetrics"/>
+            <nil key="simulatedTopBarMetrics"/>
+            <nil key="simulatedBottomBarMetrics"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="eraseButton" destination="3vA-VG-Gf4" id="nvg-sH-5Cd"/>
+                <outletCollection property="padButtons" destination="lRh-Lk-VtN" collectionClass="NSMutableArray" id="crN-a8-ijC"/>
+                <outletCollection property="padButtons" destination="lzg-4C-Toe" collectionClass="NSMutableArray" id="oFK-y8-Rkw"/>
+                <outletCollection property="padButtons" destination="Kaq-qD-HlX" collectionClass="NSMutableArray" id="rFc-a4-K37"/>
+                <outletCollection property="padButtons" destination="5HN-So-Yaz" collectionClass="NSMutableArray" id="eBh-Ei-fIo"/>
+                <outletCollection property="padButtons" destination="6zZ-31-9Id" collectionClass="NSMutableArray" id="4vs-Xw-x82"/>
+                <outletCollection property="padButtons" destination="Zhd-K7-1Cq" collectionClass="NSMutableArray" id="F2I-u9-3Yz"/>
+                <outletCollection property="padButtons" destination="SzG-9j-emA" collectionClass="NSMutableArray" id="vhb-bZ-llv"/>
+                <outletCollection property="padButtons" destination="gT6-Pc-gSa" collectionClass="NSMutableArray" id="1vi-qG-26N"/>
+                <outletCollection property="padButtons" destination="jUK-Ev-f6h" collectionClass="NSMutableArray" id="PCz-Vd-s6k"/>
+                <outletCollection property="padButtons" destination="Kt1-ny-CFD" collectionClass="NSMutableArray" id="mx2-He-6Ps"/>
+            </connections>
+        </view>
+    </objects>
+    <resources>
+        <image name="btn_keypad_0_iphone4S" width="75" height="42"/>
+        <image name="btn_keypad_1_iphone4S" width="75" height="42"/>
+        <image name="btn_keypad_2_iphone4S" width="75" height="42"/>
+        <image name="btn_keypad_3_iphone4S" width="75" height="42"/>
+        <image name="btn_keypad_4_iphone4S" width="75" height="42"/>
+        <image name="btn_keypad_5_iphone4S" width="75" height="42"/>
+        <image name="btn_keypad_6_iphone4S" width="75" height="42"/>
+        <image name="btn_keypad_7_iphone4S" width="75" height="42"/>
+        <image name="btn_keypad_8_iphone4S" width="75" height="42"/>
+        <image name="btn_keypad_9_iphone4S" width="75" height="42"/>
+        <image name="btn_keypad_erase_iphone4S" width="75" height="86"/>
+    </resources>
+</document>

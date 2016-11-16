@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11542" systemVersion="16B2555" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11524"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="SDx-24-Rgn" userLabel="keyboardView" customClass="KeyboardView" customModule="Docha" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="269"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <subviews>
+                <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Bkf-hr-dQD" userLabel="1">
+                    <rect key="frame" x="24" y="11" width="98.5" height="57"/>
+                    <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
+                    <state key="normal" backgroundImage="btn_keypad_1"/>
+                    <connections>
+                        <action selector="clickOnPad:" destination="SDx-24-Rgn" eventType="touchUpInside" id="Xca-Aq-ccp"/>
+                    </connections>
+                </button>
+                <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wqW-k0-47m" userLabel="2">
+                    <rect key="frame" x="138.5" y="11" width="98" height="57"/>
+                    <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
+                    <state key="normal" backgroundImage="btn_keypad_2"/>
+                    <connections>
+                        <action selector="clickOnPad:" destination="SDx-24-Rgn" eventType="touchUpInside" id="N22-JT-JoQ"/>
+                    </connections>
+                </button>
+                <button opaque="NO" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Yyx-8z-BB9" userLabel="3">
+                    <rect key="frame" x="252.5" y="11" width="98.5" height="57"/>
+                    <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
+                    <state key="normal" backgroundImage="btn_keypad_3"/>
+                    <connections>
+                        <action selector="clickOnPad:" destination="SDx-24-Rgn" eventType="touchUpInside" id="MAJ-gO-5P7"/>
+                    </connections>
+                </button>
+                <button opaque="NO" tag="4" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9hJ-p2-Nzt" userLabel="4">
+                    <rect key="frame" x="24" y="74" width="98.5" height="57"/>
+                    <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
+                    <state key="normal" backgroundImage="btn_keypad_4"/>
+                    <connections>
+                        <action selector="clickOnPad:" destination="SDx-24-Rgn" eventType="touchUpInside" id="6ar-hZ-dJF"/>
+                    </connections>
+                </button>
+                <button opaque="NO" tag="5" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eL9-mU-dIT" userLabel="5">
+                    <rect key="frame" x="138.5" y="74" width="98" height="57"/>
+                    <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
+                    <state key="normal" backgroundImage="btn_keypad_5"/>
+                    <connections>
+                        <action selector="clickOnPad:" destination="SDx-24-Rgn" eventType="touchUpInside" id="ARF-Fa-DPC"/>
+                    </connections>
+                </button>
+                <button opaque="NO" tag="6" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="U8l-mq-c3L" userLabel="6">
+                    <rect key="frame" x="252.5" y="74" width="98.5" height="57"/>
+                    <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
+                    <state key="normal" backgroundImage="btn_keypad_6"/>
+                    <connections>
+                        <action selector="clickOnPad:" destination="SDx-24-Rgn" eventType="touchUpInside" id="nUZ-U6-ZT3"/>
+                    </connections>
+                </button>
+                <button opaque="NO" tag="7" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OJZ-7m-lzN" userLabel="7">
+                    <rect key="frame" x="24" y="137" width="98.5" height="57"/>
+                    <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
+                    <state key="normal" backgroundImage="btn_keypad_7"/>
+                    <connections>
+                        <action selector="clickOnPad:" destination="SDx-24-Rgn" eventType="touchUpInside" id="fqJ-5x-bld"/>
+                    </connections>
+                </button>
+                <button opaque="NO" tag="8" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nQp-gw-Z3F" userLabel="8">
+                    <rect key="frame" x="138.5" y="137" width="98" height="57"/>
+                    <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
+                    <state key="normal" backgroundImage="btn_keypad_8"/>
+                    <connections>
+                        <action selector="clickOnPad:" destination="SDx-24-Rgn" eventType="touchUpInside" id="oog-UR-euM"/>
+                    </connections>
+                </button>
+                <button opaque="NO" tag="9" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4De-hG-Bt4" userLabel="9">
+                    <rect key="frame" x="252.5" y="137" width="98.5" height="57"/>
+                    <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
+                    <state key="normal" backgroundImage="btn_keypad_9"/>
+                    <connections>
+                        <action selector="clickOnPad:" destination="SDx-24-Rgn" eventType="touchUpInside" id="Vyk-f6-f9h"/>
+                    </connections>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ekV-y1-6Us" userLabel="erase">
+                    <rect key="frame" x="24" y="200" width="98.5" height="57"/>
+                    <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
+                    <state key="normal" backgroundImage="btn_keypad_erase"/>
+                    <connections>
+                        <action selector="eraseAllCounters:" destination="SDx-24-Rgn" eventType="touchUpInside" id="Bam-65-03f"/>
+                    </connections>
+                </button>
+                <button hidden="YES" opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jLT-EX-eq7" userLabel="valid">
+                    <rect key="frame" x="252.5" y="200" width="98.5" height="57"/>
+                    <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
+                    <state key="normal" backgroundImage="btn_keypad_valid"/>
+                    <connections>
+                        <action selector="validatePricing:" destination="SDx-24-Rgn" eventType="touchUpInside" id="Xda-o1-AlL"/>
+                    </connections>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ROn-ae-qfR" userLabel="0">
+                    <rect key="frame" x="138.5" y="200" width="98" height="57"/>
+                    <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
+                    <state key="normal" backgroundImage="btn_keypad_0"/>
+                    <connections>
+                        <action selector="clickOnPad:" destination="SDx-24-Rgn" eventType="touchUpInside" id="RUn-75-stg"/>
+                    </connections>
+                </button>
+            </subviews>
+            <constraints>
+                <constraint firstItem="eL9-mU-dIT" firstAttribute="height" secondItem="wqW-k0-47m" secondAttribute="height" id="4pE-Hx-BwY"/>
+                <constraint firstItem="wqW-k0-47m" firstAttribute="leading" secondItem="Bkf-hr-dQD" secondAttribute="trailing" constant="16" id="5mz-7Z-DuS"/>
+                <constraint firstAttribute="trailing" secondItem="U8l-mq-c3L" secondAttribute="trailing" constant="24" id="6tc-mD-67x"/>
+                <constraint firstItem="Yyx-8z-BB9" firstAttribute="width" secondItem="wqW-k0-47m" secondAttribute="width" id="7nQ-AG-ZT2"/>
+                <constraint firstItem="eL9-mU-dIT" firstAttribute="width" secondItem="wqW-k0-47m" secondAttribute="width" id="8Wf-jF-Lgu"/>
+                <constraint firstItem="9hJ-p2-Nzt" firstAttribute="leading" secondItem="SDx-24-Rgn" secondAttribute="leading" constant="24" id="B9X-l3-cmX"/>
+                <constraint firstItem="4De-hG-Bt4" firstAttribute="leading" secondItem="nQp-gw-Z3F" secondAttribute="trailing" constant="16" id="BEi-yr-i07"/>
+                <constraint firstItem="ekV-y1-6Us" firstAttribute="leading" secondItem="SDx-24-Rgn" secondAttribute="leading" constant="24" id="Bt2-uS-wJf"/>
+                <constraint firstItem="ROn-ae-qfR" firstAttribute="top" secondItem="nQp-gw-Z3F" secondAttribute="bottom" constant="6" id="D59-B2-Ngb"/>
+                <constraint firstItem="OJZ-7m-lzN" firstAttribute="top" secondItem="9hJ-p2-Nzt" secondAttribute="bottom" constant="6" id="DvH-xM-ucd"/>
+                <constraint firstAttribute="trailing" secondItem="Yyx-8z-BB9" secondAttribute="trailing" constant="24" id="F9N-11-Hee"/>
+                <constraint firstItem="4De-hG-Bt4" firstAttribute="top" secondItem="U8l-mq-c3L" secondAttribute="bottom" constant="6" id="FUd-U9-F6p"/>
+                <constraint firstItem="Bkf-hr-dQD" firstAttribute="top" secondItem="SDx-24-Rgn" secondAttribute="top" constant="11" id="FcK-Ew-JzY"/>
+                <constraint firstItem="jLT-EX-eq7" firstAttribute="height" secondItem="ROn-ae-qfR" secondAttribute="height" id="Fhq-ff-taT"/>
+                <constraint firstItem="ROn-ae-qfR" firstAttribute="width" secondItem="nQp-gw-Z3F" secondAttribute="width" id="GQS-jD-wyt"/>
+                <constraint firstItem="jLT-EX-eq7" firstAttribute="leading" secondItem="ROn-ae-qfR" secondAttribute="trailing" constant="16" id="GeK-3O-JVT"/>
+                <constraint firstItem="4De-hG-Bt4" firstAttribute="width" secondItem="nQp-gw-Z3F" secondAttribute="width" id="HDD-n1-i0E"/>
+                <constraint firstItem="Bkf-hr-dQD" firstAttribute="leading" secondItem="SDx-24-Rgn" secondAttribute="leading" constant="24" id="HPA-NK-6cA"/>
+                <constraint firstItem="U8l-mq-c3L" firstAttribute="width" secondItem="eL9-mU-dIT" secondAttribute="width" id="HdT-3l-TVV"/>
+                <constraint firstItem="Yyx-8z-BB9" firstAttribute="top" secondItem="SDx-24-Rgn" secondAttribute="top" constant="11" id="IoM-6q-kkW"/>
+                <constraint firstItem="nQp-gw-Z3F" firstAttribute="leading" secondItem="OJZ-7m-lzN" secondAttribute="trailing" constant="16" id="MLY-kJ-l6I"/>
+                <constraint firstItem="ekV-y1-6Us" firstAttribute="width" secondItem="ROn-ae-qfR" secondAttribute="width" id="Nx8-wt-Lem"/>
+                <constraint firstItem="9hJ-p2-Nzt" firstAttribute="width" secondItem="eL9-mU-dIT" secondAttribute="width" id="Oux-RI-cLH"/>
+                <constraint firstItem="9hJ-p2-Nzt" firstAttribute="top" secondItem="Bkf-hr-dQD" secondAttribute="bottom" constant="6" id="PHv-8R-ST7"/>
+                <constraint firstItem="Bkf-hr-dQD" firstAttribute="width" secondItem="wqW-k0-47m" secondAttribute="width" id="RjN-d9-xCd"/>
+                <constraint firstItem="nQp-gw-Z3F" firstAttribute="width" secondItem="eL9-mU-dIT" secondAttribute="width" id="TIE-1R-MxF"/>
+                <constraint firstItem="eL9-mU-dIT" firstAttribute="leading" secondItem="9hJ-p2-Nzt" secondAttribute="trailing" constant="16" id="Yo7-kM-a7Z"/>
+                <constraint firstAttribute="trailing" secondItem="4De-hG-Bt4" secondAttribute="trailing" constant="24" id="ZDx-Md-FPS"/>
+                <constraint firstItem="jLT-EX-eq7" firstAttribute="width" secondItem="ROn-ae-qfR" secondAttribute="width" id="ZYF-rU-aep"/>
+                <constraint firstItem="ROn-ae-qfR" firstAttribute="centerX" secondItem="SDx-24-Rgn" secondAttribute="centerX" id="ZYq-a8-de1"/>
+                <constraint firstItem="jLT-EX-eq7" firstAttribute="top" secondItem="4De-hG-Bt4" secondAttribute="bottom" constant="6" id="Ztl-Pb-ki3"/>
+                <constraint firstItem="OJZ-7m-lzN" firstAttribute="leading" secondItem="SDx-24-Rgn" secondAttribute="leading" constant="24" id="a71-S2-kix"/>
+                <constraint firstAttribute="bottom" secondItem="ekV-y1-6Us" secondAttribute="bottom" constant="12" id="amo-vX-xG5"/>
+                <constraint firstItem="eL9-mU-dIT" firstAttribute="top" secondItem="wqW-k0-47m" secondAttribute="bottom" constant="6" id="b0l-7J-QiY"/>
+                <constraint firstItem="U8l-mq-c3L" firstAttribute="leading" secondItem="eL9-mU-dIT" secondAttribute="trailing" constant="16" id="cLI-0r-aiO"/>
+                <constraint firstItem="Yyx-8z-BB9" firstAttribute="leading" secondItem="wqW-k0-47m" secondAttribute="trailing" constant="16" id="dle-kf-2hu"/>
+                <constraint firstItem="nQp-gw-Z3F" firstAttribute="height" secondItem="eL9-mU-dIT" secondAttribute="height" id="dum-6Q-9om"/>
+                <constraint firstItem="nQp-gw-Z3F" firstAttribute="top" secondItem="eL9-mU-dIT" secondAttribute="bottom" constant="6" id="eW7-N2-879"/>
+                <constraint firstItem="wqW-k0-47m" firstAttribute="top" secondItem="SDx-24-Rgn" secondAttribute="top" constant="11" id="fTp-Ko-eJ2"/>
+                <constraint firstAttribute="bottom" secondItem="jLT-EX-eq7" secondAttribute="bottom" constant="12" id="gTD-pl-ZlE"/>
+                <constraint firstItem="ekV-y1-6Us" firstAttribute="top" secondItem="OJZ-7m-lzN" secondAttribute="bottom" constant="6" id="h2w-H2-xdd"/>
+                <constraint firstAttribute="trailing" secondItem="jLT-EX-eq7" secondAttribute="trailing" constant="24" id="ilb-Us-OWt"/>
+                <constraint firstItem="OJZ-7m-lzN" firstAttribute="height" secondItem="nQp-gw-Z3F" secondAttribute="height" id="j3e-yW-ms7"/>
+                <constraint firstItem="Yyx-8z-BB9" firstAttribute="height" secondItem="wqW-k0-47m" secondAttribute="height" id="jSo-DN-4WL"/>
+                <constraint firstItem="4De-hG-Bt4" firstAttribute="height" secondItem="nQp-gw-Z3F" secondAttribute="height" id="jkh-oZ-GJG"/>
+                <constraint firstItem="OJZ-7m-lzN" firstAttribute="width" secondItem="nQp-gw-Z3F" secondAttribute="width" id="l7E-r0-Gaz"/>
+                <constraint firstItem="U8l-mq-c3L" firstAttribute="top" secondItem="Yyx-8z-BB9" secondAttribute="bottom" constant="6" id="l8M-9d-HXm"/>
+                <constraint firstItem="ekV-y1-6Us" firstAttribute="height" secondItem="ROn-ae-qfR" secondAttribute="height" id="oz3-jX-WyB"/>
+                <constraint firstItem="9hJ-p2-Nzt" firstAttribute="height" secondItem="eL9-mU-dIT" secondAttribute="height" id="sNN-ly-E8Q"/>
+                <constraint firstItem="eL9-mU-dIT" firstAttribute="centerX" secondItem="SDx-24-Rgn" secondAttribute="centerX" id="tFr-qb-ypf"/>
+                <constraint firstItem="nQp-gw-Z3F" firstAttribute="centerX" secondItem="SDx-24-Rgn" secondAttribute="centerX" id="tWh-bJ-RMY"/>
+                <constraint firstItem="Bkf-hr-dQD" firstAttribute="height" secondItem="wqW-k0-47m" secondAttribute="height" id="wZT-bi-m2i"/>
+                <constraint firstItem="ROn-ae-qfR" firstAttribute="height" secondItem="nQp-gw-Z3F" secondAttribute="height" id="xC9-LF-6xW"/>
+                <constraint firstItem="ROn-ae-qfR" firstAttribute="leading" secondItem="ekV-y1-6Us" secondAttribute="trailing" constant="16" id="xsx-jR-XTG"/>
+                <constraint firstAttribute="bottom" secondItem="ROn-ae-qfR" secondAttribute="bottom" constant="12" id="ykU-JH-r4I"/>
+                <constraint firstItem="U8l-mq-c3L" firstAttribute="height" secondItem="eL9-mU-dIT" secondAttribute="height" id="ypI-f9-oor"/>
+            </constraints>
+            <nil key="simulatedStatusBarMetrics"/>
+            <nil key="simulatedTopBarMetrics"/>
+            <nil key="simulatedBottomBarMetrics"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="eraseButton" destination="ekV-y1-6Us" id="TxR-Dm-vRb"/>
+                <outlet property="validButton" destination="jLT-EX-eq7" id="vWV-RK-FiC"/>
+                <outletCollection property="padButtons" destination="ROn-ae-qfR" collectionClass="NSMutableArray" id="dcj-q5-tuQ"/>
+                <outletCollection property="padButtons" destination="Bkf-hr-dQD" collectionClass="NSMutableArray" id="Qht-EE-eky"/>
+                <outletCollection property="padButtons" destination="wqW-k0-47m" collectionClass="NSMutableArray" id="CTh-09-2z8"/>
+                <outletCollection property="padButtons" destination="Yyx-8z-BB9" collectionClass="NSMutableArray" id="zdd-YQ-wWB"/>
+                <outletCollection property="padButtons" destination="9hJ-p2-Nzt" collectionClass="NSMutableArray" id="yTf-Rm-7lZ"/>
+                <outletCollection property="padButtons" destination="eL9-mU-dIT" collectionClass="NSMutableArray" id="WMB-hi-a4d"/>
+                <outletCollection property="padButtons" destination="U8l-mq-c3L" collectionClass="NSMutableArray" id="lJm-1h-XyN"/>
+                <outletCollection property="padButtons" destination="OJZ-7m-lzN" collectionClass="NSMutableArray" id="9mq-PO-zOX"/>
+                <outletCollection property="padButtons" destination="nQp-gw-Z3F" collectionClass="NSMutableArray" id="Yf6-cs-4wi"/>
+                <outletCollection property="padButtons" destination="4De-hG-Bt4" collectionClass="NSMutableArray" id="5p7-2n-HxZ"/>
+            </connections>
+            <point key="canvasLocation" x="101" y="-25"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="btn_keypad_0" width="80" height="45"/>
+        <image name="btn_keypad_1" width="80" height="45"/>
+        <image name="btn_keypad_2" width="80" height="45"/>
+        <image name="btn_keypad_3" width="80" height="45"/>
+        <image name="btn_keypad_4" width="80" height="45"/>
+        <image name="btn_keypad_5" width="80" height="45"/>
+        <image name="btn_keypad_6" width="80" height="45"/>
+        <image name="btn_keypad_7" width="80" height="45"/>
+        <image name="btn_keypad_8" width="80" height="45"/>
+        <image name="btn_keypad_9" width="80" height="45"/>
+        <image name="btn_keypad_erase" width="80" height="45"/>
+        <image name="btn_keypad_valid" width="80" height="45"/>
+    </resources>
+</document>

@@ -74,7 +74,9 @@ class GameplayMainViewController: GameViewController, KeyboardViewDelegate, Coun
     var cardCenterXConstraint: NSLayoutConstraint?
     
     // Keyboard View
-    @IBOutlet weak var keyboardView: KeyboardView!
+    var keyboardView: KeyboardView!
+    @IBOutlet weak var keyboardContainerView: UIView!
+    @IBOutlet weak var aspectRatioKeyboardContainerView: NSLayoutConstraint!
     
     
 //MARK: Life View Cycle
@@ -82,9 +84,7 @@ class GameplayMainViewController: GameViewController, KeyboardViewDelegate, Coun
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        if DeviceType.IS_IPHONE_4_OR_LESS {
-            initKeyboardForiPhone4S()
-        }
+        initKeyboardView()
         
         keyboardView.delegate = self
         
@@ -443,7 +443,28 @@ class GameplayMainViewController: GameViewController, KeyboardViewDelegate, Coun
     }
     
     
-//MARK: Keyboard Delegate
+//MARK: Keyboard Init + Delegate
+    
+    func initKeyboardView() {
+        if DeviceType.IS_IPHONE_4_OR_LESS {
+            let keyboardView4S = KeyboardView.loadFromNibNamed("KeyboardView4S") as? KeyboardView
+            self.keyboardView = keyboardView4S
+            aspectRatioKeyboardContainerView.isActive = false
+            
+            
+        } else {
+            let keyboardView = KeyboardView.loadFromNibNamed("KeyboardView") as? KeyboardView
+            self.keyboardView = keyboardView
+            aspectRatioKeyboardContainerView = NSLayoutConstraint(item: keyboardContainerView, attribute: .width, relatedBy: .equal, toItem: keyboardContainerView, attribute: .height, multiplier: 320/221, constant: 0)
+        }
+        
+        keyboardView.translatesAutoresizingMaskIntoConstraints = false
+        keyboardContainerView.addSubview(keyboardView)
+        self.view.addConstraint(NSLayoutConstraint(item: keyboardView, attribute: .top, relatedBy: .equal, toItem: keyboardContainerView, attribute: .top, multiplier: 1.0, constant: 0.0))
+        self.view.addConstraint(NSLayoutConstraint(item: keyboardView, attribute: .bottom, relatedBy: .equal, toItem: keyboardContainerView, attribute: .bottom, multiplier: 1.0, constant: 0.0))
+        self.view.addConstraint(NSLayoutConstraint(item: keyboardView, attribute: .leading, relatedBy: .equal, toItem: keyboardContainerView, attribute: .leading, multiplier: 1.0, constant: 0.0))
+        self.view.addConstraint(NSLayoutConstraint(item: keyboardView, attribute: .trailing, relatedBy: .equal, toItem: keyboardContainerView, attribute: .trailing, multiplier: 1.0, constant: 0.0))
+    }
     
     func clickOnPad(withNumber number: Int) {
         if cursorCounter == currentPriceArray?.count {
@@ -455,7 +476,6 @@ class GameplayMainViewController: GameViewController, KeyboardViewDelegate, Coun
         cursorCounter += 1
         
         if cursorCounter == currentPriceArray?.count {
-            //keyboardView.enableValidButton(true)
             validatePricing()
         }
     }
@@ -604,18 +624,6 @@ class GameplayMainViewController: GameViewController, KeyboardViewDelegate, Coun
                     return -100.0
                 }
             }
-        }
-    }
-    
-    func initKeyboardForiPhone4S() {
-        keyboardView.removeFromSuperview()
-        
-        let keyboard4S = KeyboardView.loadFromNibNamed("Keyboard4SView") as? KeyboardView
-        if let keyboard4S = keyboard4S {
-            keyboard4S.translatesAutoresizingMaskIntoConstraints = false
-            self.view.addSubview(keyboard4S)
-            keyboard4S.addConstraints(keyboardView.constraints)
-            keyboardView = keyboard4S
         }
     }
 }

@@ -24,7 +24,7 @@ class KeyboardView: UIView {
     @IBOutlet weak var validButton: UIButton!
     
     func reset() {
-        enableValidButton(false)
+        //enableValidButton(false)
         enableEreaseButton(false)
     }
     
@@ -33,7 +33,7 @@ class KeyboardView: UIView {
             padButton.isEnabled = enabled
         }
         eraseButton.isEnabled = enabled
-        validButton.isEnabled = enabled
+        //validButton.isEnabled = enabled
     }
     
     func enableEreaseButton(_ enabled: Bool) {
@@ -50,7 +50,7 @@ class KeyboardView: UIView {
     
     @IBAction func eraseAllCounters(_ sender: UIButton) {
         self.delegate?.eraseAllCounters()
-        self.validButton.isEnabled = false
+        //self.validButton.isEnabled = false
         self.eraseButton.isEnabled = false
     }
     

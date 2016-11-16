@@ -8,6 +8,7 @@
 
 import Foundation
 import FBSDKShareKit
+import SnapKit
 
 class GameplayDebriefViewController: GameViewController, UIPageViewControllerDataSource, UIPageViewControllerDelegate, GameplayDebriefPageContentDelegate, CounterContainerViewDelegate, FBSDKSharingDelegate {
     
@@ -19,22 +20,12 @@ class GameplayDebriefViewController: GameViewController, UIPageViewControllerDat
     var pagesContentsViewControllerArray: [GameplayDebriefPageContentViewController] = []
     var pageViewController: UIPageViewController!
     
-    @IBOutlet weak var resultRoundSentenceImageView: UIImageView!
-    
-    @IBOutlet weak var userAvatarImageView: UIImageView!
-    @IBOutlet weak var userNameLabel: UILabel!
-    @IBOutlet weak var userLevelLabel: UILabel!
-    @IBOutlet weak var userTimeLabel: UILabel!
-    @IBOutlet var userTimelineImageViewCollection: [UIImageView]!
-    
-    @IBOutlet weak var opponentAvatarImageView: UIImageView!
-    @IBOutlet weak var opponentNameLabel: UILabel!
-    @IBOutlet weak var opponentLevelLabel: UILabel!
-    @IBOutlet weak var opponentTimeLabel: UILabel!
-    @IBOutlet var opponentTimelineImageViewCollection: [UIImageView]!
-    
     @IBOutlet weak var pageControl: UIPageControl!
     @IBOutlet weak var containerPageViewController: UIView!
+    @IBOutlet weak var topContainerView: UIView!
+    @IBOutlet weak var aspectRatioTopContainerConstraint: NSLayoutConstraint!
+    
+    @IBOutlet weak var responseLabel: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -70,6 +61,10 @@ class GameplayDebriefViewController: GameViewController, UIPageViewControllerDat
         self.navigationController?.setNavigationBarHidden(true, animated: true)
     }
     
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+    }
+    
     func loadNewUserInfos() {
         UserSessionManager.sharedInstance.getUser(
             success: {
@@ -81,6 +76,28 @@ class GameplayDebriefViewController: GameViewController, UIPageViewControllerDat
     }
     
     func buildUI() {
+        var idDebriefView = "DebriefTopContainerView"
+        
+        if DeviceType.IS_IPHONE_4_OR_LESS {
+            idDebriefView = "DebriefTopContainerView4S"
+            aspectRatioTopContainerConstraint.isActive = false
+            self.view.addConstraint(NSLayoutConstraint(item: topContainerView, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 155))
+            self.view.addConstraint(NSLayoutConstraint(item: topContainerView, attribute: .width, relatedBy: .equal, toItem: self.view, attribute: .width, multiplier: 1, constant: 0))
+            
+            responseLabel.isHidden = true
+        }
+        
+        let debriefTopContainerView = DebriefTopContainerView.loadFromNibNamed(idDebriefView) as! DebriefTopContainerView
+        debriefTopContainerView.translatesAutoresizingMaskIntoConstraints = false
+        topContainerView.addSubview(debriefTopContainerView)
+        
+        debriefTopContainerView.snp.makeConstraints { (make) in
+            make.top.equalToSuperview()
+            make.bottom.equalToSuperview()
+            make.leading.equalToSuperview()
+            make.trailing.equalToSuperview()
+        }
+        
         let matchManager = MatchManager.sharedInstance
         let currentRound = matchManager.currentRound as? RoundFull
         
@@ -107,16 +124,16 @@ class GameplayDebriefViewController: GameViewController, UIPageViewControllerDat
                     timelineImage = #imageLiteral(resourceName: "red_big_icon")
                 }
                 
-                userTimelineImageViewCollection[index].image = timelineImage
+                debriefTopContainerView.userTimelineImageViewCollection[index].image = timelineImage
                 index += 1
             }
             
-            for index in 0..<opponentTimelineImageViewCollection.count {
+            for index in 0..<debriefTopContainerView.opponentTimelineImageViewCollection.count {
                 if currentRound.status == .waiting {
-                    opponentTimelineImageViewCollection[index].image = #imageLiteral(resourceName: "waiting_icon")
+                    debriefTopContainerView.opponentTimelineImageViewCollection[index].image = #imageLiteral(resourceName: "waiting_icon")
                     
                 } else {
-                    opponentTimelineImageViewCollection[index].image = #imageLiteral(resourceName: "red_big_icon")
+                    debriefTopContainerView.opponentTimelineImageViewCollection[index].image = #imageLiteral(resourceName: "red_big_icon")
                 }
             }
             
@@ -124,7 +141,7 @@ class GameplayDebriefViewController: GameViewController, UIPageViewControllerDat
             opponentScore = opponentScore > scoreMax ? scoreMax : opponentScore
             
             for index in 0..<opponentScore {
-                opponentTimelineImageViewCollection[index].image = #imageLiteral(resourceName: "perfect_big_icon")
+                debriefTopContainerView.opponentTimelineImageViewCollection[index].image = #imageLiteral(resourceName: "perfect_big_icon")
             }
             
             var userBorderColor: UIColor = UIColor.white
@@ -133,23 +150,23 @@ class GameplayDebriefViewController: GameViewController, UIPageViewControllerDat
             // Result sentence
             switch currentRound.status {
             case .waiting:
-                resultRoundSentenceImageView.image = #imageLiteral(resourceName: "waiting_sentence")
+                debriefTopContainerView.resultRoundSentenceImageView.image = #imageLiteral(resourceName: "waiting_sentence")
                 break
                 
             case .won:
-                resultRoundSentenceImageView.image = #imageLiteral(resourceName: "winner_sentence")
+                debriefTopContainerView.resultRoundSentenceImageView.image = #imageLiteral(resourceName: "winner_sentence")
                 userBorderColor = UIColor.greenDochaColor()
                 opponentBorderColor = UIColor.redDochaColor()
                 break
                 
             case .lost:
-                resultRoundSentenceImageView.image = #imageLiteral(resourceName: "looser_sentence")
+                debriefTopContainerView.resultRoundSentenceImageView.image = #imageLiteral(resourceName: "looser_sentence")
                 userBorderColor = UIColor.redDochaColor()
                 opponentBorderColor = UIColor.greenDochaColor()
                 break
                 
             case .tie:
-                resultRoundSentenceImageView.image = #imageLiteral(resourceName: "nul_sentence")
+                debriefTopContainerView.resultRoundSentenceImageView.image = #imageLiteral(resourceName: "nul_sentence")
                 break
             }
             
@@ -158,34 +175,34 @@ class GameplayDebriefViewController: GameViewController, UIPageViewControllerDat
             let opponentPlayer = matchManager.opponentPlayer
             
             if let userPlayer = userPlayer {
-                userAvatarImageView.image = userPlayer.avatarImage
-                userAvatarImageView.applyCircle(withBorderColor: userBorderColor)
-                userNameLabel.text = userPlayer.pseudo
+                debriefTopContainerView.userAvatarImageView.image = userPlayer.avatarImage
+                debriefTopContainerView.userAvatarImageView.applyCircle(withBorderColor: userBorderColor)
+                debriefTopContainerView.userNameLabel.text = userPlayer.pseudo
                 
                 if let level = userPlayer.level {
-                    userLevelLabel.text = "Niveau \(level)"
+                    debriefTopContainerView.userLevelLabel.text = "Niveau \(level)"
                     
                 } else {
-                    userLevelLabel.text = "?"
+                    debriefTopContainerView.userLevelLabel.text = "?"
                 }
             }
             
             // Opponent infos
             if let opponentPlayer = opponentPlayer {
-                opponentNameLabel.text = opponentPlayer.pseudo
+                debriefTopContainerView.opponentNameLabel.text = opponentPlayer.pseudo
                 
                 opponentPlayer.getAvatarImage(for: .medium,
-                    completionHandler: { (image) in
-                        self.opponentAvatarImageView.image = image
-                        self.opponentAvatarImageView.applyCircle(withBorderColor: opponentBorderColor)
-                    }
+                                              completionHandler: { (image) in
+                                                debriefTopContainerView.opponentAvatarImageView.image = image
+                                                debriefTopContainerView.opponentAvatarImageView.applyCircle(withBorderColor: opponentBorderColor)
+                }
                 )
                 
                 if let level = opponentPlayer.level {
-                    opponentLevelLabel.text = "Niveau \(level)"
+                    debriefTopContainerView.opponentLevelLabel.text = "Niveau \(level)"
                     
                 } else {
-                    opponentLevelLabel.text = "?"
+                    debriefTopContainerView.opponentLevelLabel.text = "?"
                 }
             }
             
@@ -197,16 +214,16 @@ class GameplayDebriefViewController: GameViewController, UIPageViewControllerDat
                 if let userTime = currentRound.userTime {
                     let seconds = Int(userTime/1000)
                     let milliseconds = (Int(Int(userTime) - (seconds * 1000))) / 1000
-                    userTimeLabel.text = "\(seconds)\"\(milliseconds)"
-                    opponentTimeLabel.text = "Temps écoulé"
+                    debriefTopContainerView.userTimeLabel.text = "\(seconds)\"\(milliseconds)"
+                    debriefTopContainerView.opponentTimeLabel.text = "Temps écoulé"
                 }
             } else if opponentScore > scoreMax {
                 // You loose
                 if let opponentTime = currentRound.opponentTime {
                     let seconds = Int(opponentTime/1000)
                     let milliseconds = (Int(Int(opponentTime) - (seconds * 1000))) / 1000
-                    opponentTimeLabel.text = "\(seconds)\"\(milliseconds)"
-                    userTimeLabel.text = "Temps écoulé"
+                    debriefTopContainerView.opponentTimeLabel.text = "\(seconds)\"\(milliseconds)"
+                    debriefTopContainerView.userTimeLabel.text = "Temps écoulé"
                 }
                 
             } else if userScore == opponentScore {
@@ -214,13 +231,13 @@ class GameplayDebriefViewController: GameViewController, UIPageViewControllerDat
                 if let userTime = currentRound.userTime {
                     let seconds = Int(userTime/1000)
                     let milliseconds = (Int(Int(userTime) - (seconds * 1000))) / 1000
-                    userTimeLabel.text = "\(seconds)\"\(milliseconds)"
-                    opponentTimeLabel.text = userTimeLabel.text
+                    debriefTopContainerView.userTimeLabel.text = "\(seconds)\"\(milliseconds)"
+                    debriefTopContainerView.opponentTimeLabel.text = debriefTopContainerView.userTimeLabel.text
                 }
                 
             } else {
-                userTimeLabel.text = nil
-                opponentTimeLabel.text = nil
+                debriefTopContainerView.userTimeLabel.text = nil
+                debriefTopContainerView.opponentTimeLabel.text = nil
             }
         }
     }

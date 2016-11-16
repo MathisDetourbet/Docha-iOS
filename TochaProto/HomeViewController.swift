@@ -199,6 +199,13 @@ class HomeViewController: GameViewController, UITableViewDelegate, UITableViewDa
             MatchManager.sharedInstance.getQuickPlayers(byOrder: "activity", andLimit: 10,
                 success: { (friends) in
                     
+                    for friend in friends {
+                        friend.getAvatarImage(for: .medium,
+                            completionHandler: { (image) in
+                                friend.avatarImage = image
+                            }
+                        )
+                    }
                     self.data[HomeSectionName.friends] = friends
                     if let completion = completion {
                         completion()

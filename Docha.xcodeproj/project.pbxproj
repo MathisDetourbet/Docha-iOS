@@ -10,7 +10,11 @@
 		17C4C55B632D40738F022EBF /* Pods_Docha.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7B81E7EE25887F1C2C481FAD /* Pods_Docha.framework */; };
 		3BBFA0F0EB4F828F18867FE4 /* Pods_DochaTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7CF8F4D01B437EA5343370DD /* Pods_DochaTests.framework */; };
 		67005C731DDB7231002331B5 /* DeviceHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67005C721DDB7231002331B5 /* DeviceHelper.swift */; };
-		67005C751DDB835D002331B5 /* Keyboard4SView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 67005C741DDB835D002331B5 /* Keyboard4SView.xib */; };
+		67005C751DDB835D002331B5 /* KeyboardView4S.xib in Resources */ = {isa = PBXBuildFile; fileRef = 67005C741DDB835D002331B5 /* KeyboardView4S.xib */; };
+		67005C771DDB949F002331B5 /* KeyboardView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 67005C761DDB949F002331B5 /* KeyboardView.xib */; };
+		67005C791DDC5CA9002331B5 /* DebriefTopContainerView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 67005C781DDC5CA9002331B5 /* DebriefTopContainerView.xib */; };
+		67005C7B1DDC5D73002331B5 /* DebriefTopContainerView4S.xib in Resources */ = {isa = PBXBuildFile; fileRef = 67005C7A1DDC5D73002331B5 /* DebriefTopContainerView4S.xib */; };
+		67005C7D1DDC5FDD002331B5 /* DebriefTopContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67005C7C1DDC5FDD002331B5 /* DebriefTopContainerView.swift */; };
 		6701D9741C108A2100F87043 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6701D9731C108A2100F87043 /* AppDelegate.swift */; };
 		6701D9791C108A2100F87043 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6701D9771C108A2100F87043 /* Main.storyboard */; };
 		6701D97E1C108A2100F87043 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6701D97C1C108A2100F87043 /* LaunchScreen.storyboard */; };
@@ -195,7 +199,11 @@
 		55664A0EBC2926A784E0D3C2 /* Pods-Docha.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Docha.release.xcconfig"; path = "Pods/Target Support Files/Pods-Docha/Pods-Docha.release.xcconfig"; sourceTree = "<group>"; };
 		5B0290D3059667BA03F0D851 /* Pods-DochaUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DochaUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-DochaUITests/Pods-DochaUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		67005C721DDB7231002331B5 /* DeviceHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeviceHelper.swift; sourceTree = "<group>"; };
-		67005C741DDB835D002331B5 /* Keyboard4SView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Keyboard4SView.xib; sourceTree = "<group>"; };
+		67005C741DDB835D002331B5 /* KeyboardView4S.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = KeyboardView4S.xib; sourceTree = "<group>"; };
+		67005C761DDB949F002331B5 /* KeyboardView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = KeyboardView.xib; sourceTree = "<group>"; };
+		67005C781DDC5CA9002331B5 /* DebriefTopContainerView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DebriefTopContainerView.xib; sourceTree = "<group>"; };
+		67005C7A1DDC5D73002331B5 /* DebriefTopContainerView4S.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DebriefTopContainerView4S.xib; sourceTree = "<group>"; };
+		67005C7C1DDC5FDD002331B5 /* DebriefTopContainerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DebriefTopContainerView.swift; sourceTree = "<group>"; };
 		6701D9701C108A2100F87043 /* Docha.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Docha.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6701D9731C108A2100F87043 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		6701D9781C108A2100F87043 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -911,7 +919,8 @@
 				67F75F6F1C42E00C00E78102 /* CounterView.swift */,
 				678113641D8168DD00B24234 /* CounterContainerView.swift */,
 				672D6F0E1D0B25AC00C0EB01 /* KeyboardView.swift */,
-				67005C741DDB835D002331B5 /* Keyboard4SView.xib */,
+				67005C761DDB949F002331B5 /* KeyboardView.xib */,
+				67005C741DDB835D002331B5 /* KeyboardView4S.xib */,
 				67FDCDCB1D7EF8EA00FC1264 /* CardProductView.swift */,
 				67FDCDCD1D7EFD2B00FC1264 /* CardProductView.xib */,
 				67FDCDD11D7F1CF700FC1264 /* PinIconView.swift */,
@@ -1121,6 +1130,9 @@
 			children = (
 				67B90ECE1D86BA860009F32C /* GameplayDebriefViewController.swift */,
 				67B90ED01D880BED0009F32C /* GameplayDebriefPageContentViewController.swift */,
+				67005C7C1DDC5FDD002331B5 /* DebriefTopContainerView.swift */,
+				67005C781DDC5CA9002331B5 /* DebriefTopContainerView.xib */,
+				67005C7A1DDC5D73002331B5 /* DebriefTopContainerView4S.xib */,
 				67475E9C1DB751310005677C /* Rewards */,
 			);
 			name = Debrief;
@@ -1352,6 +1364,7 @@
 				67EFFDE61D907922003EE8E5 /* Tutorial2View.xib in Resources */,
 				67FEE22F1C8E1E07008F842C /* Montserrat-UltraLight.otf in Resources */,
 				67EFFDF31D914592003EE8E5 /* Tutorial6View.xib in Resources */,
+				67005C771DDB949F002331B5 /* KeyboardView.xib in Resources */,
 				67FDCDCE1D7EFD2B00FC1264 /* CardProductView.xib in Resources */,
 				673F0C361DD34034001E5E95 /* Assets.xcassets in Resources */,
 				67FEE2291C8E1E07008F842C /* Montserrat-Bold.otf in Resources */,
@@ -1363,16 +1376,18 @@
 				67DED22D1D47D88400A4027E /* PopupView.xib in Resources */,
 				67FEE2281C8E1E07008F842C /* Montserrat-Black.otf in Resources */,
 				6701D97E1C108A2100F87043 /* LaunchScreen.storyboard in Resources */,
+				67005C7B1DDC5D73002331B5 /* DebriefTopContainerView4S.xib in Resources */,
 				67EFFDF11D91450A003EE8E5 /* Tutorial5View.xib in Resources */,
 				6701D9791C108A2100F87043 /* Main.storyboard in Resources */,
 				67EFFDF51D9145E9003EE8E5 /* Tutorial7View.xib in Resources */,
 				67EFFDEC1D913C14003EE8E5 /* Tutorial3View.xib in Resources */,
 				6791CDE21D2EA1C20091DDB0 /* CaviarDreams_Bold.ttf in Resources */,
 				67FDCDD01D7F1C1600FC1264 /* PinIconView.xib in Resources */,
+				67005C791DDC5CA9002331B5 /* DebriefTopContainerView.xib in Resources */,
 				67FEE22C1C8E1E07008F842C /* Montserrat-Light.otf in Resources */,
 				67FEE22D1C8E1E07008F842C /* Montserrat-Regular.otf in Resources */,
 				67FEE22E1C8E1E07008F842C /* Montserrat-SemiBold.otf in Resources */,
-				67005C751DDB835D002331B5 /* Keyboard4SView.xib in Resources */,
+				67005C751DDB835D002331B5 /* KeyboardView4S.xib in Resources */,
 				67EFFDE41D907916003EE8E5 /* Tutorial1View.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1579,6 +1594,7 @@
 				67C18F261DAAF9B8008DD94B /* RoundRequest.swift in Sources */,
 				67EFFDE81D907AC4003EE8E5 /* TutorialView.swift in Sources */,
 				67DD961B1D78B586007598E0 /* NewGameFindOpponentViewController.swift in Sources */,
+				67005C7D1DDC5FDD002331B5 /* DebriefTopContainerView.swift in Sources */,
 				6786E4041CF485ED00729D8E /* RootViewController.swift in Sources */,
 				679B84831D8C5C7C0031EC27 /* GameplayMatchViewController.swift in Sources */,
 				676D0EB81DA681B4005ABBC1 /* LaunchScreenViewController.swift in Sources */,

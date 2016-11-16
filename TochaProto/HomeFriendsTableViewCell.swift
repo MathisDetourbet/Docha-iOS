@@ -64,12 +64,18 @@ class HomeFriendsTableViewCell: UITableViewCell, UICollectionViewDelegate, UICol
         
         let friend = friends[indexPath.row]
         cell.friendNameLabel.text = friend.pseudo
-        friend.getAvatarImage(for: .medium,
-            completionHandler: { (image) in
-                cell.friendAvatarImageView.image = image
-                cell.friendAvatarImageView.applyCircle(withBorderColor: UIColor.lightGrayDochaColor())
-            }
-        )
+        if let avatarImage = friend.avatarImage {
+            cell.friendAvatarImageView.image = avatarImage
+            cell.friendAvatarImageView.applyCircle(withBorderColor: UIColor.lightGrayDochaColor())
+            
+        } else {
+            friend.getAvatarImage(for: .medium,
+                completionHandler: { (image) in
+                    cell.friendAvatarImageView.image = image
+                    cell.friendAvatarImageView.applyCircle(withBorderColor: UIColor.lightGrayDochaColor())
+                }
+            )
+        }
         cell.friendOnlineIndicatorImageView.isHidden = friend.isOnline ? false : true
         
         return cell
