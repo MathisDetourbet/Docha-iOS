@@ -125,22 +125,29 @@ class NewGameCategorieSelectionViewController: GameViewController, UICollectionV
                 let match = MatchManager.sharedInstance.currentMatch
                 let round = MatchManager.sharedInstance.currentRound
                 
-                UserSessionManager.sharedInstance.renewCategories(forMatchID: match?.id, andRoundID: round?.id,
-                    success: { (categories) in
-                        self.categoriesDisplayed = categories
-                        
-                        let newUserDochos = UserSessionManager.sharedInstance.currentSession()?.dochos
-                        self.userDochosLabel.countFrom(Float(userDochos), to: Float(newUserDochos!), withDuration: 1.0, andAnimationType: .easeInOut, andCountingType: .int)
-                        self.collectionView.reloadData()
-                        
-                        if newUserDochos! < 10 {
-                            self.renewCategoriesButton.isEnabled = false
+                PopupManager.sharedInstance.showLoadingPopup(message: Constants.PopupMessage.LoadingMessage.kLoadingJustAMoment) {
+                    UserSessionManager.sharedInstance.renewCategories(forMatchID: match?.id, andRoundID: round?.id,
+                        success: { (categories) in
+                            
+                            PopupManager.sharedInstance.dismissPopup(true) {
+                                self.categoriesDisplayed = categories
+                                
+                                let newUserDochos = UserSessionManager.sharedInstance.currentSession()?.dochos
+                                self.userDochosLabel.countFrom(Float(userDochos), to: Float(newUserDochos!), withDuration: 1.0, andAnimationType: .easeInOut, andCountingType: .int)
+                                self.collectionView.reloadData()
+                                
+                                if newUserDochos! < 10 {
+                                    self.renewCategoriesButton.isEnabled = false
+                                }
+                            }
+                            
+                        }, fail: {(error) in
+                            PopupManager.sharedInstance.dismissPopup(true) {
+                                PopupManager.sharedInstance.showErrorPopup(message: Constants.PopupMessage.ErrorMessage.kErrorOccured)
+                            }
                         }
-                                                                    
-                    }, fail: {(error) in
-                        PopupManager.sharedInstance.showErrorPopup(message: Constants.PopupMessage.ErrorMessage.kErrorOccured)
-                    }
-                )
+                    )
+                }
             }
         }
     }
