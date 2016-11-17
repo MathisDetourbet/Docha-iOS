@@ -457,6 +457,11 @@ class HomeViewController: GameViewController, UITableViewDelegate, UITableViewDa
                     if self.data[sectionType]!.isEmpty {
                         self.data.removeValue(forKey: sectionType)
                         
+                        self.sortedDataKeys = Array(self.data.keys)
+                        self.sortedDataKeys.sort(by: { (first, second) -> Bool in
+                            first.rawValue < second.rawValue
+                        })
+                        
                         self.tableView.deleteRows(at: [indexPath], with: .right)
                         
                         let indexSet = NSMutableIndexSet()
@@ -479,7 +484,7 @@ class HomeViewController: GameViewController, UITableViewDelegate, UITableViewDa
     func buildDeleteButtonCell() -> UIButton! {
         let deleteButton = UIButton(type: .custom)
         deleteButton.backgroundColor = UIColor.redDochaColor()
-        deleteButton.setImage(UIImage(named: "bin_icon"), for: UIControlState())
+        deleteButton.setImage(#imageLiteral(resourceName: "bin_icon"), for: UIControlState())
         
         return deleteButton
     }

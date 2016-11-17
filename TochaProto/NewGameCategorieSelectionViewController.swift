@@ -133,7 +133,7 @@ class NewGameCategorieSelectionViewController: GameViewController, UICollectionV
                         self.userDochosLabel.countFrom(Float(userDochos), to: Float(newUserDochos!), withDuration: 1.0, andAnimationType: .easeInOut, andCountingType: .int)
                         self.collectionView.reloadData()
                         
-                        if newUserDochos < 10 {
+                        if newUserDochos! < 10 {
                             self.renewCategoriesButton.isEnabled = false
                         }
                                                                     
