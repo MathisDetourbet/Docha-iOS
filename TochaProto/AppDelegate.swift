@@ -165,7 +165,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         switch status {
         case .offline, .unknown:
-            if PopupManager.sharedInstance.isDisplayingNetworkPopup() {
+            if PopupManager.sharedInstance.isDisplayingNetworkPopup() == false {
                 PopupManager.sharedInstance.showLoadingPopup("Aucune connexion internet", message: "Nous essayons de rétablir ta connexion internet...", completion: nil)
             }
             break

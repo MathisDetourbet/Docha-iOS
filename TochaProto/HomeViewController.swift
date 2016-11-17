@@ -59,7 +59,7 @@ class HomeViewController: GameViewController, UITableViewDelegate, UITableViewDa
     
     @IBOutlet weak var sharingButton: UIButton!
     
-//MARK: View Life Cycle
+//MARK: - View Life Cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -136,7 +136,7 @@ class HomeViewController: GameViewController, UITableViewDelegate, UITableViewDa
     }
     
     
-//MARK: Load Data Methods
+//MARK: - Load Data Methods
     
     func loadUserInfos() {
         let userData = UserSessionManager.sharedInstance.getUserInfosAndAvatarImage(withImageSize: .large)
@@ -259,7 +259,7 @@ class HomeViewController: GameViewController, UITableViewDelegate, UITableViewDa
     }
     
     
-//MARK: Table View Controller - Data Source Methods
+//MARK: - Table View Controller - Data Source Methods
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if sortedDataKeys[section] == HomeSectionName.friends {
@@ -403,7 +403,7 @@ class HomeViewController: GameViewController, UITableViewDelegate, UITableViewDa
     }
     
 
-//MARK: Table View Controller - Delegate Methods
+//MARK: - Table View Controller - Delegate Methods
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath.section == HomeSectionName.friends.rawValue {
@@ -437,7 +437,7 @@ class HomeViewController: GameViewController, UITableViewDelegate, UITableViewDa
     }
     
     
-//MARK: SWTableViewCell - Delegate Methods
+//MARK: - SWTableViewCell - Delegate Methods
     
     func swipeableTableViewCell(_ cell: SWTableViewCell!, didTriggerRightUtilityButtonWith index: Int) {
         let indexPath = tableView.indexPath(for: cell)
@@ -457,12 +457,14 @@ class HomeViewController: GameViewController, UITableViewDelegate, UITableViewDa
                     if self.data[sectionType]!.isEmpty {
                         self.data.removeValue(forKey: sectionType)
                         
+                        self.tableView.deleteRows(at: [indexPath], with: .right)
+                        
                         let indexSet = NSMutableIndexSet()
                         indexSet.add(indexPath.section)
-                        self.tableView.deleteSections(indexSet as IndexSet, with: .fade)
+                        self.tableView.deleteSections(indexSet as IndexSet, with: .right)
                         
                     } else {
-                        self.tableView.deleteRows(at: [indexPath], with: .fade)
+                        self.tableView.deleteRows(at: [indexPath], with: .right)
                     }
                     
                     self.tableView.endUpdates()
@@ -483,7 +485,7 @@ class HomeViewController: GameViewController, UITableViewDelegate, UITableViewDa
     }
 
     
-//MARK: HomePlayCellDelegate Methods
+//MARK: - HomePlayCellDelegate Methods
     
     func newGameButtonTouched() {
         let newGameFindOpponentVC = self.storyboard?.instantiateViewController(withIdentifier: "idNewGameFindOpponentViewController") as! NewGameFindOpponentViewController
@@ -491,7 +493,7 @@ class HomeViewController: GameViewController, UITableViewDelegate, UITableViewDa
     }
     
     
-//MARK: HomeUserTurnCellDelegate Methods
+//MARK: - HomeUserTurnCellDelegate Methods
     
     func playButtonTouched(withIndexPath indexPath: IndexPath) {
         let sectionType = sortedDataKeys[indexPath.section]
@@ -527,7 +529,7 @@ class HomeViewController: GameViewController, UITableViewDelegate, UITableViewDa
     }
     
     
-//MARK: HomeFriendsCellDelegate Methods
+//MARK: - HomeFriendsCellDelegate Methods
     
     func displayAllFriendsButtonTouched() {}
     
@@ -545,19 +547,25 @@ class HomeViewController: GameViewController, UITableViewDelegate, UITableViewDa
             }
             
         } else {
-            matchManager.postMatch(withOpponentPseudo: friend.pseudo,
-                success: { (match) in
-                    
-                    MatchManager.sharedInstance.loadPlayersInfos(
-                        withCompletion: {
-                            
-                            let newGameCategorieSelectionVC = self.storyboard?.instantiateViewController(withIdentifier: "idNewGameCategorieSelectionViewController") as! NewGameCategorieSelectionViewController
-                            self.navigationController?.pushViewController(newGameCategorieSelectionVC, animated: true)
+            PopupManager.sharedInstance.showLoadingPopup(message: Constants.PopupMessage.LoadingMessage.kLoadingMatchCreation) {
+                matchManager.postMatch(withOpponentPseudo: friend.pseudo,
+                    success: { (match) in
+                        
+                        PopupManager.sharedInstance.dismissPopup(true) {
+                            MatchManager.sharedInstance.loadPlayersInfos(
+                                withCompletion: {
+                                    
+                                    let newGameCategorieSelectionVC = self.storyboard?.instantiateViewController(withIdentifier: "idNewGameCategorieSelectionViewController") as! NewGameCategorieSelectionViewController
+                                    self.navigationController?.pushViewController(newGameCategorieSelectionVC, animated: true)
+                                }
+                            )
                         }
-                    )
-                    
-            }) { (error) in
-                PopupManager.sharedInstance.showErrorPopup(message: Constants.PopupMessage.ErrorMessage.kErrorOccured)
+                        
+                }) { (error) in
+                    PopupManager.sharedInstance.dismissPopup(true) {
+                        PopupManager.sharedInstance.showErrorPopup(message: Constants.PopupMessage.ErrorMessage.kErrorOccured)
+                    }
+                }
             }
         }
     }
@@ -571,7 +579,7 @@ class HomeViewController: GameViewController, UITableViewDelegate, UITableViewDa
     }
     
     
-//MARK: Bubbles Events Methods
+//MARK: - Bubbles Events Methods
     
     func toggleBubble(_ isBubbleDochos: Bool) {
         
@@ -617,7 +625,7 @@ class HomeViewController: GameViewController, UITableViewDelegate, UITableViewDa
     }
     
     
-//MARK: @IBActions Methods
+//MARK: - @IBActions Methods
     
     @IBAction func preferencesButtonTouched(_ sender: UIButton) {
         let preferencesVC = self.storyboard?.instantiateViewController(withIdentifier: "idPreferencesNavController") as! UINavigationController
@@ -657,7 +665,7 @@ class HomeViewController: GameViewController, UITableViewDelegate, UITableViewDa
     }
     
     
-//MARK: FBSDKSharingDelegate
+//MARK: - FBSDKSharingDelegate
     
     func sharer(_ sharer: FBSDKSharing!, didCompleteWithResults results: [AnyHashable: Any]!) {
         PopupManager.sharedInstance.showSuccessPopup(message: Constants.PopupMessage.SuccessMessage.kSuccessFBSharing)
@@ -672,7 +680,7 @@ class HomeViewController: GameViewController, UITableViewDelegate, UITableViewDa
     }
     
     
-//MARK: FBSDKGameRequestDialog Delegate Methods
+//MARK: - FBSDKGameRequestDialog Delegate Methods
     
     func gameRequestDialog(_ gameRequestDialog: FBSDKGameRequestDialog!, didCompleteWithResults results: [AnyHashable : Any]!) {
         PopupManager.sharedInstance.showSuccessPopup(message: Constants.PopupMessage.SuccessMessage.kSuccessFBFriendsInvite)

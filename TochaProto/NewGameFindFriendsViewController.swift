@@ -136,15 +136,11 @@ class NewGameFindFriendsViewController: GameViewController, UITableViewDataSourc
             }
             
         } else {
-            if (UIApplication.shared.delegate as! AppDelegate).hasLowNetworkConnection() {
-                PopupManager.sharedInstance.showLoadingPopup(message: Constants.PopupMessage.LoadingMessage.kLoadingJustAMoment,
-                    completion: {
-                        self.goToCategorieSelection(withPlayer: player)
-                    }
-                )
-            } else {
-                goToCategorieSelection(withPlayer: player)
-            }
+            PopupManager.sharedInstance.showLoadingPopup(message: Constants.PopupMessage.LoadingMessage.kLoadingMatchCreation,
+                completion: {
+                    self.goToCategorieSelection(withPlayer: player)
+                }
+            )
         }
     }
     
@@ -152,16 +148,20 @@ class NewGameFindFriendsViewController: GameViewController, UITableViewDataSourc
         MatchManager.sharedInstance.postMatch(withOpponentPseudo: player.pseudo,
             success: { (match) in
                 
-                MatchManager.sharedInstance.loadPlayersInfos(
-                    withCompletion: {
-                        
-                        let newGameCategorieSelectionVC = self.storyboard?.instantiateViewController(withIdentifier: "idNewGameCategorieSelectionViewController") as! NewGameCategorieSelectionViewController
-                        self.navigationController?.pushViewController(newGameCategorieSelectionVC, animated: true)
-                    }
-                )
+                PopupManager.sharedInstance.dismissPopup(true) {
+                    MatchManager.sharedInstance.loadPlayersInfos(
+                        withCompletion: {
+                            
+                            let newGameCategorieSelectionVC = self.storyboard?.instantiateViewController(withIdentifier: "idNewGameCategorieSelectionViewController") as! NewGameCategorieSelectionViewController
+                            self.navigationController?.pushViewController(newGameCategorieSelectionVC, animated: true)
+                        }
+                    )
+                }
                 
             }) { (error) in
-                PopupManager.sharedInstance.showErrorPopup(message: Constants.PopupMessage.ErrorMessage.kErrorOccured)
+                PopupManager.sharedInstance.dismissPopup(true) {
+                    PopupManager.sharedInstance.showErrorPopup(message: Constants.PopupMessage.ErrorMessage.kErrorOccured)
+                }
         }
     }
     

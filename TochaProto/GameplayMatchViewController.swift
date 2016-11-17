@@ -145,7 +145,7 @@ class GameplayMatchViewController: GameViewController, UITableViewDelegate, UITa
     }
     
     
-//MARK: UITableView - Data Source
+//MARK: - UITableView - Data Source
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 1
@@ -248,7 +248,7 @@ class GameplayMatchViewController: GameViewController, UITableViewDelegate, UITa
     }
     
     
-//MARK: UITableView - Delegate
+//MARK: - UITableView - Delegate
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         return
@@ -285,19 +285,14 @@ class GameplayMatchViewController: GameViewController, UITableViewDelegate, UITa
     }
     
     
-//MARK: Cells Delegate
+//MARK: - Cells Delegate
     
     func yourTurnButtonTouched() {
-        if (UIApplication.shared.delegate as! AppDelegate).hasLowNetworkConnection() {
-            PopupManager.sharedInstance.showLoadingPopup(message: Constants.PopupMessage.LoadingMessage.kLoadingJustAMoment,
-                completion: {
-                    self.startTheGame()
-                }
-            )
-            
-        } else {
-            startTheGame()
-        }
+        PopupManager.sharedInstance.showLoadingPopup(message: Constants.PopupMessage.LoadingMessage.kLoadingJustAMoment,
+            completion: {
+                self.startTheGame()
+            }
+        )
     }
     
     private func startTheGame() {
@@ -322,7 +317,7 @@ class GameplayMatchViewController: GameViewController, UITableViewDelegate, UITa
     }
     
     
-//MARK: @IBActions
+//MARK: - @IBActions
     
     @IBAction func playButtonTouched(_ sender: UIButton) {
         yourTurnButtonTouched()

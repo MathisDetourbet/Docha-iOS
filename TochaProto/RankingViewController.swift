@@ -15,7 +15,6 @@ class RankingViewController: GameViewController, UITableViewDataSource, UITableV
     
     var friendsList: [Player] = []
     var generalList: [Player] = []
-    var currentList: [Player] = []
     
     @IBOutlet weak var tableView: UITableView!
     
@@ -32,7 +31,6 @@ class RankingViewController: GameViewController, UITableViewDataSource, UITableV
         buildUI()
         loadUserInfos()
         
-        currentList = (segmentControl.selectedSegmentIndex == 0) ? friendsList : generalList
         (segmentControl.selectedSegmentIndex == 0) ? loadFriendsRankingData(withCompletion: nil) : loadGeneralRankingData(withCompletion: nil)
     }
     
@@ -60,7 +58,6 @@ class RankingViewController: GameViewController, UITableViewDataSource, UITableV
         let refresher = PullToRefresh()
         tableView.addPullToRefresh(refresher) {
             if self.segmentControl.selectedSegmentIndex == 0 {
-                self.friendsList = []
                 self.loadFriendsRankingData(
                     withCompletion: {
                         self.tableView.endRefreshing(at: Position.top)
@@ -68,7 +65,6 @@ class RankingViewController: GameViewController, UITableViewDataSource, UITableV
                 )
                 
             } else {
-                self.generalList = []
                 self.loadGeneralRankingData(
                     withCompletion: {
                         self.tableView.endRefreshing(at: Position.top)
@@ -93,7 +89,6 @@ class RankingViewController: GameViewController, UITableViewDataSource, UITableV
                 success: { (friends) in
                     
                     self.friendsList = friends
-                    self.currentList = self.friendsList
                     self.tableView.reloadData()
                     completion?()
                     
@@ -105,7 +100,6 @@ class RankingViewController: GameViewController, UITableViewDataSource, UITableV
             }
             
         } else {
-            currentList = friendsList
             completion?()
         }
     }
@@ -116,7 +110,6 @@ class RankingViewController: GameViewController, UITableViewDataSource, UITableV
                 success: { (players) in
                     
                     self.generalList = players
-                    self.currentList = self.generalList
                     self.tableView.reloadData()
                     completion?()
                     
@@ -127,7 +120,6 @@ class RankingViewController: GameViewController, UITableViewDataSource, UITableV
                 )
             }
         } else {
-            currentList = generalList
             completion?()
         }
     }
@@ -136,7 +128,11 @@ class RankingViewController: GameViewController, UITableViewDataSource, UITableV
 //MARK: UITableView - Data Source
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return currentList.count
+        if segmentControl.selectedSegmentIndex == 0 {
+            return friendsList.count
+        }
+        
+        return generalList.count
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -146,6 +142,7 @@ class RankingViewController: GameViewController, UITableViewDataSource, UITableV
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "idRankingTableViewCell", for: indexPath) as! RankingTableViewCell
         
+        let currentList = segmentControl.selectedSegmentIndex == 0 ? friendsList : generalList
         let player = currentList[indexPath.row]
         cell.userNameLabel.text = player.pseudo
         cell.rankLabel.text = "#" + String(indexPath.row+1)
@@ -156,7 +153,7 @@ class RankingViewController: GameViewController, UITableViewDataSource, UITableV
             completionHandler: { (image) in
                 cell.userImageView.image = image
                 cell.userImageView.applyCircle(withBorderColor: UIColor.lightGrayDochaColor())
-                self.currentList[indexPath.row].avatarImage = image
+                currentList[indexPath.row].avatarImage = image
             }
         )
         
@@ -210,6 +207,8 @@ class RankingViewController: GameViewController, UITableViewDataSource, UITableV
 //MARK: @IBActions
     
     @IBAction func didChangeValueSegmentControl(_ sender: UISegmentedControl) {
+        NetworkManager.sharedInstance.cancelAllRequests()
+        
         (segmentControl.selectedSegmentIndex == 0) ? loadFriendsRankingData(withCompletion: nil) : loadGeneralRankingData(withCompletion: nil)
         let range = NSMakeRange(0, tableView.numberOfSections)
         let sections = NSIndexSet(indexesIn: range)

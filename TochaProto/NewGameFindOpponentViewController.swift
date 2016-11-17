@@ -120,18 +120,25 @@ class NewGameFindOpponentViewController: GameViewController, UITableViewDataSour
             }
             
         } else {
-            matchManager.postMatch(withOpponentPseudo: player.pseudo,
-                success: { (match) in
-                    MatchManager.sharedInstance.loadPlayersInfos(
-                        withCompletion: {
-                            
-                            let newGameCategorieSelectionVC = self.storyboard?.instantiateViewController(withIdentifier: "idNewGameCategorieSelectionViewController") as! NewGameCategorieSelectionViewController
-                            self.navigationController?.pushViewController(newGameCategorieSelectionVC, animated: true)
+            PopupManager.sharedInstance.showLoadingPopup(message: Constants.PopupMessage.LoadingMessage.kLoadingMatchCreation) {
+                matchManager.postMatch(withOpponentPseudo: player.pseudo,
+                    success: { (match) in
+                        
+                        PopupManager.sharedInstance.dismissPopup(true) {
+                            MatchManager.sharedInstance.loadPlayersInfos(
+                                withCompletion: {
+                                    
+                                    let newGameCategorieSelectionVC = self.storyboard?.instantiateViewController(withIdentifier: "idNewGameCategorieSelectionViewController") as! NewGameCategorieSelectionViewController
+                                    self.navigationController?.pushViewController(newGameCategorieSelectionVC, animated: true)
+                            }
+                            )
                         }
-                    )
-                    
-            }) { (error) in
-                PopupManager.sharedInstance.showErrorPopup(message: Constants.PopupMessage.ErrorMessage.kErrorOccured)
+                        
+                }) { (error) in
+                    PopupManager.sharedInstance.dismissPopup(true) {
+                        PopupManager.sharedInstance.showErrorPopup(message: Constants.PopupMessage.ErrorMessage.kErrorOccured)
+                    }
+                }
             }
         }
         
@@ -168,25 +175,29 @@ class NewGameFindOpponentViewController: GameViewController, UITableViewDataSour
             self.navigationController?.pushViewController(newGameFacebookFriendsVC, animated: true)
             
         } else if (indexPath as NSIndexPath).row == 1 {
-            MatchManager.sharedInstance.postMatch(
-                success: { (match) in
-                    
-                    MatchManager.sharedInstance.loadPlayersInfos(
-                        withCompletion: {
-                            
-                            if let _ = match.rounds.last?.category {
-                                let launcherVC = self.storyboard?.instantiateViewController(withIdentifier: "idGameplayLauncherViewController") as! GameplayLauncherViewController
-                                self.navigationController?.pushViewController(launcherVC, animated: true)
+            PopupManager.sharedInstance.showLoadingPopup(message: Constants.PopupMessage.LoadingMessage.kLoadingMatchCreation) {
+                MatchManager.sharedInstance.postMatch(
+                    success: { (match) in
+                        
+                        PopupManager.sharedInstance.dismissPopup(true) {
+                            MatchManager.sharedInstance.loadPlayersInfos {
                                 
-                            } else {
-                                let newGameCategorieSelectionVC = self.storyboard?.instantiateViewController(withIdentifier: "idNewGameCategorieSelectionViewController") as! NewGameCategorieSelectionViewController
-                                self.navigationController?.pushViewController(newGameCategorieSelectionVC, animated: true)
+                                if let _ = match.rounds.last?.category {
+                                    let launcherVC = self.storyboard?.instantiateViewController(withIdentifier: "idGameplayLauncherViewController") as! GameplayLauncherViewController
+                                    self.navigationController?.pushViewController(launcherVC, animated: true)
+                                    
+                                } else {
+                                    let newGameCategorieSelectionVC = self.storyboard?.instantiateViewController(withIdentifier: "idNewGameCategorieSelectionViewController") as! NewGameCategorieSelectionViewController
+                                    self.navigationController?.pushViewController(newGameCategorieSelectionVC, animated: true)
+                                }
                             }
                         }
-                    )
-                    
-            }) { (error) in
-                PopupManager.sharedInstance.showErrorPopup(message: Constants.PopupMessage.ErrorMessage.kErrorOccured)
+                        
+                }) { (error) in
+                    PopupManager.sharedInstance.dismissPopup(true) {
+                        PopupManager.sharedInstance.showErrorPopup(message: Constants.PopupMessage.ErrorMessage.kErrorOccured)
+                    }
+                }
             }
             
         } else if (indexPath as NSIndexPath).row == 2 {

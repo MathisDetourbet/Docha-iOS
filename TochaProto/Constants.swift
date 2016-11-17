@@ -186,6 +186,7 @@ struct Constants {
         
         struct LoadingMessage {
             static let kLoadingJustAMoment = "Juste un instant..."
+            static let kLoadingMatchCreation = "Un instant, création du match en cours..."
         }
     }
     
