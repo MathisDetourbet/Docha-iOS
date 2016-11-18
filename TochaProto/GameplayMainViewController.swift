@@ -56,7 +56,7 @@ class GameplayMainViewController: GameViewController, KeyboardViewDelegate, Coun
     var currentMillisecondsTime: Int = 0
     
 
-//MARK: @IBOutlets
+//MARK: - @IBOutlets
     
     // Top Container View
     @IBOutlet weak var userAvatarImageView: UIImageView!
@@ -79,7 +79,7 @@ class GameplayMainViewController: GameViewController, KeyboardViewDelegate, Coun
     @IBOutlet weak var aspectRatioKeyboardContainerView: NSLayoutConstraint!
     
     
-//MARK: Life View Cycle
+//MARK: - Life View Cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -191,7 +191,7 @@ class GameplayMainViewController: GameViewController, KeyboardViewDelegate, Coun
     }
     
     
-//MARK: Card Product Management
+//MARK: - Card Product Management
     
     func initCardsView() {
         var cardsArray: [CardProductView] = []
@@ -207,7 +207,7 @@ class GameplayMainViewController: GameViewController, KeyboardViewDelegate, Coun
             cardProductView?.counterContainerView.centsLabel.text = centsString
             cardProductView?.counterContainerView.numberOfCounterDisplayed = priceArray.priceArray.count
             cardProductView?.counterContainerView.delegate = self
-            print("Real price : \(product.price)")
+            //print("Real price : \(product.price)")
             
             userPlayer?.getAvatarImage(for: .small,
                 completionHandler: { (image) in
@@ -328,7 +328,7 @@ class GameplayMainViewController: GameViewController, KeyboardViewDelegate, Coun
     }
     
     
-//MARK: Timer Methods
+//MARK: - Timer Methods
     
     func initTimer(animated: Bool) {
         timeleft = kTimePerRound
@@ -407,7 +407,7 @@ class GameplayMainViewController: GameViewController, KeyboardViewDelegate, Coun
     }
     
 
-//MARK: Timeline Methods
+//MARK: - Timeline Methods
     
     func updateTimeline(withResult result: TimelineState, isForUser: Bool) {
         var timelineImageName: String?
@@ -436,14 +436,21 @@ class GameplayMainViewController: GameViewController, KeyboardViewDelegate, Coun
     }
     
     
-//MARK: Counter Container View Delegate
+//MARK: - Counter Container View Delegate
     
     func infosButtonTouched() {
-        PopupManager.sharedInstance.showInfosPopup("Informations prix", message: "Le prix de ce produit a été relevé le [DATE].\n Images et copyright appartiennent à \((currentProductData?.brand)!)", viewController: self, completion: nil, doneActionCompletion: nil)
+        let product = currentProductData
+        
+        if let product = product {
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "dd/MM/yyyy"
+            let dateString = dateFormatter.string(from: product.lastUpdatedDate)
+            PopupManager.sharedInstance.showInfosPopup("Informations prix", message: "Le prix de ce produit a été relevé le \(dateString).\n Images et copyright appartiennent à \((product.brand))", viewController: self, completion: nil, doneActionCompletion: nil)
+        }
     }
     
     
-//MARK: Keyboard Init + Delegate
+//MARK: - Keyboard Init + Delegate
     
     func initKeyboardView() {
         if DeviceType.IS_IPHONE_4_OR_LESS {
@@ -514,7 +521,7 @@ class GameplayMainViewController: GameViewController, KeyboardViewDelegate, Coun
     }
     
 
-//MARK: Displaying Message
+//MARK: - Displaying Message
     
     func displayMessage(_ messageType: MessageType!, completion: ((_ finished: Bool) -> Void)?) {
         var messageImageView: UIImageView? = UIImageView(image: UIImage(named: "answer_\(messageType.rawValue)"))
@@ -543,7 +550,7 @@ class GameplayMainViewController: GameViewController, KeyboardViewDelegate, Coun
     }
     
 
-//MARK: Gauge Methods
+//MARK: - Gauge Methods
     
     func animateUserPinIcon(withEstimation estimation: Double? = nil, forPlayer isForUser: Bool, andCompletion completion: ((_ finished: Bool) -> Void)?) {
         let errorPercent = calculateUserEstimationErrorPercent(withEstimation: estimation)

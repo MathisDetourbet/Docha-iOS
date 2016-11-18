@@ -33,7 +33,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         initManagers()
         
         // Reachability
-        launchNetworkManager()
+        //launchNetworkManager()
         
         // Crashlytics
         Fabric.with([Crashlytics.self])
