@@ -12,7 +12,12 @@
 		<key>DochaFastlaneUITests.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>21</integer>
+			<integer>1</integer>
+		</dict>
+		<key>DochaStickers.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>23</integer>
 		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
@@ -28,6 +33,11 @@
 			<true/>
 		</dict>
 		<key>6701D98E1C108A2100F87043</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>67051AC31DDF711A00D4F8F7</key>
 		<dict>
 			<key>primary</key>
 			<true/>

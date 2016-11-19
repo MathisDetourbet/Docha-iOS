@@ -20,6 +20,9 @@
 		6701D97E1C108A2100F87043 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6701D97C1C108A2100F87043 /* LaunchScreen.storyboard */; };
 		6701D9891C108A2100F87043 /* TochaProtoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6701D9881C108A2100F87043 /* TochaProtoTests.swift */; };
 		6701D9A21C108AAE00F87043 /* Product.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6701D9A11C108AAE00F87043 /* Product.swift */; };
+		67051AC71DDF711A00D4F8F7 /* Stickers.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 67051AC61DDF711A00D4F8F7 /* Stickers.xcassets */; };
+		67051ACB1DDF711A00D4F8F7 /* DochaStickers.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 67051AC41DDF711A00D4F8F7 /* DochaStickers.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		67051AD11DDF744F00D4F8F7 /* Messages.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 67051AD01DDF744F00D4F8F7 /* Messages.framework */; };
 		670F61F61D6DCBEC00CE96F4 /* BadgesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 670F61F51D6DCBEC00CE96F4 /* BadgesViewController.swift */; };
 		670F61F81D6DCD1A00CE96F4 /* BadgeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 670F61F71D6DCD1A00CE96F4 /* BadgeTableViewCell.swift */; };
 		6715C7AB1DA29C22008C50F4 /* CategoryRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6715C7AA1DA29C22008C50F4 /* CategoryRequest.swift */; };
@@ -185,6 +188,13 @@
 			remoteGlobalIDString = 6701D96F1C108A2100F87043;
 			remoteInfo = TochaProto;
 		};
+		67051AC91DDF711A00D4F8F7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 6701D9681C108A2100F87043 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 67051AC31DDF711A00D4F8F7;
+			remoteInfo = DochaStickers;
+		};
 		67C42D9B1D4A254B00DF4E5D /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 6701D9681C108A2100F87043 /* Project object */;
@@ -193,6 +203,20 @@
 			remoteInfo = Docha;
 		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		67051ACF1DDF711A00D4F8F7 /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				67051ACB1DDF711A00D4F8F7 /* DochaStickers.appex in Embed App Extensions */,
+			);
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		352F70D99049A1FC09684B9B /* Pods_DochaUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_DochaUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -217,6 +241,10 @@
 		6701D9931C108A2100F87043 /* TochaProtoUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TochaProtoUITests.swift; sourceTree = "<group>"; };
 		6701D9951C108A2100F87043 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6701D9A11C108AAE00F87043 /* Product.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Product.swift; sourceTree = "<group>"; };
+		67051AC41DDF711A00D4F8F7 /* DochaStickers.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = DochaStickers.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		67051AC61DDF711A00D4F8F7 /* Stickers.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Stickers.xcassets; sourceTree = "<group>"; };
+		67051AC81DDF711A00D4F8F7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		67051AD01DDF744F00D4F8F7 /* Messages.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Messages.framework; path = System/Library/Frameworks/Messages.framework; sourceTree = SDKROOT; };
 		670F61F51D6DCBEC00CE96F4 /* BadgesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BadgesViewController.swift; sourceTree = "<group>"; };
 		670F61F71D6DCD1A00CE96F4 /* BadgeTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BadgeTableViewCell.swift; sourceTree = "<group>"; };
 		6715C7AA1DA29C22008C50F4 /* CategoryRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CategoryRequest.swift; sourceTree = "<group>"; };
@@ -382,6 +410,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				67051AD11DDF744F00D4F8F7 /* Messages.framework in Frameworks */,
 				679273FF1CFC6B6900DABA88 /* GooglePlus.framework in Frameworks */,
 				679273FB1CFC6B4900DABA88 /* UIKit.framework in Frameworks */,
 				679273F91CFC6B3D00DABA88 /* SystemConfiguration.framework in Frameworks */,
@@ -445,6 +474,7 @@
 		4F0217EA73D099493A640F99 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				67051AD01DDF744F00D4F8F7 /* Messages.framework */,
 				676291021D70464300E49487 /* GameKit.framework */,
 				679273FC1CFC6B6900DABA88 /* GoogleOpenSource.framework */,
 				679273FD1CFC6B6900DABA88 /* GooglePlus.framework */,
@@ -476,6 +506,7 @@
 				6701D9871C108A2100F87043 /* DochaTests */,
 				6701D9921C108A2100F87043 /* DochaUITests */,
 				67C42D971D4A254B00DF4E5D /* DochaFastlaneUITests */,
+				67051AC51DDF711A00D4F8F7 /* DochaStickers */,
 				6701D9711C108A2100F87043 /* Products */,
 				4F0217EA73D099493A640F99 /* Frameworks */,
 				4E795923C5C48DD6B0F7EFDC /* Pods */,
@@ -489,6 +520,7 @@
 				6701D9841C108A2100F87043 /* Docha.xctest */,
 				6701D98F1C108A2100F87043 /* Docha.xctest */,
 				67C42D961D4A254B00DF4E5D /* DochaFastlaneUITests.xctest */,
+				67051AC41DDF711A00D4F8F7 /* DochaStickers.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -522,6 +554,15 @@
 			);
 			name = DochaUITests;
 			path = TochaProtoUITests;
+			sourceTree = "<group>";
+		};
+		67051AC51DDF711A00D4F8F7 /* DochaStickers */ = {
+			isa = PBXGroup;
+			children = (
+				67051AC61DDF711A00D4F8F7 /* Stickers.xcassets */,
+				67051AC81DDF711A00D4F8F7 /* Info.plist */,
+			);
+			path = DochaStickers;
 			sourceTree = "<group>";
 		};
 		6715C7AC1DA29CF1008C50F4 /* Category */ = {
@@ -1224,10 +1265,12 @@
 				45E91A69D1C69421F16FF2EB /* [CP] Embed Pods Frameworks */,
 				3D5C08E2569F483EC55C0C3F /* [CP] Copy Pods Resources */,
 				67D482781D1D79E8009F1992 /* ShellScript */,
+				67051ACF1DDF711A00D4F8F7 /* Embed App Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				67051ACA1DDF711A00D4F8F7 /* PBXTargetDependency */,
 			);
 			name = Docha;
 			productName = TochaProto;
@@ -1274,6 +1317,21 @@
 			productName = TochaProtoUITests;
 			productReference = 6701D98F1C108A2100F87043 /* Docha.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+		67051AC31DDF711A00D4F8F7 /* DochaStickers */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 67051ACC1DDF711A00D4F8F7 /* Build configuration list for PBXNativeTarget "DochaStickers" */;
+			buildPhases = (
+				67051AC21DDF711A00D4F8F7 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = DochaStickers;
+			productName = DochaStickers;
+			productReference = 67051AC41DDF711A00D4F8F7 /* DochaStickers.appex */;
+			productType = "com.apple.product-type.app-extension.messages-sticker-pack";
 		};
 		67C42D951D4A254B00DF4E5D /* DochaFastlaneUITests */ = {
 			isa = PBXNativeTarget;
@@ -1329,6 +1387,11 @@
 						CreatedOnToolsVersion = 7.1.1;
 						TestTargetID = 6701D96F1C108A2100F87043;
 					};
+					67051AC31DDF711A00D4F8F7 = {
+						CreatedOnToolsVersion = 8.1;
+						DevelopmentTeam = YNPZ79497Y;
+						ProvisioningStyle = Automatic;
+					};
 					67C42D951D4A254B00DF4E5D = {
 						CreatedOnToolsVersion = 7.3.1;
 						LastSwiftMigration = 0800;
@@ -1353,6 +1416,7 @@
 				6701D9831C108A2100F87043 /* DochaTests */,
 				6701D98E1C108A2100F87043 /* DochaUITests */,
 				67C42D951D4A254B00DF4E5D /* DochaFastlaneUITests */,
+				67051AC31DDF711A00D4F8F7 /* DochaStickers */,
 			);
 		};
 /* End PBXProject section */
@@ -1406,6 +1470,14 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		67051AC21DDF711A00D4F8F7 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				67051AC71DDF711A00D4F8F7 /* Stickers.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1707,6 +1779,11 @@
 			target = 6701D96F1C108A2100F87043 /* Docha */;
 			targetProxy = 6701D9901C108A2100F87043 /* PBXContainerItemProxy */;
 		};
+		67051ACA1DDF711A00D4F8F7 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 67051AC31DDF711A00D4F8F7 /* DochaStickers */;
+			targetProxy = 67051AC91DDF711A00D4F8F7 /* PBXContainerItemProxy */;
+		};
 		67C42D9C1D4A254B00DF4E5D /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 6701D96F1C108A2100F87043 /* Docha */;
@@ -1968,6 +2045,42 @@
 			};
 			name = Release;
 		};
+		67051ACD1DDF711A00D4F8F7 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = "iMessage App Icon";
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_SUSPICIOUS_MOVES = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = YNPZ79497Y;
+				INFOPLIST_FILE = DochaStickers/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.1;
+				PRODUCT_BUNDLE_IDENTIFIER = fr.slymoover.docha.DochaStickers;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		67051ACE1DDF711A00D4F8F7 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = "iMessage App Icon";
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_SUSPICIOUS_MOVES = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = YNPZ79497Y;
+				INFOPLIST_FILE = DochaStickers/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.1;
+				PRODUCT_BUNDLE_IDENTIFIER = fr.slymoover.docha.DochaStickers;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
 		67C42D9D1D4A254B00DF4E5D /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -2034,6 +2147,14 @@
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
+		};
+		67051ACC1DDF711A00D4F8F7 /* Build configuration list for PBXNativeTarget "DochaStickers" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				67051ACD1DDF711A00D4F8F7 /* Debug */,
+				67051ACE1DDF711A00D4F8F7 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
 		};
 		67C42D9F1D4A254B00DF4E5D /* Build configuration list for PBXNativeTarget "DochaFastlaneUITests" */ = {
 			isa = XCConfigurationList;
