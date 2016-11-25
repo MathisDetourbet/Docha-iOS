@@ -47,7 +47,7 @@ class InscriptionPseudoSelectionViewController: RootViewController {
 //MARK: @IBActions Methods
     
     @IBAction func pseudoTextFieldEditing(_ sender: HoshiTextField) {
-        if sender.text?.characters.count > 2 && sender.text?.characters.count < 128 {
+        if sender.text?.characters.count > 2 && sender.text?.characters.count < 50 {
             sender.borderActiveColor = UIColor.blue
             sender.borderInactiveColor = UIColor.blueDochaColor()
             
@@ -77,7 +77,11 @@ class InscriptionPseudoSelectionViewController: RootViewController {
                             
                             PopupManager.sharedInstance.dismissPopup(true,
                                 completion: {
-                                    self.goToHome()
+                                    UserSessionManager.sharedInstance.uptdateDeviceTokenIfNeeded(
+                                        withCompletion: {
+                                            self.goToHome()
+                                        }
+                                    )
                                 }
                             )
                             

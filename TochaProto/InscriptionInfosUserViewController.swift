@@ -19,6 +19,8 @@ class InscriptionInfosUserViewController: RootViewController, UITextFieldDelegat
     @IBOutlet weak var womanButton: UIButton!
     @IBOutlet weak var birthdayTextField: HoshiTextField!
     @IBOutlet weak var validProfilButton: UIButton!
+    @IBOutlet weak var privacyPolicyButton: UIButton!
+    @IBOutlet weak var skipButton: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,6 +36,10 @@ class InscriptionInfosUserViewController: RootViewController, UITextFieldDelegat
     func buildUI() {
         validProfilButton.isEnabled = false
         birthdayTextField.placeholderColor = UIColor.blueDochaColor()
+        
+        let underlineAttribute = [NSUnderlineStyleAttributeName: NSUnderlineStyle.styleSingle.rawValue]
+        let underlineAttributedString = NSAttributedString(string: "Privacy policy", attributes: underlineAttribute)
+        privacyPolicyButton.titleLabel?.attributedText = underlineAttributedString
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
@@ -84,8 +90,19 @@ class InscriptionInfosUserViewController: RootViewController, UITextFieldDelegat
     }
     
     @IBAction func skipButtonTouched(_ sender: UIButton) {
-        let inscriptionAvatarVC = self.storyboard?.instantiateViewController(withIdentifier: "idInscriptionProfilViewController") as! InscriptionProfilViewController
-        self.navigationController?.pushViewController(inscriptionAvatarVC, animated: true)
+        let inscriptionPseudoVC = self.storyboard?.instantiateViewController(withIdentifier: "idInscriptionPseudoSelectionViewController") as! InscriptionPseudoSelectionViewController
+        self.navigationController?.pushViewController(inscriptionPseudoVC, animated: true)
+    }
+    
+    @IBAction func privacyPolicyButtonTouched(_ sender: UIButton) {
+        let webViewController = storyboard?.instantiateViewController(withIdentifier: "idCustomWebViewController") as? CustomWebViewController
+        let url = URL(string: Constants.Links.privacyPolicyLink)
+        webViewController!.url = url
+        webViewController?.titleNavBar = "Charte de confidentialité"
+        
+        let activity = UIActivity()
+        webViewController?.applicationActivities = [activity]
+        self.navigationController?.pushViewController(webViewController!, animated: true)
     }
     
     @IBAction func genderButtonTouched(_ sender: UIButton) {
@@ -93,16 +110,16 @@ class InscriptionInfosUserViewController: RootViewController, UITextFieldDelegat
             // Man selected
             genderSelected = "male"
             avatarUrl = "avatar_man"
-            manButton.setImage(UIImage(named: "avatar_man_large_selected"), for: UIControlState())
-            womanButton.setImage(UIImage(named: "avatar_woman_large"), for: UIControlState())
+            manButton.setImage(#imageLiteral(resourceName: "avatar_man_large_selected"), for: UIControlState())
+            womanButton.setImage(#imageLiteral(resourceName: "avatar_woman_large"), for: UIControlState())
             manButton.animatedLikeBubbleWithDelay(0.0, duration: 0.5)
             
         } else {
             // Woman selected
             genderSelected = "female"
             avatarUrl = "avatar_woman"
-            womanButton.setImage(UIImage(named: "avatar_woman_large_selected"), for: UIControlState())
-            manButton.setImage(UIImage(named: "avatar_man_large"), for: UIControlState())
+            womanButton.setImage(#imageLiteral(resourceName: "avatar_woman_large_selected"), for: UIControlState())
+            manButton.setImage(#imageLiteral(resourceName: "avatar_man_large"), for: UIControlState())
             womanButton.animatedLikeBubbleWithDelay(0.0, duration: 0.5)
         }
     }

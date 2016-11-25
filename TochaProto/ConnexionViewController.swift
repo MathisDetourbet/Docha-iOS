@@ -22,7 +22,7 @@ class ConnexionViewController: RootViewController {
     @IBOutlet weak var connexionEmailButton: UIButton!
     
     
-//MARK: Life View Cycle
+//MARK: - Life View Cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -38,24 +38,31 @@ class ConnexionViewController: RootViewController {
     }
     
     
-//MARK: Facebook Method
+//MARK: - Facebook Method
     
     func getFBUserData() {
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         appDelegate.facebookSignIn({
             
-            PopupManager.sharedInstance.dismissPopup(true, completion: {
-                let categoryPrefered = UserSessionManager.sharedInstance.currentSession()!.categoriesPrefered
-                
-                if categoryPrefered.isEmpty {
-                    let categoryViewController = self.storyboard?.instantiateViewController(withIdentifier: "idInscriptionCategorySelectionViewController") as! InscriptionCategorySelectionViewController
-                    categoryViewController.comeFromConnexionVC = true
-                    self.navigationController?.pushViewController(categoryViewController, animated: true)
+            UserSessionManager.sharedInstance.uptdateDeviceTokenIfNeeded(
+                withCompletion: {
                     
-                } else {
-                    self.goToHome()
+                    PopupManager.sharedInstance.dismissPopup(true,
+                        completion: {
+                            let categoryPrefered = UserSessionManager.sharedInstance.currentSession()!.categoriesPrefered
+                        
+                            if categoryPrefered.isEmpty {
+                                let categoryViewController = self.storyboard?.instantiateViewController(withIdentifier: "idInscriptionCategorySelectionViewController") as! InscriptionCategorySelectionViewController
+                            categoryViewController.comeFromConnexionVC = true
+                                self.navigationController?.pushViewController(categoryViewController, animated: true)
+                            
+                            } else {
+                                self.goToHome()
+                            }
+                        }
+                    )
                 }
-            })
+            )
             
         }) { (error) in
             PopupManager.sharedInstance.dismissPopup(true, completion: {
@@ -64,6 +71,9 @@ class ConnexionViewController: RootViewController {
             })
         }
     }
+    
+    
+//MARK: - Textfield Validator Methods
     
     func isEmailValid() -> Bool {
         if let emailString = emailTextField.text {
@@ -119,7 +129,7 @@ class ConnexionViewController: RootViewController {
     }
     
 
-//MARK: @IBActions
+//MARK: - @IBActions
     
     @IBAction func EmailTextFieldEditingChanged(_ sender: HoshiTextField) {
         connexionEmailButton.isEnabled = (isEmailValid() && isPasswordValid()) ? true : false
@@ -149,9 +159,11 @@ class ConnexionViewController: RootViewController {
                 
                 if(fbloginresult.grantedPermissions.contains("email"))
                 {
-                    PopupManager.sharedInstance.showLoadingPopup("Connexion en cours...", message: nil, completion: {
-                        self.getFBUserData()
-                    })
+                    PopupManager.sharedInstance.showLoadingPopup("Connexion en cours...", message: nil,
+                        completion: {
+                            self.getFBUserData()
+                        }
+                    )
                 }
             }
         }
@@ -164,9 +176,14 @@ class ConnexionViewController: RootViewController {
                 UserSessionManager.sharedInstance.connectByEmail(self.emailString!, andPassword: self.passwordString!,
                     success: {
                         
-                        PopupManager.sharedInstance.dismissPopup(true,
-                            completion: {
-                                self.goToHome()
+                        UserSessionManager.sharedInstance.uptdateDeviceTokenIfNeeded(
+                            withCompletion: {
+                                
+                                PopupManager.sharedInstance.dismissPopup(true,
+                                    completion: {
+                                        self.goToHome()
+                                    }
+                                )
                             }
                         )
                         

@@ -24,11 +24,16 @@ target 'Docha' do
     pod 'PullToRefresher', '~> 1.4.0'
 end
 
-target 'DochaTests' do
+def testing_pods
+    pod 'Quick'
+    pod 'Nimble'
+end
 
+target 'DochaTests' do
+    testing_pods
 end
 
 target 'DochaUITests' do
-
+    testing_pods
 end
 

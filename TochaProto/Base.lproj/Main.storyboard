@@ -51,7 +51,7 @@
                                 </constraints>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="Docher" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DRl-OW-9dn" userLabel="userNameLabel">
-                                <rect key="frame" x="160" y="174.5" width="55" height="18.5"/>
+                                <rect key="frame" x="160" y="174" width="55" height="19"/>
                                 <fontDescription key="fontDescription" name="Montserrat-SemiBold" family="Montserrat" pointSize="15"/>
                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
@@ -89,7 +89,7 @@
                                                                 <autoresizingMask key="autoresizingMask"/>
                                                                 <subviews>
                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Docher" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LQg-Ok-ee6">
-                                                                        <rect key="frame" x="-3" y="57" width="56" height="12"/>
+                                                                        <rect key="frame" x="-3" y="56" width="56" height="13"/>
                                                                         <constraints>
                                                                             <constraint firstAttribute="width" constant="56" id="gff-LH-B2u"/>
                                                                         </constraints>
@@ -167,19 +167,19 @@
                                                     <rect key="frame" x="120" y="0.0" width="156" height="68"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PWo-9s-7WX">
-                                                            <rect key="frame" x="100.5" y="25" width="10.5" height="18"/>
+                                                            <rect key="frame" x="101" y="25" width="11" height="19"/>
                                                             <fontDescription key="fontDescription" name="Montserrat-SemiBold" family="Montserrat" pointSize="15"/>
                                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=":" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UjZ-sG-66Y">
-                                                            <rect key="frame" x="92" y="25" width="3.5" height="18"/>
+                                                            <rect key="frame" x="92" y="25" width="4" height="19"/>
                                                             <fontDescription key="fontDescription" name="Montserrat-SemiBold" family="Montserrat" pointSize="15"/>
                                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QDG-bg-07W">
-                                                            <rect key="frame" x="80.5" y="25" width="6.5" height="18"/>
+                                                            <rect key="frame" x="80" y="25" width="7" height="19"/>
                                                             <fontDescription key="fontDescription" name="Montserrat-SemiBold" family="Montserrat" pointSize="15"/>
                                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <nil key="highlightedColor"/>
@@ -212,7 +212,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Niveau 3" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jx4-dB-rE8">
-                                                    <rect key="frame" x="66" y="38" width="50.5" height="14"/>
+                                                    <rect key="frame" x="66" y="38" width="51" height="15"/>
                                                     <fontDescription key="fontDescription" name="Montserrat-Regular" family="Montserrat" pointSize="12"/>
                                                     <color key="textColor" red="0.67843137249999996" green="0.66666666669999997" blue="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
@@ -278,19 +278,19 @@
                                                     <rect key="frame" x="120" y="0.0" width="156" height="68"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dtk-Vg-6dj">
-                                                            <rect key="frame" x="100.5" y="25" width="10.5" height="18"/>
+                                                            <rect key="frame" x="101" y="25" width="11" height="19"/>
                                                             <fontDescription key="fontDescription" name="Montserrat-SemiBold" family="Montserrat" pointSize="15"/>
                                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=":" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sgt-lz-uPK">
-                                                            <rect key="frame" x="92" y="25" width="3.5" height="18"/>
+                                                            <rect key="frame" x="92" y="25" width="4" height="19"/>
                                                             <fontDescription key="fontDescription" name="Montserrat-SemiBold" family="Montserrat" pointSize="15"/>
                                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="orL-el-y1C">
-                                                            <rect key="frame" x="80.5" y="25" width="6.5" height="18"/>
+                                                            <rect key="frame" x="80" y="25" width="7" height="19"/>
                                                             <fontDescription key="fontDescription" name="Montserrat-SemiBold" family="Montserrat" pointSize="15"/>
                                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <nil key="highlightedColor"/>
@@ -323,7 +323,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Niveau 3" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="S02-vD-JOO">
-                                                    <rect key="frame" x="66" y="36" width="50.5" height="14"/>
+                                                    <rect key="frame" x="66" y="36" width="51" height="15"/>
                                                     <fontDescription key="fontDescription" name="Montserrat-Regular" family="Montserrat" pointSize="12"/>
                                                     <color key="textColor" red="0.67843137249999996" green="0.66666666669999997" blue="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
@@ -332,7 +332,7 @@
                                                     <rect key="frame" x="276" y="0.0" width="99" height="68"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="En attente" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WDT-6a-Ihj">
-                                                            <rect key="frame" x="10.5" y="25" width="78.5" height="18"/>
+                                                            <rect key="frame" x="10" y="25" width="79" height="18"/>
                                                             <fontDescription key="fontDescription" name="Montserrat-Regular" family="Montserrat" pointSize="15"/>
                                                             <color key="textColor" red="0.66666666666666663" green="0.66666666666666663" blue="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <nil key="highlightedColor"/>
@@ -389,19 +389,19 @@
                                                     <rect key="frame" x="120" y="0.0" width="156" height="68"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="t3z-Zx-Foa">
-                                                            <rect key="frame" x="100.5" y="25" width="10.5" height="18"/>
+                                                            <rect key="frame" x="101" y="25" width="11" height="19"/>
                                                             <fontDescription key="fontDescription" name="Montserrat-SemiBold" family="Montserrat" pointSize="15"/>
                                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=":" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yKz-R6-PEL">
-                                                            <rect key="frame" x="92" y="25" width="3.5" height="18"/>
+                                                            <rect key="frame" x="92" y="25" width="4" height="19"/>
                                                             <fontDescription key="fontDescription" name="Montserrat-SemiBold" family="Montserrat" pointSize="15"/>
                                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ghI-jX-19w">
-                                                            <rect key="frame" x="80.5" y="25" width="6.5" height="18"/>
+                                                            <rect key="frame" x="80" y="25" width="7" height="19"/>
                                                             <fontDescription key="fontDescription" name="Montserrat-SemiBold" family="Montserrat" pointSize="15"/>
                                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <nil key="highlightedColor"/>
@@ -434,7 +434,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Niveau 3" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iid-44-D2c">
-                                                    <rect key="frame" x="66" y="36" width="50.5" height="14"/>
+                                                    <rect key="frame" x="66" y="36" width="51" height="15"/>
                                                     <fontDescription key="fontDescription" name="Montserrat-Regular" family="Montserrat" pointSize="12"/>
                                                     <color key="textColor" red="0.67843137249999996" green="0.66666666669999997" blue="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
@@ -443,7 +443,7 @@
                                                     <rect key="frame" x="276" y="0.0" width="99" height="68"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Gagné" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bAI-NU-Nmw">
-                                                            <rect key="frame" x="25.5" y="25" width="48.5" height="18"/>
+                                                            <rect key="frame" x="25" y="25" width="49" height="18"/>
                                                             <fontDescription key="fontDescription" name="Montserrat-Regular" family="Montserrat" pointSize="15"/>
                                                             <color key="textColor" red="0.27058823529999998" green="0.90588235289999997" blue="0.64313725489999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <nil key="highlightedColor"/>
@@ -496,7 +496,7 @@
                                 </connections>
                             </tableView>
                             <imageView contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="avatar_man_large" translatesAutoresizingMaskIntoConstraints="NO" id="c9l-Ug-fCQ" userLabel="avatarImageView">
-                                <rect key="frame" x="138" y="65.5" width="100" height="100"/>
+                                <rect key="frame" x="138" y="65" width="100" height="100"/>
                                 <gestureRecognizers/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="100" id="Ssl-HP-DkX"/>
@@ -504,7 +504,7 @@
                                 </constraints>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Docha" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PWv-L7-2qL">
-                                <rect key="frame" x="156.5" y="10" width="62.5" height="25.5"/>
+                                <rect key="frame" x="156" y="10" width="63" height="26"/>
                                 <fontDescription key="fontDescription" name="CaviarDreams-Bold" family="Caviar Dreams" pointSize="20"/>
                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
@@ -533,13 +533,13 @@
                                 <rect key="frame" x="276" y="233" width="20" height="20"/>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="100" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZNa-bP-3U2" customClass="SACountingLabel" customModule="SACountingLabel">
-                                <rect key="frame" x="90" y="233.5" width="27.5" height="18.5"/>
+                                <rect key="frame" x="90" y="233" width="28" height="19"/>
                                 <fontDescription key="fontDescription" name="Montserrat-SemiBold" family="Montserrat" pointSize="15"/>
                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="5" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RFo-K7-MF3" customClass="SACountingLabel" customModule="SACountingLabel">
-                                <rect key="frame" x="306" y="233.5" width="9" height="18.5"/>
+                                <rect key="frame" x="306" y="233" width="9" height="19"/>
                                 <fontDescription key="fontDescription" name="Montserrat-SemiBold" family="Montserrat" pointSize="15"/>
                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
@@ -560,7 +560,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vhx-Ed-szr" userLabel="sharingButton">
-                                <rect key="frame" x="225" y="173.5" width="20" height="22"/>
+                                <rect key="frame" x="225" y="173" width="20" height="22"/>
                                 <state key="normal" image="sharing_icon_white"/>
                                 <connections>
                                     <action selector="sharingButtonTouched:" destination="aLk-xj-zzQ" eventType="touchUpInside" id="k15-TM-THl"/>
@@ -673,13 +673,13 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="DÉFI RAPIDE" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ODZ-dW-klh">
-                                <rect key="frame" x="139" y="54" width="97.5" height="18.5"/>
+                                <rect key="frame" x="139" y="54" width="98" height="19"/>
                                 <fontDescription key="fontDescription" name="Montserrat-SemiBold" family="Montserrat" pointSize="15"/>
                                 <color key="textColor" red="0.1450980392" green="0.21960784310000001" blue="0.31764705879999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4Lx-sh-M6p">
-                                <rect key="frame" x="0.0" y="77.5" width="375" height="168"/>
+                                <rect key="frame" x="0.0" y="78" width="375" height="168"/>
                                 <subviews>
                                     <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="p3G-wY-4Jq">
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="168"/>
@@ -704,7 +704,7 @@
                                                             </constraints>
                                                         </imageView>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Docher" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9d7-Lf-8nm">
-                                                            <rect key="frame" x="29" y="101" width="43.5" height="15"/>
+                                                            <rect key="frame" x="28" y="101" width="44" height="15"/>
                                                             <fontDescription key="fontDescription" name="Montserrat-Regular" family="Montserrat" pointSize="12"/>
                                                             <color key="textColor" red="0.1450980392" green="0.21960784310000001" blue="0.31764705879999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <nil key="highlightedColor"/>
@@ -759,7 +759,7 @@
                                 </constraints>
                             </view>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Wld-2u-TIC">
-                                <rect key="frame" x="0.0" y="255.5" width="375" height="411.5"/>
+                                <rect key="frame" x="0.0" y="256" width="375" height="411"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="idNewGameFindOpponentTableViewCell" rowHeight="70" id="70I-ex-SXv" customClass="NewGameFindOpponentTableViewCell" customModule="Docha" customModuleProvider="target">
@@ -900,7 +900,7 @@
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                         </imageView>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Lifestyle" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oym-Bz-p8D">
-                                                            <rect key="frame" x="0.0" y="131.5" width="130" height="18.5"/>
+                                                            <rect key="frame" x="0.0" y="131" width="130" height="19"/>
                                                             <fontDescription key="fontDescription" name="Montserrat-SemiBold" family="Montserrat" pointSize="15"/>
                                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <nil key="highlightedColor"/>
@@ -936,7 +936,7 @@
                                 </constraints>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="100" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="q12-tR-pNc" customClass="SACountingLabel" customModule="SACountingLabel">
-                                <rect key="frame" x="337.5" y="55.5" width="27.5" height="18.5"/>
+                                <rect key="frame" x="337" y="55" width="28" height="19"/>
                                 <fontDescription key="fontDescription" name="Montserrat-SemiBold" family="Montserrat" pointSize="15"/>
                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
@@ -1007,13 +1007,13 @@
                                         </constraints>
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Docher" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gRs-Ue-Vlh">
-                                        <rect key="frame" x="130" y="18.5" width="56" height="18.5"/>
+                                        <rect key="frame" x="130" y="18" width="56" height="19"/>
                                         <fontDescription key="fontDescription" name="Montserrat-ExtraBold" family="Montserrat" pointSize="15"/>
                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Niveau ?" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cBm-UB-A7Y">
-                                        <rect key="frame" x="130" y="42" width="49.5" height="14"/>
+                                        <rect key="frame" x="130" y="42" width="50" height="15"/>
                                         <fontDescription key="fontDescription" name="Montserrat-Regular" family="Montserrat" pointSize="12"/>
                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
@@ -1050,13 +1050,13 @@
                                         </constraints>
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Niveau ?" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JBP-rR-0yn">
-                                        <rect key="frame" x="221" y="42" width="49.5" height="14"/>
+                                        <rect key="frame" x="221" y="42" width="50" height="15"/>
                                         <fontDescription key="fontDescription" name="Montserrat-Regular" family="Montserrat" pointSize="12"/>
                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Docher" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bRV-bF-dna">
-                                        <rect key="frame" x="221" y="18.5" width="56" height="18.5"/>
+                                        <rect key="frame" x="221" y="18" width="56" height="19"/>
                                         <fontDescription key="fontDescription" name="Montserrat-ExtraBold" family="Montserrat" pointSize="15"/>
                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
@@ -1075,13 +1075,13 @@
                                 </constraints>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Catégorie" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uSA-k7-Wpr">
-                                <rect key="frame" x="158.5" y="431.5" width="58" height="14"/>
+                                <rect key="frame" x="159" y="431" width="58" height="15"/>
                                 <fontDescription key="fontDescription" name="Montserrat-Regular" family="Montserrat" pointSize="12"/>
                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DJD-VG-2AD">
-                                <rect key="frame" x="166.5" y="450.5" width="42.5" height="18.5"/>
+                                <rect key="frame" x="166" y="451" width="43" height="19"/>
                                 <fontDescription key="fontDescription" name="Montserrat-ExtraBold" family="Montserrat" pointSize="15"/>
                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
@@ -1330,25 +1330,25 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yc3-e8-PkU" userLabel="TopContainer">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="275.5"/>
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="276"/>
                                 <color key="backgroundColor" red="0.28235294119999998" green="0.64705882349999999" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="yc3-e8-PkU" secondAttribute="height" multiplier="64:47" id="ve7-Qt-4uJ"/>
                                 </constraints>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Réponses" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jAl-js-2Jv">
-                                <rect key="frame" x="150.5" y="280.5" width="75.5" height="18.5"/>
+                                <rect key="frame" x="150" y="281" width="76" height="19"/>
                                 <fontDescription key="fontDescription" name="Montserrat-ExtraBold" family="Montserrat" pointSize="15"/>
                                 <color key="textColor" red="0.054901961239999998" green="0.24705882370000001" blue="0.45098039509999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <pageControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="3" translatesAutoresizingMaskIntoConstraints="NO" id="2B0-oy-xFP">
-                                <rect key="frame" x="168" y="294.5" width="39" height="37"/>
+                                <rect key="frame" x="168" y="296" width="39" height="37"/>
                                 <color key="pageIndicatorTintColor" red="0.83137254900000002" green="0.82745098039999998" blue="0.85490196080000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <color key="currentPageIndicatorTintColor" red="0.47058823529411764" green="0.49411764705882355" blue="0.53725490196078429" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </pageControl>
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aFS-Vb-ihC">
-                                <rect key="frame" x="0.0" y="327.5" width="375" height="269"/>
+                                <rect key="frame" x="0.0" y="329" width="375" height="268"/>
                                 <connections>
                                     <segue destination="FfV-0i-RVE" kind="embed" id="T6c-98-p0k"/>
                                 </connections>
@@ -1416,40 +1416,40 @@
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="623"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="DOCHA, QU'EST-CE QUE C'EST ?" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0Sj-Ex-VJe">
-                                                <rect key="frame" x="68.5" y="10" width="240" height="18.5"/>
+                                                <rect key="frame" x="68" y="10" width="240" height="19"/>
                                                 <fontDescription key="fontDescription" name="Montserrat-SemiBold" family="Montserrat" pointSize="15"/>
                                                 <color key="textColor" red="0.24313725489999999" green="0.36078431370000003" blue="0.47058823529999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="749" textAlignment="justified" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5bH-sd-kSj">
-                                                <rect key="frame" x="10" y="38.5" width="355" height="180"/>
+                                                <rect key="frame" x="10" y="39" width="355" height="180"/>
                                                 <string key="text">Docha est le premier jeu mobile de quiz sur les prix. Le principe est simple : tu vas devoir deviner le plus rapidement possible les prix des produits contre un adversaire. Tu peux retrouver l'ensemble de tes amis grâce à la connexion Facebook et les défier directement ! A la fin de chaque partie, tu gagneras des Dochos si tu es le vainqueur et des Perfects si tu découvres les prix cachés. Alors n'attend plus, deviens le meilleur sur les prix !</string>
                                                 <fontDescription key="fontDescription" name="Montserrat-Regular" family="Montserrat" pointSize="15"/>
                                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="QUI SOMMES-NOUS ?" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QGD-gG-uA9">
-                                                <rect key="frame" x="107" y="233.5" width="162" height="18.5"/>
+                                                <rect key="frame" x="107" y="234" width="162" height="19"/>
                                                 <fontDescription key="fontDescription" name="Montserrat-SemiBold" family="Montserrat" pointSize="15"/>
                                                 <color key="textColor" red="0.24313725489999999" green="0.36078431370000003" blue="0.47058823529999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="cofounders" translatesAutoresizingMaskIntoConstraints="NO" id="g9G-cC-29g">
-                                                <rect key="frame" x="131" y="260" width="113" height="100"/>
+                                                <rect key="frame" x="131" y="261" width="113" height="100"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="113" id="Zxg-rd-l9s"/>
                                                     <constraint firstAttribute="height" constant="100" id="vp9-H0-Qc0"/>
                                                 </constraints>
                                             </imageView>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="justified" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="coc-Rv-k5G">
-                                                <rect key="frame" x="10" y="370" width="355" height="108"/>
+                                                <rect key="frame" x="10" y="371" width="355" height="108"/>
                                                 <string key="text">Nous sommes deux co-fondateurs : Louis et Mathis. Nous sommes deux mordus d’Internet et avons déjà participé à des succès du web français. Nous voulons faire de Docha un endroit où l’utilisateur peut s’amuser, défier ses amis autour des prix.</string>
                                                 <fontDescription key="fontDescription" name="Montserrat-Regular" family="Montserrat" pointSize="15"/>
                                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="jhw-vK-kBl">
-                                                <rect key="frame" x="0.0" y="488" width="375" height="134"/>
+                                                <rect key="frame" x="0.0" y="489" width="375" height="134"/>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="134" id="SD8-0e-hIA"/>
@@ -1463,7 +1463,7 @@
                                                             <autoresizingMask key="autoresizingMask"/>
                                                             <subviews>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xqf-uo-rMc">
-                                                                    <rect key="frame" x="8" y="12" width="46" height="20"/>
+                                                                    <rect key="frame" x="8" y="12" width="46" height="21"/>
                                                                     <fontDescription key="fontDescription" name="Montserrat-Regular" family="Montserrat" pointSize="17"/>
                                                                     <nil key="textColor"/>
                                                                     <nil key="highlightedColor"/>
@@ -1599,13 +1599,13 @@
                                                     <rect key="frame" x="21" y="22" width="43" height="60"/>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ESPOIR" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="maG-1n-2sW">
-                                                    <rect key="frame" x="80" y="28" width="54" height="17"/>
+                                                    <rect key="frame" x="80" y="28" width="54" height="18"/>
                                                     <fontDescription key="fontDescription" name="Montserrat-SemiBold" family="Montserrat" pointSize="14"/>
                                                     <color key="textColor" red="0.96470588235294119" green="0.23529411764705882" blue="0.12549019607843137" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Trouvez 5 perfects" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="U4Q-LN-x1n">
-                                                    <rect key="frame" x="80" y="50" width="176" height="14"/>
+                                                    <rect key="frame" x="80" y="51" width="176" height="15"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="176" id="rlf-sY-dzj"/>
                                                     </constraints>
@@ -1614,27 +1614,27 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1 %" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="52i-Vk-WWY">
-                                                    <rect key="frame" x="347.5" y="30" width="19.5" height="14"/>
+                                                    <rect key="frame" x="347" y="30" width="20" height="15"/>
                                                     <fontDescription key="fontDescription" name="Montserrat-Regular" family="Montserrat" pointSize="12"/>
                                                     <color key="textColor" red="0.4039215686" green="0.4039215686" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="fond_bleu_dochos" translatesAutoresizingMaskIntoConstraints="NO" id="bkt-xH-wNI">
-                                                    <rect key="frame" x="314" y="52" width="53" height="19"/>
+                                                    <rect key="frame" x="314" y="53" width="53" height="19"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="53" id="Yi1-Ze-rCL"/>
                                                         <constraint firstAttribute="height" constant="19" id="qeP-2g-f8G"/>
                                                     </constraints>
                                                 </imageView>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="dochos_icon" translatesAutoresizingMaskIntoConstraints="NO" id="J7P-xn-z6O">
-                                                    <rect key="frame" x="319" y="54" width="15" height="15"/>
+                                                    <rect key="frame" x="319" y="55" width="15" height="15"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="15" id="IXj-3k-hZx"/>
                                                         <constraint firstAttribute="width" constant="15" id="gsD-ca-NMQ"/>
                                                     </constraints>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="3000" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="knl-f8-2nq">
-                                                    <rect key="frame" x="338.5" y="56" width="26.5" height="12"/>
+                                                    <rect key="frame" x="338" y="56" width="27" height="13"/>
                                                     <fontDescription key="fontDescription" name="Montserrat-SemiBold" family="Montserrat" pointSize="10"/>
                                                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
@@ -1711,7 +1711,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2sm-tt-sal" userLabel="containerView">
-                                <rect key="frame" x="70" y="87.5" width="235" height="100"/>
+                                <rect key="frame" x="70" y="88" width="235" height="100"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bg_zone_moi" translatesAutoresizingMaskIntoConstraints="NO" id="uUK-dw-rgA">
                                         <rect key="frame" x="0.0" y="0.0" width="235" height="100"/>
@@ -1720,13 +1720,13 @@
                                         <rect key="frame" x="24" y="8" width="46" height="63"/>
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="# 8" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5Ud-8u-dXy">
-                                        <rect key="frame" x="31" y="73" width="32.5" height="24.5"/>
+                                        <rect key="frame" x="31" y="73" width="33" height="25"/>
                                         <fontDescription key="fontDescription" name="Montserrat-ExtraBold" family="Montserrat" pointSize="20"/>
                                         <color key="textColor" red="0.074509803920000006" green="0.1529411765" blue="0.21960784310000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="100" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0mr-FI-JKM">
-                                        <rect key="frame" x="165" y="71" width="37" height="24.5"/>
+                                        <rect key="frame" x="165" y="71" width="37" height="25"/>
                                         <fontDescription key="fontDescription" name="Montserrat-ExtraBold" family="Montserrat" pointSize="20"/>
                                         <color key="textColor" red="0.074509803920000006" green="0.1529411765" blue="0.21960784310000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
@@ -1751,13 +1751,13 @@
                                 </constraints>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="MOI" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="D3O-9T-Eaf">
-                                <rect key="frame" x="172.5" y="59" width="30.5" height="18.5"/>
+                                <rect key="frame" x="172" y="59" width="31" height="19"/>
                                 <fontDescription key="fontDescription" name="Montserrat-ExtraBold" family="Montserrat" pointSize="15"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="default" allowsSelection="NO" rowHeight="51" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="633-vb-EZJ">
-                                <rect key="frame" x="0.0" y="245.5" width="375" height="421.5"/>
+                                <rect key="frame" x="0.0" y="246" width="375" height="421"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="idRankingTableViewCell" rowHeight="71" id="3Kv-DR-h9Q" customClass="RankingTableViewCell" customModule="Docha" customModuleProvider="target">
@@ -1792,13 +1792,13 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="178" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VXf-42-QN2">
-                                                    <rect key="frame" x="342.5" y="26" width="24.5" height="18"/>
+                                                    <rect key="frame" x="342.5" y="27" width="24.5" height="18"/>
                                                     <fontDescription key="fontDescription" name="Montserrat-SemiBold" family="Montserrat" pointSize="15"/>
                                                     <color key="textColor" red="0.074509803920000006" green="0.1529411765" blue="0.21960784310000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="perfect_small" translatesAutoresizingMaskIntoConstraints="NO" id="q0x-1x-tKV">
-                                                    <rect key="frame" x="314.5" y="25" width="20" height="20"/>
+                                                    <rect key="frame" x="314.5" y="26" width="20" height="20"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="20" id="DZx-Dq-bfA"/>
                                                         <constraint firstAttribute="height" constant="20" id="EkZ-Qt-Nxz"/>
@@ -1837,7 +1837,7 @@
                                 </connections>
                             </tableView>
                             <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="I2l-LL-uZJ">
-                                <rect key="frame" x="16" y="202.5" width="343" height="29"/>
+                                <rect key="frame" x="16" y="203" width="343" height="29"/>
                                 <segments>
                                     <segment title="Amis"/>
                                     <segment title="Général"/>
@@ -2065,7 +2065,7 @@
                                                     </connections>
                                                 </button>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="13z-r3-K2k">
-                                                    <rect key="frame" x="68" y="16" width="146" height="18"/>
+                                                    <rect key="frame" x="68" y="15" width="146" height="19"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="146" id="ujB-UC-5Lc"/>
                                                     </constraints>
@@ -2080,7 +2080,7 @@
                                                     </constraints>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eE7-W3-JP0">
-                                                    <rect key="frame" x="68" y="39" width="146" height="14"/>
+                                                    <rect key="frame" x="68" y="39" width="146" height="15"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="146" id="jBc-KD-95A"/>
                                                     </constraints>
@@ -2274,13 +2274,13 @@
                                                             <rect key="frame" x="0.0" y="0.0" width="360" height="70"/>
                                                         </imageView>
                                                         <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="+ 1 meilleur temps !" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Wl4-DH-7ya">
-                                                            <rect key="frame" x="241.5" y="51" width="115.5" height="15"/>
+                                                            <rect key="frame" x="241" y="51" width="116" height="15"/>
                                                             <fontDescription key="fontDescription" name="Montserrat-SemiBold" family="Montserrat" pointSize="12"/>
                                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="+ 1 meilleur temps !" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rfg-qP-v6C">
-                                                            <rect key="frame" x="3.5" y="51" width="115.5" height="15"/>
+                                                            <rect key="frame" x="3" y="51" width="116" height="15"/>
                                                             <fontDescription key="fontDescription" name="Montserrat-SemiBold" family="Montserrat" pointSize="12"/>
                                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <nil key="highlightedColor"/>
@@ -2696,7 +2696,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="623"/>
                             </imageView>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Email" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="ZFN-jb-fTC" customClass="HoshiTextField" customModule="TextFieldEffects">
-                                <rect key="frame" x="67.5" y="171.5" width="240" height="46"/>
+                                <rect key="frame" x="67.5" y="170.5" width="240" height="46"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="240" id="5qM-TJ-77U"/>
                                     <constraint firstAttribute="height" constant="46" id="qGZ-BF-Dm9"/>
@@ -2734,7 +2734,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fDF-tJ-b03">
-                                <rect key="frame" x="129" y="589" width="117" height="26"/>
+                                <rect key="frame" x="132.5" y="590" width="110" height="25"/>
                                 <fontDescription key="fontDescription" name="Montserrat-Regular" family="Montserrat" pointSize="11"/>
                                 <state key="normal" title="Mot de passe oublié ?">
                                     <color key="titleColor" red="0.66666666666666663" green="0.66666666666666663" blue="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -2744,7 +2744,7 @@
                                 </connections>
                             </button>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Mot de passe" textAlignment="natural" clearsOnBeginEditing="YES" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="JAs-yI-pp7" customClass="HoshiTextField" customModule="TextFieldEffects">
-                                <rect key="frame" x="67.5" y="232.5" width="240" height="46"/>
+                                <rect key="frame" x="67.5" y="231.5" width="240" height="46"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="240" id="0fA-9y-wyh"/>
                                     <constraint firstAttribute="height" constant="46" id="hVB-ds-tU0"/>
@@ -2775,7 +2775,7 @@
                                 </connections>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="R1h-Qc-qEX">
-                                <rect key="frame" x="80" y="514" width="215" height="67"/>
+                                <rect key="frame" x="80" y="515" width="215" height="67"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="R1h-Qc-qEX" secondAttribute="height" multiplier="16:5" id="pCr-Ca-Npi"/>
                                 </constraints>
@@ -2785,7 +2785,7 @@
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ou connexion par email" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QiS-EB-iek">
-                                <rect key="frame" x="97.5" y="132" width="180.5" height="18.5"/>
+                                <rect key="frame" x="109.5" y="132" width="156.5" height="17.5"/>
                                 <fontDescription key="fontDescription" name="Montserrat-ExtraBold" family="Montserrat" pointSize="15"/>
                                 <color key="textColor" red="0.1450980392" green="0.23921568630000001" blue="0.30980392159999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
@@ -2930,13 +2930,13 @@
                                 </constraints>
                             </imageView>
                             <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Devine les prix de tes produits préférés !" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Bu6-Pn-N8h">
-                                <rect key="frame" x="41" y="528" width="295" height="18"/>
+                                <rect key="frame" x="40" y="528" width="295" height="18"/>
                                 <fontDescription key="fontDescription" name="Montserrat-Regular" family="Montserrat" pointSize="15"/>
                                 <color key="textColor" red="0.52156862745098043" green="0.58823529411764708" blue="0.6588235294117647" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Bienvenue sur Docha !" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="w3R-jg-akf">
-                                <rect key="frame" x="91.5" y="499" width="192.5" height="21"/>
+                                <rect key="frame" x="91" y="499" width="193" height="21"/>
                                 <fontDescription key="fontDescription" name="Montserrat-ExtraBold" family="Montserrat" pointSize="17"/>
                                 <color key="textColor" red="0.1450980392" green="0.23921568630000001" blue="0.30980392159999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
@@ -2977,7 +2977,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Découvre un maximum de prix" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3av-3V-6bU">
-                                <rect key="frame" x="53.5" y="499" width="269" height="21"/>
+                                <rect key="frame" x="53" y="499" width="269" height="21"/>
                                 <fontDescription key="fontDescription" name="Montserrat-ExtraBold" family="Montserrat" pointSize="17"/>
                                 <color key="textColor" red="0.1450980392" green="0.23921568630000001" blue="0.30980392159999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
@@ -3054,7 +3054,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Défie tes amis et sois le meilleur" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SKl-Nh-bez">
-                                <rect key="frame" x="55.5" y="499" width="264.5" height="20"/>
+                                <rect key="frame" x="55" y="499" width="265" height="20"/>
                                 <fontDescription key="fontDescription" name="Montserrat-ExtraBold" family="Montserrat" pointSize="16"/>
                                 <color key="textColor" red="0.1450980392" green="0.23921568630000001" blue="0.30980392159999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
@@ -3150,7 +3150,7 @@
                                 </connections>
                             </button>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="bezel" placeholder="Email" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="PGq-0l-ITw" customClass="HoshiTextField" customModule="TextFieldEffects">
-                                <rect key="frame" x="67.5" y="193.5" width="240" height="46"/>
+                                <rect key="frame" x="67.5" y="192.5" width="240" height="46"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="240" id="mCw-f4-0Fo"/>
                                     <constraint firstAttribute="height" constant="46" id="wgi-XV-uB2"/>
@@ -3179,7 +3179,7 @@
                                 </connections>
                             </textField>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Mot de passe" textAlignment="natural" clearsOnBeginEditing="YES" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="tSV-nw-XqR" customClass="HoshiTextField" customModule="TextFieldEffects">
-                                <rect key="frame" x="67.5" y="260.5" width="240" height="46"/>
+                                <rect key="frame" x="67.5" y="259.5" width="240" height="46"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="46" id="RKw-Zc-vAf"/>
                                     <constraint firstAttribute="width" constant="240" id="ROl-ql-a5w"/>
@@ -3215,7 +3215,7 @@
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ou inscription par email" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Um0-xM-0v6">
-                                <rect key="frame" x="96" y="167" width="184" height="18.5"/>
+                                <rect key="frame" x="110" y="167" width="156.5" height="17.5"/>
                                 <fontDescription key="fontDescription" name="Montserrat-ExtraBold" family="Montserrat" pointSize="15"/>
                                 <color key="textColor" red="0.1450980392" green="0.23921568630000001" blue="0.30980392159999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
@@ -3270,39 +3270,39 @@
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="623"/>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Ton sexe" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="L3m-mF-Nuk">
-                                <rect key="frame" x="152.5" y="16" width="71" height="20"/>
+                                <rect key="frame" x="156.5" y="16" width="63.5" height="19"/>
                                 <fontDescription key="fontDescription" name="Montserrat-ExtraBold" family="Montserrat" pointSize="16"/>
                                 <color key="textColor" red="0.1450980392" green="0.23921568630000001" blue="0.30980392159999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cVu-88-HIK">
-                                <rect key="frame" x="40" y="51" width="100" height="100"/>
+                                <rect key="frame" x="40" y="50" width="100" height="100"/>
                                 <state key="normal" image="avatar_man_large"/>
                                 <connections>
                                     <action selector="genderButtonTouched:" destination="Mgl-ri-00g" eventType="touchUpInside" id="Pk3-Nb-Zel"/>
                                 </connections>
                             </button>
                             <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WH4-9t-4fM">
-                                <rect key="frame" x="235" y="51" width="100" height="100"/>
+                                <rect key="frame" x="235" y="50" width="100" height="100"/>
                                 <state key="normal" image="avatar_woman_large"/>
                                 <connections>
                                     <action selector="genderButtonTouched:" destination="Mgl-ri-00g" eventType="touchUpInside" id="j5N-Yd-HL9"/>
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Un homme" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dEG-nk-f9q">
-                                <rect key="frame" x="50" y="159" width="79.5" height="17"/>
+                                <rect key="frame" x="50" y="158" width="69.5" height="17"/>
                                 <fontDescription key="fontDescription" name="Montserrat-Bold" family="Montserrat" pointSize="14"/>
                                 <color key="textColor" red="0.1450980392" green="0.23921568630000001" blue="0.30980392159999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Une femme" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mSA-B9-X6D">
-                                <rect key="frame" x="244" y="159" width="83" height="17"/>
+                                <rect key="frame" x="254.5" y="158" width="72.5" height="17"/>
                                 <fontDescription key="fontDescription" name="Montserrat-Bold" family="Montserrat" pointSize="14"/>
                                 <color key="textColor" red="0.1450980392" green="0.23921568630000001" blue="0.30980392159999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Exemple : 1er Janvier 1990" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="mLY-tn-lfY" customClass="HoshiTextField" customModule="TextFieldEffects">
-                                <rect key="frame" x="67.5" y="255.5" width="240" height="46"/>
+                                <rect key="frame" x="67.5" y="253.5" width="240" height="46"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="240" id="1qA-cq-wP0"/>
                                     <constraint firstAttribute="height" constant="46" id="J7o-Rb-cvJ"/>
@@ -3336,26 +3336,37 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1Lp-uv-MHF">
-                                <rect key="frame" x="137" y="589" width="101" height="26"/>
+                                <rect key="frame" x="142.5" y="590" width="30" height="25"/>
                                 <fontDescription key="fontDescription" name="Montserrat-Light" family="Montserrat" pointSize="11"/>
-                                <state key="normal" title="Skip. Private policy">
-                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <state key="normal" title="Skip -">
+                                    <color key="titleColor" red="0.1450980392" green="0.21960784310000001" blue="0.31764705879999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
                                 <connections>
                                     <action selector="skipButtonTouched:" destination="Mgl-ri-00g" eventType="touchUpInside" id="GRR-eo-Xno"/>
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Ta date de naissance" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ugi-02-9sh">
-                                <rect key="frame" x="108" y="224" width="159.5" height="18.5"/>
+                                <rect key="frame" x="117" y="223" width="141.5" height="17.5"/>
                                 <fontDescription key="fontDescription" name="Montserrat-ExtraBold" family="Montserrat" pointSize="15"/>
                                 <color key="textColor" red="0.1450980392" green="0.23921568630000001" blue="0.30980392159999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="v9o-Rh-kfd">
+                                <rect key="frame" x="172.5" y="589" width="75" height="26"/>
+                                <fontDescription key="fontDescription" name="Montserrat-Light" family="Montserrat" pointSize="12"/>
+                                <state key="normal" title="Privacy policy">
+                                    <color key="titleColor" red="0.1450980392" green="0.21960784310000001" blue="0.31764705879999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="privacyPolicyButtonTouched:" destination="Mgl-ri-00g" eventType="touchUpInside" id="A3V-27-cGM"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <constraints>
                             <constraint firstItem="0Kp-mi-z8U" firstAttribute="leading" secondItem="7kY-eX-m4H" secondAttribute="leading" id="6Iy-Az-GUv"/>
                             <constraint firstItem="ITc-tl-qiJ" firstAttribute="top" secondItem="1Lp-uv-MHF" secondAttribute="bottom" constant="8" id="Clm-4c-qMJ"/>
                             <constraint firstItem="cVu-88-HIK" firstAttribute="top" secondItem="L3m-mF-Nuk" secondAttribute="bottom" constant="15" id="ELH-Pk-sWC"/>
+                            <constraint firstItem="ITc-tl-qiJ" firstAttribute="top" secondItem="v9o-Rh-kfd" secondAttribute="bottom" constant="8" id="FGe-Lq-jXc"/>
                             <constraint firstItem="dEG-nk-f9q" firstAttribute="leading" secondItem="7kY-eX-m4H" secondAttribute="leading" constant="50" id="FSg-WV-vki"/>
                             <constraint firstItem="cVu-88-HIK" firstAttribute="leading" secondItem="7kY-eX-m4H" secondAttribute="leading" constant="40" id="G1S-hq-fYL"/>
                             <constraint firstItem="Ugi-02-9sh" firstAttribute="centerX" secondItem="7kY-eX-m4H" secondAttribute="centerX" id="GSr-5w-wc5"/>
@@ -3367,6 +3378,7 @@
                             <constraint firstItem="42s-M7-A7A" firstAttribute="centerX" secondItem="7kY-eX-m4H" secondAttribute="centerX" id="WTq-EK-PHr"/>
                             <constraint firstItem="WH4-9t-4fM" firstAttribute="top" secondItem="L3m-mF-Nuk" secondAttribute="bottom" constant="15" id="YSX-T3-rnl"/>
                             <constraint firstItem="dEG-nk-f9q" firstAttribute="top" secondItem="cVu-88-HIK" secondAttribute="bottom" constant="8" id="bbk-Of-oMM"/>
+                            <constraint firstItem="v9o-Rh-kfd" firstAttribute="leading" secondItem="1Lp-uv-MHF" secondAttribute="trailing" id="cpc-cq-f6a"/>
                             <constraint firstItem="Ugi-02-9sh" firstAttribute="top" secondItem="dEG-nk-f9q" secondAttribute="bottom" constant="48" id="gqp-Lp-ja0"/>
                             <constraint firstItem="mSA-B9-X6D" firstAttribute="top" secondItem="WH4-9t-4fM" secondAttribute="bottom" constant="8" id="hhR-KW-WKX"/>
                             <constraint firstItem="mLY-tn-lfY" firstAttribute="top" secondItem="Ugi-02-9sh" secondAttribute="bottom" constant="13" id="inG-8L-zHh"/>
@@ -3375,7 +3387,7 @@
                             <constraint firstAttribute="trailing" secondItem="0Kp-mi-z8U" secondAttribute="trailing" id="pMS-Fy-VKG"/>
                             <constraint firstItem="Ugi-02-9sh" firstAttribute="top" secondItem="mSA-B9-X6D" secondAttribute="bottom" constant="48" id="tWa-Uz-bru"/>
                             <constraint firstItem="ITc-tl-qiJ" firstAttribute="top" secondItem="0Kp-mi-z8U" secondAttribute="bottom" id="xL1-e0-fkH"/>
-                            <constraint firstItem="1Lp-uv-MHF" firstAttribute="centerX" secondItem="7kY-eX-m4H" secondAttribute="centerX" id="ziN-gX-aI9"/>
+                            <constraint firstItem="1Lp-uv-MHF" firstAttribute="centerX" secondItem="7kY-eX-m4H" secondAttribute="centerX" constant="-30" id="ziN-gX-aI9"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Qui es-tu ?" id="UoZ-u1-Flr"/>
@@ -3384,6 +3396,8 @@
                     <connections>
                         <outlet property="birthdayTextField" destination="mLY-tn-lfY" id="PJ6-X3-2Ii"/>
                         <outlet property="manButton" destination="cVu-88-HIK" id="mb4-0V-LnG"/>
+                        <outlet property="privacyPolicyButton" destination="v9o-Rh-kfd" id="CFo-zw-Tbk"/>
+                        <outlet property="skipButton" destination="1Lp-uv-MHF" id="lbo-wQ-ANw"/>
                         <outlet property="validProfilButton" destination="42s-M7-A7A" id="hB3-JD-tKG"/>
                         <outlet property="womanButton" destination="WH4-9t-4fM" id="9DJ-yY-AC9"/>
                     </connections>
@@ -3415,7 +3429,7 @@
                                 </connections>
                             </button>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="bezel" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="csC-CP-dTP" customClass="HoshiTextField" customModule="TextFieldEffects">
-                                <rect key="frame" x="67.5" y="93" width="240" height="46"/>
+                                <rect key="frame" x="67.5" y="92" width="240" height="46"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="46" id="E9g-aS-fl6"/>
                                     <constraint firstAttribute="width" constant="240" id="aUC-ox-W8K"/>
@@ -3442,7 +3456,7 @@
                                 </connections>
                             </textField>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Entre ton pseudo" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Lbz-HH-B3F">
-                                <rect key="frame" x="116.5" y="60" width="142.5" height="20"/>
+                                <rect key="frame" x="126" y="60" width="123.5" height="19"/>
                                 <fontDescription key="fontDescription" name="Montserrat-ExtraBold" family="Montserrat" pointSize="16"/>
                                 <color key="textColor" red="0.1450980392" green="0.23921568630000001" blue="0.30980392159999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
@@ -3860,7 +3874,7 @@
                                                     </constraints>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Modifier le profil" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Z0R-Ti-e36">
-                                                    <rect key="frame" x="56" y="12" width="122.5" height="18"/>
+                                                    <rect key="frame" x="56" y="12" width="123" height="18"/>
                                                     <fontDescription key="fontDescription" name="Montserrat-Regular" family="Montserrat" pointSize="15"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
@@ -4261,7 +4275,7 @@
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Lifestyle" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DhI-x9-KjG">
-                                                    <rect key="frame" x="0.0" y="131.5" width="130" height="18.5"/>
+                                                    <rect key="frame" x="0.0" y="131" width="130" height="19"/>
                                                     <fontDescription key="fontDescription" name="Montserrat-SemiBold" family="Montserrat" pointSize="15"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
@@ -4492,20 +4506,20 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TRR-wY-zvv">
-                                        <rect key="frame" x="0.0" y="51" width="147" height="14"/>
+                                        <rect key="frame" x="0.0" y="51" width="147" height="15"/>
                                         <fontDescription key="fontDescription" name="Montserrat-Regular" family="Montserrat" pointSize="12"/>
                                         <color key="textColor" red="0.54117647059999996" green="0.56862745100000001" blue="0.60784313729999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IAK-oR-Jfh">
-                                        <rect key="frame" x="12" y="80" width="124" height="34"/>
+                                        <rect key="frame" x="12" y="81" width="124" height="34"/>
                                         <state key="normal" image="more_details_btn"/>
                                         <connections>
                                             <action selector="moreDetailsButtonTouched:" destination="rWJ-QO-2bP" eventType="touchUpInside" id="Arc-A8-hSn"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3TE-bq-SPD">
-                                        <rect key="frame" x="64" y="122" width="20" height="22"/>
+                                        <rect key="frame" x="64" y="123" width="20" height="22"/>
                                         <state key="normal" image="sharing_icon_blue"/>
                                         <connections>
                                             <action selector="shareButtonTouched:" destination="rWJ-QO-2bP" eventType="touchUpInside" id="8Ak-fa-439"/>
@@ -4541,7 +4555,7 @@
                                         </constraints>
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="84 €" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qFF-oF-dqV">
-                                        <rect key="frame" x="249.5" y="37" width="36" height="15"/>
+                                        <rect key="frame" x="250" y="37" width="36" height="15"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="36" id="E3L-Rt-Aml"/>
                                         </constraints>
@@ -4550,7 +4564,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="," lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qt7-ri-TH1">
-                                        <rect key="frame" x="241" y="20.5" width="7.5" height="39.5"/>
+                                        <rect key="frame" x="241" y="20" width="8" height="40"/>
                                         <fontDescription key="fontDescription" name="Montserrat-SemiBold" family="Montserrat" pointSize="32"/>
                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
@@ -4652,19 +4666,19 @@
                                 <rect key="frame" x="16" y="238" width="343" height="191"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="dochos_large" translatesAutoresizingMaskIntoConstraints="NO" id="k1y-Ec-e6d">
-                                        <rect key="frame" x="195.5" y="61" width="70" height="70"/>
+                                        <rect key="frame" x="195" y="61" width="70" height="70"/>
                                         <constraints>
                                             <constraint firstAttribute="width" secondItem="k1y-Ec-e6d" secondAttribute="height" multiplier="1:1" id="SLp-nH-rMg"/>
                                         </constraints>
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="W7L-Re-5Xd" customClass="SACountingLabel" customModule="SACountingLabel">
-                                        <rect key="frame" x="123.5" y="46.5" width="57" height="98"/>
+                                        <rect key="frame" x="123" y="47" width="57" height="98"/>
                                         <fontDescription key="fontDescription" name="Montserrat-ExtraBold" family="Montserrat" pointSize="80"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="+" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hda-Kf-9GH">
-                                        <rect key="frame" x="72" y="46.5" width="41.5" height="98"/>
+                                        <rect key="frame" x="71" y="47" width="42" height="98"/>
                                         <fontDescription key="fontDescription" name="Montserrat-ExtraBold" family="Montserrat" pointSize="80"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <nil key="highlightedColor"/>
@@ -4741,25 +4755,25 @@
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                             </imageView>
                             <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="dochos_level_up" translatesAutoresizingMaskIntoConstraints="NO" id="XgO-4a-UPm">
-                                <rect key="frame" x="200.5" y="458" width="40" height="40"/>
+                                <rect key="frame" x="200" y="458" width="40" height="40"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="XgO-4a-UPm" secondAttribute="height" multiplier="1:1" id="sIJ-jU-KA1"/>
                                 </constraints>
                             </imageView>
                             <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6aB-Qh-iwQ" customClass="SACountingLabel" customModule="SACountingLabel">
-                                <rect key="frame" x="160.5" y="457" width="25" height="43"/>
+                                <rect key="frame" x="160" y="457" width="25" height="43"/>
                                 <fontDescription key="fontDescription" name="Montserrat-ExtraBold" family="Montserrat" pointSize="35"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Félicitation !" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fbh-pX-oeR">
-                                <rect key="frame" x="91.5" y="59.5" width="193" height="37"/>
+                                <rect key="frame" x="91" y="59" width="193" height="37"/>
                                 <fontDescription key="fontDescription" name="Montserrat-ExtraBold" family="Montserrat" pointSize="30"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tu es passé au :" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ScP-Ei-n8N">
-                                <rect key="frame" x="122.5" y="114.5" width="130.5" height="21"/>
+                                <rect key="frame" x="122" y="114" width="131" height="21"/>
                                 <fontDescription key="fontDescription" name="Montserrat-SemiBold" family="Montserrat" pointSize="17"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
@@ -4771,13 +4785,13 @@
                                 </constraints>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Niveau 3" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Icb-lT-zW4">
-                                <rect key="frame" x="145.5" y="167.5" width="85.5" height="24.5"/>
+                                <rect key="frame" x="145" y="167" width="86" height="25"/>
                                 <fontDescription key="fontDescription" name="Montserrat-SemiBold" family="Montserrat" pointSize="20"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="+" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wf3-hu-wgn">
-                                <rect key="frame" x="137" y="457" width="18.5" height="43"/>
+                                <rect key="frame" x="136" y="457" width="19" height="43"/>
                                 <fontDescription key="fontDescription" name="Montserrat-ExtraBold" family="Montserrat" pointSize="35"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>

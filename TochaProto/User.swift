@@ -78,7 +78,7 @@ class User: NSObject {
         self.rank = jsonObject[UserDataKey.kRank].uIntValue
     }
     
-    func initPropertiesFromUser(user: User) {
+    func initPropertiesFromUser(_ user: User) {
         let user = user
         if let email = user.email { self.email = email }
         if let pseudo = user.pseudo { self.pseudo = pseudo }

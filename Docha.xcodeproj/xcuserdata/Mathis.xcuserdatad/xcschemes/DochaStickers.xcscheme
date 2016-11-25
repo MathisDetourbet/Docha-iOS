@@ -43,13 +43,33 @@
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       shouldUseLaunchSchemeArgsEnv = "YES">
       <Testables>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "67E9EE751DE45C63000F6F6D"
+               BuildableName = "DochaUnitTests.xctest"
+               BlueprintName = "DochaUnitTests"
+               ReferencedContainer = "container:Docha.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "67E9EE861DE461DC000F6F6D"
+               BuildableName = "DochaTests.xctest"
+               BlueprintName = "DochaTests"
+               ReferencedContainer = "container:Docha.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "67051AC31DDF711A00D4F8F7"
-            BuildableName = "DochaStickers.appex"
-            BlueprintName = "DochaStickers"
+            BlueprintIdentifier = "6701D96F1C108A2100F87043"
+            BuildableName = "Docha.app"
+            BlueprintName = "Docha"
             ReferencedContainer = "container:Docha.xcodeproj">
          </BuildableReference>
       </MacroExpansion>

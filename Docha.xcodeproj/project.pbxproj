@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		17C4C55B632D40738F022EBF /* Pods_Docha.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7B81E7EE25887F1C2C481FAD /* Pods_Docha.framework */; };
-		3BBFA0F0EB4F828F18867FE4 /* Pods_DochaTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7CF8F4D01B437EA5343370DD /* Pods_DochaTests.framework */; };
+		1A14E85DA37FE6C0ED028B78 /* Pods_DochaTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7CF8F4D01B437EA5343370DD /* Pods_DochaTests.framework */; };
 		67005C731DDB7231002331B5 /* DeviceHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67005C721DDB7231002331B5 /* DeviceHelper.swift */; };
 		67005C751DDB835D002331B5 /* KeyboardView4S.xib in Resources */ = {isa = PBXBuildFile; fileRef = 67005C741DDB835D002331B5 /* KeyboardView4S.xib */; };
 		67005C771DDB949F002331B5 /* KeyboardView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 67005C761DDB949F002331B5 /* KeyboardView.xib */; };
@@ -18,11 +18,10 @@
 		6701D9741C108A2100F87043 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6701D9731C108A2100F87043 /* AppDelegate.swift */; };
 		6701D9791C108A2100F87043 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6701D9771C108A2100F87043 /* Main.storyboard */; };
 		6701D97E1C108A2100F87043 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6701D97C1C108A2100F87043 /* LaunchScreen.storyboard */; };
-		6701D9891C108A2100F87043 /* TochaProtoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6701D9881C108A2100F87043 /* TochaProtoTests.swift */; };
 		6701D9A21C108AAE00F87043 /* Product.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6701D9A11C108AAE00F87043 /* Product.swift */; };
 		67051AC71DDF711A00D4F8F7 /* Stickers.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 67051AC61DDF711A00D4F8F7 /* Stickers.xcassets */; };
 		67051ACB1DDF711A00D4F8F7 /* DochaStickers.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 67051AC41DDF711A00D4F8F7 /* DochaStickers.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		67051AD11DDF744F00D4F8F7 /* Messages.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 67051AD01DDF744F00D4F8F7 /* Messages.framework */; };
+		67051AD11DDF744F00D4F8F7 /* Messages.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 67051AD01DDF744F00D4F8F7 /* Messages.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		670F61F61D6DCBEC00CE96F4 /* BadgesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 670F61F51D6DCBEC00CE96F4 /* BadgesViewController.swift */; };
 		670F61F81D6DCD1A00CE96F4 /* BadgeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 670F61F71D6DCD1A00CE96F4 /* BadgeTableViewCell.swift */; };
 		6715C7AB1DA29C22008C50F4 /* CategoryRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6715C7AA1DA29C22008C50F4 /* CategoryRequest.swift */; };
@@ -139,6 +138,18 @@
 		67E7ED031D78D71A00D04536 /* NewGameCategorieSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67E7ED021D78D71A00D04536 /* NewGameCategorieSelectionViewController.swift */; };
 		67E7ED051D79B63B00D04536 /* InscriptionPseudoSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67E7ED041D79B63B00D04536 /* InscriptionPseudoSelectionViewController.swift */; };
 		67E7ED071D7D893C00D04536 /* GameplayLauncherViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67E7ED061D7D893C00D04536 /* GameplayLauncherViewController.swift */; };
+		67E9EE8A1DE461DC000F6F6D /* DochaTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67E9EE891DE461DC000F6F6D /* DochaTests.swift */; };
+		67E9EE931DE46371000F6F6D /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 678B63451C9B5C0C00797516 /* User.swift */; };
+		67E9EE941DE46371000F6F6D /* UserSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67240CEF1CEF5C68001F4DC6 /* UserSession.swift */; };
+		67E9EE951DE46371000F6F6D /* UserSessionEmail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 679273E01CFB0FC000DABA88 /* UserSessionEmail.swift */; };
+		67E9EE961DE46371000F6F6D /* UserSessionFacebook.swift in Sources */ = {isa = PBXBuildFile; fileRef = 679273E41CFB5BC000DABA88 /* UserSessionFacebook.swift */; };
+		67E9EE971DE46371000F6F6D /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6767441F1DABB7E5007B6ABC /* Player.swift */; };
+		67E9EE981DE46371000F6F6D /* Match.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67C18F1F1DAAC3E2008DD94B /* Match.swift */; };
+		67E9EE991DE46371000F6F6D /* Round.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67C18F221DAAC529008DD94B /* Round.swift */; };
+		67E9EE9A1DE46371000F6F6D /* RoundFull.swift in Sources */ = {isa = PBXBuildFile; fileRef = 676744221DABB9CC007B6ABC /* RoundFull.swift */; };
+		67E9EE9B1DE46371000F6F6D /* Proposition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 676744241DABC2D9007B6ABC /* Proposition.swift */; };
+		67E9EE9C1DE46371000F6F6D /* Category.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6715C7AD1DA29D09008C50F4 /* Category.swift */; };
+		67E9EE9D1DE46371000F6F6D /* Product.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6701D9A11C108AAE00F87043 /* Product.swift */; };
 		67EFFDD01D8FE15F003EE8E5 /* GameplayMatchRoundYourTurnCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67EFFDCF1D8FE15F003EE8E5 /* GameplayMatchRoundYourTurnCell.swift */; };
 		67EFFDD21D900921003EE8E5 /* RankingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67EFFDD11D900921003EE8E5 /* RankingViewController.swift */; };
 		67EFFDD41D900A57003EE8E5 /* RankingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67EFFDD31D900A57003EE8E5 /* RankingTableViewCell.swift */; };
@@ -174,13 +185,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		6701D9851C108A2100F87043 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 6701D9681C108A2100F87043 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 6701D96F1C108A2100F87043;
-			remoteInfo = TochaProto;
-		};
 		6701D9901C108A2100F87043 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 6701D9681C108A2100F87043 /* Project object */;
@@ -196,6 +200,13 @@
 			remoteInfo = DochaStickers;
 		};
 		67C42D9B1D4A254B00DF4E5D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 6701D9681C108A2100F87043 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 6701D96F1C108A2100F87043;
+			remoteInfo = Docha;
+		};
+		67E9EE8C1DE461DC000F6F6D /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 6701D9681C108A2100F87043 /* Project object */;
 			proxyType = 1;
@@ -234,9 +245,6 @@
 		6701D9781C108A2100F87043 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		6701D97D1C108A2100F87043 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		6701D97F1C108A2100F87043 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		6701D9841C108A2100F87043 /* Docha.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Docha.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		6701D9881C108A2100F87043 /* TochaProtoTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TochaProtoTests.swift; sourceTree = "<group>"; };
-		6701D98A1C108A2100F87043 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6701D98F1C108A2100F87043 /* Docha.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Docha.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		6701D9931C108A2100F87043 /* TochaProtoUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TochaProtoUITests.swift; sourceTree = "<group>"; };
 		6701D9951C108A2100F87043 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -367,6 +375,9 @@
 		67E7ED021D78D71A00D04536 /* NewGameCategorieSelectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewGameCategorieSelectionViewController.swift; sourceTree = "<group>"; };
 		67E7ED041D79B63B00D04536 /* InscriptionPseudoSelectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InscriptionPseudoSelectionViewController.swift; sourceTree = "<group>"; };
 		67E7ED061D7D893C00D04536 /* GameplayLauncherViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameplayLauncherViewController.swift; sourceTree = "<group>"; };
+		67E9EE871DE461DC000F6F6D /* DochaTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DochaTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		67E9EE891DE461DC000F6F6D /* DochaTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DochaTests.swift; sourceTree = "<group>"; };
+		67E9EE8B1DE461DC000F6F6D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		67EFFDCF1D8FE15F003EE8E5 /* GameplayMatchRoundYourTurnCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameplayMatchRoundYourTurnCell.swift; sourceTree = "<group>"; };
 		67EFFDD11D900921003EE8E5 /* RankingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RankingViewController.swift; sourceTree = "<group>"; };
 		67EFFDD31D900A57003EE8E5 /* RankingTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RankingTableViewCell.swift; sourceTree = "<group>"; };
@@ -406,6 +417,13 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		37EE6E02386E83A7238179DC /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		6701D96D1C108A2100F87043 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -432,14 +450,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		6701D9811C108A2100F87043 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				3BBFA0F0EB4F828F18867FE4 /* Pods_DochaTests.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		6701D98C1C108A2100F87043 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -452,6 +462,14 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		67E9EE841DE461DC000F6F6D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1A14E85DA37FE6C0ED028B78 /* Pods_DochaTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -503,7 +521,7 @@
 			isa = PBXGroup;
 			children = (
 				6701D9721C108A2100F87043 /* Docha */,
-				6701D9871C108A2100F87043 /* DochaTests */,
+				67E9EE881DE461DC000F6F6D /* DochaTests */,
 				6701D9921C108A2100F87043 /* DochaUITests */,
 				67C42D971D4A254B00DF4E5D /* DochaFastlaneUITests */,
 				67051AC51DDF711A00D4F8F7 /* DochaStickers */,
@@ -517,10 +535,10 @@
 			isa = PBXGroup;
 			children = (
 				6701D9701C108A2100F87043 /* Docha.app */,
-				6701D9841C108A2100F87043 /* Docha.xctest */,
 				6701D98F1C108A2100F87043 /* Docha.xctest */,
 				67C42D961D4A254B00DF4E5D /* DochaFastlaneUITests.xctest */,
 				67051AC41DDF711A00D4F8F7 /* DochaStickers.appex */,
+				67E9EE871DE461DC000F6F6D /* DochaTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -534,16 +552,6 @@
 			);
 			name = Docha;
 			path = TochaProto;
-			sourceTree = "<group>";
-		};
-		6701D9871C108A2100F87043 /* DochaTests */ = {
-			isa = PBXGroup;
-			children = (
-				6701D9881C108A2100F87043 /* TochaProtoTests.swift */,
-				6701D98A1C108A2100F87043 /* Info.plist */,
-			);
-			name = DochaTests;
-			path = TochaProtoTests;
 			sourceTree = "<group>";
 		};
 		6701D9921C108A2100F87043 /* DochaUITests */ = {
@@ -1073,6 +1081,15 @@
 			name = Launcher;
 			sourceTree = "<group>";
 		};
+		67E9EE881DE461DC000F6F6D /* DochaTests */ = {
+			isa = PBXGroup;
+			children = (
+				67E9EE891DE461DC000F6F6D /* DochaTests.swift */,
+				67E9EE8B1DE461DC000F6F6D /* Info.plist */,
+			);
+			path = DochaTests;
+			sourceTree = "<group>";
+		};
 		67EFFDD51D900A5A003EE8E5 /* Cells */ = {
 			isa = PBXGroup;
 			children = (
@@ -1277,27 +1294,6 @@
 			productReference = 6701D9701C108A2100F87043 /* Docha.app */;
 			productType = "com.apple.product-type.application";
 		};
-		6701D9831C108A2100F87043 /* DochaTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 6701D99B1C108A2100F87043 /* Build configuration list for PBXNativeTarget "DochaTests" */;
-			buildPhases = (
-				ABED16C81BC8263C94EC535C /* [CP] Check Pods Manifest.lock */,
-				6701D9801C108A2100F87043 /* Sources */,
-				6701D9811C108A2100F87043 /* Frameworks */,
-				6701D9821C108A2100F87043 /* Resources */,
-				8527282BB86C52D64CCAA823 /* [CP] Embed Pods Frameworks */,
-				3F072A28002262A5072CBED1 /* [CP] Copy Pods Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				6701D9861C108A2100F87043 /* PBXTargetDependency */,
-			);
-			name = DochaTests;
-			productName = TochaProtoTests;
-			productReference = 6701D9841C108A2100F87043 /* Docha.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
 		6701D98E1C108A2100F87043 /* DochaUITests */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 6701D99E1C108A2100F87043 /* Build configuration list for PBXNativeTarget "DochaUITests" */;
@@ -1323,6 +1319,7 @@
 			buildConfigurationList = 67051ACC1DDF711A00D4F8F7 /* Build configuration list for PBXNativeTarget "DochaStickers" */;
 			buildPhases = (
 				67051AC21DDF711A00D4F8F7 /* Resources */,
+				37EE6E02386E83A7238179DC /* Frameworks */,
 			);
 			buildRules = (
 			);
@@ -1351,6 +1348,27 @@
 			productReference = 67C42D961D4A254B00DF4E5D /* DochaFastlaneUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
+		67E9EE861DE461DC000F6F6D /* DochaTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 67E9EE8E1DE461DC000F6F6D /* Build configuration list for PBXNativeTarget "DochaTests" */;
+			buildPhases = (
+				2096F38822ADCBAD0388A8DE /* [CP] Check Pods Manifest.lock */,
+				67E9EE831DE461DC000F6F6D /* Sources */,
+				67E9EE841DE461DC000F6F6D /* Frameworks */,
+				67E9EE851DE461DC000F6F6D /* Resources */,
+				E32343BF35EC04B42668CDB5 /* [CP] Embed Pods Frameworks */,
+				E0896807A3E0A5E8A08C97E6 /* [CP] Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				67E9EE8D1DE461DC000F6F6D /* PBXTargetDependency */,
+			);
+			name = DochaTests;
+			productName = DochaTests;
+			productReference = 67E9EE871DE461DC000F6F6D /* DochaTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -1358,7 +1376,7 @@
 			isa = PBXProject;
 			attributes = {
 				CLASSPREFIX = "";
-				LastSwiftUpdateCheck = 0730;
+				LastSwiftUpdateCheck = 0810;
 				LastUpgradeCheck = 0810;
 				ORGANIZATIONNAME = Slymoover;
 				TargetAttributes = {
@@ -1376,15 +1394,14 @@
 							com.apple.Push = {
 								enabled = 1;
 							};
+							com.apple.SafariKeychain = {
+								enabled = 1;
+							};
 						};
-					};
-					6701D9831C108A2100F87043 = {
-						CreatedOnToolsVersion = 7.1.1;
-						LastSwiftMigration = 0800;
-						TestTargetID = 6701D96F1C108A2100F87043;
 					};
 					6701D98E1C108A2100F87043 = {
 						CreatedOnToolsVersion = 7.1.1;
+						LastSwiftMigration = 0810;
 						TestTargetID = 6701D96F1C108A2100F87043;
 					};
 					67051AC31DDF711A00D4F8F7 = {
@@ -1395,6 +1412,13 @@
 					67C42D951D4A254B00DF4E5D = {
 						CreatedOnToolsVersion = 7.3.1;
 						LastSwiftMigration = 0800;
+						TestTargetID = 6701D96F1C108A2100F87043;
+					};
+					67E9EE861DE461DC000F6F6D = {
+						CreatedOnToolsVersion = 8.1;
+						DevelopmentTeam = YNPZ79497Y;
+						LastSwiftMigration = 0810;
+						ProvisioningStyle = Automatic;
 						TestTargetID = 6701D96F1C108A2100F87043;
 					};
 				};
@@ -1413,10 +1437,10 @@
 			projectRoot = "";
 			targets = (
 				6701D96F1C108A2100F87043 /* Docha */,
-				6701D9831C108A2100F87043 /* DochaTests */,
+				67051AC31DDF711A00D4F8F7 /* DochaStickers */,
+				67E9EE861DE461DC000F6F6D /* DochaTests */,
 				6701D98E1C108A2100F87043 /* DochaUITests */,
 				67C42D951D4A254B00DF4E5D /* DochaFastlaneUITests */,
-				67051AC31DDF711A00D4F8F7 /* DochaStickers */,
 			);
 		};
 /* End PBXProject section */
@@ -1459,13 +1483,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		6701D9821C108A2100F87043 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		6701D98D1C108A2100F87043 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1482,6 +1499,13 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		67C42D941D4A254B00DF4E5D /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		67E9EE851DE461DC000F6F6D /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -1521,6 +1545,21 @@
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
+		2096F38822ADCBAD0388A8DE /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
 		3D5C08E2569F483EC55C0C3F /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -1534,21 +1573,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Docha/Pods-Docha-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		3F072A28002262A5072CBED1 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-DochaTests/Pods-DochaTests-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		45E91A69D1C69421F16FF2EB /* [CP] Embed Pods Frameworks */ = {
@@ -1579,36 +1603,6 @@
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Fabric/run\" 02b604c53ba9d2be18f6f74b9eb795f9e294b3ba 8a71acde2d58cf11813fa5d479dafaaf8ff9d87bbad813fbf219f3c12434d3ee";
 		};
-		8527282BB86C52D64CCAA823 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-DochaTests/Pods-DochaTests-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		ABED16C81BC8263C94EC535C /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
-			showEnvVarsInLog = 0;
-		};
 		C1F161AC8478F8C8ABB72278 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -1622,6 +1616,36 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-DochaUITests/Pods-DochaUITests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		E0896807A3E0A5E8A08C97E6 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-DochaTests/Pods-DochaTests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		E32343BF35EC04B42668CDB5 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-DochaTests/Pods-DochaTests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -1741,14 +1765,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		6701D9801C108A2100F87043 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				6701D9891C108A2100F87043 /* TochaProtoTests.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		6701D98B1C108A2100F87043 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1766,14 +1782,28 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		67E9EE831DE461DC000F6F6D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				67E9EE931DE46371000F6F6D /* User.swift in Sources */,
+				67E9EE941DE46371000F6F6D /* UserSession.swift in Sources */,
+				67E9EE951DE46371000F6F6D /* UserSessionEmail.swift in Sources */,
+				67E9EE961DE46371000F6F6D /* UserSessionFacebook.swift in Sources */,
+				67E9EE971DE46371000F6F6D /* Player.swift in Sources */,
+				67E9EE981DE46371000F6F6D /* Match.swift in Sources */,
+				67E9EE991DE46371000F6F6D /* Round.swift in Sources */,
+				67E9EE9A1DE46371000F6F6D /* RoundFull.swift in Sources */,
+				67E9EE9B1DE46371000F6F6D /* Proposition.swift in Sources */,
+				67E9EE9C1DE46371000F6F6D /* Category.swift in Sources */,
+				67E9EE9D1DE46371000F6F6D /* Product.swift in Sources */,
+				67E9EE8A1DE461DC000F6F6D /* DochaTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		6701D9861C108A2100F87043 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 6701D96F1C108A2100F87043 /* Docha */;
-			targetProxy = 6701D9851C108A2100F87043 /* PBXContainerItemProxy */;
-		};
 		6701D9911C108A2100F87043 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 6701D96F1C108A2100F87043 /* Docha */;
@@ -1788,6 +1818,11 @@
 			isa = PBXTargetDependency;
 			target = 6701D96F1C108A2100F87043 /* Docha */;
 			targetProxy = 67C42D9B1D4A254B00DF4E5D /* PBXContainerItemProxy */;
+		};
+		67E9EE8D1DE461DC000F6F6D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 6701D96F1C108A2100F87043 /* Docha */;
+			targetProxy = 67E9EE8C1DE461DC000F6F6D /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -1901,7 +1936,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 4E4F35DA13902859F62CB364 /* Pods-Docha.debug.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = Docha.entitlements;
@@ -1947,7 +1981,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 55664A0EBC2926A784E0D3C2 /* Pods-Docha.release.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = Docha.entitlements;
@@ -1987,44 +2020,18 @@
 			};
 			name = Release;
 		};
-		6701D99C1C108A2100F87043 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 9392295D54620C70435BC5BE /* Pods-DochaTests.debug.xcconfig */;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				INFOPLIST_FILE = TochaProtoTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.latv.TochaProtoTests;
-				PRODUCT_NAME = Docha;
-				SWIFT_VERSION = 3.0;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Docha.app/Docha";
-			};
-			name = Debug;
-		};
-		6701D99D1C108A2100F87043 /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 83AA344425FDFDE624755D92 /* Pods-DochaTests.release.xcconfig */;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				INFOPLIST_FILE = TochaProtoTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.latv.TochaProtoTests;
-				PRODUCT_NAME = Docha;
-				SWIFT_VERSION = 3.0;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Docha.app/Docha";
-			};
-			name = Release;
-		};
 		6701D99F1C108A2100F87043 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 5B0290D3059667BA03F0D851 /* Pods-DochaUITests.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer: Mathis Detourbet (VV3XJFU98M)";
 				INFOPLIST_FILE = TochaProtoUITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.latv.TochaProtoUITests;
 				PRODUCT_NAME = Docha;
 				PROVISIONING_PROFILE = "b8492694-95a0-43ce-8492-a8cc0fd273f9";
+				SWIFT_VERSION = 3.0;
 				TEST_TARGET_NAME = TochaProto;
 				USES_XCTRUNNER = YES;
 			};
@@ -2034,12 +2041,14 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = E0828485D3C862857D125B40 /* Pods-DochaUITests.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer: Mathis Detourbet (VV3XJFU98M)";
 				INFOPLIST_FILE = TochaProtoUITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.latv.TochaProtoUITests;
 				PRODUCT_NAME = Docha;
 				PROVISIONING_PROFILE = "b8492694-95a0-43ce-8492-a8cc0fd273f9";
+				SWIFT_VERSION = 3.0;
 				TEST_TARGET_NAME = TochaProto;
 				USES_XCTRUNNER = YES;
 			};
@@ -2109,6 +2118,47 @@
 			};
 			name = Release;
 		};
+		67E9EE8F1DE461DC000F6F6D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 9392295D54620C70435BC5BE /* Pods-DochaTests.debug.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_SUSPICIOUS_MOVES = YES;
+				DEVELOPMENT_TEAM = YNPZ79497Y;
+				INFOPLIST_FILE = DochaTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.1;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = fr.slymoover.DochaTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_VERSION = 3.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Docha.app/Docha";
+			};
+			name = Debug;
+		};
+		67E9EE901DE461DC000F6F6D /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 83AA344425FDFDE624755D92 /* Pods-DochaTests.release.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_SUSPICIOUS_MOVES = YES;
+				DEVELOPMENT_TEAM = YNPZ79497Y;
+				INFOPLIST_FILE = DochaTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.1;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = fr.slymoover.DochaTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Docha.app/Docha";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -2130,15 +2180,6 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		6701D99B1C108A2100F87043 /* Build configuration list for PBXNativeTarget "DochaTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				6701D99C1C108A2100F87043 /* Debug */,
-				6701D99D1C108A2100F87043 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
 		6701D99E1C108A2100F87043 /* Build configuration list for PBXNativeTarget "DochaUITests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -2155,12 +2196,22 @@
 				67051ACE1DDF711A00D4F8F7 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		67C42D9F1D4A254B00DF4E5D /* Build configuration list for PBXNativeTarget "DochaFastlaneUITests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				67C42D9D1D4A254B00DF4E5D /* Debug */,
 				67C42D9E1D4A254B00DF4E5D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		67E9EE8E1DE461DC000F6F6D /* Build configuration list for PBXNativeTarget "DochaTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				67E9EE8F1DE461DC000F6F6D /* Debug */,
+				67E9EE901DE461DC000F6F6D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

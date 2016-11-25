@@ -87,7 +87,7 @@ class InscriptionIdentifiantsViewController: RootViewController, UITextFieldDele
     func isPasswordValid() -> Bool {
         if let passwordString = passwordTextField.text {
             if !passwordString.isEmpty {
-                if case 6...128 = passwordString.characters.count {
+                if case 8...128 = passwordString.characters.count {
                     self.passwordTextField.borderActiveColor = UIColor.blueDochaColor()
                     self.passwordTextField.borderInactiveColor = UIColor.blueDochaColor()
                     self.passwordString = passwordTextField.text

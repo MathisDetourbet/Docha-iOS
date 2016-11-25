@@ -149,9 +149,15 @@ class InscriptionCategorySelectionViewController: RootViewController, UICollecti
                     
                     UserSessionManager.sharedInstance.updateUser(withData: data,
                         success: {
-                            PopupManager.sharedInstance.dismissPopup(true,
-                                completion: {
-                                    self.goToHome()
+                            
+                            UserSessionManager.sharedInstance.uptdateDeviceTokenIfNeeded(
+                                withCompletion: {
+                                    
+                                    PopupManager.sharedInstance.dismissPopup(true,
+                                        completion: {
+                                            self.goToHome()
+                                        }
+                                    )
                                 }
                             )
                                                                     

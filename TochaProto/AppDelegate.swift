@@ -93,6 +93,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         Amplitude.instance().logEvent("ApplicationWillTerminate")
     }
     
+    
+//MARK: - Notifications Push
+    
     func application(_ application: UIApplication, didRegister notificationSettings: UIUserNotificationSettings) {
         if notificationSettings.types != .none {
             application.registerForRemoteNotifications()
@@ -113,33 +116,43 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         application.registerUserNotificationSettings(notificationSettings)
     }
     
+    
+//MARK: - Universal links
+    
+    func application(_ application: UIApplication, continue userActivity: NSUserActivity, restorationHandler: @escaping ([Any]?) -> Void) -> Bool {
+        if userActivity.activityType == NSUserActivityTypeBrowsingWeb {
+            return true
+        }
+        
+        return false
+    }
+    
 
-// MARK: Facebook Sign In
+// MARK: - Facebook Sign In
     
     func facebookSignIn(_ success:@escaping () -> Void, fail failure: @escaping (_ error: Error?) -> Void) {
         if((FBSDKAccessToken.current()) != nil) {
             
-            FBSDKGraphRequest(graphPath: "me", parameters: ["fields": "id, name, first_name, last_name, picture.type(large), email, gender, birthday"]).start(completionHandler: { (connection, result, error) -> Void in
+            FBSDKGraphRequest(graphPath: "me", parameters: ["fields": "id, name, first_name, last_name, picture.type(large), email, gender, birthday"])
+                .start(completionHandler: { (connection, result, error) -> Void in
                 
-                if (error == nil) {
-                    print("Facebook authentication result : \(result)")
+                    if (error == nil) {
+                        // User access token
+                        let accessToken = FBSDKAccessToken.current().tokenString as String
                     
-                    // User access token
-                    let accessToken = FBSDKAccessToken.current().tokenString as String
-                    
-                    UserSessionManager.sharedInstance.connectByFacebook(
-                        withFacebookToken: accessToken,
-                        success: {
-                            success()
-                        }, fail: { (error) in
-                            print("error saving Facebook user data in database : \(error)")
-                            failure(error)
-                    })
-                } else {
-                    print("Facebook get user data : error : \(error)")
-                    failure(error as Error?)
+                        UserSessionManager.sharedInstance.connectByFacebook(
+                            withFacebookToken: accessToken,
+                            success: {
+                                success()
+                            }, fail: { (error) in
+                                failure(error)
+                            }
+                        )
+                    } else {
+                        failure(error as Error?)
+                    }
                 }
-            })
+            )
         }
     }
 
@@ -157,6 +170,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         NotificationCenter.default.addObserver(self, selector: #selector(AppDelegate.networkStatusChanged(_:)), name: NSNotification.Name(rawValue: ReachabilityStatusChangedNotification), object: nil)
         Reach().monitorReachabilityChanges()
     }
+    
+    
+//MARK: - Network helpers
     
     func networkStatusChanged(_ notification: Notification) {
         let userInfo = (notification as NSNotification).userInfo

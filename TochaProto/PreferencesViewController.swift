@@ -217,16 +217,13 @@ class PreferencesViewController: GameViewController, UITableViewDelegate, UITabl
     }
     
     
-//MARK: @IBAction Methods
+//MARK: - @IBAction Methods
     
     func inviteFacebookFriendsButtonTouched() {
-        // Amplitude
-        Amplitude.instance().logEvent("ClickInviteFriends")
-        
         let gameRequestContent = FBSDKGameRequestContent()
-        gameRequestContent.message = "Un super message super long"
-        gameRequestContent.title = "Un titre"
-        
+        gameRequestContent.message = "Viens me rejoindre sur Docha !"
+        gameRequestContent.title = "Inviter mes amis"
+        gameRequestContent.actionType = .none
         FBSDKGameRequestDialog.show(with: gameRequestContent, delegate: self)
     }
     
@@ -236,23 +233,21 @@ class PreferencesViewController: GameViewController, UITableViewDelegate, UITabl
     }
     
     func logoutButtonTouched() {
-        // Amplitude
-        Amplitude.instance().logEvent("LogOutUser")
-        
         UserSessionManager.sharedInstance.logout()
         let connexionViewController = self.storyboard?.instantiateViewController(withIdentifier: "idStarterNavController")
         NavSchemeManager.sharedInstance.changeRootViewController(connexionViewController!)
     }
     
     
-//MARK: FBSDKGameRequestDialog Delegate Methods
+//MARK: - FBSDKGameRequestDialog Delegate Methods
     
     func gameRequestDialog(_ gameRequestDialog: FBSDKGameRequestDialog!, didCompleteWithResults results: [AnyHashable : Any]!) {
-        PopupManager.sharedInstance.showSuccessPopup(message: Constants.PopupMessage.SuccessMessage.kSuccessFBFriendsInvite)
+        PopupManager.sharedInstance.showSuccessPopup(message: Constants.PopupMessage.SuccessMessage.kSuccessFBFriendsInvite, viewController: self)
     }
     
     func gameRequestDialog(_ gameRequestDialog: FBSDKGameRequestDialog!, didFailWithError error: Error!) {
-        PopupManager.sharedInstance.showErrorPopup(message: Constants.PopupMessage.ErrorMessage.kErrorFBFriendsInvite +  " " + Constants.PopupMessage.ErrorMessage.kErrorOccured)
+        print(error)
+        PopupManager.sharedInstance.showErrorPopup(message: Constants.PopupMessage.ErrorMessage.kErrorFBFriendsInvite +  " " + Constants.PopupMessage.ErrorMessage.kErrorOccured, viewController: self)
     }
     
     func gameRequestDialogDidCancel(_ gameRequestDialog: FBSDKGameRequestDialog!) {

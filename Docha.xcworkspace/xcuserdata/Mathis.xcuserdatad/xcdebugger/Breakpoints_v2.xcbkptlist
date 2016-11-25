@@ -9,13 +9,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "TochaProto/HomeViewController.swift"
-            timestampString = "501110946.945131"
+            filePath = "TochaProto/LaunchScreenViewController.swift"
+            timestampString = "501766666.604029"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "266"
-            endingLineNumber = "266"
-            landmarkName = "tableView(_:numberOfRowsInSection:)"
+            startingLineNumber = "48"
+            endingLineNumber = "48"
+            landmarkName = "signInUser()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -25,29 +25,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "TochaProto/HomeViewController.swift"
-            timestampString = "501110948.582262"
+            filePath = "TochaProto/LaunchScreenViewController.swift"
+            timestampString = "501766668.072139"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "270"
-            endingLineNumber = "270"
-            landmarkName = "tableView(_:numberOfRowsInSection:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "TochaProto/HomeViewController.swift"
-            timestampString = "501112879.865553"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "469"
-            endingLineNumber = "469"
-            landmarkName = "swipeableTableViewCell(_:didTriggerRightUtilityButtonWith:)"
+            startingLineNumber = "50"
+            endingLineNumber = "50"
+            landmarkName = "signInUser()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

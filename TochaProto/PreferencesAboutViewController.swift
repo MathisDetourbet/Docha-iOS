@@ -17,7 +17,6 @@ class PreferencesAboutConditionsCell: UITableViewCell {
 class PreferencesAboutViewController: RootViewController, UITableViewDataSource, UITableViewDelegate {
     
     let titlesCell = ["Conditions générales d'utilisation", "Charte de confidentialité"]
-    let webViewUrls = ["http://www.docha.fr/terms.html", "http://www.docha.fr/privacy.html"]
     var webViewController: CustomWebViewController?
     
     @IBOutlet weak var tableView: UITableView!
@@ -34,8 +33,6 @@ class PreferencesAboutViewController: RootViewController, UITableViewDataSource,
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        
-        //scrollView.contentSize.height = tableView.frame.origin.y + tableView.frame.size.height + 50
     }
     
     @IBAction func backButtonTouched(_ sender: UIBarButtonItem) {
@@ -64,7 +61,12 @@ class PreferencesAboutViewController: RootViewController, UITableViewDataSource,
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         webViewController = storyboard?.instantiateViewController(withIdentifier: "idCustomWebViewController") as? CustomWebViewController
-        let url = URL(string: webViewUrls[indexPath.row])
+        var url: URL
+        if indexPath.row == 0 {
+            url = URL(string: Constants.Links.cguLink)!
+        } else {
+            url = URL(string: Constants.Links.privacyPolicyLink)!
+        }
         webViewController!.url = url
         webViewController?.titleNavBar = titlesCell[indexPath.row]
         

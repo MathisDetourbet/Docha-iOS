@@ -96,6 +96,12 @@ struct CategoryDataKey {
 }
 
 struct Constants {
+    
+    struct Links {
+        static let privacyPolicyLink = "http://www.docha.fr/privacy.html"
+        static let cguLink = "http://www.docha.fr/terms.html"
+    }
+    
     struct UserDefaultsKey {
         // User object key
         static let kUserSessionObject = "userSessionObject"
@@ -157,7 +163,7 @@ struct Constants {
             static let kErrorNoInternetConnection = "Une erreur est survenue. Tu n'es peut être pas connecter à internet. Essaie de te connecter à nouveau."
             static let kErrorOccuredHomeRedirection = "Une erreur est survenue... Tu seras redirigé vers le menu principal."
             
-            static let kErrorRegistrationPasswordMinimumCharacters = "Vérifie que ton mot de passe possède au minimum 6 caractères."
+            static let kErrorRegistrationPasswordMinimumCharacters = "Vérifie que ton mot de passe possède au minimum 8 caractères et au maximum 50."
             static let kErrorRegistrationEmailNotValid = "Cette adresse email n'est pas valide."
             static let kErrorRegistrationUsernameAlreadyTaken = "Ce pseudo est déjà pris."
             

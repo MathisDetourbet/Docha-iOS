@@ -32,8 +32,8 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "6701D9831C108A2100F87043"
-               BuildableName = "Docha.xctest"
+               BlueprintIdentifier = "67E9EE861DE461DC000F6F6D"
+               BuildableName = "DochaTests.xctest"
                BlueprintName = "DochaTests"
                ReferencedContainer = "container:Docha.xcodeproj">
             </BuildableReference>
@@ -55,6 +55,16 @@
                BlueprintIdentifier = "67C42D951D4A254B00DF4E5D"
                BuildableName = "DochaFastlaneUITests.xctest"
                BlueprintName = "DochaFastlaneUITests"
+               ReferencedContainer = "container:Docha.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "67E9EE751DE45C63000F6F6D"
+               BuildableName = "DochaUnitTests.xctest"
+               BlueprintName = "DochaUnitTests"
                ReferencedContainer = "container:Docha.xcodeproj">
             </BuildableReference>
          </TestableReference>

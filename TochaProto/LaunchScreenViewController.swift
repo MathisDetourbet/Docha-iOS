@@ -45,19 +45,11 @@ class LaunchScreenViewController: UIViewController {
     func signInUser() {
         UserSessionManager.sharedInstance.signIn(
             {
-                if let token = UserSessionManager.sharedInstance.getDeviceToken() {
-                    let notificationsTokens = UserSessionManager.sharedInstance.currentSession()!.notificationTokens
-                    if notificationsTokens.contains(token) == false {
-                        let data = [UserDataKey.kDeviceToken: token] as [String: Any]
-                        UserSessionManager.sharedInstance.setDeviceToken(withData: data,
-                            success: { (deviceTokenArray) in
-                                print(deviceTokenArray)
-                                
-                            }, fail: nil)
+                UserSessionManager.sharedInstance.uptdateDeviceTokenIfNeeded(
+                    withCompletion: {
+                        self.signInFinished = true
                     }
-                }
-                
-                self.signInFinished = true
+                )
             }
         ) { (error) in
             self.signInFinished = true

@@ -95,8 +95,8 @@ class UserSession: User, NSCoding {
         return filePath
     }
     
-    override func initPropertiesFromUser(user: User) {
-        super.initPropertiesFromUser(user: user)
+    override func initPropertiesFromUser(_ user: User) {
+        super.initPropertiesFromUser(user)
     }
     
     override func initPropertiesWithResponseObject(_ jsonObject: JSON) {

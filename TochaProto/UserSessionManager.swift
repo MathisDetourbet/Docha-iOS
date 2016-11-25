@@ -25,7 +25,7 @@ class UserSessionManager {
     }
     
     
-//MARK: User Data Methods
+//MARK: - User Data Methods
 	
     func currentSession() -> UserSession? {
         let currentSession: UserSession?
@@ -58,19 +58,6 @@ class UserSessionManager {
         return UserDefaults.standard.object(forKey: Constants.UserDefaultsKey.kUserSessionObject) != nil
     }
     
-    func save(deviceToken token : String!) {
-        let userDefaults = UserDefaults.standard
-        userDefaults.set(token, forKey: Constants.UserDefaultsKey.kDeviceToken)
-        userDefaults.synchronize()
-    }
-    
-    func getDeviceToken() -> String? {
-        let userDefaults = UserDefaults.standard
-        let token = userDefaults.object(forKey: Constants.UserDefaultsKey.kDeviceToken) as? String
-        
-        return token ?? nil
-    }
-    
     func getAuthToken() -> String? {
         let currentSession = self.currentSession()
         if let currentSession = currentSession {
@@ -94,7 +81,7 @@ class UserSessionManager {
     func getUserInfosAndAvatarImage(withImageSize imageSize: AvatarDochaSize = .medium) -> (user: User?, avatarImage: UIImage?) {
         if let currentSession = currentSession() {
             let user = User()
-            user.initPropertiesFromUser(user: currentSession)
+            user.initPropertiesFromUser(currentSession)
             
             if currentSession.isKind(of: UserSessionEmail.self) {
                 let userSessionEmail = currentSession as! UserSessionEmail
@@ -126,7 +113,66 @@ class UserSessionManager {
     }
     
     
-// MARK: User Inscription Request
+//MARK: - Device Token Methods (Notifications)
+    
+    func uptdateDeviceTokenIfNeeded(withCompletion completion: (() -> Void)?) {
+        if let token = getDeviceToken() {
+            let notificationsTokens = currentSession()!.notificationTokens
+            if notificationsTokens.contains(token) == false {
+                let data = [UserDataKey.kDeviceToken: token] as [String: Any]
+                
+                setDeviceToken(withData: data,
+                    success: { (deviceTokenArray) in
+                        
+                        print(deviceTokenArray)
+                        completion?()
+                        
+                                                                    
+                    }, fail: { (error) in
+                        completion?()
+                    }
+                )
+            } else {
+                completion?()
+            }
+        } else {
+            completion?()
+        }
+    }
+    
+    func save(deviceToken token : String!) {
+        let userDefaults = UserDefaults.standard
+        userDefaults.set(token, forKey: Constants.UserDefaultsKey.kDeviceToken)
+        userDefaults.synchronize()
+    }
+    
+    func getDeviceToken() -> String? {
+        let userDefaults = UserDefaults.standard
+        let token = userDefaults.object(forKey: Constants.UserDefaultsKey.kDeviceToken) as? String
+        
+        return token ?? nil
+    }
+    
+    func setDeviceToken(withData data: [String: Any]!, success: @escaping (_ deviceTokensList: [String]) -> Void, fail failure: ((_ error: Error?) -> Void)?) {
+        
+        guard let authToken = getAuthToken() else {
+            failure?(DochaRequestError.authTokenNotFound)
+            return
+        }
+        
+        userRequest = UserRequest()
+        userRequest?.postDeviceToken(withAuthToken: authToken, andData: data,
+            success: { (user) in
+                success(user.notificationTokens)
+                                        
+            }, fail: { (error) in
+                failure?(error)
+            }
+        )
+    }
+    
+    
+//MARK: - User Inscription Request
     
     // Email inscription
     func registrationByEmail(_ email: String!, andPassword password: String!, success: @escaping () -> Void, fail failure: @escaping (_ error: Error?) -> Void) {
@@ -142,7 +188,7 @@ class UserSessionManager {
                         Answers.logSignUp(withMethod: "sign_up_by_email", success: true, customAttributes: nil)
                         
                         let userSessionEmail = UserSessionEmail()
-                        userSessionEmail.initPropertiesFromUser(user: user)
+                        userSessionEmail.initPropertiesFromUser(user)
                         userSessionEmail.authToken = authToken
                         
                         userSessionEmail.saveSession()
@@ -162,7 +208,7 @@ class UserSessionManager {
     }
     
 
-// MARK: User Connection Requests
+// MARK: - User Connection Requests
     
     func signIn(_ success: @escaping () -> Void, fail failure: @escaping (_ error: Error?) -> Void) {
         
@@ -194,7 +240,7 @@ class UserSessionManager {
                         Answers.logLogin(withMethod: "sign_in_by_email", success: true, customAttributes: nil)
                         
                         let userSessionEmail = UserSessionEmail()
-                        userSessionEmail.initPropertiesFromUser(user: user)
+                        userSessionEmail.initPropertiesFromUser(user)
                         userSessionEmail.authToken = authToken
                         
                         userSessionEmail.saveSession()
@@ -226,7 +272,7 @@ class UserSessionManager {
                         Answers.logLogin(withMethod: "sign_in_by_facebook", success: true, customAttributes: nil)
                         
                         let userSessionFacebook = UserSessionFacebook()
-                        userSessionFacebook.initPropertiesFromUser(user: user)
+                        userSessionFacebook.initPropertiesFromUser(user)
                         userSessionFacebook.authToken = authToken
                         userSessionFacebook.facebookAccessToken = accessToken
                         
@@ -265,7 +311,7 @@ class UserSessionManager {
     }
     
     
-//MARK: User Update Requests
+//MARK: - User Update Requests
     
     func getUser(success: @escaping () -> Void, fail failure: @escaping (_ error: Error?) -> Void) {
         guard let authToken = getAuthToken() else {
@@ -280,7 +326,7 @@ class UserSessionManager {
             userRequest?.getUser(withAuthToken: authToken,
                 success: { (user) in
                     
-                    userSession!.initPropertiesFromUser(user: user)
+                    userSession!.initPropertiesFromUser(user)
                     userSession!.saveSession()
                     success()
                     
@@ -293,7 +339,7 @@ class UserSessionManager {
             userRequest?.getUser(withAuthToken: authToken,
                 success: { (user) in
                     
-                    userSession!.initPropertiesFromUser(user: user)
+                    userSession!.initPropertiesFromUser(user)
                     userSession!.saveSession()
                     success()
                     
@@ -322,7 +368,7 @@ class UserSessionManager {
                     return
                 }
                 
-                currentSessionUnwrapped.initPropertiesFromUser(user: user)
+                currentSessionUnwrapped.initPropertiesFromUser(user)
                 currentSessionUnwrapped.saveSession()
                 
                 success()
@@ -350,26 +396,8 @@ class UserSessionManager {
         )
     }
     
-    func setDeviceToken(withData data: [String: Any]!, success: @escaping (_ deviceTokensList: [String]) -> Void, fail failure: ((_ error: Error?) -> Void)?) {
-        
-        guard let authToken = getAuthToken() else {
-            failure?(DochaRequestError.authTokenNotFound)
-            return
-        }
-        
-        userRequest = UserRequest()
-        userRequest?.postDeviceToken(withAuthToken: authToken, andData: data,
-            success: { (user) in
-                success(user.notificationTokens)
-                
-            }, fail: { (error) in
-                failure?(error)
-            }
-        )
-    }
     
-    
-//MARK: Category Requests
+//MARK: - Category Requests
     
     func getAllCategory(success: @escaping (_ categoriesList: [Category]) -> Void, fail failure: @escaping (_ error: Error?) -> Void) {
         guard let authToken = getAuthToken() else {

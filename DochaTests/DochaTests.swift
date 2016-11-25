@@ -1,14 +1,14 @@
 //
-//  TochaProtoTests.swift
-//  TochaProtoTests
+//  DochaTests.swift
+//  DochaTests
 //
-//  Created by Mathis D on 03/12/2015.
-//  Copyright © 2015 LaTV. All rights reserved.
+//  Created by Mathis D on 22/11/2016.
+//  Copyright © 2016 Slymoover. All rights reserved.
 //
 
 import XCTest
 
-class TochaProtoTests: XCTestCase {
+class DochaTests: XCTestCase {
     
     override func setUp() {
         super.setUp()
@@ -23,6 +23,9 @@ class TochaProtoTests: XCTestCase {
     func testExample() {
         // This is an example of a functional test case.
         // Use XCTAssert and related functions to verify your tests produce the correct results.
+        
+        let user = User()
+        XCTAssertNil(user.getGenderDataForDisplay(), "Pass")
     }
     
     func testPerformanceExample() {
@@ -31,5 +34,4 @@ class TochaProtoTests: XCTestCase {
             // Put the code you want to measure the time of here.
         }
     }
-    
 }
