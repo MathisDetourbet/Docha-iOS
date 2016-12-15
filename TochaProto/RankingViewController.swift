@@ -10,6 +10,7 @@ import Foundation
 import Kingfisher
 import PullToRefresh
 import FBSDKShareKit
+import Crashlytics
 
 class RankingViewController: GameViewController, UITableViewDataSource, UITableViewDelegate, FBSDKSharingDelegate {
     
@@ -221,6 +222,9 @@ class RankingViewController: GameViewController, UITableViewDataSource, UITableV
     }
     
     @IBAction func shareButtonTouched(_ sender: UIBarButtonItem) {
+        // Answers
+        Answers.logShare(withMethod: "Facebook", contentName: "Rank shared", contentType: "post", contentId: nil, customAttributes: nil)
+        
         let rank = UserSessionManager.sharedInstance.currentSession()?.rank
         var contentString = "Viens voir mon classement Docha !"
 

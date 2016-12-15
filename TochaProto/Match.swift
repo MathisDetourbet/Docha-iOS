@@ -16,6 +16,15 @@ enum MatchStatus: String {
     case won = "won"
     case lost = "lost"
     case tie = "tie"
+    
+    func isMatchFinished() -> Bool {
+        if self == .won || self == .lost || self == .tie {
+            return true
+            
+        } else {
+            return false
+        }
+    }
 }
 
 class Match {

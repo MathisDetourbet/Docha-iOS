@@ -13,6 +13,7 @@ import SwiftyJSON
 import SWTableViewCell
 import PullToRefresh
 import SACountingLabel
+import Crashlytics
 
 enum HomeSectionName: Int, CustomStringConvertible {
     case userTurn = 0
@@ -225,6 +226,7 @@ class HomeViewController: GameViewController, UITableViewDelegate, UITableViewDa
     
     func sortMatchArray(matchArray: [Match]) {
         let keys = data.keys
+        
         for key in keys {
             if key != .friends {
                 data[key]?.removeAll()
@@ -314,8 +316,11 @@ class HomeViewController: GameViewController, UITableViewDelegate, UITableViewDa
             
             opponentPlayer.getAvatarImage(for: .medium,
                 completionHandler: { (image) in
-                    cell.opponentImageView.image = image
-                    cell.opponentImageView.applyCircle(withBorderColor: UIColor.lightGrayDochaColor())
+                    
+                    if tableView.visibleCells.contains(cell) {
+                        cell.opponentImageView.image = image
+                        cell.opponentImageView.applyCircle(withBorderColor: UIColor.lightGrayDochaColor())
+                    }
                 }
             )
             
@@ -346,8 +351,11 @@ class HomeViewController: GameViewController, UITableViewDelegate, UITableViewDa
             
             opponentPlayer.getAvatarImage(for: .medium,
                 completionHandler: { (image) in
-                    cell.opponentImageView.image = image
-                    cell.opponentImageView.applyCircle(withBorderColor: UIColor.lightGrayDochaColor())
+                    
+                    if tableView.visibleCells.contains(cell) {
+                        cell.opponentImageView.image = image
+                        cell.opponentImageView.applyCircle(withBorderColor: UIColor.lightGrayDochaColor())
+                    }
                 }
             )
             
@@ -380,8 +388,11 @@ class HomeViewController: GameViewController, UITableViewDelegate, UITableViewDa
             
             opponentPlayer.getAvatarImage(for: .medium,
                 completionHandler: { (image) in
-                    cell.opponentImageView.image = image
-                    cell.opponentImageView.applyCircle(withBorderColor: UIColor.lightGrayDochaColor())
+                    
+                    if tableView.visibleCells.contains(cell) {
+                        cell.opponentImageView.image = image
+                        cell.opponentImageView.applyCircle(withBorderColor: UIColor.lightGrayDochaColor())
+                    }
                 }
             )
             
@@ -412,10 +423,31 @@ class HomeViewController: GameViewController, UITableViewDelegate, UITableViewDa
         } else {
             let sectionType = sortedDataKeys[indexPath.section]
             let matchData = data[sectionType]?[indexPath.row] as! Match
-            let matchVC = self.storyboard?.instantiateViewController(withIdentifier: "idGameplayMatchViewController") as! GameplayMatchViewController
+            let matchStatus = matchData.status
             MatchManager.sharedInstance.currentMatch = matchData
-            matchVC.match = matchData
-            self.navigationController?.pushViewController(matchVC, animated: true)
+            
+            switch matchStatus {
+            case .won:
+                let rewardVC = self.storyboard?.instantiateViewController(withIdentifier: "idGameplayRewardsMatchWonViewController") as! GameplayRewardsMatchWonViewController
+                self.navigationController?.pushViewController(rewardVC, animated: true)
+                break
+                
+            case .lost:
+                let rewardVC = self.storyboard?.instantiateViewController(withIdentifier: "idGameplayRewardsMatchLoseViewController") as! GameplayRewardsMatchLoseViewController
+                self.navigationController?.pushViewController(rewardVC, animated: true)
+                break
+                
+            case .tie:
+                let rewardVC = self.storyboard?.instantiateViewController(withIdentifier: "idGameplayRewardsMatchTieViewController") as! GameplayRewardsMatchTieViewController
+                self.navigationController?.pushViewController(rewardVC, animated: true)
+                break
+                
+            default:
+                let matchVC = self.storyboard?.instantiateViewController(withIdentifier: "idGameplayMatchViewController") as! GameplayMatchViewController
+                matchVC.match = matchData
+                self.navigationController?.pushViewController(matchVC, animated: true)
+                break
+            }
         }
     }
     
@@ -427,7 +459,7 @@ class HomeViewController: GameViewController, UITableViewDelegate, UITableViewDa
         let headerView = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.width, height: 30))
         headerView.backgroundColor = UIColor.lightGrayDochaColor()
         
-        let sectionLabel = UILabel(frame: CGRect(x: 10.0, y: 5.0, width: 100.0, height: 28.0))
+        let sectionLabel = UILabel(frame: CGRect(x: 10, y: 5, width: 100, height: 28))
         sectionLabel.textColor = UIColor.darkBlueDochaColor()
         sectionLabel.text = sortedDataKeys[section].description
         sectionLabel.font = UIFont(name: "Montserrat-Semibold", size: 12)
@@ -502,35 +534,11 @@ class HomeViewController: GameViewController, UITableViewDelegate, UITableViewDa
     
     func playButtonTouched(withIndexPath indexPath: IndexPath) {
         let sectionType = sortedDataKeys[indexPath.section]
-        let matchData = data[sectionType]?[indexPath.row] as! Match
+        let matchData = data[sectionType]?[indexPath.row] as? Match
         let matchVC = self.storyboard?.instantiateViewController(withIdentifier: "idGameplayMatchViewController") as! GameplayMatchViewController
         MatchManager.sharedInstance.currentMatch = matchData
         matchVC.match = matchData
         self.navigationController?.pushViewController(matchVC, animated: true)
-    }
-    
-    func playButtonTouched(withMatch match: Match?) {
-        if let match = match {
-            let currentRound = match.rounds.last
-            
-            if let category = currentRound?.category {
-                MatchManager.sharedInstance.loadPlayersInfos(
-                    withCompletion: {
-                        
-                        let launcherVC = self.storyboard?.instantiateViewController(withIdentifier: "idGameplayLauncherViewController") as! GameplayLauncherViewController
-                        launcherVC.categorySelected = category
-                        MatchManager.sharedInstance.currentMatch = match
-                        MatchManager.sharedInstance.opponentPlayer = match.opponent
-                        self.navigationController?.pushViewController(launcherVC, animated: true)
-                    }
-                )
-                
-            } else {
-                let newGameCategorieSelectionVC = self.storyboard?.instantiateViewController(withIdentifier: "idNewGameCategorieSelectionViewController") as! NewGameCategorieSelectionViewController
-                MatchManager.sharedInstance.currentMatch = match
-                self.navigationController?.pushViewController(newGameCategorieSelectionVC, animated: true)
-            }
-        }
     }
     
     
@@ -649,6 +657,9 @@ class HomeViewController: GameViewController, UITableViewDelegate, UITableViewDa
         if let pseudo = pseudo {
             contentString = "Rejoins-moi sur Docha et défie moi. Mon pseudo est : \(pseudo)."
         }
+        
+        // Answers
+        Answers.logShare(withMethod: "Facebook", contentName: "Home profil sharing", contentType: "post", contentId: nil, customAttributes: nil)
         
         // Facebook Sharing
         let content = FBSDKShareLinkContent()

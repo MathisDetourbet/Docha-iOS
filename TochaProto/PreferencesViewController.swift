@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import Crashlytics
 import Amplitude_iOS
 import PBWebViewController
 import FBSDKShareKit
@@ -220,6 +221,9 @@ class PreferencesViewController: GameViewController, UITableViewDelegate, UITabl
 //MARK: - @IBAction Methods
     
     func inviteFacebookFriendsButtonTouched() {
+        // Answers
+        Answers.logInvite(withMethod: "Facebook", customAttributes: nil)
+        
         let gameRequestContent = FBSDKGameRequestContent()
         gameRequestContent.message = "Viens me rejoindre sur Docha !"
         gameRequestContent.title = "Inviter mes amis"

@@ -20,6 +20,7 @@ PODS:
   - Crashlytics (3.8.3):
     - Fabric (~> 1.6.3)
   - Fabric (1.6.11)
+  - IBAnimatable (3.0.1)
   - IQKeyboardManagerSwift (4.0.7)
   - Kingfisher (3.1.4)
   - MBCircularProgressBar (0.3.5)
@@ -29,6 +30,7 @@ PODS:
   - PullToRefresher (1.4.2)
   - Quick (0.10.0)
   - RSKImageCropper (1.5.1)
+  - SAConfettiView (0.1.8)
   - SACountingLabel (0.1.1)
   - SnapKit (3.0.2)
   - SwiftyJSON (3.1.1)
@@ -42,6 +44,7 @@ DEPENDENCIES:
   - CNPPopupController
   - Crashlytics
   - Fabric
+  - IBAnimatable
   - IQKeyboardManagerSwift
   - Kingfisher (~> 3.0)
   - MBCircularProgressBar
@@ -51,6 +54,7 @@ DEPENDENCIES:
   - PullToRefresher (~> 1.4.0)
   - Quick
   - RSKImageCropper
+  - SAConfettiView
   - SACountingLabel
   - SnapKit (>= 3.0.0)
   - SwiftyJSON
@@ -64,6 +68,7 @@ SPEC CHECKSUMS:
   CNPPopupController: 59b06290762f68beab5fb0bbfa87eb4dcbefb7de
   Crashlytics: 2b6dbe138a42395577cfa73dfa1aa7248cadf39e
   Fabric: 5911403591946b8228ab1c51d98f1d7137e863c6
+  IBAnimatable: 709f04a2b951c55db9ac4d8893684830bbdd0be2
   IQKeyboardManagerSwift: 58bbcf46b5cf9fd4ed625d28a60cb2fbae4ab0f4
   Kingfisher: 6c67e3e57f2d81a9cfdfa25052cd86f33ceac9bb
   MBCircularProgressBar: 0b795b722a5eb5b0923822f90474e2576a1a7855
@@ -73,12 +78,13 @@ SPEC CHECKSUMS:
   PullToRefresher: f5173dbaca14d10417f9d3681ebe097cce10344c
   Quick: 5d290df1c69d5ee2f0729956dcf0fd9a30447eaa
   RSKImageCropper: edd65fedb3734332818deb139906d6b7f54b8a44
+  SAConfettiView: c87031a2280659261b730fce3669fb10e73636ee
   SACountingLabel: 6b0c2a177b77e65ea63772e50f4d4285bb6d5a71
   SnapKit: 2e456761aa92d4d4067a7a5594c18769d451a8ad
   SwiftyJSON: f0be2e604f83e8405a624e9f891898bf6ed4e019
   SWTableViewCell: 2a94aadc9d47b2b611fa064566bf57948b95b579
   TextFieldEffects: ef594746f17997c813e07633f8ae5acaf9b04f27
 
-PODFILE CHECKSUM: 332496f7b94d096d43aa9a052f713aca56ff7d85
+PODFILE CHECKSUM: ef5ee479d0d5665f1633afc7da3181681d9d6d30
 
 COCOAPODS: 1.0.1

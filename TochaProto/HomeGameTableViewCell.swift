@@ -13,6 +13,22 @@ enum MatchResult: String {
     case won = "Gagné"
     case lost = "Perdu"
     case tie = "Égalité"
+    
+    init?(with matchStatus: MatchStatus) {
+        switch (matchStatus) {
+        case .won:
+            self = .won
+            break
+        case .lost:
+            self = .lost
+            break
+        case .tie:
+            self = .tie
+            break
+        default:
+            return nil
+        }
+    }
 }
 
 class HomeGameTableViewCell: SWTableViewCell {

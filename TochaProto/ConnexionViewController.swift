@@ -151,14 +151,13 @@ class ConnexionViewController: RootViewController {
                 return
                 
             } else if (result?.isCancelled)! {
-                print("Facebook login : cancelled")
                 return
                 
             } else {
                 let fbloginresult : FBSDKLoginManagerLoginResult = result!
                 
-                if(fbloginresult.grantedPermissions.contains("email"))
-                {
+                if(fbloginresult.grantedPermissions.contains("email")) {
+                    
                     PopupManager.sharedInstance.showLoadingPopup("Connexion en cours...", message: nil,
                         completion: {
                             self.getFBUserData()

@@ -64,6 +64,7 @@ class HomeFriendsTableViewCell: UITableViewCell, UICollectionViewDelegate, UICol
         
         let friend = friends[indexPath.row]
         cell.friendNameLabel.text = friend.pseudo
+        
         if let avatarImage = friend.avatarImage {
             cell.friendAvatarImageView.image = avatarImage
             cell.friendAvatarImageView.applyCircle(withBorderColor: UIColor.lightGrayDochaColor())
@@ -71,8 +72,11 @@ class HomeFriendsTableViewCell: UITableViewCell, UICollectionViewDelegate, UICol
         } else {
             friend.getAvatarImage(for: .medium,
                 completionHandler: { (image) in
-                    cell.friendAvatarImageView.image = image
-                    cell.friendAvatarImageView.applyCircle(withBorderColor: UIColor.lightGrayDochaColor())
+                    
+                    if collectionView.visibleCells.contains(cell) {
+                        cell.friendAvatarImageView.image = image
+                        cell.friendAvatarImageView.applyCircle(withBorderColor: UIColor.lightGrayDochaColor())
+                    }
                 }
             )
         }

@@ -8,6 +8,7 @@
 
 import Foundation
 import FBSDKShareKit
+import Crashlytics
 
 class NewGameFindOpponentTableViewCell: UITableViewCell {
     
@@ -215,6 +216,9 @@ class NewGameFindOpponentViewController: GameViewController, UITableViewDataSour
 //MARK: @IBAction Methods
     
     @IBAction func inviteFBFriendsButtonTouched(_ sender: UIButton) {
+        // Answers
+        Answers.logInvite(withMethod: "Facebook", customAttributes: nil)
+        
         let gameRequestContent = FBSDKGameRequestContent()
         gameRequestContent.message = "Viens me défier sur Docha ! Télécharge l'application sur ce lien : http://www.docha.fr"
         gameRequestContent.title = "Invite tes amis"

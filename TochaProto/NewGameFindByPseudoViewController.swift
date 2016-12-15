@@ -65,9 +65,11 @@ class NewGameFindByPseudoViewController: GameViewController, UITableViewDataSour
             player.getAvatarImage(for: .medium,
                 completionHandler: { (image) in
                     
-                    cell.friendAvatarImageView.image = image
-                    cell.friendAvatarImageView.applyCircle(withBorderColor: UIColor.lightGrayDochaColor())
-                    players[indexPath.row].avatarImage = image
+                    if tableView.visibleCells.contains(cell) {
+                        cell.friendAvatarImageView.image = image
+                        cell.friendAvatarImageView.applyCircle(withBorderColor: UIColor.lightGrayDochaColor())
+                        players[indexPath.row].avatarImage = image
+                    }
                 }
             )
             

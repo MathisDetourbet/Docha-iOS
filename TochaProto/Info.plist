@@ -15,7 +15,7 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.2.1</string>
+	<string>1.2.2</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleURLTypes</key>
@@ -24,11 +24,11 @@
 			<key>CFBundleTypeRole</key>
 			<string>Editor</string>
 			<key>CFBundleURLName</key>
-			<string>com.latv.docha</string>
+			<string>fr.slymoover.docha</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
 				<string>fb273418713002986</string>
-				<string>home</string>
+				<string>docha</string>
 			</array>
 		</dict>
 		<dict>
@@ -93,10 +93,7 @@
 		<key>NSAllowsArbitraryLoads</key>
 		<true/>
 		<key>NSExceptionDomains</key>
-		<dict>
-			<key>cdn.tutsplus.com</key>
-			<string></string>
-		</dict>
+		<dict/>
 	</dict>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Advertisement would like to store a photo</string>

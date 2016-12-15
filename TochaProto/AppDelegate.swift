@@ -16,6 +16,7 @@ import Amplitude_iOS
 import CoreTelephony
 
 public var testing = false
+public var answersNumberOfRoundPlayed = 0
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -89,6 +90,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let loginManager: FBSDKLoginManager = FBSDKLoginManager()
         loginManager.logOut()
         
+        // Answers: number of round played in session
+        Answers.logCustomEvent(withName: "Rounds played in session", customAttributes: ["rounds_played_session": answersNumberOfRoundPlayed])
+        
         // Amplitude Event
         Amplitude.instance().logEvent("ApplicationWillTerminate")
     }
@@ -117,15 +121,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     
+    
 //MARK: - Universal links
     
     func application(_ application: UIApplication, continue userActivity: NSUserActivity, restorationHandler: @escaping ([Any]?) -> Void) -> Bool {
         if userActivity.activityType == NSUserActivityTypeBrowsingWeb {
-            return true
+            NavSchemeManager.sharedInstance.initRootController()
         }
         
-        return false
+        return true
     }
+    
+    
     
 
 // MARK: - Facebook Sign In

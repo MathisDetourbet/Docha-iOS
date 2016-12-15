@@ -9,6 +9,7 @@
 import Foundation
 import MBCircularProgressBar
 import Kingfisher
+import Crashlytics
 
 enum TimelineState {
     case perfect
@@ -46,13 +47,13 @@ class GameplayMainViewController: GameViewController, KeyboardViewDelegate, Coun
     var cursorCounter: Int = 0
     
     let kTimePerRound: Double = 60.0
-    var timer: Timer?
+    weak var timer: Timer?
     var timeleft: Double!
     
     var userPropositions: [Proposition] = []
     var opponentPropositions: [Proposition]?
     var sortedOpponentPropositions: [Int: [Int: Double]]?
-    var propositionTimer: Timer?
+    weak var propositionTimer: Timer?
     var currentMillisecondsTime: Int = 0
     
 
@@ -196,7 +197,7 @@ class GameplayMainViewController: GameViewController, KeyboardViewDelegate, Coun
     func initCardsView() {
         var cardsArray: [CardProductView] = []
         
-        for product in self.round!.products {
+        for product in round!.products {
             let cardProductView = CardProductView.loadFromNibNamed("CardProductView") as? CardProductView
             let priceArray = ConverterHelper.convertPriceToArrayOfInt(product.price)
             let centsString = priceArray.centsString
@@ -207,7 +208,6 @@ class GameplayMainViewController: GameViewController, KeyboardViewDelegate, Coun
             cardProductView?.counterContainerView.centsLabel.text = centsString
             cardProductView?.counterContainerView.numberOfCounterDisplayed = priceArray.priceArray.count
             cardProductView?.counterContainerView.delegate = self
-            //print("Real price : \(product.price)")
             
             userPlayer?.getAvatarImage(for: .small,
                 completionHandler: { (image) in
@@ -292,7 +292,7 @@ class GameplayMainViewController: GameViewController, KeyboardViewDelegate, Coun
             nextCard.translatesAutoresizingMaskIntoConstraints = false
             nextCard.frame = cardContainerView.frame
             
-            let centerXNextCard = NSLayoutConstraint(item: nextCard, attribute: .centerX, relatedBy: .lessThanOrEqual, toItem: cardContainerView, attribute: .centerX, multiplier: 1.0, constant: self.view.frame.width+1.0)
+            let centerXNextCard = NSLayoutConstraint(item: nextCard, attribute: .centerX, relatedBy: .lessThanOrEqual, toItem: cardContainerView, attribute: .centerX, multiplier: 1.0, constant: self.view.frame.width + 1.0)
             cardContainerView.addConstraint(centerXNextCard)
             cardContainerView.addConstraint(NSLayoutConstraint(item: nextCard, attribute: .centerY, relatedBy: .equal, toItem: cardContainerView, attribute: .centerY, multiplier: 1.0, constant: 0.0))
             cardContainerView.addConstraint(NSLayoutConstraint(item: nextCard, attribute: .height, relatedBy: .equal, toItem: cardContainerView, attribute: .height, multiplier: 1.0, constant: 0.0))
@@ -325,6 +325,9 @@ class GameplayMainViewController: GameViewController, KeyboardViewDelegate, Coun
                 }
             )
         }
+        
+        // Answers: Number of products displayed
+        Answers.logCustomEvent(withName: "Product displayed", customAttributes: nil)
     }
     
     
@@ -410,23 +413,23 @@ class GameplayMainViewController: GameViewController, KeyboardViewDelegate, Coun
 //MARK: - Timeline Methods
     
     func updateTimeline(withResult result: TimelineState, isForUser: Bool) {
-        var timelineImageName: String?
+        var timelineImage: UIImage?
         
         switch result {
-            case .perfect:  timelineImageName = "timeline_perfect_found"; break
-            case .current:  timelineImageName = "timeline_encours"; break
-            case .wrong:    timelineImageName = "timeline_red_zone"; break
-            case .unplayed: timelineImageName = "timeline_unlock"; break
+            case .perfect:  timelineImage = #imageLiteral(resourceName: "timeline_perfect_found"); break
+            case .current:  timelineImage = #imageLiteral(resourceName: "timeline_encours"); break
+            case .wrong:    timelineImage = #imageLiteral(resourceName: "timeline_red_zone"); break
+            case .unplayed: timelineImage = #imageLiteral(resourceName: "timeline_unlock"); break
         }
         
         if isForUser {
-            if let timelineImageName = timelineImageName {
-                userTimelineImageViewCollection[cursorCard].image = UIImage(named: timelineImageName)
+            if let timelineImage = timelineImage {
+                userTimelineImageViewCollection[cursorCard].image = timelineImage
             }
             
         } else {
-            if let timelineImageName = timelineImageName {
-                opponentTimelineImageViewCollection[cursorCard].image = UIImage(named: timelineImageName)
+            if let timelineImage = timelineImage {
+                opponentTimelineImageViewCollection[cursorCard].image = timelineImage
             }
             
             if result == .perfect || result == .wrong {
@@ -497,6 +500,12 @@ class GameplayMainViewController: GameViewController, KeyboardViewDelegate, Coun
                 if self.userEstimation! == self.currentPriceArray! {
                     self.nextProduct(withResult: .perfect)
                     
+                    // Answers: number of perfects price discovered
+                    Answers.logCustomEvent(withName: "Perfects", customAttributes: nil)
+                    
+                    // Answers: average time to discover prices
+                    Answers.logCustomEvent(withName: "Time (ms) to find the right price", customAttributes: nil)
+                    
                 } else {
                     self.cursorCounter = 0
                     self.keyboardView.enabledKeyboard(true)
@@ -505,6 +514,9 @@ class GameplayMainViewController: GameViewController, KeyboardViewDelegate, Coun
                 }
             }
         }
+        
+        // Answers: number of try
+        Answers.logCustomEvent(withName: "Try to find the price", customAttributes: nil)
     }
     
     func eraseAllCounters() {
@@ -558,27 +570,18 @@ class GameplayMainViewController: GameViewController, KeyboardViewDelegate, Coun
         if isForUser {
             currentCard?.updatePinIconPosition(withErrorPercent: errorPercent, forPlayer: isForUser,
                 andCompletion: { (finished) in
+                    
                     if errorPercent < 0 {
-                        self.displayMessage(.more,
-                            completion: { (finished) in
-                                completion?(finished)
-                            }
-                        )
+                        self.displayMessage(.more, completion: nil)
                         
                     } else if errorPercent > 0 {
-                        self.displayMessage(.less,
-                            completion: { (finished) in
-                                completion?(finished)
-                            }
-                        )
+                        self.displayMessage(.less, completion: nil)
                         
                     } else {
-                        self.displayMessage(.perfect,
-                            completion: { (finished) in
-                                completion?(finished)
-                            }
-                        )
+                        self.displayMessage(.perfect, completion: nil)
                     }
+                    
+                    completion?(finished)
                 }
             )
             
@@ -619,16 +622,17 @@ class GameplayMainViewController: GameViewController, KeyboardViewDelegate, Coun
                 
                 if userEstimation > realPrice {
                     return errorPercent
+                    
                 } else {
                     return -errorPercent
                 }
                 
             } else {
                 if userEstimation > priceMax {
-                    return 100.0
+                    return 1.0
                     
                 } else {
-                    return -100.0
+                    return -1.0
                 }
             }
         }

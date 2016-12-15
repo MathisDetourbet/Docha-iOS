@@ -9,6 +9,7 @@
 import Foundation
 import FBSDKShareKit
 import SnapKit
+import Crashlytics
 
 class GameplayDebriefViewController: GameViewController, UIPageViewControllerDataSource, UIPageViewControllerDelegate, GameplayDebriefPageContentDelegate, CounterContainerViewDelegate, FBSDKSharingDelegate {
     
@@ -26,6 +27,9 @@ class GameplayDebriefViewController: GameViewController, UIPageViewControllerDat
     @IBOutlet weak var aspectRatioTopContainerConstraint: NSLayoutConstraint!
     
     @IBOutlet weak var responseLabel: UILabel!
+    
+    
+// MARK: - Life View Cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -54,6 +58,9 @@ class GameplayDebriefViewController: GameViewController, UIPageViewControllerDat
         pageContentVC!.counterContainerView.updateCountersViewsWithPrice(priceArray)
         
         loadNewUserInfos()
+        
+        // Answers: number of rounds played in session
+        answersNumberOfRoundPlayed += 1
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -64,6 +71,9 @@ class GameplayDebriefViewController: GameViewController, UIPageViewControllerDat
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
     }
+    
+    
+// MARK: - Load & Display User Data
     
     func loadNewUserInfos() {
         UserSessionManager.sharedInstance.getUser(
@@ -243,7 +253,7 @@ class GameplayDebriefViewController: GameViewController, UIPageViewControllerDat
     }
     
 
-//MARK: Page View Controller Data Source
+//MARK: - Page View Controller Data Source
     
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController? {
         var index = (viewController as! GameplayDebriefPageContentViewController).pageIndex!
@@ -265,7 +275,7 @@ class GameplayDebriefViewController: GameViewController, UIPageViewControllerDat
     }
     
     
-//MARK: Page View Controller Delegate
+//MARK: - Page View Controller Delegate
     
     func pageViewController(_ pageViewController: UIPageViewController, didFinishAnimating finished: Bool, previousViewControllers: [UIViewController], transitionCompleted completed: Bool) {
         if finished {
@@ -316,7 +326,7 @@ class GameplayDebriefViewController: GameViewController, UIPageViewControllerDat
     }
     
     
-//MARK: Gameplay Debrief Page Content Delegate
+//MARK: - Gameplay Debrief Page Content Delegate
     
     func moreDetailsButtonTouched() {
         if let pageUrlString = productsList?[pageControl.currentPage].pageUrl {
@@ -335,7 +345,11 @@ class GameplayDebriefViewController: GameViewController, UIPageViewControllerDat
         } else {
             PopupManager.sharedInstance.showErrorPopup(message: Constants.PopupMessage.ErrorMessage.kErrorOccured)
         }
+        
+        // Answers: number of clicks
+        Answers.logCustomEvent(withName: "More infos clicked", customAttributes: nil)
     }
+    
     func shareButtonTouched() {
         // Facebook Sharing
         let product = productsList?[pageControl.currentPage]
@@ -368,10 +382,18 @@ class GameplayDebriefViewController: GameViewController, UIPageViewControllerDat
     }
     
     
-//MARK: @IBActions Methods
+//MARK: - @IBActions Methods
     
     @IBAction func nextButtonTouched(_ sender: UIButton) {
         let currentRound = MatchManager.sharedInstance.currentRound as? RoundFull
+        let currentMatch = MatchManager.sharedInstance.currentMatch
+        var matchResult: MatchResult?
+        
+        if let currentMatch = currentMatch {
+            if currentMatch.status.isMatchFinished() {
+                matchResult = MatchResult(with: currentMatch.status)
+            }
+        }
         
         if let currentRound = currentRound {
             if let oldUser = self.oldUser, let newUser = self.newUser {
@@ -381,6 +403,7 @@ class GameplayDebriefViewController: GameViewController, UIPageViewControllerDat
                     let rewardsDochosVC = self.storyboard?.instantiateViewController(withIdentifier: "idGameplayRewardsDochosViewController") as! GameplayRewardsDochosViewController
                     rewardsDochosVC.dochosWon = dochosWon
                     rewardsDochosVC.newLevel = oldUser.levelMaxUnlocked! < newUser.levelMaxUnlocked! ? newUser.levelMaxUnlocked : nil
+                    rewardsDochosVC.matchResult = matchResult
                     self.navigationController?.pushViewController(rewardsDochosVC, animated: true)
                     
                     return
@@ -388,6 +411,7 @@ class GameplayDebriefViewController: GameViewController, UIPageViewControllerDat
                 } else if oldUser.levelMaxUnlocked! < newUser.levelMaxUnlocked! {
                     let rewardsLevelUpVC = self.storyboard?.instantiateViewController(withIdentifier: "idGameplayRewardsLevelUpViewController") as! GameplayRewardsLevelUpViewController
                     rewardsLevelUpVC.newUserLevel = newUser.levelMaxUnlocked!
+                    rewardsLevelUpVC.matchResult = matchResult
                     self.navigationController?.pushViewController(rewardsLevelUpVC, animated: true)
                     
                     return
@@ -405,7 +429,7 @@ class GameplayDebriefViewController: GameViewController, UIPageViewControllerDat
     }
     
     
-//MARK: CounterContainerView Delegate Methods
+//MARK: - CounterContainerView Delegate Methods
     
     func infosButtonTouched() {
         let product = productsList?[pageControl.currentPage]

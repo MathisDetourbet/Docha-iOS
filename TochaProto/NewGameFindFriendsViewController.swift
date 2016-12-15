@@ -8,6 +8,7 @@
 
 import Foundation
 import FBSDKShareKit
+import Crashlytics
 
 class NewGameFindFriendsViewController: GameViewController, UITableViewDataSource, UITableViewDelegate, NewGameFindFriendsTableViewCellDelegate, FBSDKGameRequestDialogDelegate {
     
@@ -33,7 +34,7 @@ class NewGameFindFriendsViewController: GameViewController, UITableViewDataSourc
     }
     
     func getFacebookFriends() {
-        MatchManager.sharedInstance.getQuickPlayers(byOrder: "activity", andLimit: 50,
+        MatchManager.sharedInstance.getQuickPlayers(byOrder: "activity", andLimit: 100,
             success: { (friends) in
                 
                 self.friends = friends
@@ -75,9 +76,11 @@ class NewGameFindFriendsViewController: GameViewController, UITableViewDataSourc
             friend.getAvatarImage(for: .medium,
                 completionHandler: { (image) in
                     
-                    cell.friendAvatarImageView.image = image
-                    cell.friendAvatarImageView.applyCircle(withBorderColor: UIColor.lightGrayDochaColor())
-                    friends[indexPath.row].avatarImage = image
+                    if tableView.visibleCells.contains(cell) {
+                        cell.friendAvatarImageView.image = image
+                        cell.friendAvatarImageView.applyCircle(withBorderColor: UIColor.lightGrayDochaColor())
+                        friends[indexPath.row].avatarImage = image
+                    }
                 }
             )
             
@@ -104,7 +107,7 @@ class NewGameFindFriendsViewController: GameViewController, UITableViewDataSourc
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let headerView = UIView(frame: CGRect(x: 0.0, y: 0.0, width: tableView.frame.width, height: 28))
-        headerView.backgroundColor = UIColor.clear
+        headerView.backgroundColor = self.view.backgroundColor
         let sectionLabel = UILabel(frame: CGRect(x: 15.0, y: 5.0, width: 100.0, height: 28.0))
         sectionLabel.textColor = UIColor.darkBlueDochaColor()
         if let numberOfFriends = friends?.count {
@@ -158,17 +161,21 @@ class NewGameFindFriendsViewController: GameViewController, UITableViewDataSourc
                     )
                 }
                 
-            }) { (error) in
+            })
+            { (error) in
                 PopupManager.sharedInstance.dismissPopup(true) {
                     PopupManager.sharedInstance.showErrorPopup(message: Constants.PopupMessage.ErrorMessage.kErrorOccured)
                 }
-        }
+            }
     }
     
     
 //MARK: @IBActions
     
     @IBAction func inviteFriendsButtonTouched(_ sender: UIButton) {
+        //Answers
+        Answers.logInvite(withMethod: "Facebook", customAttributes: nil)
+        
         let gameRequestContent = FBSDKGameRequestContent()
         gameRequestContent.message = "Viens me défier sur Docha ! Télécharge l'application sur ce lien : http://www.docha.fr"
         gameRequestContent.title = "Invite tes amis"

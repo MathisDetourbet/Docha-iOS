@@ -28,9 +28,20 @@ class CardProductView: UIView {
         super.awakeFromNib()
         
         userPinIconView.isHidden = true
-        opponentPinIconView.isHidden = true
+        userPinIconView.animationType = .shake(repeatCount: 1)
+        userPinIconView.delay = 0.0
+        userPinIconView.duration = 1.0
+        userPinIconView.velocity = 2
+        userPinIconView.force = 0.5
         
-        userPinIconView.setAvatarImage(UIImage(named: "avatar_man_small")!)
+        userPinIconView.setAvatarImage(#imageLiteral(resourceName: "avatar_man_small"))
+        
+        opponentPinIconView.isHidden = true
+        opponentPinIconView.animationType = .shake(repeatCount: 1)
+        opponentPinIconView.delay = 0.0
+        opponentPinIconView.duration = 1.0
+        opponentPinIconView.velocity = 2
+        opponentPinIconView.force = 1
         
         productImageView.layer.cornerRadius = 18.0
         productImageView.layer.masksToBounds = false
@@ -45,39 +56,57 @@ class CardProductView: UIView {
         var newPosX = 0.0 as CGFloat
         
         if errorPercent != 0.0 {
-            let gaugeFrame = self.gaugeContainerView.frame
+            let gaugeHalfWidth = gaugeContainerView.frame.width / 2
+            let multiplier = CGFloat(errorPercent / abs(errorPercent))
             
-            if errorPercent >= 100.0 {
-                newPosX = gaugeFrame.origin.x + gaugeFrame.width / 2
+            if errorPercent >= 1.0 {
+                newPosX = gaugeHalfWidth
                 
-            } else if errorPercent <= -100.0 {
-                newPosX = gaugeFrame.origin.x - gaugeFrame.width / 2
+            } else if errorPercent <= -1.0 {
+                newPosX = -gaugeHalfWidth
                 
             } else {
-                let errorPercentFloat = CGFloat(errorPercent)
-                newPosX = (gaugeFrame.width / 2) * errorPercentFloat + ((errorPercentFloat / abs(errorPercentFloat)) * (gaugeFrame.width * 0.107))
+                let perfectSquareWidth = gaugeHalfWidth * 2.0 * 0.090
+                let errorPercentReverse = 1.0 - errorPercent
+                newPosX = multiplier * abs(CGFloat(log(abs(errorPercentReverse)))) * gaugeHalfWidth +  multiplier * perfectSquareWidth / 2
+                
+                if newPosX > gaugeHalfWidth || newPosX < -gaugeHalfWidth {
+                    newPosX = multiplier * gaugeHalfWidth
+                }
             }
         }
         
         var constraintToSet: NSLayoutConstraint
         
         if isForUser {
-            self.userPinIconView.isHidden = false
+            userPinIconView.isHidden = false
             constraintToSet = centerXUserPinIconConstraint
             
         } else {
-            self.opponentPinIconView.isHidden = false
+            opponentPinIconView.isHidden = false
             constraintToSet = centerXOpponentPinIconConstraint
-            
         }
         
-        UIView.animate(withDuration: 1.0, animations: {
-            constraintToSet.constant = newPosX
-            self.layoutIfNeeded()
+        if constraintToSet.constant == newPosX {
+            if isForUser {
+                userPinIconView.animate() {
+                    completion?(true)
+                }
+                
+            } else {
+                opponentPinIconView.animate() {
+                    completion?(true)
+                }
+            }
             
+        } else {
+            UIView.animate(withDuration: 1.0, animations: {
+                constraintToSet.constant = newPosX
+                self.layoutIfNeeded()
+                
             }, completion: { (finished) in
                 completion?(finished)
-            }
-        )
+            })
+        }
     }
 }
