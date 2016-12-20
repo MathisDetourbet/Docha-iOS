@@ -8,9 +8,8 @@
 
 import Foundation
 import Kingfisher
-import IBAnimatable
 
-class PinIconView: AnimatableView {
+class PinIconView: UIView {
     
     @IBOutlet weak var avatarImageView: UIImageView!
     

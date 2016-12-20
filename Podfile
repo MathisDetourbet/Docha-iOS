@@ -23,7 +23,6 @@ target 'Docha' do
     pod 'SWTableViewCell', '~> 0.3.7'
     pod 'PullToRefresher', '~> 1.4.0'
     pod 'SAConfettiView'
-    pod 'IBAnimatable'
 end
 
 def testing_pods

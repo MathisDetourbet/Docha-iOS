@@ -8,7 +8,6 @@
 
 import Foundation
 import SnapKit
-import IBAnimatable
 
 class GameplayRewardsMatchLoseViewController: GameViewController {
     

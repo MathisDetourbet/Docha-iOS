@@ -28,20 +28,10 @@ class CardProductView: UIView {
         super.awakeFromNib()
         
         userPinIconView.isHidden = true
-        userPinIconView.animationType = .shake(repeatCount: 1)
-        userPinIconView.delay = 0.0
-        userPinIconView.duration = 1.0
-        userPinIconView.velocity = 2
-        userPinIconView.force = 0.5
-        
         userPinIconView.setAvatarImage(#imageLiteral(resourceName: "avatar_man_small"))
         
         opponentPinIconView.isHidden = true
-        opponentPinIconView.animationType = .shake(repeatCount: 1)
-        opponentPinIconView.delay = 0.0
-        opponentPinIconView.duration = 1.0
-        opponentPinIconView.velocity = 2
-        opponentPinIconView.force = 1
+        opponentPinIconView.setAvatarImage(#imageLiteral(resourceName: "avatar_man_small"))
         
         productImageView.layer.cornerRadius = 18.0
         productImageView.layer.masksToBounds = false
@@ -89,13 +79,13 @@ class CardProductView: UIView {
         
         if constraintToSet.constant == newPosX {
             if isForUser {
-                userPinIconView.animate() {
-                    completion?(true)
+                wrongPinIconAnimation(userPinIconView) { (finished) in
+                    completion?(finished)
                 }
                 
             } else {
-                opponentPinIconView.animate() {
-                    completion?(true)
+                wrongPinIconAnimation(opponentPinIconView) { (finished) in
+                    completion?(finished)
                 }
             }
             
@@ -108,5 +98,27 @@ class CardProductView: UIView {
                 completion?(finished)
             })
         }
+    }
+    
+    func wrongPinIconAnimation(_ pinIconView: PinIconView, completion: @escaping(_ finished: Bool) -> Void) {
+        let yOffset = 10.0 as CGFloat
+        UIView.animate(withDuration: 0.25, animations: {
+            pinIconView.transform = CGAffineTransform(translationX: 0.0, y: -yOffset)
+        }, completion: { (finished) in
+            UIView.animate(withDuration: 0.15, animations: {
+                pinIconView.transform = CGAffineTransform(translationX: 0.0, y: yOffset)
+            }, completion: { (finished) in
+                UIView.animate(withDuration: 0.15, animations: {
+                    pinIconView.transform = CGAffineTransform(translationX: 0.0, y: -yOffset/2)
+                }, completion: { (finished) in
+                    UIView.animate(withDuration: 0.05, animations: {
+                        pinIconView.transform = CGAffineTransform(translationX: 0.0, y: yOffset/2)
+                    }, completion: { (finished) in
+                        pinIconView.transform = CGAffineTransform(translationX: 0.0, y: 0.0)
+                        completion(finished)
+                    })
+                })
+            })
+        })
     }
 }
